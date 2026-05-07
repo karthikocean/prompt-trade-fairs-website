@@ -8,7 +8,7 @@ import EnquirySection from'../components/ResigterForm';
 import PreviousExpo from '../components/IndustriesSlider';
 import WhyChoose from '../components/WhyChoose';
 import NextExpoSection from '../components/NextExpoSection';
-import ReportingCharts from '../components/ReportingCharts';
+
 
 
 
@@ -22,9 +22,8 @@ const Home = () => {
         <main>
             <Hero />
             <NextExpoSection />
-            <PreviousExpo/>
             <Stats />
-            <ReportingCharts />
+            <PreviousExpo/>
             <WhyChoose />
 
             {/* <VenueSection /> */}

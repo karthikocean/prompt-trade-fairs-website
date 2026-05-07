@@ -109,17 +109,11 @@ ul {
   top: 0;
   left: 0;
   z-index: 1000;
-  padding: 22px 0;
-  background: transparent !important;
+  padding: 14px 0;
+  background: #ffffff !important; /* SOLID BY DEFAULT */
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   margin: 0 !important;
-}
-
-/* SCROLLED STATE */
-.header.scrolled {
-  background: #ffffff !important;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-  padding: 14px 0;
 }
 
 /* CONTAINER */
@@ -135,33 +129,31 @@ ul {
 
 /* LOGO */
 .nav-logo img {
-  height: 58px;
+  height: 46px; /* SCROLLED SIZE BY DEFAULT */
   transition: height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.header.scrolled .nav-logo img {
-  height: 46px;
 }
 
 /* NAV LINKS WRAPPER */
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 12px; /* INCREASED GAP */
+  flex-wrap: nowrap; /* PREVENT STACKING */
 }
 
-/* EACH LINK */
+/* EACH LINK - DARK TEXT BY DEFAULT */
 .nav-links a,
 .dropdown-toggle {
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
-  padding: 8px 14px;
+  font-weight: 600; /* SLIGHTLY BOLDER */
+  color: #1F2937 !important;
+  padding: 10px 16px; /* BETTER CLICK AREA */
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.25s ease;
   position: relative;
+  white-space: nowrap; /* PREVENT TEXT WRAP */
 }
 
 /* SCROLLED LINK COLOR */
@@ -276,10 +268,10 @@ ul {
 /* CONTACT BUTTON */
 .contact-btn {
   background: #ED1C24 !important;
-  color: #ffffff !important;
-  padding: 10px 22px !important;
+  color: #ffffff !important; /* FORCED WHITE TEXT */
+  padding: 10px 24px !important;
   border-radius: 50px !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
   font-size: 14px !important;
   box-shadow: 0 4px 16px rgba(237, 28, 36, 0.25);
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;

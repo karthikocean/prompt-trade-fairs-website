@@ -1,48 +1,75 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import EnquiryForm from '../components/EnquiryForm';
 
 const PreviousExhibitions = () => {
-  const [activeTab, setActiveTab] = useState('photos');
+  const [selectedExpo, setSelectedExpo] = useState(null);
+  const [isEnquiryModalOpen, setIsEnquiryModalOpen] = useState(false);
   const [pastVisibleCount, setPastVisibleCount] = useState(3);
   const [galleryVisibleCount, setGalleryVisibleCount] = useState(3);
-  const [selectedMedia, setSelectedMedia] = useState(null);
+  const [activeTab, setActiveTab] = useState('photos');
+  const [isSimplified, setIsSimplified] = useState(false);
 
   const pastExpos = [
     {
       id: 1, title: "Property Festival 2025: Premium Venue", date: "JAN 12-14, 2025",
       location: "Coimbatore, India", shortDesc: "Record-breaking real estate networking.",
-      longDesc: "Contrary to popular belief...", img: "/webbannerg1.jpg", status: "COMPLETED", type: 'photo'
+      longDesc: "Property Festival 2025 was a landmark event that connected premium builders with potential homebuyers. The event witnessed an unprecedented footfall and significant booking volumes, cementing its place as South India's premier property show.",
+      img: "/webpropg1.jpg", status: "COMPLETED"
     },
     {
       id: 2, title: "Grand Furniture Expo 2024: Chennai Edition", date: "NOV 05-07, 2024",
       location: "Chennai, India", shortDesc: "India's largest furniture trade gathering.",
-      longDesc: "Detailed furniture highlights...", img: "/webpropg1.jpg", status: "SUCCESS", type: 'photo'
+      longDesc: "The Grand Furniture Expo showcased the latest trends in interior design and modular furniture. Featuring exhibitors from across the globe, it provided a platform for business networking and direct-to-consumer sales.",
+      img: "/expo1.jpg", status: "SUCCESS"
     },
     {
       id: 3, title: "Build Expo 2024: Industry Success Storey", date: "OCT 12-14, 2024",
       location: "Hyderabad, India", shortDesc: "Mega construction expo with 500+ exhibitors.",
-      longDesc: "Detailed build expo summary...", img: "/webbannerbuild.jpg", status: "RECORD", type: 'photo'
+      longDesc: "Build Expo 2024 brought together architects, builders, and material suppliers. The exhibition focused on sustainable construction technologies and innovative building materials that are shaping the future of urban infrastructure.",
+      img: "/webbannerbuild.jpg", status: "RECORD"
     },
-    { id: 4, title: "Smart Home & Automation Meet 2024", date: "SEP 20-22, 2024", location: "Bengaluru", shortDesc: "Smart tech event.", longDesc: "Smart home highlights...", img: "/webbannerg1.jpg", status: "COMPLETED", type: 'photo' },
-    { id: 5, title: "Regional Business Meet 2024: Pondicherry", date: "AUG 15, 2024", location: "Pondicherry", shortDesc: "B2B local meetup.", longDesc: "Detailed regional summary...", img: "/team.png", status: "COMPLETED", type: 'photo' },
-    { id: 6, title: "International Trade Fair: Logistics Edition", date: "JUL 12-14, 2024", location: "Mumbai", shortDesc: "Logistics industry gathering.", longDesc: "Logistics show highlights...", img: "/webbannerbuild.jpg", status: "SUCCESS", type: 'photo' }
+    { 
+      id: 4, title: "Smart Home & Automation Meet 2024", date: "SEP 20-22, 2024", 
+      location: "Bengaluru", shortDesc: "Next-gen automation trends.", 
+      longDesc: "A focused gathering of tech leaders in the home automation space.",
+      img: "/webbannerg1.jpg", status: "COMPLETED" 
+    },
+    { 
+      id: 5, title: "Regional Business Meet 2024: Pondicherry", date: "AUG 15, 2024", 
+      location: "Pondicherry", shortDesc: "B2B local networking.", 
+      longDesc: "Strengthening local business ties in the Pondicherry region.",
+      img: "/team.png", status: "COMPLETED" 
+    },
+    { 
+      id: 6, title: "International Trade Fair: Logistics Edition", date: "JUL 12-14, 2024", 
+      location: "Mumbai", shortDesc: "Supply chain and logistics gathering.", 
+      longDesc: "Exploring the global logistics landscape and new-age supply chain solutions.",
+      img: "/webbannerbuild.jpg", status: "SUCCESS" 
+    }
   ];
 
   const galleryData = {
     photos: [
-      { id: 101, title: "Inaugural Ceremony: Build Expo 2024", date: "2024", location: "Hyderabad", shortDesc: "Grand opening highlights.", longDesc: "Detailed opening summary...", img: "/webbannerbuild.jpg", type: 'photo' },
-      { id: 102, title: "Exhibitor Interaction: Furniture Expo", date: "2024", location: "Chennai", shortDesc: "Business networking.", longDesc: "Detailed interaction summary...", img: "/webpropg1.jpg", type: 'photo' },
-      { id: 103, title: "Property Festival: Home Finder Summit", date: "2024", location: "Coimbatore", shortDesc: "Real estate highlights.", longDesc: "Detailed festival summary...", img: "/webbannerg1.jpg", type: 'photo' },
-      { id: 104, title: "Industry Leaders Gala 2024", date: "2024", location: "Madurai", shortDesc: "Networking night.", longDesc: "Gala highlights...", img: "/webbannerg1.jpg", type: 'photo' }
+      { id: 101, title: "Inaugural Ceremony: Build Expo 2024", date: "2024", location: "Hyderabad", shortDesc: "Grand opening highlights.", img: "/webbannerbuild.jpg", type: 'photo' },
+      { id: 102, title: "Exhibitor Interaction: Furniture Expo", date: "2024", location: "Chennai", shortDesc: "Business networking.", img: "/webpropg1.jpg", type: 'photo' },
+      { id: 103, title: "Property Festival: Home Finder Summit", date: "2024", location: "Coimbatore", shortDesc: "Real estate highlights.", img: "/webbannerg1.jpg", type: 'photo' },
+      { id: 104, title: "Industry Leaders Gala 2024", date: "2024", location: "Madurai", shortDesc: "Networking night.", img: "/webbannerg1.jpg", type: 'photo' }
     ],
     videos: [
-      { id: 201, title: "Mega Expo 2024: Official Aftermovie", date: "2024", location: "Coimbatore", shortDesc: "Cinematic highlights.", longDesc: "Watch the energy and success of the 2024 season...", url: "https://www.youtube.com/embed/dQw4w9WgXcQ", type: 'video' }
+      { id: 201, title: "Mega Expo 2024: Official Aftermovie", date: "2024", location: "Coimbatore", shortDesc: "Cinematic highlights.", url: "https://www.youtube.com/embed/dQw4w9WgXcQ", type: 'video' }
     ]
   };
 
   const handlePastLoadMore = () => setPastVisibleCount(prev => prev + 3);
   const handleGalleryLoadMore = () => setGalleryVisibleCount(prev => prev + 3);
+
+  const openInterestedForm = (expo) => {
+    setSelectedExpo(expo);
+    setIsSimplified(true);
+    setIsEnquiryModalOpen(true);
+  };
 
   const currentGalleryItems = activeTab === 'photos' ? galleryData.photos : galleryData.videos;
 
@@ -53,7 +80,7 @@ const PreviousExhibitions = () => {
         <div className="v3-hero-overlay-dark"></div>
         <div className="container v3-hero-container">
           <div className="v3-hero-content">
-            <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}>
+            <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
               <div className="v3-breadcrumb"><Link to="/">Home</Link> <span>/</span> <span className="current">Previous Exhibitions</span></div>
               <h1 className="v3-hero-title">Previous <span>Exhibitions</span></h1>
             </motion.div>
@@ -61,218 +88,177 @@ const PreviousExhibitions = () => {
         </div>
       </section>
 
-      {/* EXPOS GRID */}
+      {/* EXPOS GRID - MATCHING UPCOMING STYLE */}
       <section className="past-expos-v3" style={{ padding: '120px 0', background: '#f8f9fa' }}>
         <div className="container">
           <div className="premium-header-box centered">
             <div className="header-accent-row"><div className="header-accent-line"></div><span className="header-accent-tag">SUCCESS JOURNEY</span><div className="header-accent-line"></div></div>
             <h2 className="header-main-title">A Legacy of <span>Successful Expos</span></h2>
           </div>
-          <div className="modern-gallery-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '30px', marginTop: '60px' }}>
+
+          <div className="modern-gallery-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(48%, 1fr))', gap: '30px', marginTop: '60px' }}>
             {pastExpos.slice(0, pastVisibleCount).map(item => (
-              <motion.div key={item.id} className="modern-gallery-card expo-card" onClick={() => setSelectedMedia(item)} style={{ background: '#fff', borderRadius: '16px', border: '1px solid #eee', overflow: 'hidden', padding: '20px', cursor: 'pointer', boxShadow: '0 4px 15px rgba(0,0,0,0.03)' }}>
+              <motion.div
+                key={item.id} whileHover={{ y: -8 }}
+                className="modern-gallery-card expo-card"
+                onClick={() => setSelectedExpo(item)}
+                style={{ background: '#fff', borderRadius: '16px', border: '1px solid #eee', overflow: 'hidden', padding: '25px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', cursor: 'pointer', position: 'relative', display: 'flex', flexDirection: 'column' }}
+              >
+                <div style={{
+                  position: 'absolute', top: '35px', right: '35px', zIndex: 10,
+                  background: '#ED1C24',
+                  color: '#fff', padding: '6px 15px', borderRadius: '50px', fontSize: '12px', fontWeight: '800', textTransform: 'uppercase'
+                }}>
+                  {item.status}
+                </div>
+
                 <div className="modern-card-inner">
-                  <div className="modern-card-img" style={{ height: '220px', position: 'relative', overflow: 'hidden', borderRadius: '8px' }}>
-                    <div className="status-badge" style={{ position: 'absolute', top: '15px', right: '15px', background: '#ED1C24', color: '#fff', padding: '6px 15px', fontSize: '12px', fontWeight: '800', borderRadius: '50px', zIndex: '5' }}>{item.status}</div>
+                  <div className="expo-img" style={{ height: '260px', overflow: 'hidden', borderRadius: '12px' }}>
                     <img src={item.img} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
-                  <div className="modern-card-content" style={{ padding: '20px 0 0', background: '#fff' }}>
-                    <div className="modern-card-meta" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ED1C24', fontWeight: '600', fontSize: '13.5px', marginBottom: '12px' }}>
+                  <div style={{ padding: '20px 0 0' }}>
+                    <div className="expo-meta" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#ED1C24', fontWeight: '700', fontSize: '14px', marginBottom: '15px' }}>
                       <i className="far fa-calendar-alt"></i> {item.date}
                     </div>
-                    <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#111', lineHeight: '1.4', marginBottom: '12px', textAlign: 'left' }}>{item.title}</h3>
-                    <p style={{
-                      color: '#555', fontSize: '14.5px', lineHeight: '1.6', marginBottom: '15px', textAlign: 'left',
-                      display: '-webkit-box', WebkitLineClamp: '2', WebkitBoxOrient: 'vertical', overflow: 'hidden'
-                    }}>{item.shortDesc}</p>
-                    {item.location && (
-                      <p style={{ color: '#777', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <h3 style={{ fontSize: '1.4rem', fontWeight: '800', color: '#111', lineHeight: '1.3', marginBottom: '15px' }}>
+                      {item.title}
+                    </h3>
+                    <p style={{ color: '#666', fontSize: '15px', lineHeight: '1.6', marginBottom: '20px' }}>
+                      {item.shortDesc}
+                    </p>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', paddingTop: '20px', borderTop: '1px solid #f0f0f0' }}>
+                       <span style={{ color: '#777', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24' }}></i> {item.location}
-                      </p>
-                    )}
+                      </span>
+                      {/* ADDED INTERESTED BUTTON ON CARD */}
+                      <button 
+                        onClick={(e) => { e.stopPropagation(); openInterestedForm(item); }}
+                        style={{ background: '#ED1C24', color: '#fff', border: 'none', padding: '8px 20px', borderRadius: '50px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
+                      >
+                        Interested
+                      </button>
+                    </div>
                   </div>
                 </div>
               </motion.div>
             ))}
           </div>
+
           {pastVisibleCount < pastExpos.length && (
-            <div style={{ textAlign: 'center', marginTop: '60px' }}>
-              <button onClick={handlePastLoadMore} className="premium-load-btn">View More Past</button>
+            <div style={{ textAlign: 'center', marginTop: '70px' }}>
+              <button 
+                onClick={handlePastLoadMore} 
+                className="premium-load-btn"
+                style={{ padding: '12px 50px', borderRadius: '50px', background: '#fff', color: '#ED1C24', border: '2px solid #ED1C24', fontWeight: '800', fontSize: '1rem', cursor: 'pointer', textTransform: 'uppercase', transition: '0.3s' }}
+                onMouseEnter={(e) => { e.target.style.background = '#ED1C24'; e.target.style.color = '#fff'; }}
+                onMouseLeave={(e) => { e.target.style.background = '#fff'; e.target.style.color = '#ED1C24'; }}
+              >
+                View More Past
+              </button>
             </div>
           )}
         </div>
       </section>
 
-      {/* GALLERY INTERFACE */}
-      <section className="past-gallery-v3" style={{ padding: '120px 0', background: '#fff' }}>
-        <div className="container">
-          <div className="premium-header-box centered">
-            <h2 className="header-main-title">Visual <span>Archives</span></h2>
-          </div>
-          <div className="gallery-tabs-container" style={{ display: 'flex', justifyContent: 'center', gap: '20px', margin: '40px 0' }}>
-            <button className={`gallery-tab-btn ${activeTab === 'photos' ? 'active' : ''}`} onClick={() => { setActiveTab('photos'); setGalleryVisibleCount(3); }} style={{ padding: '12px 35px', borderRadius: '50px', border: 'none', background: activeTab === 'photos' ? '#ED1C24' : '#f8f9fa', color: activeTab === 'photos' ? '#fff' : '#111', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}><i className="fas fa-camera"></i> Photos</button>
-            <button className={`gallery-tab-btn ${activeTab === 'videos' ? 'active' : ''}`} onClick={() => { setActiveTab('videos'); setGalleryVisibleCount(3); }} style={{ padding: '12px 35px', borderRadius: '50px', border: 'none', background: activeTab === 'videos' ? '#ED1C24' : '#f8f9fa', color: activeTab === 'videos' ? '#fff' : '#111', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}><i className="fas fa-play-circle"></i> Videos</button>
-          </div>
-          <div className="modern-gallery-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '30px' }}>
-            {currentGalleryItems.slice(0, galleryVisibleCount).map(item => (
-              <motion.div key={item.id} className="modern-gallery-card" onClick={() => setSelectedMedia(item)} 
-                style={{ background: '#fff', borderRadius: '16px', border: '1px solid #eee', overflow: 'hidden', padding: '20px', cursor: 'pointer', boxShadow: '0 4px 15px rgba(0,0,0,0.03)' }}>
-                <div className="modern-card-inner">
-                  <div className="modern-card-img" style={{ height: '220px', background: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px', overflow: 'hidden' }}>
-                    {item.type === 'photo' ? (
-                      <img src={item.img} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    ) : (
-                      <i className="fas fa-play-circle" style={{ fontSize: '3rem', color: '#ED1C24' }}></i>
-                    )}
-                  </div>
-                  <div className="modern-card-meta" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ED1C24', fontWeight: '600', fontSize: '13.5px', marginTop: '20px', marginBottom: '12px' }}>
-                    <i className="far fa-calendar-alt"></i> Year: {item.date}
-                  </div>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#111', lineHeight: '1.4', marginBottom: '12px', textAlign: 'left' }}>{item.title}</h3>
-                  <p style={{
-                    color: '#555', fontSize: '14.5px', lineHeight: '1.6', textAlign: 'left',
-                    display: '-webkit-box', WebkitLineClamp: '2', WebkitBoxOrient: 'vertical', overflow: 'hidden'
-                  }}>{item.shortDesc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-          {galleryVisibleCount < currentGalleryItems.length && (
-            <div style={{ textAlign: 'center', marginTop: '60px' }}>
-              <button onClick={handleGalleryLoadMore} className="premium-load-btn">More Highlights</button>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* REFINED POPUP MODAL */}
-      {/* 3. PREMIUM POPUP MODAL — MATCHING UPCOMING EXPO LAYOUT */}
+      {/* REFINED POPUP MODAL - MATCHING UPCOMING STYLE + 3 BUTTONS */}
       <AnimatePresence>
-        {selectedMedia && (
+        {selectedExpo && (
           <motion.div
-            className="media-modal-overlay"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            onClick={() => setSelectedMedia(null)}
-            style={{
-              position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
-              background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(10px)',
-              zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px'
-            }}
+            className="media-modal-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            onClick={() => setSelectedExpo(null)}
+            style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(10px)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}
           >
             <motion.div
-              className="modal-premium-card"
               initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              style={{
-                maxWidth: '900px', width: '95%', background: '#fff',
-                boxShadow: '0 40px 80px rgba(0,0,0,0.12)',
-                maxHeight: '95vh', overflow: 'hidden',
-                borderRadius: '12px', position: 'relative',
-                display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) 1fr'
-              }}
+              style={{ maxWidth: '950px', width: '100%', background: '#fff', boxShadow: '0 40px 80px rgba(0,0,0,0.12)', maxHeight: '95vh', overflow: 'hidden', borderRadius: '16px', position: 'relative', display: 'grid', gridTemplateColumns: '1.1fr 1fr' }}
             >
-              {/* ── CLOSE BUTTON ── */}
-              <div
-                onClick={() => setSelectedMedia(null)}
-                style={{
-                  position: 'absolute', top: '16px', right: '16px',
-                  width: '32px', height: '32px', borderRadius: '50%',
-                  background: 'rgba(0,0,0,0.1)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  cursor: 'pointer', zIndex: 100, transition: 'background 0.2s'
-                }}
-              >
-                <i className="fas fa-times" style={{ color: '#444', fontSize: '0.8rem' }}></i>
+              <div onClick={() => setSelectedExpo(null)} style={{ position: 'absolute', top: '20px', right: '20px', width: '36px', height: '36px', borderRadius: '50%', background: '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 100 }}><i className="fas fa-times" style={{ color: '#111' }}></i></div>
+
+              <div className="modal-media-left" style={{ position: 'relative', minHeight: '550px' }}>
+                <img src={selectedExpo.img} alt="Expo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.4), transparent)' }} />
               </div>
 
-              {/* ── LEFT: IMAGE/VIDEO PANEL ── */}
-              <div className="modal-media-left" style={{ position: 'relative', minHeight: '520px', background: '#000', overflow: 'hidden' }}>
-                {selectedMedia.type === 'photo' ? (
-                  <img src={selectedMedia.img} alt="Expo" style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0 }} />
-                ) : (
-                  <iframe width="100%" height="100%" src={selectedMedia.url + "?autoplay=1"} frameBorder="0" allowFullScreen style={{ position: 'absolute', top: 0, left: 0 }}></iframe>
-                )}
-              </div>
-
-              {/* ── RIGHT: CONTENT PANEL ── */}
-              <div
-                className="modal-meta-right"
-                style={{
-                  padding: '40px 40px',
-                  display: 'flex', flexDirection: 'column', gap: '25px',
-                  overflowY: 'auto', background: '#fff'
-                }}
-              >
-                {/* Title block */}
+              <div className="modal-meta-right" style={{ padding: '40px', display: 'flex', flexDirection: 'column', gap: '25px', overflowY: 'auto' }}>
                 <div>
-                  <p style={{ fontSize: '10px', letterSpacing: '2px', color: '#ED1C24', textTransform: 'uppercase', fontWeight: '700', margin: '0 0 7px' }}>
-                    TRADE EVENT
-                  </p>
-                  <h2 style={{ color: '#111', fontSize: '1.8rem', fontWeight: '800', lineHeight: '1.25', letterSpacing: '-0.3px', margin: 0 }}>
-                    {selectedMedia.title}
-                  </h2>
+                  <h2 style={{ color: '#111', fontSize: '1.8rem', fontWeight: '800', lineHeight: '1.3', marginBottom: '10px' }}>{selectedExpo.title}</h2>
+                  <div style={{ height: '3px', width: '50px', background: '#ED1C24' }}></div>
                 </div>
 
-                {/* Divider */}
-                <div style={{ height: '1px', background: '#f0f0f0' }} />
-
-                {/* Info rows with icon tiles */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  {/* Date */}
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
-                    <div style={{
-                      width: '38px', height: '38px', borderRadius: '10px', flexShrink: 0,
-                      background: 'rgba(237,28,36,0.07)',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center'
-                    }}>
-                      <i className="far fa-calendar-alt" style={{ color: '#ED1C24', fontSize: '0.95rem' }}></i>
-                    </div>
-                    <div style={{ paddingTop: '2px' }}>
-                      <p style={{ fontSize: '11px', letterSpacing: '1.2px', color: '#999', textTransform: 'uppercase', fontWeight: '700', margin: '0 0 4px' }}>Date</p>
-                      <p style={{ color: '#111', fontSize: '15px', fontWeight: '700', margin: 0 }}>{selectedMedia.date}</p>
-                    </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                    <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}><i className="far fa-calendar-alt"></i></div>
+                    <div><p style={{ fontSize: '11px', color: '#999', margin: 0, textTransform: 'uppercase' }}>Date</p><p style={{ fontWeight: '700', margin: 0 }}>{selectedExpo.date}</p></div>
                   </div>
-
-                  {/* Location */}
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
-                    <div style={{
-                      width: '38px', height: '38px', borderRadius: '10px', flexShrink: 0,
-                      background: 'rgba(237,28,36,0.07)',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center'
-                    }}>
-                      <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24', fontSize: '0.95rem' }}></i>
-                    </div>
-                    <div style={{ paddingTop: '2px' }}>
-                      <p style={{ fontSize: '11px', letterSpacing: '1.2px', color: '#999', textTransform: 'uppercase', fontWeight: '700', margin: '0 0 4px' }}>Location</p>
-                      <p style={{ color: '#111', fontSize: '15px', fontWeight: '700', margin: 0 }}>{selectedMedia.location}</p>
-                    </div>
-                  </div>
-
-                  {/* About Expo */}
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
-                    <div style={{
-                      width: '38px', height: '38px', borderRadius: '10px', flexShrink: 0,
-                      background: 'rgba(237,28,36,0.07)',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center'
-                    }}>
-                      <i className="fas fa-info" style={{ color: '#ED1C24', fontSize: '0.95rem' }}></i>
-                    </div>
-                    <div style={{ paddingTop: '2px' }}>
-                      <p style={{ fontSize: '11px', letterSpacing: '1.2px', color: '#999', textTransform: 'uppercase', fontWeight: '700', margin: '0 0 4px' }}>About Expo</p>
-                      <p style={{ color: '#444', fontSize: '15px', fontWeight: '500', lineHeight: '1.5', margin: 0 }}>{selectedMedia.shortDesc}</p>
-                    </div>
-                  </div>
-
-                  {/* Extra descriptive text if needed */}
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px', marginTop: '10px' }}>
-                     <p style={{ color: '#555', fontSize: '14.5px', fontWeight: '400', lineHeight: '1.6', margin: 0, textAlign: 'justify' }}>{selectedMedia.longDesc}</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                    <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}><i className="fas fa-map-marker-alt"></i></div>
+                    <div><p style={{ fontSize: '11px', color: '#999', margin: 0, textTransform: 'uppercase' }}>Location</p><p style={{ fontWeight: '700', margin: 0 }}>{selectedExpo.location}</p></div>
                   </div>
                 </div>
+
+                <div style={{ marginTop: '10px' }}>
+                  <h4 style={{ fontSize: '0.9rem', fontWeight: '800', textTransform: 'uppercase', marginBottom: '10px', color: '#111' }}>About the Expo</h4>
+                  <p style={{ color: '#555', fontSize: '14.5px', lineHeight: '1.6' }}>{selectedExpo.longDesc}</p>
+                </div>
+
+                {/* SINGLE INTERESTED BUTTON AS REQUESTED */}
+                <button 
+                   onClick={() => { setIsSimplified(true); setIsEnquiryModalOpen(true); }}
+                   style={{ 
+                     padding: '18px', 
+                     background: '#ED1C24', 
+                     color: '#fff', 
+                     border: 'none', 
+                     fontWeight: '800', 
+                     borderRadius: '12px', 
+                     cursor: 'pointer', 
+                     textTransform: 'uppercase', 
+                     fontSize: '15px',
+                     boxShadow: '0 8px 25px rgba(237,28,36,0.25)',
+                     display: 'flex',
+                     alignItems: 'center',
+                     justifyContent: 'center',
+                     gap: '10px'
+                   }}
+                >
+                  Interested <i className="fas fa-chevron-right"></i>
+                </button>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* ENQUIRY FORM MODAL */}
+      <AnimatePresence>
+        {isEnquiryModalOpen && (
+          <motion.div
+            className="media-modal-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            onClick={() => setIsEnquiryModalOpen(false)}
+            style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.6)', zIndex: 10000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', backdropFilter: 'blur(8px)' }}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              style={{ width: '100%', maxWidth: '650px', background: '#fff', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 30px 60px rgba(0,0,0,0.4)' }}
+            >
+              <EnquiryForm
+                isExpoRegistration={true}
+                expoInfo={selectedExpo}
+                isSimplified={isSimplified}
+                onClose={() => setIsEnquiryModalOpen(false)}
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <style jsx>{`
+        @media (max-width: 992px) {
+          .modern-gallery-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </main>
   );
 };

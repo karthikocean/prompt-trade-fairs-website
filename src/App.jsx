@@ -16,6 +16,7 @@ import ToExhibit from './pages/ToExhibit';
 import PaymentTerms from './pages/PaymentTerms';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import RefundPolicy from './pages/RefundPolicy';
+import EventDetail from './pages/EventDetail';
 import './assets/css/styles.css';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
                     <Route path="/about" element={<About />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/events" element={<Events />} />
+                    <Route path="/event/:id" element={<EventDetail />} />
                     <Route path="/upcoming-exhibitions" element={<UpcomingExhibitions />} />
                     <Route path="/previous-exhibitions" element={<PreviousExhibitions />} />
                     <Route path="/our-groups" element={<OurGroups />} />

@@ -1,272 +1,156 @@
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import EnquiryForm from "./EnquiryForm";
 
-const upcomingExpos = [
+const futureExpos = [
   {
-    title: "Build Expo 2025",
+    title: "Build Expo 2024",
     meta: "Building materials, construction tech, interior solutions & smart home innovations.",
-    date: "Aug 14–16, 2025",
-    location: "Chennai Trade Centre",
+    date: "Aug 14–16, 2024",
+    location: "Chennai",
     badge: "Construction",
     img: "/expos/build-expo.png",
   },
   {
-    title: "Property Expo 2025",
+    title: "Property Expo 2024",
     meta: "Residential & commercial real estate, plots, investment opportunities & home loans.",
-    date: "Sep 5–7, 2025",
-    location: "CODISSIA, Coimbatore",
+    date: "Sep 5–7, 2024",
+    location: "Coimbatore",
     badge: "Real Estate",
     img: "/expos/property-expo.png",
   },
   {
-    title: "Furniture Home Products Expo",
+    title: "Furniture Home Products Expo 2024",
     meta: "Premium furniture brands, modular kitchens, décor & smart home accessories.",
-    date: "Oct 10–12, 2025",
-    location: "Chennai Trade Centre",
+    date: "Oct 10–12, 2024",
+    location: "Chennai",
     badge: "Furniture",
     img: "/expos/furniture-home.png",
   },
   {
-    title: "Furniture Lifestyle Expo",
+    title: "Furniture Lifestyle Expo 2024",
     meta: "Luxury living, designer interiors, lifestyle brands & exclusive home collections.",
-    date: "Nov 20–22, 2025",
-    location: "BIEC, Bengaluru",
+    date: "Nov 20–22, 2024",
+    location: "Bengaluru",
     badge: "Lifestyle",
     img: "/expos/furniture-lifestyle.png",
-  },
-  {
-    title: "Food & Hospitality Expo",
-    meta: "F&B brands, restaurant tech, catering equipment & hospitality service innovations.",
-    date: "Dec 6–8, 2025",
-    location: "Chennai Trade Centre",
-    badge: "Food & Bev",
-    img: "/expos/food-expo.png",
-  },
-  {
-    title: "Gems & Jewellery Expo",
-    meta: "Fine jewellery, diamond collections, gemstones & artisan craftsmanship showcases.",
-    date: "Jan 17–19, 2026",
-    location: "CODISSIA, Coimbatore",
-    badge: "Jewellery",
-    img: "/expos/gems-expo.png",
-  },
-  {
-    title: "Cosmetics & Beauty Expo",
-    meta: "Skincare, cosmetics, wellness brands, salon equipment & beauty technology.",
-    date: "Feb 7–9, 2026",
-    location: "Chennai Trade Centre",
-    badge: "Beauty",
-    img: "/expos/beauty-expo.png",
-  },
-  {
-    title: "Healthcare & Pharma Expo",
-    meta: "Medical devices, pharmaceuticals, diagnostics, wellness & healthcare innovations.",
-    date: "Mar 14–16, 2026",
-    location: "BIEC, Bengaluru",
-    badge: "Healthcare",
-    img: "/expos/healthcare-expo.png",
-  },
-];
-
-const previousExpos = [
-  {
-    title: "Build Expo 2024",
-    special: "🏆 Most Influential B2B Platform of the Year. Attracted 250+ Tier-1 construction giants.",
-    badge: "Milestone",
-    img: "/expos/past-build.png",
-  },
-  {
-    title: "Property Expo 2024",
-    special: "🏠 Record Breaking 450+ On-Spot Bookings. Connected 15,000+ potential homeowners.",
-    badge: "Success",
-    img: "/expos/past-property.png",
-  },
-  {
-    title: "Furniture Lifestyle 2024",
-    special: "🛋️ Largest Interior Collections Showcase in South India. Featured 120+ luxury brands.",
-    badge: "Design",
-    img: "/expos/past-furniture.png",
-  },
-  {
-    title: "Food & Hospitality 2024",
-    special: "🥘 Global Networking Hub. Facilitated \$20M+ in cross-border food tech partnerships.",
-    badge: "Global",
-    img: "/expos/food-expo.png",
-  },
-  {
-    title: "Gems & Jewellery 2024",
-    special: "💎 18-Carat Masterclass Sessions. Showcased the largest cluster of artisan entrepreneurs.",
-    badge: "Artistry",
-    img: "/expos/gems-expo.png",
-  },
-  {
-    title: "Health & Beauty 2024",
-    special: "💄 2024's Best Beauty Launchpad. Hosted the debut of 15+ international organic brands.",
-    badge: "Innovation",
-    img: "/expos/beauty-expo.png",
-  },
+  }
 ];
 
 const CalIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-    <rect x="1" y="3" width="14" height="11" rx="2" stroke="white" strokeWidth="1.4" />
-    <path d="M5 1v3M11 1v3M1 7h14" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
+  <svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <rect x="1" y="3" width="14" height="11" rx="2" stroke="#ED1C24" strokeWidth="1.4" />
+    <path d="M5 1v3M11 1v3M1 7h14" stroke="#ED1C24" strokeWidth="1.4" strokeLinecap="round" />
   </svg>
 );
 
 const PinIcon = () => (
-  <svg width="11" height="12" viewBox="0 0 14 18" fill="none" aria-hidden="true">
+  <svg width="10" height="10" viewBox="0 0 14 18" fill="none" aria-hidden="true">
     <path
       d="M7 1C4.239 1 2 3.239 2 6c0 3.75 5 11 5 11s5-7.25 5-11c0-2.761-2.239-5-5-5z"
-      stroke="white"
+      stroke="#ED1C24"
       strokeWidth="1.4"
     />
-    <circle cx="7" cy="6" r="1.8" stroke="white" strokeWidth="1.4" />
+    <circle cx="7" cy="6" r="1.8" stroke="#ED1C24" strokeWidth="1.4" />
   </svg>
 );
 
-const PER_PAGE = 4;
-
-const currentExpos = [
-  {
-    title: "Gems & Jewellery Expo 2024",
-    meta: "Live exhibition featuring 500+ premium jewellery brands and bridal collections.",
-    date: "March 18–22, 2024",
-    location: "Chennai Trade Centre",
-    badge: "Live Now",
-    img: "/expos/gems-expo.png",
-  },
-  {
-    title: "Build Expo 2024 - Live",
-    meta: "Ongoing construction and architecture summit. 300+ exhibitors showcasing smart tech.",
-    date: "March 20–23, 2024",
-    location: "CODISSIA, Coimbatore",
-    badge: "Active",
-    img: "/expos/past-build.png",
-  },
-  {
-    title: "Healthcare Summit 2024",
-    meta: "Live medical innovations and diagnostics showcase. Top doctors and pharma giants present.",
-    date: "March 19–21, 2024",
-    location: "BIEC, Bengaluru",
-    badge: "Happening",
-    img: "/expos/healthcare-expo.png",
-  },
-  {
-    title: "Food Tech Expo 2024",
-    meta: "Ongoing exhibition of food processing tech and international culinary brands.",
-    date: "March 20–22, 2024",
-    location: "Chennai Trade Centre",
-    badge: "Premium Venue",
-    img: "/expos/food-expo.png",
-  },
-];
+const PER_PAGE = 2;
 
 const IndustriesSlider = () => {
-  const [activeTab, setActiveTab] = useState("current");
   const [page, setPage] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedExpo, setSelectedExpo] = useState(null);
 
-  const currentData =
-    activeTab === "current" ? currentExpos :
-      activeTab === "upcoming" ? upcomingExpos :
-        previousExpos;
-
-  const totalPages = Math.ceil(currentData.length / PER_PAGE);
-  const items = currentData.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
+  const totalPages = Math.ceil(futureExpos.length / PER_PAGE);
+  const items = futureExpos.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
 
   const prev = () => setPage((p) => (p - 1 + totalPages) % totalPages);
   const next = () => setPage((p) => (p + 1) % totalPages);
 
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-    setPage(0); // Reset page on tab change
+  const openRegisterModal = (expo) => {
+    setSelectedExpo(expo);
+    setIsModalOpen(true);
   };
 
   return (
-    <section className="expo-section">
-      <div className="container">
-        {/* CENTERED HEADER ABOVE TABS */}
-        <div className="premium-header-box centered">
-          <div className="header-accent-row">
-            <div className="header-accent-line"></div>
-            <span className="header-accent-tag">OUR EXPOS</span>
-            <div className="header-accent-line"></div>
+    <section className="expo-section" style={{ padding: '80px 0', background: '#f9fafb' }}>
+      <div className="container" style={{ position: 'relative' }}>
+        <div className="premium-header-box centered" style={{ textAlign: 'center', marginBottom: '50px' }}>
+          <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px', marginBottom: '15px' }}>
+            <div className="header-accent-line" style={{ height: '1px', width: '30px', background: '#ED1C24' }}></div>
+            <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '0.8rem' }}>Future Expo</span>
+            <div className="header-accent-line" style={{ height: '1px', width: '30px', background: '#ED1C24' }}></div>
           </div>
-          <h2 className="header-main-title">Explore All <span>Events</span></h2>
-        </div>
-
-        {/* HEADER TABS */}
-        <div className="expo-tab-header-original">
-          <h2
-            className={`expo-heading-original ${activeTab === "current" ? "active" : ""}`}
-            onClick={() => handleTabChange("current")}
-          >
-            Current Expo
-          </h2>
-          <h2
-            className={`expo-heading-original ${activeTab === "upcoming" ? "active" : ""}`}
-            onClick={() => handleTabChange("upcoming")}
-          >
-            Upcoming Expo
-          </h2>
-          <h2
-            className={`expo-heading-original ${activeTab === "previous" ? "active" : ""}`}
-            onClick={() => handleTabChange("previous")}
-          >
-            Previous Expo
+          <h2 className="header-main-title" style={{ fontSize: '2.5rem', fontWeight: '800', color: '#1a1a1a' }}>
+            Discover Future Trade Exhibition
           </h2>
         </div>
 
-        {/* RELATIVE WRAPPER FOR ARROWS */}
-        <div className="expo-slider-container">
-          <button className="expo-nav-btn prev" onClick={prev} aria-label="Previous">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
+        <div className="expo-slider-container" style={{ position: 'relative' }}>
+          {/* EXTERNAL CHEVRON ARROWS */}
+          <button 
+            onClick={prev} 
+            style={{ 
+              position: 'absolute', top: '50%', left: '-60px', transform: 'translateY(-50%)', 
+              background: 'transparent', border: 'none', cursor: 'pointer', 
+              fontSize: '3.5rem', color: '#ED1C24', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center',
+              transition: '0.3s'
+            }}
+          >
+            <i className="fas fa-chevron-left"></i>
+          </button>
+          <button 
+            onClick={next} 
+            style={{ 
+              position: 'absolute', top: '50%', right: '-60px', transform: 'translateY(-50%)', 
+              background: 'transparent', border: 'none', cursor: 'pointer', 
+              fontSize: '3.5rem', color: '#ED1C24', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center',
+              transition: '0.3s'
+            }}
+          >
+            <i className="fas fa-chevron-right"></i>
           </button>
 
-          <button className="expo-nav-btn next" onClick={next} aria-label="Next">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </button>
-
-          {/* GRID — 4 cards */}
-          <div className="expo-grid">
+          <div className="expo-grid-v2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
             {items.map((expo, i) => (
-              <div className="expo-card" key={`${activeTab}-${i}`}>
-                <img src={expo.img} alt={expo.title} loading="lazy" />
+              <div className="expo-card-v2" key={i} style={{ background: '#fff', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ position: 'relative', height: '280px' }}>
+                   <img src={expo.img} alt={expo.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                   <span style={{ position: 'absolute', top: '20px', right: '20px', background: '#ED1C24', color: '#fff', padding: '6px 15px', borderRadius: '20px', fontSize: '0.75rem', fontWeight: '800', textTransform: 'uppercase' }}>{expo.badge}</span>
+                </div>
 
-                {/* OVERLAY — light default, dark on hover */}
-                <div className="expo-overlay" />
-
-                {/* BADGE — always visible */}
-                <span className="expo-badge">{expo.badge}</span>
-
-                {/* BODY */}
-                <div className="expo-body">
-                  {/* TITLE — always visible */}
-                  <h3 className="expo-title">{expo.title}</h3>
-
-                  {/* REVEAL — only on hover */}
-                  <div className="expo-reveal">
-                    {activeTab === "upcoming" || activeTab === "current" ? (
-                      <>
-                        <p className="expo-meta">{expo.meta}</p>
-                        <div className="expo-info">
-                          <div className="expo-info-row">
-                            <CalIcon />
-                            <span>{expo.date}</span>
-                          </div>
-                          <div className="expo-info-row">
-                            <PinIcon />
-                            <span>{expo.location}</span>
-                          </div>
-                        </div>
-                      </>
-                    ) : (
-                      <p className="expo-meta special-thing">{expo.special}</p>
-                    )}
+                <div style={{ padding: '30px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', marginBottom: '12px' }}>
+                    <h3 style={{ fontSize: '1.3rem', fontWeight: '800', color: '#1a1a1a', margin: 0 }}>{expo.title}</h3>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.7rem', color: '#444', background: '#f3f4f6', padding: '4px 10px', borderRadius: '6px', border: '1px solid #e5e7eb' }}>
+                        <CalIcon />
+                        <span style={{ fontWeight: '700' }}>{expo.date}</span>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.7rem', color: '#444', background: '#f3f4f6', padding: '4px 10px', borderRadius: '6px', border: '1px solid #e5e7eb' }}>
+                        <PinIcon />
+                        <span style={{ fontWeight: '700' }}>{expo.location}</span>
+                      </div>
+                    </div>
                   </div>
+
+                  <p style={{ fontSize: '0.95rem', color: '#666', marginBottom: '25px', lineHeight: '1.6' }}>{expo.meta}</p>
+                  
+                  {/* RED INTERESTED BUTTON */}
+                  <button 
+                    onClick={() => openRegisterModal(expo)}
+                    style={{ 
+                      width: '100%', padding: '15px', background: '#ED1C24', color: '#fff', 
+                      border: 'none', borderRadius: '10px', fontWeight: '800', cursor: 'pointer', 
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', 
+                      marginTop: 'auto', transition: '0.3s' 
+                    }}
+                    onMouseEnter={(e) => e.target.style.filter = 'brightness(0.9)'}
+                    onMouseLeave={(e) => e.target.style.filter = 'brightness(1)'}
+                  >
+                    Interested <i className="fas fa-arrow-right"></i>
+                  </button>
                 </div>
               </div>
             ))}
@@ -275,19 +159,57 @@ const IndustriesSlider = () => {
 
         {/* DOTS */}
         {totalPages > 1 && (
-          <div className="expo-dots">
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '40px' }}>
             {Array.from({ length: totalPages }, (_, i) => (
               <span
                 key={i}
-                className={`expo-dot ${i === page ? "active" : ""}`}
                 onClick={() => setPage(i)}
-                aria-label={`Page ${i + 1}`}
+                style={{ width: '12px', height: '12px', borderRadius: '50%', background: i === page ? '#ED1C24' : '#ddd', cursor: 'pointer', transition: '0.3s' }}
               />
             ))}
           </div>
         )}
-
       </div>
+
+      {/* REGISTRATION MODAL WITH SIMPLIFIED FORM */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            onClick={() => setIsModalOpen(false)}
+            style={{
+              position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+              background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(8px)',
+              zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px'
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              style={{ width: '100%', maxWidth: '500px', background: '#fff', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 30px 60px rgba(0,0,0,0.3)' }}
+            >
+              <EnquiryForm 
+                isExpoRegistration={true}
+                expoInfo={selectedExpo}
+                onClose={() => setIsModalOpen(false)}
+                isSimplified={true} // ONLY NAME, PHONE, EMAIL
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <style jsx>{`
+        @media (max-width: 1300px) {
+          button[onClick] { left: -30px !important; right: -30px !important; font-size: 2.5rem !important; }
+        }
+        @media (max-width: 1100px) {
+          button[onClick] { display: none !important; }
+        }
+        @media (max-width: 992px) {
+          .expo-grid-v2 { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </section>
   );
 };
