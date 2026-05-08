@@ -143,10 +143,10 @@ const NextExpoSection = () => {
 
               <div className="present-expo-actions" style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
                 <button style={{ padding: '12px 25px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px', border: 'none', background: '#f3f4f6', color: '#374151' }}>
-                  <i className="fas fa-th-large"></i> Layout
+                  <i className="fas fa-download"></i> Layout
                 </button>
                 <button style={{ padding: '12px 25px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px', border: 'none', background: '#f3f4f6', color: '#374151' }}>
-                  <i className="fas fa-file-pdf"></i> Brochure
+                  <i className="fas fa-download"></i> Brochure
                 </button>
                 <button 
                   onClick={() => setIsModalOpen(true)}

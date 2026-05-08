@@ -23,7 +23,7 @@ const Header = () => {
         <div className="nav-logo">
           <Link to="/">
             <img
-              src={isScrolled ? "/promt orignal.png" : "/prompt-logo-NEW.png"}
+              src={isScrolled ? "/promt orignal.png" : "/promt orignal.png"}
               alt="Prompt Logo"
             />
           </Link>
@@ -88,7 +88,7 @@ const Header = () => {
           </NavLink>
 
           <NavLink to="/contact" className="contact-btn" onClick={() => setIsMenuOpen(false)}>
-            Contact Us
+            <span style={{ color: 'white' }}>Contact Us</span>
           </NavLink>
         </nav>
 

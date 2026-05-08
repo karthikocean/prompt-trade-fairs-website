@@ -66,31 +66,33 @@ const JobApplicationModal = ({ isOpen, onClose, jobTitle }) => {
               width: '100%',
               maxWidth: '650px',
               borderRadius: '24px',
-              padding: '30px 40px',
               position: 'relative',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column'
             }}
           >
-            <button
-              onClick={onClose}
-              style={{
-                position: 'absolute',
-                top: '20px',
-                right: '25px',
-                background: 'none',
-                border: 'none',
-                fontSize: '24px',
-                cursor: 'pointer',
-                color: '#666'
-              }}
-            >
-              <i className="fas fa-times"></i>
-            </button>
-
-            <div style={{ marginBottom: '25px', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>
-              <h2 style={{ fontSize: '2rem', fontWeight: '800', color: '#ED1C24', margin: 0 }}>Careers</h2>
-              <p style={{ color: '#666', marginTop: '5px', fontSize: '15px' }}>Apply for <strong>{jobTitle}</strong></p>
+            {/* COMPACT RED HEADER */}
+            <div style={{ background: '#ED1C24', padding: '15px 25px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h2 style={{ color: '#fff', fontSize: '1.2rem', fontWeight: '800', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                Job Application
+              </h2>
+              <div
+                onClick={onClose}
+                style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: '0.3s' }}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.3)'}
+                onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.2)'}
+              >
+                <i className="fas fa-times" style={{ color: '#fff', fontSize: '14px' }}></i>
+              </div>
             </div>
+
+            <div style={{ padding: '30px 40px' }}>
+              <div style={{ marginBottom: '25px', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>
+                <h3 style={{ fontSize: '1.8rem', fontWeight: '800', color: '#111', margin: 0 }}>Apply for {jobTitle}</h3>
+                <p style={{ color: '#666', marginTop: '5px', fontSize: '14px' }}>Please fill in the details below to submit your application.</p>
+              </div>
 
             <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '15px' }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
@@ -223,7 +225,8 @@ const JobApplicationModal = ({ isOpen, onClose, jobTitle }) => {
                 Submit Application
               </button>
             </form>
-          </motion.div>
+          </div>
+        </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

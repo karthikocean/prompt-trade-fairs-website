@@ -89,22 +89,22 @@ const IndustriesSlider = () => {
 
         <div className="expo-slider-container" style={{ position: 'relative' }}>
           {/* EXTERNAL CHEVRON ARROWS */}
-          <button 
-            onClick={prev} 
-            style={{ 
-              position: 'absolute', top: '50%', left: '-60px', transform: 'translateY(-50%)', 
-              background: 'transparent', border: 'none', cursor: 'pointer', 
+          <button
+            onClick={prev}
+            style={{
+              position: 'absolute', top: '50%', left: '-60px', transform: 'translateY(-50%)',
+              background: 'transparent', border: 'none', cursor: 'pointer',
               fontSize: '3.5rem', color: '#ED1C24', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center',
               transition: '0.3s'
             }}
           >
             <i className="fas fa-chevron-left"></i>
           </button>
-          <button 
-            onClick={next} 
-            style={{ 
-              position: 'absolute', top: '50%', right: '-60px', transform: 'translateY(-50%)', 
-              background: 'transparent', border: 'none', cursor: 'pointer', 
+          <button
+            onClick={next}
+            style={{
+              position: 'absolute', top: '50%', right: '-60px', transform: 'translateY(-50%)',
+              background: 'transparent', border: 'none', cursor: 'pointer',
               fontSize: '3.5rem', color: '#ED1C24', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center',
               transition: '0.3s'
             }}
@@ -116,8 +116,7 @@ const IndustriesSlider = () => {
             {items.map((expo, i) => (
               <div className="expo-card-v2" key={i} style={{ background: '#fff', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column' }}>
                 <div style={{ position: 'relative', height: '280px' }}>
-                   <img src={expo.img} alt={expo.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                   <span style={{ position: 'absolute', top: '20px', right: '20px', background: '#ED1C24', color: '#fff', padding: '6px 15px', borderRadius: '20px', fontSize: '0.75rem', fontWeight: '800', textTransform: 'uppercase' }}>{expo.badge}</span>
+                  <img src={expo.img} alt={expo.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
 
                 <div style={{ padding: '30px' }}>
@@ -136,15 +135,15 @@ const IndustriesSlider = () => {
                   </div>
 
                   <p style={{ fontSize: '0.95rem', color: '#666', marginBottom: '25px', lineHeight: '1.6' }}>{expo.meta}</p>
-                  
+
                   {/* RED INTERESTED BUTTON */}
-                  <button 
+                  <button
                     onClick={() => openRegisterModal(expo)}
-                    style={{ 
-                      width: '100%', padding: '15px', background: '#ED1C24', color: '#fff', 
-                      border: 'none', borderRadius: '10px', fontWeight: '800', cursor: 'pointer', 
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', 
-                      marginTop: 'auto', transition: '0.3s' 
+                    style={{
+                      width: '100%', padding: '15px', background: '#ED1C24', color: '#fff',
+                      border: 'none', borderRadius: '10px', fontWeight: '800', cursor: 'pointer',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
+                      marginTop: 'auto', transition: '0.3s'
                     }}
                     onMouseEnter={(e) => e.target.style.filter = 'brightness(0.9)'}
                     onMouseLeave={(e) => e.target.style.filter = 'brightness(1)'}
@@ -188,7 +187,7 @@ const IndustriesSlider = () => {
               onClick={(e) => e.stopPropagation()}
               style={{ width: '100%', maxWidth: '500px', background: '#fff', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 30px 60px rgba(0,0,0,0.3)' }}
             >
-              <EnquiryForm 
+              <EnquiryForm
                 isExpoRegistration={true}
                 expoInfo={selectedExpo}
                 onClose={() => setIsModalOpen(false)}

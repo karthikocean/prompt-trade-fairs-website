@@ -77,7 +77,7 @@ const StatsSection = () => {
           <div className="why-choose-image-box">
             <div className="accent-frame red"></div>
             <div className="accent-frame blue"></div>
-            <img src="/prompt_tower_new.jpg" alt="Exhibition Impact" className="main-image shadow-premium" />
+            <img src="/promtbuilding.jpeg" alt="Exhibition Impact" className="main-image shadow-premium" />
             {/* <div className="experience-badge animate-bounce-slow"> */}
               {/* <span className="years">1200+</span> */}
               {/* <span className="text">Exhibitions <br /> Organized</span> */}

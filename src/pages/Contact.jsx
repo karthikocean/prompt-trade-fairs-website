@@ -61,7 +61,7 @@ const Contact = () => {
             </div>
             <div className="contact-form-card" style={{ background: '#fff', padding: '25px', borderRadius: '30px', border: '1px solid #eee', height: '100%', display: 'flex', flexDirection: 'column' }}>
               <div className="form-header" style={{ marginBottom: '20px', textAlign: 'center' }}><span style={{ fontSize: '11px', letterSpacing: '2px', color: '#ED1C24', fontWeight: '800' }}>CONTACT FORM</span><h3 style={{ fontSize: '1.6rem', fontWeight: '900', marginTop: '10px' }}>Get in Touch</h3></div>
-              <EnquiryForm title="" isSimplified={true} customClass="contact-enquiry-form" />
+              <EnquiryForm title="" isSimplified={true} hideHeader={true} customClass="contact-enquiry-form" />
             </div>
           </div>
         </div>

@@ -11,49 +11,94 @@ const UpcomingExhibitions = () => {
 
   const upcomingData = [
     {
-      id: 1, title: "Build Expo 2026: The Mega Construction Fair", date: "15, 16, 17 May 2026",
+      id: 1, title: "Build Expo 2026: The Mega Construction Fair",
+      manager: "Mr. Karthik Krishnan",
+      duration: "May 15 - 17, 2026",
+      timings: "10:00 AM - 07:00 PM",
       targetDate: "2026-05-15T09:00:00",
       bookingClosingDate: "May 01, 2026",
       status: "Available",
-      stallPrice: "₹15,000 / sq.m",
-      location: "Codissia, Coimbatore", shortDesc: "The biggest construction and interior expo.",
-      longDesc: "Detailed construction expo highlights...", img: "/expo1.jpg"
+      availableStalls: 45,
+      bookedStalls: 15,
+      location: "Codissia, Coimbatore",
+      shortDesc: "South India's largest building materials and construction technology exhibition.",
+      longDesc: "South India's largest building materials and construction technology exhibition. Join industry leaders, architects, and builders for three days of networking and innovation.",
+      img: "/expo1.jpg"
     },
     {
-      id: 2, title: "Property Festival 2026: Real Estate Expo", date: "22, 23, 24 May 2026",
+      id: 2, title: "Property Festival 2026: Real Estate Expo",
+      manager: "Ms. Priya Sharma",
+      duration: "May 22 - 24, 2026",
+      timings: "09:30 AM - 06:30 PM",
       targetDate: "2026-05-22T09:00:00",
       bookingClosingDate: "May 10, 2026",
       status: "Blocked",
-      stallPrice: "₹20,000 / sq.m",
-      location: "CTC, Chennai", shortDesc: "India's top property developers.",
-      longDesc: "Detailed real estate festival highlights...", img: "/webpropg1.jpg"
+      availableStalls: 20,
+      bookedStalls: 40,
+      location: "CTC, Chennai",
+      shortDesc: "India's top property developers connecting with homebuyers.",
+      longDesc: "India's top property developers connecting with homebuyers. Discover premium properties and investment opportunities in the heart of Chennai.",
+      img: "/webpropg1.jpg"
     },
     {
-      id: 3, title: "Furniture & Home Decor Expo 2026", date: "05, 06, 07 June 2026",
+      id: 3, title: "Furniture & Home Decor Expo 2026",
+      manager: "Mr. Suresh Kumar",
+      duration: "June 05 - 07, 2026",
+      timings: "10:00 AM - 08:00 PM",
       targetDate: "2026-06-05T09:00:00",
       bookingClosingDate: "May 25, 2026",
       status: "Booked",
-      stallPrice: "₹12,000 / sq.m",
-      location: "KTPO, Bengaluru", shortDesc: "Modern home innovations.",
-      longDesc: "Detailed home decor highlights...", img: "/webbannerg1.jpg"
+      availableStalls: 0,
+      bookedStalls: 60,
+      location: "KTPO, Bengaluru",
+      shortDesc: "Showcasing modern interiors, modular kitchens, and decor.",
+      longDesc: "Showcasing modern interiors, modular kitchens, and decor. A must-visit event for homeowners and interior designers looking for the latest trends.",
+      img: "/webbannerg1.jpg"
     },
-    { 
-      id: 4, title: "Architecture & Design Summit 2026", date: "12, 13, 14 June 2026", 
-      targetDate: "2026-06-12T00:00:00", bookingClosingDate: "June 01, 2026", status: "Available", 
-      stallPrice: "₹18,000 / sq.m", location: "Hyderabad", shortDesc: "Design trends and architectural marvels.", 
-      longDesc: "Summit highlights...", img: "/webbannerbuild.jpg" 
+    {
+      id: 4, title: "Architecture & Design Summit 2026",
+      manager: "Mr. Ramesh Babu",
+      duration: "June 12 - 14, 2026",
+      timings: "10:00 AM - 07:00 PM",
+      targetDate: "2026-06-12T00:00:00",
+      bookingClosingDate: "June 01, 2026",
+      status: "Available",
+      availableStalls: 35,
+      bookedStalls: 25,
+      location: "Hitex, Hyderabad",
+      shortDesc: "Design trends and architectural marvels summit.",
+      longDesc: "Exploring design trends and architectural marvels. This summit brings together the best minds in architecture and design from across the country.",
+      img: "/webbannerbuild.jpg"
     },
-    { 
-      id: 5, title: "Smart Home & Automation Expo", date: "20, 21 June 2026", 
-      targetDate: "2026-06-20T00:00:00", bookingClosingDate: "June 10, 2026", status: "Available", 
-      stallPrice: "₹15,000 / sq.m", location: "Bengaluru", shortDesc: "Automation trends and smart living.", 
-      longDesc: "Automation expo highlights...", img: "/webbannerg1.jpg" 
+    {
+      id: 5, title: "Smart Home & Automation Expo",
+      manager: "Mr. Vijay Anand",
+      duration: "June 20 - 21, 2026",
+      timings: "09:00 AM - 06:00 PM",
+      targetDate: "2026-06-20T00:00:00",
+      bookingClosingDate: "June 10, 2026",
+      status: "Available",
+      availableStalls: 50,
+      bookedStalls: 10,
+      location: "Manpho, Bengaluru",
+      shortDesc: "Automation trends and smart living exhibition.",
+      longDesc: "Experience the future of living with automation trends and smart home technologies. Discover how to make your home more efficient and connected.",
+      img: "/webbannerg1.jpg"
     },
-    { 
-      id: 6, title: "Mega Property Show: Luxury Edition", date: "28, 29 June 2026", 
-      targetDate: "2026-06-28T00:00:00", bookingClosingDate: "June 15, 2026", status: "Available", 
-      stallPrice: "₹25,000 / sq.m", location: "Mumbai", shortDesc: "Luxury properties and premium investments.", 
-      longDesc: "Luxury show highlights...", img: "/webpropg1.jpg" 
+    {
+      id: 6, title: "Mega Property Show: Luxury Edition",
+      manager: "Mr. Sanjay Gupta",
+      duration: "June 28 - 29, 2026",
+      timings: "10:00 AM - 08:00 PM",
+      targetDate: "2026-06-28T00:00:00",
+      bookingClosingDate: "June 15, 2026",
+      status: "Available",
+      availableStalls: 15,
+      bookedStalls: 45,
+      location: "NESCO, Mumbai",
+      shortDesc: "Luxury properties and premium investment options.",
+      longDesc: "An exclusive showcase of luxury properties and premium investment options. Perfect for high-net-worth individuals and serious real estate investors.",
+      img: "/webpropg1.jpg"
     }
   ];
 
@@ -61,7 +106,7 @@ const UpcomingExhibitions = () => {
     setVisibleCount(prev => prev + 2);
   };
 
-  const showLoadMore = visibleCount < upcomingData.length;
+  const showLoadMore = upcomingData.length > visibleCount;
 
   const statusColor = (status) => {
     if (status === 'Available') return '#10b981';
@@ -76,8 +121,8 @@ const UpcomingExhibitions = () => {
         <div className="container v3-hero-container">
           <div className="v3-hero-content">
             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-              <div className="v3-breadcrumb"><Link to="/">Home</Link> <span>/</span> <span className="current">Upcoming Exhibitions</span></div>
-              <h1 className="v3-hero-title">Upcoming <span>Exhibitions</span></h1>
+              <div className="v3-breadcrumb"><Link to="/">Home</Link> <span>/</span> <span className="current">Present Exhibitions</span></div>
+              <h1 className="v3-hero-title">Present <span>Exhibitions</span></h1>
             </motion.div>
           </div>
         </div>
@@ -86,8 +131,8 @@ const UpcomingExhibitions = () => {
       <section className="upcoming-grid-v3" style={{ padding: '120px 0', background: '#f8f9fa' }}>
         <div className="container">
           <div className="premium-header-box centered">
-            <div className="header-accent-row"><div className="header-accent-line"></div><span className="header-accent-tag">FUTURE EVENTS</span><div className="header-accent-line"></div></div>
-            <h2 className="header-main-title">Book Your Calendar</h2>
+            <div className="header-accent-row"><div className="header-accent-line"></div><span className="header-accent-tag">Present Exhibitions</span><div className="header-accent-line"></div></div>
+            <h2 className="header-main-title">Book Your Expo</h2>
           </div>
 
           <div className="modern-gallery-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(48%, 1fr))', gap: '30px', marginTop: '60px' }}>
@@ -98,34 +143,20 @@ const UpcomingExhibitions = () => {
                 onClick={() => setSelectedExpo(item)}
                 style={{ background: '#fff', borderRadius: '16px', border: '1px solid #eee', overflow: 'hidden', padding: '25px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', cursor: 'pointer', position: 'relative', display: 'flex', flexDirection: 'column' }}
               >
-                <div style={{
-                  position: 'absolute', top: '35px', right: '35px', zIndex: 10,
-                  background: statusColor(item.status),
-                  color: '#fff', padding: '6px 15px', borderRadius: '50px', fontSize: '12px', fontWeight: '800', textTransform: 'uppercase'
-                }}>
-                  {item.status}
-                </div>
-
                 <div className="modern-card-inner">
                   <div className="expo-img" style={{ height: '260px', overflow: 'hidden', borderRadius: '12px' }}>
                     <img src={item.img} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                   <div style={{ padding: '20px 0 0' }}>
-                    <div className="expo-meta" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#ED1C24', fontWeight: '700', fontSize: '14px', marginBottom: '15px' }}>
-                      <i className="far fa-calendar-alt"></i> {item.date}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', color: 'rgb(17, 17, 17)', fontWeight: '700', fontSize: '13px', marginBottom: '15px' }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><i className="fas fa-user-tie" style={{ color: '#ED1C24' }}></i> {item.manager}</span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><i className="far fa-calendar-alt" style={{ color: '#ED1C24' }}></i> {item.duration}</span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><i className="fas fa-map-marker-alt" style={{ color: '#ED1C24' }}></i> {item.location}</span>
                     </div>
-                    <h3 style={{ fontSize: '1.4rem', fontWeight: '800', color: '#111', lineHeight: '1.3', marginBottom: '15px' }}>
+
+                    <h3 style={{ fontSize: '1.4rem', fontWeight: '800', color: '#111', lineHeight: '1.3', marginBottom: '0' }}>
                       {item.title}
                     </h3>
-                    <p style={{ color: '#666', fontSize: '15px', lineHeight: '1.6', marginBottom: '20px' }}>
-                      {item.shortDesc}
-                    </p>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', paddingTop: '20px', borderTop: '1px solid #f0f0f0' }}>
-                       <span style={{ color: '#777', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24' }}></i> {item.location}
-                      </span>
-                      <span style={{ fontSize: '12px', color: '#888', fontWeight: '600' }}>Closes: <span style={{ color: '#ED1C24' }}>{item.bookingClosingDate}</span></span>
-                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -135,17 +166,17 @@ const UpcomingExhibitions = () => {
           {showLoadMore && (
             <div style={{ textAlign: 'center', marginTop: '70px' }}>
               {/* PILL STYLE LOAD MORE BUTTON */}
-              <button 
-                onClick={handleLoadMore} 
-                className="premium-load-btn" 
-                style={{ 
-                  padding: '12px 50px', 
-                  borderRadius: '50px', 
-                  background: '#fff', 
-                  color: '#ED1C24', 
-                  border: '2px solid #ED1C24', 
-                  fontWeight: '800', 
-                  fontSize: '1rem', 
+              <button
+                onClick={handleLoadMore}
+                className="premium-load-btn"
+                style={{
+                  padding: '12px 50px',
+                  borderRadius: '50px',
+                  background: '#fff',
+                  color: '#ED1C24',
+                  border: '2px solid #ED1C24',
+                  fontWeight: '800',
+                  fontSize: '1rem',
                   cursor: 'pointer',
                   textTransform: 'uppercase',
                   transition: '0.3s'
@@ -153,7 +184,7 @@ const UpcomingExhibitions = () => {
                 onMouseEnter={(e) => { e.target.style.background = '#ED1C24'; e.target.style.color = '#fff'; }}
                 onMouseLeave={(e) => { e.target.style.background = '#fff'; e.target.style.color = '#ED1C24'; }}
               >
-                View More Upcoming
+                View More
               </button>
             </div>
           )}
@@ -177,58 +208,83 @@ const UpcomingExhibitions = () => {
               initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
               style={{
-                maxWidth: '950px', width: '100%', background: '#fff',
+                maxWidth: '850px', width: '100%', background: '#fff',
                 boxShadow: '0 40px 80px rgba(0,0,0,0.12)',
-                maxHeight: '95vh', overflow: 'hidden',
+                maxHeight: '98vh', overflowY: 'auto',
                 borderRadius: '16px', position: 'relative',
-                display: 'grid', gridTemplateColumns: '1.1fr 1fr'
+                display: 'flex', flexDirection: 'column', overflow: 'hidden'
               }}
             >
-              <div
-                onClick={() => setSelectedExpo(null)}
-                style={{ position: 'absolute', top: '20px', right: '20px', width: '36px', height: '36px', borderRadius: '50%', background: '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 100 }}
-              >
-                <i className="fas fa-times" style={{ color: '#111' }}></i>
+              {/* COMPACT RED HEADER */}
+              <div style={{ background: '#ED1C24', padding: '15px 25px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h2 style={{ color: '#fff', fontSize: '1.2rem', fontWeight: '800', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                  {selectedExpo.title}
+                </h2>
+                <div
+                  onClick={() => setSelectedExpo(null)}
+                  style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: '0.3s' }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.3)'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.2)'}
+                >
+                  <i className="fas fa-times" style={{ color: '#fff', fontSize: '14px' }}></i>
+                </div>
               </div>
 
-              <div className="modal-media-left" style={{ position: 'relative', minHeight: '550px' }}>
-                <img src={selectedExpo.img} alt="Expo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.4), transparent)' }} />
-              </div>
-
-              <div className="modal-meta-right" style={{ padding: '40px', display: 'flex', flexDirection: 'column', gap: '25px', overflowY: 'auto' }}>
-                <div>
-                  <h2 style={{ color: '#111', fontSize: '1.8rem', fontWeight: '800', lineHeight: '1.3', marginBottom: '10px' }}>{selectedExpo.title}</h2>
-                  <div style={{ height: '3px', width: '50px', background: '#ED1C24' }}></div>
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                    <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}><i className="far fa-calendar-alt"></i></div>
-                    <div><p style={{ fontSize: '11px', color: '#999', margin: 0, textTransform: 'uppercase' }}>Date</p><p style={{ fontWeight: '700', margin: 0 }}>{selectedExpo.date}</p></div>
+              <div style={{ padding: '25px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                {/* MIDDLE ROW: IMAGE & DETAILS */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: '25px', alignItems: 'center' }}>
+                  <div style={{ borderRadius: '12px', overflow: 'hidden', height: '180px', boxShadow: '0 8px 25px rgba(0,0,0,0.08)' }}>
+                    <img src={selectedExpo.img} alt="Expo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                    <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}><i className="fas fa-map-marker-alt"></i></div>
-                    <div><p style={{ fontSize: '11px', color: '#999', margin: 0, textTransform: 'uppercase' }}>Location</p><p style={{ fontWeight: '700', margin: 0 }}>{selectedExpo.location}</p></div>
+
+                  <div className="modal-details-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '12px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}><i className="fas fa-user-tie" style={{ fontSize: '14px' }}></i></div>
+                      <div><p style={{ fontSize: '10px', color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: '700' }}>Manager</p><p style={{ fontWeight: '800', margin: 0, fontSize: '0.9rem' }}>{selectedExpo.manager}</p></div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}><i className="fas fa-map-marker-alt" style={{ fontSize: '14px' }}></i></div>
+                      <div><p style={{ fontSize: '10px', color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: '700' }}>Location</p><p style={{ fontWeight: '800', margin: 0, fontSize: '0.9rem' }}>{selectedExpo.location}</p></div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}><i className="fas fa-calendar-check" style={{ fontSize: '14px' }}></i></div>
+                      <div><p style={{ fontSize: '10px', color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: '700' }}>Duration</p><p style={{ fontWeight: '800', margin: 0, fontSize: '0.9rem' }}>{selectedExpo.duration}</p></div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}><i className="fas fa-clock" style={{ fontSize: '14px' }}></i></div>
+                      <div><p style={{ fontSize: '10px', color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: '700' }}>Timings</p><p style={{ fontWeight: '800', margin: 0, fontSize: '0.9rem' }}>{selectedExpo.timings}</p></div>
+                    </div>
                   </div>
                 </div>
 
-                <div style={{ padding: '20px', background: '#f9fafb', borderRadius: '12px' }}>
-                   <p style={{ fontSize: '11px', color: '#999', margin: '0 0 10px', textTransform: 'uppercase', fontWeight: '800' }}>Starts In</p>
-                   <CountdownTimer targetDate={selectedExpo.targetDate} />
+                {/* DESCRIPTION & AVAILABILITY SECTION */}
+                <div style={{ padding: '20px', background: '#f9fafb', borderRadius: '12px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                  <p style={{ color: '#555', fontSize: '13.5px', lineHeight: '1.6', margin: 0, textAlign: 'center' }}>{selectedExpo.longDesc}</p>
+
+                  <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', paddingTop: '15px', borderTop: '1px solid #eee' }}>
+                    <div style={{ textAlign: 'center' }}>
+                      <p style={{ fontSize: '10px', color: '#999', margin: '0 0 3px', textTransform: 'uppercase', fontWeight: '800' }}>Available Stalls:</p>
+                      <p style={{ fontSize: '1.5rem', fontWeight: '900', color: '#10b981', margin: 0 }}>{selectedExpo.availableStalls}</p>
+                    </div>
+                    <div style={{ width: '1px', height: '30px', background: '#ddd' }}></div>
+                    <div style={{ textAlign: 'center' }}>
+                      <p style={{ fontSize: '10px', color: '#999', margin: '0 0 3px', textTransform: 'uppercase', fontWeight: '800' }}>Booked Stalls:</p>
+                      <p style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ED1C24', margin: 0 }}>{selectedExpo.bookedStalls}</p>
+                    </div>
+                  </div>
                 </div>
 
-                {/* TRIPLE BUTTON INTERFACE */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginTop: '10px' }}>
-                  <button style={{ padding: '15px', background: '#f4f6f9', border: 'none', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: '#1a2b4a', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>
-                    <i className="fas fa-th-large"></i> Layout
+                {/* BUTTONS AT BOTTOM */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1.2fr', gap: '12px' }}>
+                  <button style={{ padding: '12px', background: '#f4f6f9', border: 'none', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: '#1a2b4a', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>
+                    <i className="fas fa-download"></i> Layout
                   </button>
-                  <button style={{ padding: '15px', background: '#f4f6f9', border: 'none', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: '#1a2b4a', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>
-                    <i className="fas fa-file-pdf"></i> Brochure
+                  <button style={{ padding: '12px', background: '#f4f6f9', border: 'none', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: '#1a2b4a', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>
+                    <i className="fas fa-download"></i> Brochure
                   </button>
-                  <button 
+                  <button
                     onClick={() => setIsEnquiryModalOpen(true)}
-                    style={{ padding: '15px', background: '#ED1C24', border: 'none', borderRadius: '12px', color: '#fff', fontWeight: '700', fontSize: '13px', cursor: 'pointer', boxShadow: '0 8px 20px rgba(237,28,36,0.2)' }}
+                    style={{ padding: '12px', background: '#ED1C24', border: 'none', borderRadius: '10px', color: '#fff', fontWeight: '800', fontSize: '13px', cursor: 'pointer', boxShadow: '0 6px 15px rgba(237,28,36,0.2)', textTransform: 'uppercase' }}
                   >
                     Register Now
                   </button>

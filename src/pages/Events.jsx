@@ -12,14 +12,15 @@ const Events = () => {
     { id: 3, title: "Furniture & Home Products Expo", date: "17-May-2024", location: "Coimbatore, India", shortDesc: "Showcasing modern interiors, modular kitchens, and premium furniture.", img: "/webbannerg1.jpg", type: 'photo' },
     { id: 4, title: "Regional Business Meet 2024", date: "18-May-2024", location: "Chennai", shortDesc: "Focused B2B networking for small and medium enterprises.", img: "/team.png", type: 'photo' },
     { id: 101, title: "Grand Opening Ceremony 2024", date: "15-May-2024", location: "Virtual Event", shortDesc: "Cinematic highlights of the mega launch and industry keynote.", url: "https://www.youtube.com/embed/dQw4w9WgXcQ", type: 'video', img: "/webbannerbuild.jpg" },
-    { id: 5, title: "Industry Leaders Summit", date: "20-May-2024", location: "Bangalore", shortDesc: "Executive gala featuring leadership talks and strategic insights.", img: "/webbannerbuild.jpg", type: 'photo' }
+    { id: 5, title: "Industry Leaders Summit", date: "20-May-2024", location: "Bangalore", shortDesc: "Executive gala featuring leadership talks and strategic insights.", img: "/webbannerbuild.jpg", type: 'photo' },
+    { id: 6, title: "Industry Leaders Summit", date: "20-May-2024", location: "Bangalore", shortDesc: "Executive gala featuring leadership talks and strategic insights.", img: "/webbannerbuild.jpg", type: 'photo' }
   ];
 
   const handleLoadMore = () => {
     setVisibleCount(prev => prev + 3);
   };
 
-  const showLoadMore = visibleCount < allEvents.length;
+  const showLoadMore = allEvents.length > visibleCount;
 
   const handleCardClick = (id) => {
     navigate(`/event/${id}`);
@@ -65,7 +66,7 @@ const Events = () => {
                       <img src={item.img} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                       {item.type === 'video' && (
                         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.2)' }}>
-                           <i className="fas fa-play-circle" style={{ fontSize: '3.5rem', color: '#fff', opacity: '0.9' }}></i>
+                          <i className="fas fa-play-circle" style={{ fontSize: '3.5rem', color: '#fff', opacity: '0.9' }}></i>
                         </div>
                       )}
                     </div>
@@ -81,7 +82,7 @@ const Events = () => {
                     <p style={{ color: '#666', fontSize: '14px', lineHeight: '1.6', margin: 0, display: '-webkit-box', WebkitLineClamp: '2', WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                       {item.shortDesc}
                     </p>
-                    
+
                     <div style={{ marginTop: '20px', color: '#ED1C24', fontWeight: '700', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '5px' }}>
                       View Details <i className="fas fa-arrow-right" style={{ fontSize: '12px' }}></i>
                     </div>
