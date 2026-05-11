@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
@@ -17,11 +18,13 @@ import PaymentTerms from './pages/PaymentTerms';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import RefundPolicy from './pages/RefundPolicy';
 import EventDetail from './pages/EventDetail';
+import RegisterNow from './pages/RegisterNow';
 import './assets/css/styles.css';
 
 function App() {
     return (
         <Router>
+            <Toaster position="top-right" reverseOrder={false} />
             <ScrollToTop />
             <div className="App">
                 <Header />
@@ -36,6 +39,7 @@ function App() {
                     <Route path="/our-groups" element={<OurGroups />} />
                     <Route path="/careers" element={<Careers />} />
                     <Route path="/to-export" element={<ToExhibit />} />
+                    <Route path="/register-now" element={<RegisterNow />} />
                     <Route path="/payment-terms" element={<PaymentTerms />} />
                     <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                     <Route path="/refund-policy" element={<RefundPolicy />} />
