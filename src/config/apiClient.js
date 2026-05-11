@@ -1,47 +1,76 @@
-import axios from 'axios';
+import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
+const APP_ENV = import.meta.env.VITE_APP_ENV || "dev";
+
+let IMAGE_BASE_URL = "";
+let BASE_URL = "";
+let server = "";
+
+switch (APP_ENV) {
+    case "dev":
+        IMAGE_BASE_URL = "http://192.168.1.15:2001/public";
+        BASE_URL = "http://192.168.1.15:2001/api/website";
+        server = "http://192.168.1.15:2001";
+        break;
+
+    case "production":
+        IMAGE_BASE_URL = "http://13.126.146.21:4000/public";
+        BASE_URL = "http://13.126.146.21:4000/api/website";
+        server = "http://13.126.146.21:4000";
+        break;
+
+    case "local":
+    default:
+        IMAGE_BASE_URL = "http://localhost:5001/public";
+        BASE_URL = "http://localhost:5001/api/website";
+        server = "http://localhost:5001";
+        break;
+}
 
 const apiClient = axios.create({
     baseURL: BASE_URL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
 });
 
-// Request interceptor
 apiClient.interceptors.request.use(
-    (config) => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-
-        // Automatically set content type for multipart/form-data
+    function (config) {
         if (config.data instanceof FormData) {
-            config.headers['Content-Type'] = 'multipart/form-data';
+            config.headers["Content-Type"] = "multipart/form-data";
+        } else {
+            config.headers["Content-Type"] = "application/json";
         }
 
         return config;
     },
-    (error) => {
+    function (error) {
         return Promise.reject(error);
     }
 );
 
-// Response interceptor (optional but good practice)
 apiClient.interceptors.response.use(
-    (response) => response,
-    (error) => {
-        // Handle global errors like 401 Unauthorized
-        if (error.response && error.response.status === 401) {
-            // localStorage.removeItem('token');
-            // window.location.href = '/login';
-        }
+    function (response) {
+        return response;
+    },
+    function (error) {
         return Promise.reject(error);
     }
 );
 
-export { BASE_URL, IMAGE_URL };
+const getImageUrl = (path) => {
+    if (!path) return "";
+    if (path.startsWith("http")) return path;
+    return `${IMAGE_BASE_URL}/${path.replace(/^\/+/, "")}`;
+};
+
+export {
+    IMAGE_BASE_URL,
+    BASE_URL,
+    server,
+    apiClient,
+    apiClient as api,
+    apiClient as clientApi,
+    BASE_URL as API_URL,
+    BASE_URL as CLIENT_API_URL,
+    getImageUrl
+};
+
 export default apiClient;

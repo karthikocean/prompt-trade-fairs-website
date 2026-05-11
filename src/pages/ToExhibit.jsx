@@ -123,6 +123,9 @@ const ToExhibit = () => {
           </div>
         </div>
       </section>
+
+      {/* 4. REGISTRATION FORM SECTION */}
+      <ResigterForm />
     </main>
   );
 };

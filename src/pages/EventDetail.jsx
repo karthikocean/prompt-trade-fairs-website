@@ -1,60 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getPastExpoDetails } from '../api/common.api';
+import { getImageUrl } from '../config/apiClient';
+import EnquiryForm from '../components/EnquiryForm';
+import toast from 'react-hot-toast';
 
-const allEvents = [
-  {
-    id: 1,
-    title: "Build Expo 2026 Highlights",
-    date: "15-May-2026",
-    location: "Chennai, India",
-    shortDesc: "South India's largest building materials and construction technology exhibition.",
-    longDesc: "Build Expo 2026 was a landmark event that showcased the latest trends in construction technology, green building materials, and modern interior design. With over 300 exhibitors and 20,000+ visitors, it set new benchmarks for the industry.",
-    img: "/webbannerbuild.jpg",
-    type: 'photo',
-    gallery: [
-      { type: 'photo', src: '/expo1.jpg' },
-      { type: 'photo', src: '/webbannerbuild.jpg' },
-      { type: 'youtube', src: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
-      { type: 'video', src: '/sample-video.mp4' }, // Mock video
-      { type: 'photo', src: '/webbannerg1.jpg' }
-    ]
-  },
-  {
-    id: 2,
-    title: "Property Festival Highlights",
-    date: "16-May-2026",
-    location: "Madurai, India",
-    shortDesc: "Premium real estate networking event connecting builders and buyers.",
-    longDesc: "The Property Festival brought together premium real estate developers and potential home buyers. From luxury villas to affordable apartments, the event offered something for everyone, backed by on-site financial assistance from major banks.",
-    img: "/webpropg1.jpg",
-    type: 'photo',
-    gallery: [
-      { type: 'photo', src: '/webpropg1.jpg' },
-      { type: 'photo', src: '/expo1.jpg' }
-    ]
-  },
-  {
-    id: 101,
-    title: "Grand Opening Ceremony 2024",
-    date: "15-May-2024",
-    location: "Virtual Event",
-    shortDesc: "Cinematic highlights of the mega launch and industry keynote.",
-    longDesc: "Experience the grand opening that launched India's most ambitious trade fair circuit. This video captures the keynote speeches, the ribbon-cutting ceremony, and the high-energy atmosphere that defined the event's start.",
-    img: "/webbannerbuild.jpg",
-    type: 'video',
-    url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    gallery: [
-      { type: 'youtube', src: 'https://www.youtube.com/embed/dQw4w9WgXcQ' }
-    ]
-  }
-];
+const formatDate = (dateString) => {
+  if (!dateString) return "";
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+};
 
 const EventDetail = () => {
   const { id } = useParams();
-  const [activeFilter, setActiveFilter] = useState('photo'); // 'photo', 'video', 'youtube'
+  const [activeFilter, setActiveFilter] = useState('Image'); // 'Image', 'Video', 'YouTube'
+  const [event, setEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const event = allEvents.find(e => e.id.toString() === id);
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const response = await getPastExpoDetails(id);
+        if (response.data && response.data.data) {
+          setEvent(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching expo details:", error);
+        toast.error("Failed to load exhibition details");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDetails();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div style={{ padding: '200px 0', textAlign: 'center' }}>
+        <div className="loader" style={{ border: '4px solid #f3f3f3', borderTop: '4px solid #ED1C24', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite', margin: '0 auto' }}></div>
+        <p style={{ marginTop: '20px', color: '#666' }}>Loading exhibition details...</p>
+        <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+      </div>
+    );
+  }
 
   if (!event) {
     return (
@@ -90,7 +80,7 @@ const EventDetail = () => {
         </div>
 
         {/* MAIN TITLE AT TOP */}
-        <h1 style={{ fontSize: '2.8rem', fontWeight: '900', color: '#111', marginBottom: '40px', lineHeight: '1.1' }}>{event.title}</h1>
+        <h1 style={{ fontSize: '2.8rem', fontWeight: '900', color: '#111', marginBottom: '40px', lineHeight: '1.1' }}>{event.expoName}</h1>
 
 
         {/* HERO SECTION - SPLIT VIEW */}
@@ -101,13 +91,7 @@ const EventDetail = () => {
             className="detail-hero-media"
             style={{ borderRadius: '12px', overflow: 'hidden', boxShadow: '0 20px 50px rgba(0,0,0,0.1)', height: '100%' }}
           >
-            {event.type === 'video' ? (
-              <div style={{ aspectRatio: '16/9', background: '#000' }}>
-                <iframe width="100%" height="100%" src={event.url} frameBorder="0" allowFullScreen></iframe>
-              </div>
-            ) : (
-              <img src={event.img} alt={event.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-            )}
+            <img src={getImageUrl(event.expoImage)} alt={event.expoName} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           </motion.div>
 
           <motion.div
@@ -116,19 +100,27 @@ const EventDetail = () => {
             className="detail-hero-content"
           >
             <span style={{ background: '#ED1C24', color: '#fff', padding: '6px 18px', borderRadius: '50px', fontSize: '11px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>
-              PHOTO HIGHLIGHTS
+              EXHIBITION HIGHLIGHTS
             </span>
-            {/* H1 Title moved to top */}
 
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '30px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginTop: '30px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                 <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}>
                   <i className="far fa-calendar-alt"></i>
                 </div>
                 <div>
-                  <p style={{ fontSize: '11px', color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: '700' }}>Event Date</p>
-                  <p style={{ fontWeight: '800', margin: 0, fontSize: '1.1rem' }}>{event.date}</p>
+                  <p style={{ fontSize: '11px', color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: '700' }}>Event Duration</p>
+                  <p style={{ fontWeight: '800', margin: 0, fontSize: '0.95rem' }}>{formatDate(event.startDate)} - {formatDate(event.endDate)}</p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}>
+                  <i className="fas fa-clock"></i>
+                </div>
+                <div>
+                  <p style={{ fontSize: '11px', color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: '700' }}>Timings</p>
+                  <p style={{ fontWeight: '800', margin: 0, fontSize: '0.95rem' }}>{event.startTime} - {event.endTime}</p>
                 </div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
@@ -137,17 +129,76 @@ const EventDetail = () => {
                 </div>
                 <div>
                   <p style={{ fontSize: '11px', color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: '700' }}>Venue Location</p>
-                  <p style={{ fontWeight: '800', margin: 0, fontSize: '1.1rem' }}>{event.location}</p>
+                  <p style={{ fontWeight: '800', margin: 0, fontSize: '0.95rem' }}>{event.venue}</p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                {event.eventManager?.profileImage ? (
+                  <img src={getImageUrl(event.eventManager.profileImage)} style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} alt="manager" />
+                ) : (
+                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}>
+                    <i className="fas fa-user-tie"></i>
+                  </div>
+                )}
+                <div>
+                  <p style={{ fontSize: '11px', color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: '700' }}>Manager</p>
+                  <p style={{ fontWeight: '800', margin: 0, fontSize: '0.95rem' }}>{event.eventManager?.name || "N/A"}</p>
                 </div>
               </div>
             </div>
 
+            {event.stats && (
+              <div style={{ marginTop: '30px', padding: '20px', background: '#f8fafc', borderRadius: '12px', display: 'flex', gap: '30px' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '10px', fontWeight: '800', color: '#94a3b8', textTransform: 'uppercase' }}>Available Stalls</label>
+                  <span style={{ fontSize: '1.2rem', fontWeight: '800', color: '#22c55e' }}>{event.stats.stallAvailable}</span>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '10px', fontWeight: '800', color: '#94a3b8', textTransform: 'uppercase' }}>Booked Stalls</label>
+                  <span style={{ fontSize: '1.2rem', fontWeight: '800', color: '#ef4444' }}>{event.stats.stallBooked}</span>
+                </div>
+              </div>
+            )}
+
             <div style={{ marginTop: '40px', paddingTop: '30px', borderTop: '1px solid #eee' }}>
               <h4 style={{ fontSize: '1.2rem', fontWeight: '900', marginBottom: '15px' }}>About this Event</h4>
-              <p style={{ color: '#555', lineHeight: '1.8', fontSize: '1rem' }}>{event.longDesc}</p>
+              <p style={{ color: '#555', lineHeight: '1.8', fontSize: '1rem' }}>
+                Join us for <strong>{event.expoName}</strong> at <strong>{event.venue}</strong>. 
+                {event.products?.length > 0 && ` Explore a wide range of products including ${event.products.map(p => p.productName).join(', ')}.`}
+              </p>
+
             </div>
           </motion.div>
         </div>
+
+        {/* REGISTRATION MODAL */}
+        <AnimatePresence>
+          {isModalOpen && (
+            <motion.div
+              className="expo-modal-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.85)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              onClick={() => setIsModalOpen(false)}
+            >
+              <motion.div
+                className="expo-modal-container"
+                initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                style={{ maxWidth: '850px', width: '95%', background: 'transparent', position: 'relative' }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <EnquiryForm
+                  isExpoRegistration={true}
+                  expoInfo={event}
+                  onClose={() => setIsModalOpen(false)}
+                />
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* GALLERY SECTION (WITH FILTER BUTTONS) */}
         <section className="detail-gallery-section" style={{ marginBottom: '60px' }}>
@@ -156,34 +207,32 @@ const EventDetail = () => {
               Event <span style={{ color: '#ED1C24' }}>Gallery</span>
             </h2>
 
-            {/* NEW FILTER BUTTONS: PHOTOS & VIDEOS */}
             <div style={{ display: 'flex', gap: '10px' }}>
-
               <button
-                onClick={() => setActiveFilter('photo')}
+                onClick={() => setActiveFilter('Image')}
                 style={{
-                  padding: '10px 25px', borderRadius: '50px', border: activeFilter === 'photo' ? 'none' : '1px solid #ddd',
-                  background: activeFilter === 'photo' ? '#ED1C24' : '#fff', color: activeFilter === 'photo' ? '#fff' : '#111',
+                  padding: '10px 25px', borderRadius: '50px', border: activeFilter === 'Image' ? 'none' : '1px solid #ddd',
+                  background: activeFilter === 'Image' ? '#ED1C24' : '#fff', color: activeFilter === 'Image' ? '#fff' : '#111',
                   fontWeight: '700', cursor: 'pointer', transition: '0.3s'
                 }}
               >
                 Photos
               </button>
               <button
-                onClick={() => setActiveFilter('video')}
+                onClick={() => setActiveFilter('Video')}
                 style={{
-                  padding: '10px 25px', borderRadius: '50px', border: activeFilter === 'video' ? 'none' : '1px solid #ddd',
-                  background: activeFilter === 'video' ? '#ED1C24' : '#fff', color: activeFilter === 'video' ? '#fff' : '#111',
+                  padding: '10px 25px', borderRadius: '50px', border: activeFilter === 'Video' ? 'none' : '1px solid #ddd',
+                  background: activeFilter === 'Video' ? '#ED1C24' : '#fff', color: activeFilter === 'Video' ? '#fff' : '#111',
                   fontWeight: '700', cursor: 'pointer', transition: '0.3s'
                 }}
               >
                 Videos
               </button>
               <button
-                onClick={() => setActiveFilter('youtube')}
+                onClick={() => setActiveFilter('YouTube')}
                 style={{
-                  padding: '10px 25px', borderRadius: '50px', border: activeFilter === 'youtube' ? 'none' : '1px solid #ddd',
-                  background: activeFilter === 'youtube' ? '#ED1C24' : '#fff', color: activeFilter === 'youtube' ? '#fff' : '#111',
+                  padding: '10px 25px', borderRadius: '50px', border: activeFilter === 'YouTube' ? 'none' : '1px solid #ddd',
+                  background: activeFilter === 'YouTube' ? '#ED1C24' : '#fff', color: activeFilter === 'YouTube' ? '#fff' : '#111',
                   fontWeight: '700', cursor: 'pointer', transition: '0.3s'
                 }}
               >
@@ -198,7 +247,7 @@ const EventDetail = () => {
                 <AnimatePresence mode="popLayout">
                   {filteredGallery.map((item, idx) => (
                     <motion.div
-                      key={`${item.src}-${idx}`}
+                      key={`${item.url}-${idx}`}
                       layout
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
@@ -206,19 +255,26 @@ const EventDetail = () => {
                       whileHover={{ y: -5 }}
                       style={{ borderRadius: '16px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', background: '#f8f9fa' }}
                     >
-                      {item.type === 'youtube' || item.type === 'video' ? (
+                      {item.type === 'YouTube' || item.type === 'Video' ? (
                         <div style={{ aspectRatio: '16/9' }}>
-                          {item.type === 'youtube' ? (
-                            <iframe width="100%" height="100%" src={item.src} frameBorder="0" allowFullScreen title="YouTube Video"></iframe>
+                          {item.type === 'YouTube' ? (
+                            <iframe 
+                              width="100%" 
+                              height="100%" 
+                              src={item.url.includes('embed') ? item.url : item.url.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/').split('&')[0]} 
+                              frameBorder="0" 
+                              allowFullScreen 
+                              title="YouTube Video"
+                            ></iframe>
                           ) : (
                             <video width="100%" height="100%" controls style={{ objectFit: 'cover' }}>
-                              <source src={item.src} type="video/mp4" />
+                              <source src={getImageUrl(item.url)} type="video/mp4" />
                               Your browser does not support the video tag.
                             </video>
                           )}
                         </div>
                       ) : (
-                        <img src={item.src} alt="Gallery" style={{ width: '100%', height: '220px', objectFit: 'cover' }} />
+                        <img src={getImageUrl(item.url)} alt="Gallery" style={{ width: '100%', height: '220px', objectFit: 'cover' }} />
                       )}
                     </motion.div>
                   ))}
@@ -230,8 +286,8 @@ const EventDetail = () => {
                 animate={{ opacity: 1 }}
                 style={{ textAlign: 'center', padding: '100px 0', background: '#f9fafb', borderRadius: '20px', border: '2px dashed #eee' }}
               >
-                <i className={`fas ${activeFilter === 'photo' ? 'fa-camera' : (activeFilter === 'youtube' ? 'fab fa-youtube' : 'fa-video')}`} style={{ fontSize: '3rem', color: '#ccc', marginBottom: '20px' }}></i>
-                <h3 style={{ color: '#999', fontWeight: '700' }}>No {activeFilter === 'photo' ? 'Photos' : (activeFilter === 'youtube' ? 'YouTube' : 'Videos')} upload</h3>
+                <i className={`fas ${activeFilter === 'Image' ? 'fa-camera' : (activeFilter === 'YouTube' ? 'fab fa-youtube' : 'fa-video')}`} style={{ fontSize: '3rem', color: '#ccc', marginBottom: '20px' }}></i>
+                <h3 style={{ color: '#999', fontWeight: '700' }}>No {activeFilter === 'Image' ? 'Photos' : (activeFilter === 'YouTube' ? 'YouTube Videos' : 'Videos')} uploaded</h3>
               </motion.div>
             )}
           </div>
@@ -239,6 +295,22 @@ const EventDetail = () => {
       </div>
     </main>
   );
+};
+
+const actionBtnStyle = {
+  padding: '12px 25px',
+  borderRadius: '8px',
+  background: '#f1f5f9',
+  color: '#334155',
+  fontWeight: '700',
+  fontSize: '0.9rem',
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '10px',
+  textDecoration: 'none',
+  transition: '0.3s',
+  border: '1px solid #e2e8f0',
+  cursor: 'pointer'
 };
 
 export default EventDetail;

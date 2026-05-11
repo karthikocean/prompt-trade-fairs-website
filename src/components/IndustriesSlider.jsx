@@ -1,41 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import EnquiryForm from "./EnquiryForm";
+import { getUpcomingExpos } from "../api/common.api";
+import { getImageUrl } from "../config/apiClient";
 
-const futureExpos = [
-  {
-    title: "Build Expo 2024",
-    meta: "Building materials, construction tech, interior solutions & smart home innovations.",
-    date: "Aug 14–16, 2024",
-    location: "Chennai",
-    badge: "Construction",
-    img: "/expos/build-expo.png",
-  },
-  {
-    title: "Property Expo 2024",
-    meta: "Residential & commercial real estate, plots, investment opportunities & home loans.",
-    date: "Sep 5–7, 2024",
-    location: "Coimbatore",
-    badge: "Real Estate",
-    img: "/expos/property-expo.png",
-  },
-  {
-    title: "Furniture Home Products Expo 2024",
-    meta: "Premium furniture brands, modular kitchens, décor & smart home accessories.",
-    date: "Oct 10–12, 2024",
-    location: "Chennai",
-    badge: "Furniture",
-    img: "/expos/furniture-home.png",
-  },
-  {
-    title: "Furniture Lifestyle Expo 2024",
-    meta: "Luxury living, designer interiors, lifestyle brands & exclusive home collections.",
-    date: "Nov 20–22, 2024",
-    location: "Bengaluru",
-    badge: "Lifestyle",
-    img: "/expos/furniture-lifestyle.png",
-  }
-];
+const formatDate = (start, end) => {
+  if (!start) return "";
+  const s = new Date(start);
+  const e = new Date(end);
+  const options = { month: 'short', day: 'numeric' };
+  const year = s.getFullYear();
+  if (start === end) return `${s.toLocaleDateString(undefined, options)}, ${year}`;
+  return `${s.toLocaleDateString(undefined, options)} - ${e.toLocaleDateString(undefined, options)}, ${year}`;
+};
 
 const CalIcon = () => (
   <svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -55,15 +32,44 @@ const PinIcon = () => (
   </svg>
 );
 
-const PER_PAGE = 2;
-
 const IndustriesSlider = () => {
   const [page, setPage] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedExpo, setSelectedExpo] = useState(null);
+  const [expos, setExpos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const totalPages = Math.ceil(futureExpos.length / PER_PAGE);
-  const items = futureExpos.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
+  useEffect(() => {
+    const fetchExpos = async () => {
+      try {
+        const res = await getUpcomingExpos();
+        if (res.data && Array.isArray(res.data.data)) {
+          const mapped = res.data.data.map(item => ({
+            _id: item._id,
+            expoName: item.expoName, 
+            title: item.expoName,
+            meta: item.products?.length > 0 
+              ? `${item.products.slice(0, 3).map(p => p.productName).join(", ")} & more.`
+              : `Explore the latest innovations in ${item.category?.name || 'various industries'}.`,
+            date: formatDate(item.startDate, item.endDate),
+            location: item.venue,
+            badge: item.category?.name || "Trade Fair",
+            img: getImageUrl(item.expoImage)
+          }));
+          setExpos(mapped);
+        }
+      } catch (error) {
+        console.error("Error fetching upcoming expos:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchExpos();
+  }, []);
+
+  const PER_PAGE = 2;
+  const totalPages = Math.ceil(expos.length / PER_PAGE);
+  const items = expos.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
 
   const prev = () => setPage((p) => (p - 1 + totalPages) % totalPages);
   const next = () => setPage((p) => (p + 1) % totalPages);

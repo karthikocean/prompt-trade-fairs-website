@@ -3,7 +3,7 @@ import EnquiryForm from "./EnquiryForm";
 
 const EnquirySection = () => {
   return (
-    <section className="enquiry-section">
+    <section className="enquiry-section d-none">
       <div className="container enquiry-container">
         {/* LEFT CONTENT */}
         <div className="enquiry-left">

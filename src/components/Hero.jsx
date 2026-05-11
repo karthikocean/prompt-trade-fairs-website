@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 
+import { getBanners } from "../api/common.api";
+import { getImageUrl } from "../config/apiClient";
+
 const Hero = () => {
-  const slides = [
+  const [slides, setSlides] = useState([
     {
       img: "/banner1.svg",
       title: "Upcoming Exhibitions 2026",
@@ -25,9 +28,31 @@ const Hero = () => {
       btnText: "View History",
       link: "/previous-exhibitions"
     }
-  ];
+  ]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const res = await getBanners();
+        if (res.data && Array.isArray(res.data.data) && res.data.data.length > 0) {
+          const apiBanners = res.data.data;
+          const updatedSlides = slides.map((slide, index) => {
+            // Use API image if available for this index, otherwise fallback to static
+            if (apiBanners[index]) {
+              return { ...slide, img: getImageUrl(apiBanners[index].image) };
+            }
+            return slide;
+          });
+          setSlides(updatedSlides);
+        }
+      } catch (error) {
+        console.error("Error fetching banners:", error);
+      }
+    };
+    fetchBanners();
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
