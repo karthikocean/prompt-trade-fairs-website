@@ -86,9 +86,9 @@ const Header = () => {
           <NavLink to="/to-export" onClick={() => setIsMenuOpen(false)}>
             To Exhibit
           </NavLink>
-          <NavLink to="/register-now" style={{ fontWeight: '800', color: '#ED1C24', marginLeft: '15px' }} onClick={() => setIsMenuOpen(false)}>
+          {/* <NavLink to="/register-now" style={{ fontWeight: '800', color: '#ED1C24', marginLeft: '15px' }} onClick={() => setIsMenuOpen(false)}>
             Register Now
-          </NavLink>
+          </NavLink> */}
           <NavLink to="/contact" className="contact-btn" onClick={() => setIsMenuOpen(false)}>
             <span style={{ color: 'white' }}>Contact Us</span>
           </NavLink>
