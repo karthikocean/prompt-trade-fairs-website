@@ -67,6 +67,20 @@ const IndustriesSlider = () => {
     fetchExpos();
   }, []);
 
+  if (loading) {
+    return (
+      <div style={{ padding: '100px 0', textAlign: 'center' }}>
+        <div className="loader" style={{ border: '4px solid #f3f3f3', borderTop: '4px solid #ED1C24', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite', margin: '0 auto' }}></div>
+        <p style={{ marginTop: '20px', color: '#666' }}>Loading exhibitions...</p>
+        <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+      </div>
+    );
+  }
+
+  if (expos.length === 0) {
+    return null;
+  }
+
   const PER_PAGE = 2;
   const totalPages = Math.ceil(expos.length / PER_PAGE);
   const items = expos.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
