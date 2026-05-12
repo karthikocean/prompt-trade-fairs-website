@@ -24,7 +24,15 @@ import './assets/css/styles.css';
 function App() {
     return (
         <Router>
-            <Toaster position="top-right" reverseOrder={false} />
+            <Toaster 
+                position="top-right" 
+                reverseOrder={false} 
+                toastOptions={{
+                    style: {
+                        zIndex: 999999,
+                    },
+                }}
+            />
             <ScrollToTop />
             <div className="App">
                 <Header />

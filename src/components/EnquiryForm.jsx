@@ -115,6 +115,11 @@ const EnquiryForm = ({
       setErrors(prev => ({ ...prev, [name]: "" }));
     }
 
+    // VALIDATION: Name only letters (no numbers or special characters)
+    if (name === "name") {
+      if (!/^[a-zA-Z\s]*$/.test(value)) return;
+    }
+
     // VALIDATION: Mobile only numbers and max 10 digits
     if (name === "mobileNo") {
       if (!/^\d*$/.test(value) || value.length > 10) return;
@@ -167,6 +172,11 @@ const EnquiryForm = ({
       if (!formData.category) newErrors.category = "Category is required";
       if (formData.products.length === 0) newErrors.products = "Select at least one product";
       if (!formData.stallNo) newErrors.stallNo = "Stall Selection is required";
+    }
+
+    // Remark/Message is mandatory (Common for all types)
+    if (!formData.remark || !formData.remark.trim()) {
+      newErrors.remark = "Remark / Message is required";
     }
 
     setErrors(newErrors);
@@ -226,6 +236,27 @@ const EnquiryForm = ({
       }
 
       toast.success("Enquiry Submitted Successfully!");
+      
+      // RESET FORM
+      setFormData({
+        name: "",
+        email: "",
+        companyName: "",
+        mobileNo: "",
+        category: "",
+        stallNo: "",
+        stallType: "",
+        sqm: "",
+        totalAmount: "",
+        products: [],
+        address: "",
+        remark: "",
+        city: "",
+        state: "",
+        pincode: "",
+      });
+      setErrors({});
+      
       onClose();
     } catch (error) {
       console.error("Submission error:", error);
@@ -429,7 +460,17 @@ const EnquiryForm = ({
                   </div>
                 </>
               )}
-              <div className="form-group" style={{ gridColumn: 'span 2' }}><label style={labelStyle}>Remark / Message</label><textarea style={textareaStyle} name="remark" value={formData.remark} onChange={handleChange} placeholder="Enter your requirement"></textarea></div>
+              <div className="form-group" style={{ gridColumn: 'span 2' }}>
+                <label style={labelStyle}>Remark / Message *</label>
+                <textarea 
+                  style={{...textareaStyle, borderColor: errors.remark ? '#ED1C24' : '#e2e8f0'}} 
+                  name="remark" 
+                  value={formData.remark} 
+                  onChange={handleChange} 
+                  placeholder="Enter your requirement"
+                ></textarea>
+                {errors.remark && <span style={errorTextStyle}>{errors.remark}</span>}
+              </div>
             </div>
           ) : (
             <div className="visitor-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
@@ -551,8 +592,15 @@ const EnquiryForm = ({
               </div>
 
               <div className="form-group" style={{ gridColumn: 'span 2' }}>
-                <label style={labelStyle}>Remark</label>
-                <textarea style={textareaStyle} name="remark" value={formData.remark} onChange={handleChange} placeholder="Additional notes..."></textarea>
+                <label style={labelStyle}>Remark *</label>
+                <textarea 
+                  style={{...textareaStyle, borderColor: errors.remark ? '#ED1C24' : '#e2e8f0'}} 
+                  name="remark" 
+                  value={formData.remark} 
+                  onChange={handleChange} 
+                  placeholder="Additional notes..."
+                ></textarea>
+                {errors.remark && <span style={errorTextStyle}>{errors.remark}</span>}
               </div>
             </div>
           )}

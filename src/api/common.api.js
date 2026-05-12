@@ -73,5 +73,25 @@ export const createInterestEnquiry = (data) => {
 };
 
 export const createContactEnquiry = (data) => {
-    return apiClient.post('/website/contact/create', data);
+    return apiClient.post('/contact/create', data);
+};
+
+// Careers APIs
+export const getCareers = () => {
+    return apiClient.get('/career');
+};
+
+export const applyForJob = (data) => {
+    return apiClient.post('/career/apply', data);
+};
+
+export const uploadFile = (file, folderName) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('folderName', folderName);
+    return apiClient.post('/upload', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
 };

@@ -36,8 +36,8 @@ const NextExpoSection = () => {
 
   const currentExpo = expos[currentIndex];
 
-  const nextExpo = () => setCurrentIndex((p) => (p + 1) % expos.length);
-  const prevExpo = () => setCurrentIndex((p) => (p - 1 + expos.length) % expos.length);
+  const nextExpo = () => setCurrentIndex((p) => Math.min(p + 1, expos.length - 1));
+  const prevExpo = () => setCurrentIndex((p) => Math.max(p - 1, 0));
 
   if (loading) {
     return (
@@ -67,21 +67,29 @@ const NextExpoSection = () => {
           </h2>
         </div>
 
-        {/* EXTERNAL NAVIGATION ARROWS */}
-        <button 
-          className="external-nav-btn prev" 
-          onClick={prevExpo} 
-          style={{ position: 'absolute', top: '55%', left: '-60px', transform: 'translateY(-50%)', background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '3rem', color: '#ED1C24', zIndex: 10, transition: '0.3s' }}
-        >
-          <i className="fas fa-chevron-left"></i>
-        </button>
-        <button 
-          className="external-nav-btn next" 
-          onClick={nextExpo} 
-          style={{ position: 'absolute', top: '55%', right: '-60px', transform: 'translateY(-50%)', background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '3rem', color: '#ED1C24', zIndex: 10, transition: '0.3s' }}
-        >
-          <i className="fas fa-chevron-right"></i>
-        </button>
+        {/* EXTERNAL NAVIGATION ARROWS - ONLY IF > 1 EXPO */}
+        {expos.length > 1 && (
+          <>
+            {currentIndex > 0 && (
+              <button 
+                className="nav-arrow left" 
+                onClick={prevExpo} 
+                aria-label="Previous Expo"
+              >
+                <i className="fas fa-chevron-left"></i>
+              </button>
+            )}
+            {currentIndex < expos.length - 1 && (
+              <button 
+                className="nav-arrow right" 
+                onClick={nextExpo} 
+                aria-label="Next Expo"
+              >
+                <i className="fas fa-chevron-right"></i>
+              </button>
+            )}
+          </>
+        )}
 
         <div className="next-expo-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '50px', alignItems: 'center' }}>
           {/* LEFT: GALLERY CAROUSEL */}
@@ -170,23 +178,36 @@ const NextExpoSection = () => {
                 Experience South India's premier trade event at {currentExpo.venue}. Join industry leaders and explore the latest innovations in {currentExpo.products?.map(p => p.productName).join(', ') || "various sectors"}.
               </p>
 
-              <div className="present-expo-actions" style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                <a href={getImageUrl(currentExpo.layoutImage)} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', padding: '12px 25px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px', border: 'none', background: '#f3f4f6', color: '#374151' }}>
+              <div className="present-expo-actions">
+                <a href={getImageUrl(currentExpo.layoutImage)} target="_blank" rel="noopener noreferrer" className="expo-action-link layout-btn">
                   <i className="fas fa-download"></i> Layout
                 </a>
-                <a href={getImageUrl(currentExpo.brochure)} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', padding: '12px 25px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px', border: 'none', background: '#f3f4f6', color: '#374151' }}>
+                <a href={getImageUrl(currentExpo.brochure)} target="_blank" rel="noopener noreferrer" className="expo-action-link brochure-btn">
                   <i className="fas fa-download"></i> Brochure
                 </a>
                 <button 
                   onClick={() => setIsModalOpen(true)}
-                  style={{ padding: '12px 30px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px', border: 'none', background: '#ED1C24', color: '#fff', flexGrow: 1, justifyContent: 'center', boxShadow: '0 4px 15px rgba(237, 28, 36, 0.3)' }}
+                  className="register-btn-main"
                 >
-                  Register Now
+                  Register Now <i className="fas fa-arrow-right"></i>
                 </button>
               </div>
             </div>
           </div>
         </div>
+
+        {/* DOTS */}
+        {expos.length > 1 && (
+          <div className="slider-dots">
+            {expos.map((_, index) => (
+              <button
+                key={index}
+                className={`slider-dot ${index === currentIndex ? "active" : ""}`}
+                onClick={() => setCurrentIndex(index)}
+              ></button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* REGISTRATION MODAL */}
@@ -228,6 +249,33 @@ const NextExpoSection = () => {
         @media (max-width: 992px) {
           .next-expo-grid {
             grid-template-columns: 1fr !important;
+            gap: 30px !important;
+          }
+          .gallery-main-wrapper {
+            height: 250px !important; /* Decreased image size */
+          }
+          .gallery-main-wrapper > div {
+             height: 250px !important;
+          }
+          .next-expo-content-right h3 {
+            font-size: 1.8rem !important;
+            text-align: center;
+          }
+          .details-grid-v2 {
+            grid-template-columns: 1fr !important; /* Vertical alignment for details */
+            gap: 15px !important;
+          }
+          .present-expo-actions {
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            justify-content: space-between !important;
+            gap: 8px !important;
+          }
+          .present-expo-actions a, 
+          .present-expo-actions button {
+            padding: 10px 12px !important;
+            font-size: 0.8rem !important;
+            flex: 1 !important;
           }
         }
       `}</style>

@@ -89,14 +89,12 @@ const PreviousExhibitions = () => {
                   <motion.div
                     key={item._id} whileHover={{ y: -8 }}
                     className="modern-gallery-card expo-card"
-                    onClick={() => openInterestedForm(item)}
                     style={{
                       background: '#fff',
                       borderRadius: '20px',
                       border: '1px solid #eee',
                       overflow: 'hidden',
                       boxShadow: '0 10px 40px rgba(0,0,0,0.06)',
-                      cursor: 'pointer',
                       display: 'flex',
                       flexDirection: 'column',
                       transition: '0.3s'
@@ -132,7 +130,7 @@ const PreviousExhibitions = () => {
 
                       <div style={{ marginTop: 'auto' }}>
                         <button
-                          onClick={(e) => { e.stopPropagation(); openInterestedForm(item); }}
+                          onClick={() => openInterestedForm(item)}
                           style={{
                             width: '100%',
                             background: '#ED1C24',

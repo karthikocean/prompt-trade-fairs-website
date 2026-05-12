@@ -57,7 +57,7 @@ const Hero = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 4000);
     return () => clearInterval(timer);
   }, [slides.length]);
 
@@ -77,10 +77,10 @@ const Hero = () => {
           key={currentIndex}
           className="hero-slide"
           style={{ backgroundImage: `url(${slides[currentIndex].img})` }}
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
         >
           <div className="overlay"></div>
 
@@ -88,18 +88,18 @@ const Hero = () => {
           <div className="hero-content">
             <motion.h1
               key={`h1-${currentIndex}`}
-              initial={{ y: 50, opacity: 0 }}
+              initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.1, duration: 0.4 }}
             >
               {slides[currentIndex].title}
             </motion.h1>
 
             <motion.p
               key={`p-${currentIndex}`}
-              initial={{ y: 50, opacity: 0 }}
+              initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.6 }}
+              transition={{ delay: 0.2, duration: 0.4 }}
             >
               {slides[currentIndex].desc}
             </motion.p>
@@ -107,9 +107,9 @@ const Hero = () => {
             <Link to={slides[currentIndex].link}>
               <motion.button
                 key={`btn-${currentIndex}`}
-                initial={{ y: 50, opacity: 0 }}
+                initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.9 }}
+                transition={{ delay: 0.3, duration: 0.4 }}
               >
                 {slides[currentIndex].btnText}
               </motion.button>
@@ -119,19 +119,21 @@ const Hero = () => {
       </AnimatePresence>
 
       {/* ARROWS */}
-      <div className="hero-arrows">
-        <span onClick={prevSlide}>❮</span>
-        <span onClick={nextSlide}>❯</span>
-      </div>
+      <button className="nav-arrow left" onClick={prevSlide} style={{ left: '30px' }}>
+        <i className="fas fa-chevron-left"></i>
+      </button>
+      <button className="nav-arrow right" onClick={nextSlide} style={{ right: '30px' }}>
+        <i className="fas fa-chevron-right"></i>
+      </button>
 
       {/* DOTS */}
-      <div className="hero-dots">
+      <div className="slider-dots" style={{ position: 'absolute', bottom: '40px', left: '50%', transform: 'translateX(-50%)', marginTop: 0 }}>
         {slides.map((_, index) => (
-          <span
+          <button
             key={index}
-            className={index === currentIndex ? "dot active" : "dot"}
+            className={`slider-dot ${index === currentIndex ? "active" : ""}`}
             onClick={() => setCurrentIndex(index)}
-          ></span>
+          ></button>
         ))}
       </div>
     </section>

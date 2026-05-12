@@ -40,7 +40,17 @@ const Header = () => {
           </NavLink>
 
           {/* DROPDOWN - EXHIBITIONS */}
-          <div className="dropdown" onMouseEnter={() => setActiveDropdown('exhibitions')} onMouseLeave={() => setActiveDropdown(null)}>
+          <div 
+            className="dropdown" 
+            onMouseEnter={() => setActiveDropdown('exhibitions')} 
+            onMouseLeave={() => setActiveDropdown(null)}
+            onClick={(e) => {
+              if (window.innerWidth <= 992) {
+                e.stopPropagation();
+                setActiveDropdown(activeDropdown === 'exhibitions' ? null : 'exhibitions');
+              }
+            }}
+          >
             <div className={`dropdown-toggle ${(window.location.pathname.startsWith('/exhibitions')) ? 'active' : ''}`}>
               Exhibitions <i className="fas fa-chevron-down"></i>
             </div>
@@ -60,7 +70,17 @@ const Header = () => {
           </NavLink>
 
           {/* DROPDOWN - OUR GROUPS */}
-          <div className="dropdown" onMouseEnter={() => setActiveDropdown('groups')} onMouseLeave={() => setActiveDropdown(null)}>
+          <div 
+            className="dropdown" 
+            onMouseEnter={() => setActiveDropdown('groups')} 
+            onMouseLeave={() => setActiveDropdown(null)}
+            onClick={(e) => {
+              if (window.innerWidth <= 992) {
+                e.stopPropagation();
+                setActiveDropdown(activeDropdown === 'groups' ? null : 'groups');
+              }
+            }}
+          >
             <div className="dropdown-toggle">
               Our Groups <i className="fas fa-chevron-down"></i>
             </div>
