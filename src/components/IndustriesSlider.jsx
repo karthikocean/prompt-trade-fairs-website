@@ -14,23 +14,6 @@ const formatDate = (start, end) => {
   return `${s.toLocaleDateString(undefined, options)} - ${e.toLocaleDateString(undefined, options)}, ${year}`;
 };
 
-const CalIcon = () => (
-  <svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-    <rect x="1" y="3" width="14" height="11" rx="2" stroke="#ED1C24" strokeWidth="1.4" />
-    <path d="M5 1v3M11 1v3M1 7h14" stroke="#ED1C24" strokeWidth="1.4" strokeLinecap="round" />
-  </svg>
-);
-
-const PinIcon = () => (
-  <svg width="10" height="10" viewBox="0 0 14 18" fill="none" aria-hidden="true">
-    <path
-      d="M7 1C4.239 1 2 3.239 2 6c0 3.75 5 11 5 11s5-7.25 5-11c0-2.761-2.239-5-5-5z"
-      stroke="#ED1C24"
-      strokeWidth="1.4"
-    />
-    <circle cx="7" cy="6" r="1.8" stroke="#ED1C24" strokeWidth="1.4" />
-  </svg>
-);
 
 const IndustriesSlider = () => {
   const [page, setPage] = useState(0);
@@ -38,6 +21,7 @@ const IndustriesSlider = () => {
   const [selectedExpo, setSelectedExpo] = useState(null);
   const [expos, setExpos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [itemsPerPage, setItemsPerPage] = useState(2);
 
   useEffect(() => {
     const fetchExpos = async () => {
@@ -66,6 +50,15 @@ const IndustriesSlider = () => {
     };
     fetchExpos();
   }, []);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setItemsPerPage(window.innerWidth <= 768 ? 1 : 2);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   if (loading) {
     return (
@@ -81,12 +74,11 @@ const IndustriesSlider = () => {
     return null;
   }
 
-  const PER_PAGE = 2;
-  const totalPages = Math.ceil(expos.length / PER_PAGE);
-  const items = expos.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
+  const totalPages = Math.ceil(expos.length / itemsPerPage);
+  const items = expos.slice(page * itemsPerPage, page * itemsPerPage + itemsPerPage);
 
-  const prev = () => setPage((p) => (p - 1 + totalPages) % totalPages);
-  const next = () => setPage((p) => (p + 1) % totalPages);
+  const prev = () => setPage((p) => Math.max(p - 1, 0));
+  const next = () => setPage((p) => Math.min(p + 1, totalPages - 1));
 
   const openRegisterModal = (expo) => {
     setSelectedExpo(expo);
@@ -108,48 +100,54 @@ const IndustriesSlider = () => {
         </div>
 
         <div className="expo-slider-container" style={{ position: 'relative' }}>
-          {/* EXTERNAL CHEVRON ARROWS */}
-          <button
-            onClick={prev}
-            style={{
-              position: 'absolute', top: '50%', left: '-60px', transform: 'translateY(-50%)',
-              background: 'transparent', border: 'none', cursor: 'pointer',
-              fontSize: '3.5rem', color: '#ED1C24', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center',
-              transition: '0.3s'
-            }}
-          >
-            <i className="fas fa-chevron-left"></i>
-          </button>
-          <button
-            onClick={next}
-            style={{
-              position: 'absolute', top: '50%', right: '-60px', transform: 'translateY(-50%)',
-              background: 'transparent', border: 'none', cursor: 'pointer',
-              fontSize: '3.5rem', color: '#ED1C24', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center',
-              transition: '0.3s'
-            }}
-          >
-            <i className="fas fa-chevron-right"></i>
-          </button>
+          {/* EXTERNAL CHEVRON ARROWS - ONLY IF > itemsPerPage EXPOS */}
+          {expos.length > itemsPerPage && (
+            <>
+              {page > 0 && (
+                <button
+                  className="nav-arrow left"
+                  onClick={prev}
+                  aria-label="Previous Page"
+                >
+                  <i className="fas fa-chevron-left"></i>
+                </button>
+              )}
+              {page < totalPages - 1 && (
+                <button
+                  className="nav-arrow right"
+                  onClick={next}
+                  aria-label="Next Page"
+                >
+                  <i className="fas fa-chevron-right"></i>
+                </button>
+              )}
+            </>
+          )}
 
-          <div className="expo-grid-v2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
+          <div className="expo-grid-v2" style={{ 
+            display: 'grid', 
+            gridTemplateColumns: itemsPerPage === 1 ? '1fr' : '1fr 1fr', 
+            gap: '30px',
+            maxWidth: itemsPerPage === 1 ? '550px' : '100%',
+            margin: '0 auto'
+          }}>
             {items.map((expo, i) => (
               <div className="expo-card-v2" key={i} style={{ background: '#fff', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ position: 'relative', height: '280px' }}>
+                <div className="expo-card-img-wrapper" style={{ position: 'relative', height: '280px' }}>
                   <img src={expo.img} alt={expo.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
 
                 <div style={{ padding: '30px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', marginBottom: '12px' }}>
-                    <h3 style={{ fontSize: '1.3rem', fontWeight: '800', color: '#1a1a1a', margin: 0 }}>{expo.title}</h3>
-                    <div style={{ display: 'flex', gap: '8px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.7rem', color: '#444', background: '#f3f4f6', padding: '4px 10px', borderRadius: '6px', border: '1px solid #e5e7eb' }}>
-                        <CalIcon />
-                        <span style={{ fontWeight: '700' }}>{expo.date}</span>
+                  <div style={{ marginBottom: '15px' }}>
+                    <h3 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#1a1a1a', marginBottom: '10px' }}>{expo.title}</h3>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', color: '#111' }}>
+                        <i className="fas fa-calendar-alt" style={{ color: '#ED1C24', fontSize: '1.1rem' }}></i>
+                        <span style={{ fontWeight: '800' }}>{expo.date}</span>
                       </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.7rem', color: '#444', background: '#f3f4f6', padding: '4px 10px', borderRadius: '6px', border: '1px solid #e5e7eb' }}>
-                        <PinIcon />
-                        <span style={{ fontWeight: '700' }}>{expo.location}</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', color: '#111' }}>
+                        <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24', fontSize: '1.1rem' }}></i>
+                        <span style={{ fontWeight: '800' }}>{expo.location}</span>
                       </div>
                     </div>
                   </div>
@@ -178,13 +176,13 @@ const IndustriesSlider = () => {
 
         {/* DOTS */}
         {totalPages > 1 && (
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '40px' }}>
+          <div className="slider-dots">
             {Array.from({ length: totalPages }, (_, i) => (
-              <span
+              <button
                 key={i}
+                className={`slider-dot ${i === page ? "active" : ""}`}
                 onClick={() => setPage(i)}
-                style={{ width: '12px', height: '12px', borderRadius: '50%', background: i === page ? '#ED1C24' : '#ddd', cursor: 'pointer', transition: '0.3s' }}
-              />
+              ></button>
             ))}
           </div>
         )}

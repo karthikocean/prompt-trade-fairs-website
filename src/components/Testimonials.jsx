@@ -41,8 +41,8 @@ const Testimonial = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const prev = () => setIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  const next = () => setIndex((prev) => (prev + 1) % testimonials.length);
+  const prev = () => setIndex((prev) => Math.max(prev - 1, 0));
+  const next = () => setIndex((prev) => Math.min(prev + 1, testimonials.length - 1));
 
   const getItem = (offset) => {
     return testimonials[(index + offset + testimonials.length) % testimonials.length];
@@ -69,9 +69,11 @@ const Testimonial = () => {
 
         <div className="testimonial-container-main">
           {/* NAVIGATION LEFT */}
-          <button className="nav-arrow left" onClick={prev} aria-label="Previous">
-            <i className="fas fa-chevron-left"></i>
-          </button>
+          {index > 0 && (
+            <button className="nav-arrow left" onClick={prev} aria-label="Previous">
+              <i className="fas fa-chevron-left"></i>
+            </button>
+          )}
 
           <div className="testimonial-grid-display-premium">
             {[-1, 0, 1].map((offset) => {
@@ -111,17 +113,19 @@ const Testimonial = () => {
           </div>
 
           {/* NAVIGATION RIGHT */}
-          <button className="nav-arrow right" onClick={next} aria-label="Next">
-            <i className="fas fa-chevron-right"></i>
-          </button>
+          {index < testimonials.length - 1 && (
+            <button className="nav-arrow right" onClick={next} aria-label="Next">
+              <i className="fas fa-chevron-right"></i>
+            </button>
+          )}
         </div>
 
         {/* PAGINATION DOTS */}
-        <div className="testimonial-dots-box">
+        <div className="slider-dots">
           {testimonials.map((_, i) => (
             <button
               key={i}
-              className={`testimonial-dot ${i === index ? "active" : ""}`}
+              className={`slider-dot ${i === index ? "active" : ""}`}
               onClick={() => setIndex(i)}
               aria-label={`Go to testimonial ${i + 1}`}
             />
