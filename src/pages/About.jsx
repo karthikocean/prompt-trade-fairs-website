@@ -54,44 +54,61 @@ const About = () => {
       <section className="about-v3-intro">
         <div className="container">
           <div className="about-v3-grid">
-            <motion.div 
-               className="intro-left"
-               initial={{ opacity: 0, x: -50 }}
-               whileInView={{ opacity: 1, x: 0 }}
-               viewport={{ once: true }}
-            >
-              <div className="premium-header-box">
-                <div className="header-accent-row">
-                  <div className="header-accent-line"></div>
-                  <span className="header-accent-tag">EMPROWERING BUSINESSES</span>
+            <div className="v3-intro-content-wrapper">
+              <motion.div 
+                 className="v3-intro-header"
+                 initial={{ opacity: 0, x: -50 }}
+                 whileInView={{ opacity: 1, x: 0 }}
+                 viewport={{ once: true }}
+              >
+                <div className="premium-header-box">
+                  <div className="header-accent-row">
+                    <div className="header-accent-line"></div>
+                    <span className="header-accent-tag">EMPROWERING BUSINESSES</span>
+                  </div>
+                  <h2 className="header-main-title">Prompt Trade Fairs <span>India Pvt Ltd</span></h2>
                 </div>
-                <h2 className="header-main-title">Prompt Trade Fairs <span>India Pvt Ltd</span></h2>
-              </div>
-              
-              <div className="intro-bullets">
-                 <div className="bullet-item">
-                    <div className="bullet-icon"><i className="fas fa-check-double"></i></div>
-                    <p>Globally Empowering Industry Standards</p>
-                 </div>
-                 <div className="bullet-item">
-                    <div className="bullet-icon"><i className="fas fa-check-double"></i></div>
-                    <p>Connecting Buyers with Leading Manufacturers</p>
-                 </div>
-                 <div className="bullet-item">
-                    <div className="bullet-icon"><i className="fas fa-check-double"></i></div>
-                    <p>Organizing 125+ Successful Exhibitions</p>
-                 </div>
-              </div>
-              <p className="intro-p">
-                Established in 2002, Prompt Trade Fairs India Private Limited has emerged as one of the most reputed and outstanding Exhibition Organizers in India. Led by a team of professionals who have organized over 125 Exhibitions for more than two decades, we have our footprints across the country.
-              </p>
-              <p className="intro-p">
-                We organize more than 15 exhibitions a year in various categories including Property Fair, Building & Construction Expo, Interior Design Expo, and Consumer Fairs.
-              </p>
-            </motion.div>
+              </motion.div>
+
+              <motion.div 
+                 className="v3-intro-bullets"
+                 initial={{ opacity: 0, x: -50 }}
+                 whileInView={{ opacity: 1, x: 0 }}
+                 viewport={{ once: true }}
+              >
+                <div className="intro-bullets">
+                   <div className="bullet-item">
+                      <div className="bullet-icon"><i className="fas fa-check-double"></i></div>
+                      <p>Globally Empowering Industry Standards</p>
+                   </div>
+                   <div className="bullet-item">
+                      <div className="bullet-icon"><i className="fas fa-check-double"></i></div>
+                      <p>Connecting Buyers with Leading Manufacturers</p>
+                   </div>
+                   <div className="bullet-item">
+                      <div className="bullet-icon"><i className="fas fa-check-double"></i></div>
+                      <p>Organizing 125+ Successful Exhibitions</p>
+                   </div>
+                </div>
+              </motion.div>
+
+              <motion.div 
+                 className="v3-intro-text"
+                 initial={{ opacity: 0, x: -50 }}
+                 whileInView={{ opacity: 1, x: 0 }}
+                 viewport={{ once: true }}
+              >
+                <p className="intro-p">
+                  Established in 2002, Prompt Trade Fairs India Private Limited has emerged as one of the most reputed and outstanding Exhibition Organizers in India. Led by a team of professionals who have organized over 125 Exhibitions for more than two decades, we have our footprints across the country.
+                </p>
+                <p className="intro-p">
+                  We organize more than 15 exhibitions a year in various categories including Property Fair, Building & Construction Expo, Interior Design Expo, and Consumer Fairs.
+                </p>
+              </motion.div>
+            </div>
 
             <motion.div 
-               className="intro-right"
+               className="v3-intro-image"
                initial={{ opacity: 0, scale: 0.9 }}
                whileInView={{ opacity: 1, scale: 1 }}
                viewport={{ once: true }}

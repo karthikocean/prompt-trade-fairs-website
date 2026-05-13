@@ -65,7 +65,7 @@ const EventDetail = () => {
       <div className="container" style={{ marginTop: '30px' }}>
         {/* BACK TO EVENTS BUTTON */}
         <div style={{ marginBottom: '25px' }}>
-          <Link to="/events" style={{
+          <Link to="/events" className="v3-back-btn" style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
@@ -84,7 +84,7 @@ const EventDetail = () => {
 
 
         {/* HERO SECTION - SPLIT VIEW */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '50px', alignItems: 'stretch', marginBottom: '50px' }}>
+        <div className="detail-hero-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '50px', alignItems: 'stretch', marginBottom: '50px' }}>
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -104,7 +104,7 @@ const EventDetail = () => {
             </span>
 
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginTop: '30px' }}>
+            <div className="detail-highlights-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginTop: '30px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                 <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}>
                   <i className="far fa-calendar-alt"></i>

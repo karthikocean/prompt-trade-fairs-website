@@ -153,13 +153,13 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
             </div>
 
             <div className="custom-scrollbar" style={{ padding: '30px 40px', overflowY: 'auto', flex: 1, maxHeight: 'calc(100vh - 200px)' }}>
-              <div style={{ marginBottom: '25px', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>
+              <div className="job-modal-header" style={{ marginBottom: '25px', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>
                 <h3 style={{ fontSize: '1.8rem', fontWeight: '800', color: '#111', margin: 0 }}>Apply for {job?.jobRole}</h3>
                 <p style={{ color: '#666', marginTop: '5px', fontSize: '14px' }}>Please fill in the details below to submit your application.</p>
               </div>
 
               <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '15px' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div className="job-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                   <div className="form-group-v3">
                     <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Candidate Full Name <span style={{ color: '#ED1C24' }}>*</span></label>
                     <input
@@ -183,7 +183,7 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div className="job-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                   <div className="form-group-v3">
                     <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Date of Birth <span style={{ color: '#ED1C24' }}>*</span></label>
                     <input
@@ -210,7 +210,7 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div className="job-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                   <div className="form-group-v3">
                     <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Contact No <span style={{ color: '#ED1C24' }}>*</span></label>
                     <input
@@ -247,7 +247,7 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
                   />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div className="job-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                   <div className="form-group-v3">
                     <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Experience</label>
                     <input
@@ -374,28 +374,30 @@ const Careers = () => {
         <div className="container">
           <div className="about-story-grid">
             <div className="story-content-left">
-              <div className="premium-header-box">
+              <div className="premium-header-box culture-header">
                 <div className="header-accent-row">
                   <div className="header-accent-line"></div>
                   <span className="header-accent-tag">OUR CULTURE</span>
                 </div>
                 <h2 className="header-main-title">Work at the <span>Heart of Innovation</span></h2>
               </div>
-              <p className="story-p-large">
-                At PROMPT, we believe that our people are our greatest asset. We foster a culture of creativity, collaboration, and continuous learning.
-              </p>
-              <p className="story-p-muted">
-                Whether you're an experienced professional or a fresh graduate, we offer an environment that rewards hard work and provides a platform to lead and innovate within the exhibition industry.
-              </p>
-
-              <div className="milestones-row">
-                <div className="milestone-box">
-                  <span className="milestone-num">100+</span>
-                  <span className="milestone-label">Team Members</span>
-                </div>
-                <div className="milestone-box">
-                  <span className="milestone-num">5+</span>
-                  <span className="milestone-label">State-wide Offices</span>
+              <div className="culture-text-content">
+                <p className="story-p-large">
+                  At PROMPT, we believe that our people are our greatest asset. We foster a culture of creativity, collaboration, and continuous learning.
+                </p>
+                <p className="story-p-muted">
+                  Whether you're an experienced professional or a fresh graduate, we offer an environment that rewards hard work and provides a platform to lead and innovate within the exhibition industry.
+                </p>
+ 
+                <div className="milestones-row">
+                  <div className="milestone-box">
+                    <span className="milestone-num">100+</span>
+                    <span className="milestone-label">Team Members</span>
+                  </div>
+                  <div className="milestone-box">
+                    <span className="milestone-num">5+</span>
+                    <span className="milestone-label">State-wide Offices</span>
+                  </div>
                 </div>
               </div>
             </div>
