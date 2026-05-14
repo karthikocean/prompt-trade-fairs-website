@@ -59,7 +59,7 @@ const Hero = () => {
       setCurrentIndex((prev) => (prev + 1) % slides.length);
     }, 4000);
     return () => clearInterval(timer);
-  }, [slides.length]);
+  }, [slides.length, currentIndex]);
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % slides.length);
@@ -72,7 +72,7 @@ const Hero = () => {
   return (
     <section className="hero">
       {/* SLIDER */}
-      <AnimatePresence mode="wait">
+      <AnimatePresence initial={false}>
         <motion.div
           key={currentIndex}
           className="hero-slide"
@@ -80,7 +80,7 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
         >
           <div className="overlay"></div>
 
@@ -119,15 +119,15 @@ const Hero = () => {
       </AnimatePresence>
 
       {/* ARROWS */}
-      <button className="nav-arrow left" onClick={prevSlide} style={{ left: '30px' }}>
+      {/* <button className="nav-arrow left" onClick={prevSlide} style={{ left: '30px' }}>
         <i className="fas fa-chevron-left"></i>
       </button>
       <button className="nav-arrow right" onClick={nextSlide} style={{ right: '30px' }}>
         <i className="fas fa-chevron-right"></i>
-      </button>
+      </button> */}
 
       {/* DOTS */}
-      <div className="slider-dots" style={{ position: 'absolute', bottom: '40px', left: '50%', transform: 'translateX(-50%)', marginTop: 0 }}>
+      <div className="slider-dots" style={{ position: 'absolute', bottom: '40px', left: '50%', transform: 'translateX(-50%)', marginTop: 0, zIndex: 10 }}>
         {slides.map((_, index) => (
           <button
             key={index}

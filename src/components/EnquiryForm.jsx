@@ -19,6 +19,29 @@ const EnquiryForm = ({
   customClass = ""
 }) => {
   const [enquiryType, setEnquiryType] = useState("stalls"); // "stalls" or "visitors"
+  
+  // CLEAR DATA ON TAB SWITCH
+  useEffect(() => {
+    setFormData({
+      name: "",
+      email: "",
+      companyName: "",
+      mobileNo: "",
+      category: "",
+      stallNo: "",
+      stallType: "",
+      sqm: "",
+      totalAmount: "",
+      products: [],
+      address: "",
+      remark: "",
+      city: "",
+      state: "",
+      pincode: "",
+    });
+    setErrors({});
+  }, [enquiryType]);
+
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -138,6 +161,11 @@ const EnquiryForm = ({
       if (!/^\d*$/.test(value) || value.length > 6) return;
     }
 
+    // VALIDATION: City & State only alphabets
+    if (name === "city" || name === "state") {
+      if (!/^[a-zA-Z\s]*$/.test(value)) return;
+    }
+
     // Special handling for products (array)
     if (name === "products") {
       const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
@@ -176,10 +204,14 @@ const EnquiryForm = ({
     }
 
     if (!isSimplified && enquiryType === "stalls") {
-      if (!formData.companyName.trim()) newErrors.companyName = "Company Name is required";
       if (!formData.category) newErrors.category = "Category is required";
       if (formData.products.length === 0) newErrors.products = "Select at least one product";
       if (!formData.stallNo) newErrors.stallNo = "Stall Selection is required";
+    }
+
+    if (!isSimplified && enquiryType === "visitors") {
+      if (!formData.category) newErrors.category = "Category is required";
+      if (formData.products.length === 0) newErrors.products = "Select at least one product";
     }
 
     // Remark/Message is mandatory (Common for all types)
@@ -317,7 +349,7 @@ const EnquiryForm = ({
         </div>
       )}
 
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, overflow: 'hidden' }}>
+      <form noValidate onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, overflow: 'hidden' }}>
         <div className={`scrollable-fields-container ${customClass}`} style={{ 
           padding: hideHeader ? '0' : '25px', 
           overflowY: hideHeader ? 'visible' : 'auto', 
@@ -331,7 +363,7 @@ const EnquiryForm = ({
                 {errors.name && <span style={errorTextStyle}>{errors.name}</span>}
               </div>
               <div className="form-group">
-                <label style={labelStyle}>Company Name *</label>
+                <label style={labelStyle}>Company Name</label>
                 <input style={{...inputStyle, borderColor: errors.companyName ? '#ED1C24' : '#e2e8f0'}} type="text" name="companyName" value={formData.companyName} onChange={handleChange} placeholder="Enter Company" />
                 {errors.companyName && <span style={errorTextStyle}>{errors.companyName}</span>}
               </div>
@@ -359,7 +391,7 @@ const EnquiryForm = ({
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         borderColor: errors.category ? '#ED1C24' : '#e2e8f0',
-                        minHeight: '45px',
+                        height: '45px',
                       }}
                     >
                       <span style={{ fontSize: '0.9rem', color: formData.category ? '#333' : '#999' }}>
@@ -403,7 +435,7 @@ const EnquiryForm = ({
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         borderColor: errors.products ? '#ED1C24' : '#e2e8f0',
-                        minHeight: '45px',
+                        height: '45px',
                       }}
                     >
                       <span style={{ 
@@ -485,7 +517,7 @@ const EnquiryForm = ({
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         borderColor: errors.stallNo ? '#ED1C24' : '#e2e8f0',
-                        minHeight: '45px',
+                        height: '45px',
                       }}
                     >
                       <span style={{ fontSize: '0.9rem', color: formData.stallNo ? '#333' : '#999' }}>
@@ -577,7 +609,7 @@ const EnquiryForm = ({
               <div className="form-group"><label style={labelStyle}>Pincode</label><input style={inputStyle} type="text" name="pincode" value={formData.pincode} onChange={handleChange} placeholder="Pincode" /></div>
               
               <div className="form-group category-dropdown-container" style={{ position: 'relative' }}>
-                <label style={labelStyle}>Category</label>
+                <label style={labelStyle}>Category *</label>
                 <div 
                   onClick={() => setIsCategoryDropdownOpen(!isCategoryDropdownOpen)}
                   style={{
@@ -630,7 +662,7 @@ const EnquiryForm = ({
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     borderColor: errors.products ? '#ED1C24' : '#e2e8f0',
-                    minHeight: '45px',
+                    height: '45px',
                   }}
                 >
                   <span style={{ 

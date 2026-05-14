@@ -40,7 +40,6 @@ const Footer = () => {
           <ul>
             <li><Link to="/"><i className="fas fa-chevron-right"></i>Home</Link></li>
             <li><Link to="/about"><i className="fas fa-chevron-right"></i>About Us</Link></li>
-            <li><Link to="/our-groups"><i className="fas fa-chevron-right"></i>Our Groups</Link></li>
             <li><Link to="/careers"><i className="fas fa-chevron-right"></i>Careers</Link></li>
             <li><Link to="/to-export"><i className="fas fa-chevron-right"></i>To Exhibit</Link></li>
             <li><Link to="/contact"><i className="fas fa-chevron-right"></i>Contact Us</Link></li>
@@ -51,8 +50,8 @@ const Footer = () => {
         <div className="footer-col">
           <h3>Company</h3>
           <ul>
-            <li><Link to="/events"><i className="fas fa-chevron-right"></i>Upcoming Exhibitions</Link></li>
-            <li><Link to="/events"><i className="fas fa-chevron-right"></i>Previous Exhibitions</Link></li>
+            <li><Link to="/previous-exhibitions"><i className="fas fa-chevron-right"></i>Future Exhibitions</Link></li>
+            <li><Link to="/upcoming-exhibitions"><i className="fas fa-chevron-right"></i>Present Exhibitions</Link></li>
             <li><Link to="/events"><i className="fas fa-chevron-right"></i>Events</Link></li>
             <li><Link to="/payment-terms"><i className="fas fa-chevron-right"></i>Payment Terms</Link></li>
             <li><Link to="/privacy-policy"><i className="fas fa-chevron-right"></i>Privacy Policy</Link></li>
@@ -80,7 +79,7 @@ const Footer = () => {
           <p>
             <i className="fas fa-phone-alt"></i>
             Phone: +91 44 4214 2483<br />
-            Mobile: 93913 91162, 99410 08371
+            Mobile: +91 93913 91162, +91 99410 08371
           </p>
         </div>
       </div>

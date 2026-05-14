@@ -100,7 +100,7 @@ const Testimonial = () => {
                       
                       <div className="quote-wrap-red">
                          <i className="fas fa-quote-left quote-mark start"></i>
-                         <p className="testimonial-main-text">{item.text}</p>
+                         <p className="testimonial-main-text" style={{ fontSize: '16px' }}>{item.text}</p>
                          <i className="fas fa-quote-right quote-mark end"></i>
                       </div>
                    </div>

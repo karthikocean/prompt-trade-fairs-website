@@ -60,6 +60,11 @@ h6 {
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.2;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.6;
   margin-bottom: 1rem;
 }
 
@@ -3202,7 +3207,6 @@ section:not(.hero) {
   background-image: linear-gradient(rgba(11, 18, 32, 0.85), rgba(15, 28, 63, 0.85)), url('/webbannerbuild.jpg');
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
   position: relative;
   text-align: center;
   color: white;
@@ -4243,7 +4247,7 @@ section:not(.hero) {
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   display: flex !important;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   border: 1px solid rgba(237, 28, 36, 0.1);
   box-shadow: 0 10px 30px rgba(237, 28, 36, 0.05);
 }

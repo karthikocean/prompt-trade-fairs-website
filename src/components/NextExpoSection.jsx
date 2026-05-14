@@ -59,7 +59,7 @@ const NextExpoSection = () => {
         <div className="premium-header-box centered" style={{ textAlign: 'center', marginBottom: '50px' }}>
           <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px', marginBottom: '15px' }}>
             <div className="header-accent-line" style={{ height: '1px', width: '30px', background: '#ED1C24' }}></div>
-            <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '0.8rem' }}>Present Expo</span>
+            <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>Present Expo</span>
             <div className="header-accent-line" style={{ height: '1px', width: '30px', background: '#ED1C24' }}></div>
           </div>
           <h2 className="header-main-title" style={{ fontSize: '2.5rem', fontWeight: '800', color: '#1a1a1a' }}>

@@ -33,7 +33,7 @@ export const getExpoDetails = (id) => {
 };
 
 export const getPastExpos = () => {
-    return apiClient.get('/expos/past');
+    return apiClient.get('/expos/past?limit=100');
 };
 
 export const getPastExpoDetails = (id) => {

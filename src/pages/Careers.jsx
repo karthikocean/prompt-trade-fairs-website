@@ -19,8 +19,33 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
     resume: null
   };
   const [formData, setFormData] = useState(initialFormState);
+  const [errors, setErrors] = useState({});
 
   if (!isOpen) return null;
+
+  const validateForm = () => {
+    let newErrors = {};
+    if (!formData.fullName.trim()) newErrors.fullName = "Full Name is required";
+    if (!formData.dob) newErrors.dob = "Date of Birth is required";
+    if (!formData.gender) newErrors.gender = "Gender is required";
+    if (!formData.mobileNo) {
+      newErrors.mobileNo = "Contact Number is required";
+    } else if (formData.mobileNo.length !== 10) {
+      newErrors.mobileNo = "Mobile number must be 10 digits";
+    }
+    if (!formData.email) {
+      newErrors.email = "Email Address is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Email Address is invalid";
+    }
+    if (!formData.qualification.trim()) newErrors.qualification = "Qualification is required";
+    if (!formData.experience.trim()) newErrors.experience = "Experience is required";
+    if (!formData.expectedSalary.trim()) newErrors.expectedSalary = "Expected Salary is required";
+    if (!formData.fatherOrHusbandName.trim()) newErrors.fatherOrHusbandName = "This field is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   // Validation Handlers
   const handleNameChange = (e, field) => {
@@ -42,9 +67,19 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Final Validation
-    if (formData.mobileNo.length !== 10) {
-      toast.error("Mobile number must be exactly 10 digits.");
+    if (!validateForm()) {
+      toast.error("Please fix the errors in the form.", {
+        style: {
+          border: '1px solid #ED1C24',
+          padding: '16px',
+          color: '#ED1C24',
+          fontWeight: 'bold'
+        },
+        iconTheme: {
+          primary: '#ED1C24',
+          secondary: '#FFFAEE',
+        },
+      });
       return;
     }
 
@@ -152,140 +187,147 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
               </div>
             </div>
 
-            <div className="custom-scrollbar" style={{ padding: '30px 40px', overflowY: 'auto', flex: 1, maxHeight: 'calc(100vh - 200px)' }}>
-              <div className="job-modal-header" style={{ marginBottom: '25px', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>
-                <h3 style={{ fontSize: '1.8rem', fontWeight: '800', color: '#111', margin: 0 }}>Apply for {job?.jobRole}</h3>
-                <p style={{ color: '#666', marginTop: '5px', fontSize: '14px' }}>Please fill in the details below to submit your application.</p>
+            <form noValidate onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flex: 1, overflow: 'hidden' }}>
+              <div className="custom-scrollbar" style={{ padding: '30px 40px', overflowY: 'auto', flex: 1 }}>
+                <div className="job-modal-header" style={{ marginBottom: '25px', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>
+                  <h3 style={{ fontSize: '1.8rem', fontWeight: '800', color: '#111', margin: 0 }}>Apply for {job?.jobRole}</h3>
+                  <p style={{ color: '#666', marginTop: '5px', fontSize: '14px' }}>Please fill in the details below to submit your application.</p>
+                </div>
+
+                <div style={{ display: 'grid', gap: '15px' }}>
+                  <div className="job-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                    <div className="form-group-v3">
+                      <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Candidate Full Name <span style={{ color: '#ED1C24' }}>*</span></label>
+                      <input
+                        type="text"
+                        placeholder="Enter your full name"
+                        style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: errors.fullName ? '1.5px solid #ED1C24' : '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
+                        value={formData.fullName}
+                        onChange={(e) => handleNameChange(e, 'fullName')}
+                      />
+                      {errors.fullName && <span style={{ color: '#ED1C24', fontSize: '11px', fontWeight: '600', marginTop: '4px', display: 'block' }}>{errors.fullName}</span>}
+                    </div>
+                    <div className="form-group-v3">
+                      <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Fathers / Husband Name <span style={{ color: '#ED1C24' }}>*</span></label>
+                      <input
+                        type="text"
+                        placeholder="Enter name"
+                        style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: errors.fatherOrHusbandName ? '1.5px solid #ED1C24' : '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
+                        value={formData.fatherOrHusbandName}
+                        onChange={(e) => handleNameChange(e, 'fatherOrHusbandName')}
+                      />
+                      {errors.fatherOrHusbandName && <span style={{ color: '#ED1C24', fontSize: '11px', fontWeight: '600', marginTop: '4px', display: 'block' }}>{errors.fatherOrHusbandName}</span>}
+                    </div>
+                  </div>
+
+                  <div className="job-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                    <div className="form-group-v3">
+                      <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Date of Birth <span style={{ color: '#ED1C24' }}>*</span></label>
+                      <input
+                        type="date"
+                        style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: errors.dob ? '1.5px solid #ED1C24' : '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
+                        value={formData.dob}
+                        onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
+                      />
+                      {errors.dob && <span style={{ color: '#ED1C24', fontSize: '11px', fontWeight: '600', marginTop: '4px', display: 'block' }}>{errors.dob}</span>}
+                    </div>
+                    <div className="form-group-v3">
+                      <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Gender <span style={{ color: '#ED1C24' }}>*</span></label>
+                      <select
+                        style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: errors.gender ? '1.5px solid #ED1C24' : '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
+                        value={formData.gender}
+                        onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+                      >
+                        <option value="">Select</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                      </select>
+                      {errors.gender && <span style={{ color: '#ED1C24', fontSize: '11px', fontWeight: '600', marginTop: '4px', display: 'block' }}>{errors.gender}</span>}
+                    </div>
+                  </div>
+
+                  <div className="job-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                    <div className="form-group-v3">
+                      <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Contact No <span style={{ color: '#ED1C24' }}>*</span></label>
+                      <input
+                        type="tel"
+                        placeholder="Phone number"
+                        style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: errors.mobileNo ? '1.5px solid #ED1C24' : '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
+                        value={formData.mobileNo}
+                        onChange={(e) => handleNumberChange(e, 'mobileNo', 10)}
+                      />
+                      {errors.mobileNo && <span style={{ color: '#ED1C24', fontSize: '11px', fontWeight: '600', marginTop: '4px', display: 'block' }}>{errors.mobileNo}</span>}
+                    </div>
+                    <div className="form-group-v3">
+                      <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Email <span style={{ color: '#ED1C24' }}>*</span></label>
+                      <input
+                        type="email"
+                        placeholder="Email address"
+                        style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: errors.email ? '1.5px solid #ED1C24' : '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      />
+                      {errors.email && <span style={{ color: '#ED1C24', fontSize: '11px', fontWeight: '600', marginTop: '4px', display: 'block' }}>{errors.email}</span>}
+                    </div>
+                  </div>
+
+                  <div className="form-group-v3">
+                    <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Qualification <span style={{ color: '#ED1C24' }}>*</span></label>
+                    <input
+                      type="text"
+                      placeholder="Your highest degree"
+                      style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: errors.qualification ? '1.5px solid #ED1C24' : '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
+                      value={formData.qualification}
+                      onChange={(e) => setFormData({ ...formData, qualification: e.target.value })}
+                    />
+                    {errors.qualification && <span style={{ color: '#ED1C24', fontSize: '11px', fontWeight: '600', marginTop: '4px', display: 'block' }}>{errors.qualification}</span>}
+                  </div>
+
+                  <div className="job-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                    <div className="form-group-v3">
+                      <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Experience <span style={{ color: '#ED1C24' }}>*</span></label>
+                      <input
+                        type="text"
+                        placeholder="Years of experience"
+                        style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: errors.experience ? '1.5px solid #ED1C24' : '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
+                        value={formData.experience}
+                        onChange={(e) => handleNumberChange(e, 'experience')}
+                      />
+                      {errors.experience && <span style={{ color: '#ED1C24', fontSize: '11px', fontWeight: '600', marginTop: '4px', display: 'block' }}>{errors.experience}</span>}
+                    </div>
+                    <div className="form-group-v3">
+                      <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Expected Salary <span style={{ color: '#ED1C24' }}>*</span></label>
+                      <input
+                        type="text"
+                        placeholder="Expected CTC"
+                        style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: errors.expectedSalary ? '1.5px solid #ED1C24' : '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
+                        value={formData.expectedSalary}
+                        onChange={(e) => setFormData({ ...formData, expectedSalary: e.target.value })}
+                      />
+                      {errors.expectedSalary && <span style={{ color: '#ED1C24', fontSize: '11px', fontWeight: '600', marginTop: '4px', display: 'block' }}>{errors.expectedSalary}</span>}
+                    </div>
+                  </div>
+
+                  <div className="form-group-v3">
+                    <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Upload Resume (Optional)</label>
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx"
+                      style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
+                      onChange={(e) => setFormData({ ...formData, resume: e.target.files[0] })}
+                    />
+                    <p style={{ fontSize: '11px', color: '#666', marginTop: '5px' }}>Supported formats: PDF, DOC, DOCX (Max 5MB)</p>
+                  </div>
+                </div>
               </div>
 
-              <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '15px' }}>
-                <div className="job-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                  <div className="form-group-v3">
-                    <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Candidate Full Name <span style={{ color: '#ED1C24' }}>*</span></label>
-                    <input
-                      required
-                      type="text"
-                      placeholder="Enter your full name"
-                      style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
-                      value={formData.fullName}
-                      onChange={(e) => handleNameChange(e, 'fullName')}
-                    />
-                  </div>
-                  <div className="form-group-v3">
-                    <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Fathers / Husband Name</label>
-                    <input
-                      type="text"
-                      placeholder="Enter name"
-                      style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
-                      value={formData.fatherOrHusbandName}
-                      onChange={(e) => handleNameChange(e, 'fatherOrHusbandName')}
-                    />
-                  </div>
-                </div>
-
-                <div className="job-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                  <div className="form-group-v3">
-                    <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Date of Birth <span style={{ color: '#ED1C24' }}>*</span></label>
-                    <input
-                      required
-                      type="date"
-                      style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
-                      value={formData.dob}
-                      onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
-                    />
-                  </div>
-                  <div className="form-group-v3">
-                    <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Gender <span style={{ color: '#ED1C24' }}>*</span></label>
-                    <select
-                      required
-                      style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
-                      value={formData.gender}
-                      onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-                    >
-                      <option value="">Select</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                      <option value="Other">Other</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="job-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                  <div className="form-group-v3">
-                    <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Contact No <span style={{ color: '#ED1C24' }}>*</span></label>
-                    <input
-                      required
-                      type="tel"
-                      placeholder="Phone number"
-                      style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
-                      value={formData.mobileNo}
-                      onChange={(e) => handleNumberChange(e, 'mobileNo', 10)}
-                    />
-                  </div>
-                  <div className="form-group-v3">
-                    <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Email <span style={{ color: '#ED1C24' }}>*</span></label>
-                    <input
-                      required
-                      type="email"
-                      placeholder="Email address"
-                      style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    />
-                  </div>
-                </div>
-
-                <div className="form-group-v3">
-                  <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Qualification <span style={{ color: '#ED1C24' }}>*</span></label>
-                  <input
-                    required
-                    type="text"
-                    placeholder="Your highest degree"
-                    style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
-                    value={formData.qualification}
-                    onChange={(e) => setFormData({ ...formData, qualification: e.target.value })}
-                  />
-                </div>
-
-                <div className="job-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                  <div className="form-group-v3">
-                    <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Experience</label>
-                    <input
-                      type="text"
-                      placeholder="Years of experience"
-                      style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
-                      value={formData.experience}
-                      onChange={(e) => handleNumberChange(e, 'experience')}
-                    />
-                  </div>
-                  <div className="form-group-v3">
-                    <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Expected Salary</label>
-                    <input
-                      type="text"
-                      placeholder="Expected CTC"
-                      style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
-                      value={formData.expectedSalary}
-                      onChange={(e) => setFormData({ ...formData, expectedSalary: e.target.value })}
-                    />
-                  </div>
-                </div>
-
-                <div className="form-group-v3">
-                  <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Upload Resume (Optional)</label>
-                  <input
-                    type="file"
-                    accept=".pdf,.doc,.docx"
-                    style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
-                    onChange={(e) => setFormData({ ...formData, resume: e.target.files[0] })}
-                  />
-                  <p style={{ fontSize: '11px', color: '#666', marginTop: '5px' }}>Supported formats: PDF, DOC, DOCX (Max 5MB)</p>
-                </div>
-
+              <div style={{ padding: '20px 40px', background: '#fff', borderTop: '1px solid #eee', display: 'flex', gap: '15px' }}>
                 <button
                   type="submit"
                   disabled={loading}
                   style={{
-                    marginTop: '10px',
+                    flex: 1,
                     padding: '15px',
                     borderRadius: '12px',
                     border: 'none',
@@ -300,8 +342,8 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
                 >
                   {loading ? "Submitting..." : "Submit Application"}
                 </button>
-              </form>
-            </div>
+              </div>
+            </form>
           </motion.div>
         </motion.div>
       )}
@@ -314,6 +356,7 @@ const Careers = () => {
   const [selectedJob, setSelectedJob] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(3);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -438,7 +481,7 @@ const Careers = () => {
                 <p style={{ color: '#999' }}>Check back later or send us your resume at info@prompttradefairs.com</p>
               </div>
             ) : (
-              jobs.map((job, idx) => (
+              jobs.slice(0, visibleCount).map((job, idx) => (
                 <motion.div
                   key={job._id || idx}
                   className="job-card-modern"
@@ -511,6 +554,31 @@ const Careers = () => {
                   </div>
                 </motion.div>
               ))
+            )}
+            
+            {jobs.length > visibleCount && (
+              <div style={{ textAlign: 'center', marginTop: '50px' }}>
+                <button 
+                  onClick={() => setVisibleCount(prev => prev + 3)}
+                  className="premium-load-btn"
+                  style={{
+                    padding: '12px 50px',
+                    borderRadius: '50px',
+                    background: '#fff',
+                    color: '#ED1C24',
+                    border: '2px solid #ED1C24',
+                    fontWeight: '800',
+                    fontSize: '1rem',
+                    cursor: 'pointer',
+                    textTransform: 'uppercase',
+                    transition: '0.3s'
+                  }}
+                  onMouseEnter={(e) => { e.target.style.background = '#ED1C24'; e.target.style.color = '#fff'; }}
+                  onMouseLeave={(e) => { e.target.style.background = '#fff'; e.target.style.color = '#ED1C24'; }}
+                >
+                  View More Jobs
+                </button>
+              </div>
             )}
           </div>
         </div>
