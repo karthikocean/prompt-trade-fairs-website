@@ -24,15 +24,6 @@ import './assets/css/styles.css';
 function App() {
     return (
         <Router>
-            <Toaster 
-                position="top-right" 
-                reverseOrder={false} 
-                toastOptions={{
-                    style: {
-                        zIndex: 999999,
-                    },
-                }}
-            />
             <ScrollToTop />
             <div className="App">
                 <Header />
@@ -55,7 +46,40 @@ function App() {
                 <Footer />
                 <ChatBot />
             </div>
-
+            <Toaster 
+                position="top-right" 
+                reverseOrder={false}
+                containerStyle={{ zIndex: 100000000 }}
+                toastOptions={{
+                    duration: 4000,
+                    style: {
+                        background: '#fff',
+                        color: '#111',
+                        padding: '16px 24px',
+                        borderRadius: '12px',
+                        fontSize: '15px',
+                        fontWeight: '600',
+                        boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
+                        border: '1px solid #eee'
+                    },
+                    success: {
+                        iconTheme: {
+                            primary: '#10b981',
+                            secondary: '#fff',
+                        },
+                    },
+                    error: {
+                        iconTheme: {
+                            primary: '#ef4444',
+                            secondary: '#fff',
+                        },
+                        style: {
+                            border: '1px solid #fecaca',
+                            background: '#fef2f2'
+                        }
+                    }
+                }}
+            />
         </Router>
     );
 }

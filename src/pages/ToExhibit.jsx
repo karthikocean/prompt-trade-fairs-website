@@ -68,7 +68,7 @@ const ToExhibit = () => {
                   </div>
                   <div className="card-line" style={{ height: '2px', background: '#ED1C24', width: '40px', margin: '20px 0' }}></div>
                   <h3 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '15px', color: '#111' }}>{item.title}</h3>
-                  <p style={{ fontSize: '0.95rem', color: '#555', lineHeight: '1.6' }}>{item.desc}</p>
+                  <p style={{ fontSize: '16px', color: '#555', lineHeight: '1.6' }}>{item.desc}</p>
                 </div>
                 <span className="v3-card-bottom-text" style={{ position: 'absolute', bottom: '20px', right: '30px', fontSize: '10px', letterSpacing: '2px', fontWeight: '800', opacity: '0.3' }}>{item.status}</span>
               </motion.div>
@@ -87,7 +87,7 @@ const ToExhibit = () => {
               <div className="header-accent-line"></div>
             </div>
             <h2 className="header-main-title">What's Covered in Your <span>Exhibition Plot?</span></h2>
-            <p style={{ maxWidth: '800px', margin: '25px auto 0', color: '#666', fontSize: '1.1rem', lineHeight: '1.8' }}>
+            <p style={{ maxWidth: '800px', margin: '25px auto 0', color: '#666', fontSize: '16px', lineHeight: '1.8' }}>
               We provide a comprehensive ecosystem designed for high-impact brand success.
               From infrastructure to international marketing, everything is managed by our expert team.
             </p>
@@ -117,7 +117,7 @@ const ToExhibit = () => {
                   <i className={`fas ${item.icon}`}></i>
                 </div>
                 <h3 style={{ fontSize: '1.3rem', fontWeight: '800', color: '#111' }}>{item.title}</h3>
-                <p style={{ color: '#666', lineHeight: '1.6', fontSize: '0.95rem' }}>{item.desc}</p>
+                <p style={{ color: '#666', lineHeight: '1.6', fontSize: '16px' }}>{item.desc}</p>
               </motion.div>
             ))}
           </div>

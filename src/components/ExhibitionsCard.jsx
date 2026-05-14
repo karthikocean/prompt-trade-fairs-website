@@ -52,23 +52,23 @@ const StatsSection = () => {
         <div className="stats-container">
           {/* LEFT CONTENT */}
           <div className="stats-content-main">
-            <p className="stats-text">
+            <p style={{ color: '#666', fontSize: '16px', lineHeight: '1.8', marginBottom: '20px', fontFamily: '"Inter", sans-serif' }}>
               PROMPT Trade Fairs is a trusted platform dedicated to connecting businesses with the right audience across India. With years of industry experience, we specialize in organizing impactful exhibitions that help brands grow, network, and expand their market presence.
             </p>
-            <p className="stats-text second-para">
+            <p style={{ color: '#666', fontSize: '16px', lineHeight: '1.8', marginBottom: '35px', fontFamily: '"Inter", sans-serif' }}>
               Our events bring together industry leaders, innovators, and professionals under one roof, creating opportunities for meaningful collaborations and business success.
             </p>
 
             {/* COUNTERS */}
             <div className="stats-box">
               <div className="stat-item">
-                <h3>{formatNumber(expoCount)}+</h3>
-                <p>Exhibitions Organized</p>
+                <h3 style={{ fontSize: '2.5rem', fontWeight: '800', color: '#ED1C24', marginBottom: '5px' }}>{formatNumber(expoCount)}+</h3>
+                <p style={{ color: '#111', fontWeight: '700', fontSize: '16px' }}>Exhibitions Organized</p>
               </div>
 
               <div className="stat-item">
-                <h3>{formatNumber(visitorCount)}+</h3>
-                <p>Visitors Connected</p>
+                <h3 style={{ fontSize: '2.5rem', fontWeight: '800', color: '#ED1C24', marginBottom: '5px' }}>{formatNumber(visitorCount)}+</h3>
+                <p style={{ color: '#111', fontWeight: '700', fontSize: '16px' }}>Visitors Connected</p>
               </div>
             </div>
           </div>

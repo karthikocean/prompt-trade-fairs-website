@@ -8,22 +8,22 @@ const Contact = () => {
     {
       city: "Coimbatore",
       address: "54 D, 1st Floor, Jayavarthanavelu Nagar, Masakkalipalayam Road, Peelamedu, Coimbatore – 641004.",
-      mobile: "091500 86485"
+      mobile: "+91 91500 86485"
     },
     {
       city: "Madurai",
       address: "# 279, 1st, East Main Road, Anna Nagar, Madurai – 625020.",
-      mobile: "078457 69319"
+      mobile: "+91 78457 69319"
     },
     {
       city: "Erode",
       address: "Room No.204, 205-Second Floor, No.102/3, Chinna Sengodampalayam, Perundurai Main Road, Nachimuthu Complex (Above Union Bank of India), Erode – 638012.",
-      mobile: "93620 50255"
+      mobile: "+91 93620 50255"
     },
     {
       city: "Trichy",
       address: "No. 135, Ponnagar, Trichy – 620001. Landmark: Adjacent Swarna Vinayagar Temple.",
-      mobile: "93620 50255"
+      mobile: "+91 93620 50255"
     }
   ];
 
@@ -119,7 +119,7 @@ const Contact = () => {
             <h2 className="header-main-title">Regional <span>Offices</span></h2>
           </div>
 
-          <div className="regional-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '25px', marginTop: '60px' }}>
+          <div className="regional-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '25px', marginTop: '60px' }}>
             {regionalOffices.map((office, idx) => (
               <motion.div key={idx} whileHover={{ y: -10 }} style={{ background: '#fff', padding: '35px', borderRadius: '25px', border: '1px solid #eee', position: 'relative', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column' }}>
                 <div style={{ position: 'absolute', top: '-10px', right: '-10px', fontSize: '100px', color: '#ED1C24', opacity: '0.04', fontWeight: '900', zIndex: '0' }}><i className="fas fa-building"></i></div>

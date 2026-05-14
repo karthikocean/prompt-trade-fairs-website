@@ -19,6 +19,29 @@ const EnquiryForm = ({
   customClass = ""
 }) => {
   const [enquiryType, setEnquiryType] = useState("stalls"); // "stalls" or "visitors"
+  
+  // CLEAR DATA ON TAB SWITCH
+  useEffect(() => {
+    setFormData({
+      name: "",
+      email: "",
+      companyName: "",
+      mobileNo: "",
+      category: "",
+      stallNo: "",
+      stallType: "",
+      sqm: "",
+      totalAmount: "",
+      products: [],
+      address: "",
+      remark: "",
+      city: "",
+      state: "",
+      pincode: "",
+    });
+    setErrors({});
+  }, [enquiryType]);
+
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -26,6 +49,8 @@ const EnquiryForm = ({
   const [productsList, setProductsList] = useState([]);
   const [availableStalls, setAvailableStalls] = useState([]);
   const [isProductDropdownOpen, setIsProductDropdownOpen] = useState(false);
+  const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
+  const [isStallDropdownOpen, setIsStallDropdownOpen] = useState(false);
 
   const handleProductToggle = (productId) => {
     setFormData(prev => {
@@ -41,6 +66,12 @@ const EnquiryForm = ({
     const handleClickOutside = (event) => {
       if (isProductDropdownOpen && !event.target.closest('.product-dropdown-container')) {
         setIsProductDropdownOpen(false);
+      }
+      if (isCategoryDropdownOpen && !event.target.closest('.category-dropdown-container')) {
+        setIsCategoryDropdownOpen(false);
+      }
+      if (isStallDropdownOpen && !event.target.closest('.stall-dropdown-container')) {
+        setIsStallDropdownOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -130,6 +161,11 @@ const EnquiryForm = ({
       if (!/^\d*$/.test(value) || value.length > 6) return;
     }
 
+    // VALIDATION: City & State only alphabets
+    if (name === "city" || name === "state") {
+      if (!/^[a-zA-Z\s]*$/.test(value)) return;
+    }
+
     // Special handling for products (array)
     if (name === "products") {
       const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
@@ -168,10 +204,14 @@ const EnquiryForm = ({
     }
 
     if (!isSimplified && enquiryType === "stalls") {
-      if (!formData.companyName.trim()) newErrors.companyName = "Company Name is required";
       if (!formData.category) newErrors.category = "Category is required";
       if (formData.products.length === 0) newErrors.products = "Select at least one product";
       if (!formData.stallNo) newErrors.stallNo = "Stall Selection is required";
+    }
+
+    if (!isSimplified && enquiryType === "visitors") {
+      if (!formData.category) newErrors.category = "Category is required";
+      if (formData.products.length === 0) newErrors.products = "Select at least one product";
     }
 
     // Remark/Message is mandatory (Common for all types)
@@ -309,21 +349,21 @@ const EnquiryForm = ({
         </div>
       )}
 
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, overflow: 'hidden' }}>
+      <form noValidate onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, overflow: 'hidden' }}>
         <div className={`scrollable-fields-container ${customClass}`} style={{ 
           padding: hideHeader ? '0' : '25px', 
           overflowY: hideHeader ? 'visible' : 'auto', 
           flexGrow: 1,
         }}>
           {enquiryType === "stalls" || isSimplified ? (
-            <div className="stall-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <div className="stall-form-grid">
               <div className="form-group">
                 <label style={labelStyle}>Name *</label>
                 <input style={{...inputStyle, borderColor: errors.name ? '#ED1C24' : '#e2e8f0'}} type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Enter Name" />
                 {errors.name && <span style={errorTextStyle}>{errors.name}</span>}
               </div>
               <div className="form-group">
-                <label style={labelStyle}>Company Name *</label>
+                <label style={labelStyle}>Company Name</label>
                 <input style={{...inputStyle, borderColor: errors.companyName ? '#ED1C24' : '#e2e8f0'}} type="text" name="companyName" value={formData.companyName} onChange={handleChange} placeholder="Enter Company" />
                 {errors.companyName && <span style={errorTextStyle}>{errors.companyName}</span>}
               </div>
@@ -340,12 +380,48 @@ const EnquiryForm = ({
 
               {!isSimplified && (
                 <>
-                  <div className="form-group">
+                  <div className="form-group category-dropdown-container" style={{ position: 'relative' }}>
                     <label style={labelStyle}>Category *</label>
-                    <select style={{...inputStyle, borderColor: errors.category ? '#ED1C24' : '#e2e8f0'}} name="category" value={formData.category} onChange={handleChange}>
-                      <option value="">Select Category</option>
-                      {Array.isArray(categories) && categories.map(cat => <option key={cat._id} value={cat._id}>{cat.name}</option>)}
-                    </select>
+                    <div 
+                      onClick={() => setIsCategoryDropdownOpen(!isCategoryDropdownOpen)}
+                      style={{
+                        ...inputStyle,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        borderColor: errors.category ? '#ED1C24' : '#e2e8f0',
+                        height: '45px',
+                      }}
+                    >
+                      <span style={{ fontSize: '0.9rem', color: formData.category ? '#333' : '#999' }}>
+                        {categories.find(c => c._id === formData.category)?.name || "Select Category"}
+                      </span>
+                      <i className={`fas fa-chevron-${isCategoryDropdownOpen ? 'up' : 'down'}`} style={{ fontSize: '12px', color: '#666' }}></i>
+                    </div>
+                    {isCategoryDropdownOpen && (
+                      <div className="custom-dropdown-menu" style={dropdownMenuStyle}>
+                        {categories.map(cat => (
+                          <div 
+                            key={cat._id} 
+                            onClick={() => {
+                              handleChange({ target: { name: 'category', value: cat._id } });
+                              setIsCategoryDropdownOpen(false);
+                            }}
+                            style={{ 
+                              padding: '10px 12px', 
+                              cursor: 'pointer', 
+                              fontSize: '0.85rem', 
+                              borderRadius: '8px',
+                              background: formData.category === cat._id ? '#ED1C24' : 'transparent',
+                              color: formData.category === cat._id ? '#fff' : '#4b5563'
+                            }}
+                          >
+                            {cat.name}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                     {errors.category && <span style={errorTextStyle}>{errors.category}</span>}
                   </div>
                   <div className="form-group product-dropdown-container" style={{ position: 'relative' }}>
@@ -359,7 +435,7 @@ const EnquiryForm = ({
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         borderColor: errors.products ? '#ED1C24' : '#e2e8f0',
-                        minHeight: '45px',
+                        height: '45px',
                       }}
                     >
                       <span style={{ 
@@ -381,7 +457,7 @@ const EnquiryForm = ({
                     </div>
 
                     {isProductDropdownOpen && (
-                      <div style={{
+                      <div className="product-dropdown-menu" style={{
                         position: 'absolute',
                         top: '100%',
                         left: 0,
@@ -397,32 +473,30 @@ const EnquiryForm = ({
                         padding: '10px'
                       }}>
                         {Array.isArray(productsList) && productsList.length > 0 ? (
-                          productsList.map(prod => (
-                            <label 
-                              key={prod._id} 
-                              style={{ 
-                                display: 'flex', 
-                                alignItems: 'center', 
-                                gap: '10px', 
-                                padding: '8px 10px', 
-                                cursor: 'pointer', 
-                                fontSize: '0.85rem', 
-                                borderRadius: '6px', 
-                                transition: '0.2s',
-                                color: '#4b5563' 
-                              }}
-                              onMouseEnter={(e) => e.currentTarget.style.background = '#f8fafc'}
-                              onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
-                            >
-                              <input 
-                                type="checkbox" 
-                                checked={formData.products.includes(prod._id)} 
-                                onChange={() => handleProductToggle(prod._id)}
-                                style={{ accentColor: '#ED1C24', width: '16px', height: '16px' }}
-                              />
-                              {prod.productName}
-                            </label>
-                          ))
+                          productsList.map(prod => {
+                            const isSelected = formData.products.includes(prod._id);
+                            return (
+                              <div 
+                                key={prod._id} 
+                                onClick={() => handleProductToggle(prod._id)}
+                                style={{ 
+                                  display: 'flex', 
+                                  alignItems: 'center', 
+                                  gap: '10px', 
+                                  padding: '10px 12px', 
+                                  cursor: 'pointer', 
+                                  fontSize: '0.85rem', 
+                                  borderRadius: '8px', 
+                                  transition: '0.2s',
+                                  background: isSelected ? '#ED1C24' : 'transparent',
+                                  color: isSelected ? '#fff' : '#4b5563',
+                                  marginBottom: '2px'
+                                }}
+                              >
+                                {prod.productName}
+                              </div>
+                            );
+                          })
                         ) : (
                           <p style={{ fontSize: '0.8rem', color: '#999', margin: 0, textAlign: 'center', padding: '10px' }}>
                             {formData.category ? "No products found" : "Select a category first"}
@@ -432,12 +506,48 @@ const EnquiryForm = ({
                     )}
                     {errors.products && <span style={errorTextStyle}>{errors.products}</span>}
                   </div>
-                  <div className="form-group">
+                  <div className="form-group stall-dropdown-container" style={{ position: 'relative' }}>
                     <label style={labelStyle}>Select Stall *</label>
-                    <select style={{...inputStyle, borderColor: errors.stallNo ? '#ED1C24' : '#e2e8f0'}} name="stallNo" value={formData.stallNo} onChange={handleChange}>
-                      <option value="">Select Stall</option>
-                      {Array.isArray(availableStalls) && availableStalls.map(stall => <option key={stall._id} value={stall.stallNo}>{stall.stallNo} ({stall.sqm} sqm)</option>)}
-                    </select>
+                    <div 
+                      onClick={() => setIsStallDropdownOpen(!isStallDropdownOpen)}
+                      style={{
+                        ...inputStyle,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        borderColor: errors.stallNo ? '#ED1C24' : '#e2e8f0',
+                        height: '45px',
+                      }}
+                    >
+                      <span style={{ fontSize: '0.9rem', color: formData.stallNo ? '#333' : '#999' }}>
+                        {formData.stallNo ? `${formData.stallNo} (${formData.sqm} sqm)` : "Select Stall"}
+                      </span>
+                      <i className={`fas fa-chevron-${isStallDropdownOpen ? 'up' : 'down'}`} style={{ fontSize: '12px', color: '#666' }}></i>
+                    </div>
+                    {isStallDropdownOpen && (
+                      <div className="custom-dropdown-menu" style={dropdownMenuStyle}>
+                        {availableStalls.map(stall => (
+                          <div 
+                            key={stall._id} 
+                            onClick={() => {
+                              handleChange({ target: { name: 'stallNo', value: stall.stallNo } });
+                              setIsStallDropdownOpen(false);
+                            }}
+                            style={{ 
+                              padding: '10px 12px', 
+                              cursor: 'pointer', 
+                              fontSize: '0.85rem', 
+                              borderRadius: '8px',
+                              background: formData.stallNo === stall.stallNo ? '#ED1C24' : 'transparent',
+                              color: formData.stallNo === stall.stallNo ? '#fff' : '#4b5563'
+                            }}
+                          >
+                            {stall.stallNo} ({stall.sqm} sqm)
+                          </div>
+                        ))}
+                      </div>
+                    )}
                     {errors.stallNo && <span style={errorTextStyle}>{errors.stallNo}</span>}
                   </div>
                   <div className="form-group">
@@ -453,7 +563,7 @@ const EnquiryForm = ({
                   <div className="form-group"><label style={labelStyle}>Total Amount</label><input style={{...inputStyle, background: '#f9fafb'}} type="text" value={formData.totalAmount} readOnly /></div>
                   
                   <div className="form-group" style={{ gridColumn: 'span 2' }}><label style={labelStyle}>Address</label><textarea style={textareaStyle} name="address" value={formData.address} onChange={handleChange} placeholder="Enter Address"></textarea></div>
-                  <div style={{ gridColumn: 'span 2', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '20px' }}>
+                  <div className="form-inner-grid">
                     <div className="form-group"><label style={labelStyle}>City</label><input style={inputStyle} type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" /></div>
                     <div className="form-group"><label style={labelStyle}>State</label><input style={inputStyle} type="text" name="state" value={formData.state} onChange={handleChange} placeholder="State" /></div>
                     <div className="form-group"><label style={labelStyle}>Pincode</label><input style={inputStyle} type="text" name="pincode" value={formData.pincode} onChange={handleChange} placeholder="Pincode" /></div>
@@ -473,7 +583,7 @@ const EnquiryForm = ({
               </div>
             </div>
           ) : (
-            <div className="visitor-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <div className="visitor-form-grid">
               <div className="form-group">
                 <label style={labelStyle}>Name *</label>
                 <input style={{...inputStyle, borderColor: errors.name ? '#ED1C24' : '#e2e8f0'}} type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Enter Name" />
@@ -498,12 +608,47 @@ const EnquiryForm = ({
               <div className="form-group"><label style={labelStyle}>State</label><input style={inputStyle} type="text" name="state" value={formData.state} onChange={handleChange} placeholder="State" /></div>
               <div className="form-group"><label style={labelStyle}>Pincode</label><input style={inputStyle} type="text" name="pincode" value={formData.pincode} onChange={handleChange} placeholder="Pincode" /></div>
               
-              <div className="form-group">
-                <label style={labelStyle}>Category</label>
-                <select style={inputStyle} name="category" value={formData.category} onChange={handleChange}>
-                  <option value="">Select Category</option>
-                  {Array.isArray(categories) && categories.map(cat => <option key={cat._id} value={cat._id}>{cat.name}</option>)}
-                </select>
+              <div className="form-group category-dropdown-container" style={{ position: 'relative' }}>
+                <label style={labelStyle}>Category *</label>
+                <div 
+                  onClick={() => setIsCategoryDropdownOpen(!isCategoryDropdownOpen)}
+                  style={{
+                    ...inputStyle,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    minHeight: '45px',
+                  }}
+                >
+                  <span style={{ fontSize: '0.9rem', color: formData.category ? '#333' : '#999' }}>
+                    {categories.find(c => c._id === formData.category)?.name || "Select Category"}
+                  </span>
+                  <i className={`fas fa-chevron-${isCategoryDropdownOpen ? 'up' : 'down'}`} style={{ fontSize: '12px', color: '#666' }}></i>
+                </div>
+                {isCategoryDropdownOpen && (
+                  <div className="custom-dropdown-menu" style={dropdownMenuStyle}>
+                    {categories.map(cat => (
+                      <div 
+                        key={cat._id} 
+                        onClick={() => {
+                          handleChange({ target: { name: 'category', value: cat._id } });
+                          setIsCategoryDropdownOpen(false);
+                        }}
+                        style={{ 
+                          padding: '10px 12px', 
+                          cursor: 'pointer', 
+                          fontSize: '0.85rem', 
+                          borderRadius: '8px',
+                          background: formData.category === cat._id ? '#ED1C24' : 'transparent',
+                          color: formData.category === cat._id ? '#fff' : '#4b5563'
+                        }}
+                      >
+                        {cat.name}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="form-group product-dropdown-container" style={{ position: 'relative', gridColumn: 'span 2' }}>
@@ -517,7 +662,7 @@ const EnquiryForm = ({
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     borderColor: errors.products ? '#ED1C24' : '#e2e8f0',
-                    minHeight: '45px',
+                    height: '45px',
                   }}
                 >
                   <span style={{ 
@@ -539,9 +684,9 @@ const EnquiryForm = ({
                 </div>
 
                 {isProductDropdownOpen && (
-                  <div style={{
+                  <div className="product-dropdown-menu" style={{
                     position: 'absolute',
-                    bottom: '100%', // Open upwards if it's at the bottom of the form
+                    bottom: '100%',
                     left: 0,
                     width: '100%',
                     background: '#fff',
@@ -555,32 +700,30 @@ const EnquiryForm = ({
                     padding: '10px'
                   }}>
                     {Array.isArray(productsList) && productsList.length > 0 ? (
-                      productsList.map(prod => (
-                        <label 
-                          key={prod._id} 
-                          style={{ 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            gap: '10px', 
-                            padding: '8px 10px', 
-                            cursor: 'pointer', 
-                            fontSize: '0.85rem', 
-                            borderRadius: '6px', 
-                            transition: '0.2s',
-                            color: '#4b5563' 
-                          }}
-                          onMouseEnter={(e) => e.currentTarget.style.background = '#f8fafc'}
-                          onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
-                        >
-                          <input 
-                            type="checkbox" 
-                            checked={formData.products.includes(prod._id)} 
-                            onChange={() => handleProductToggle(prod._id)}
-                            style={{ accentColor: '#ED1C24', width: '16px', height: '16px' }}
-                          />
-                          {prod.productName}
-                        </label>
-                      ))
+                      productsList.map(prod => {
+                        const isSelected = formData.products.includes(prod._id);
+                        return (
+                          <div 
+                            key={prod._id} 
+                            onClick={() => handleProductToggle(prod._id)}
+                            style={{ 
+                              display: 'flex', 
+                              alignItems: 'center', 
+                              gap: '10px', 
+                              padding: '10px 12px', 
+                              cursor: 'pointer', 
+                              fontSize: '0.85rem', 
+                              borderRadius: '8px', 
+                              transition: '0.2s',
+                              background: isSelected ? '#ED1C24' : 'transparent',
+                              color: isSelected ? '#fff' : '#4b5563',
+                              marginBottom: '2px'
+                            }}
+                          >
+                            {prod.productName}
+                          </div>
+                        );
+                      })
                     ) : (
                       <p style={{ fontSize: '0.8rem', color: '#999', margin: 0, textAlign: 'center', padding: '10px' }}>
                         {formData.category ? "No products found" : "Select a category first"}
@@ -606,9 +749,9 @@ const EnquiryForm = ({
           )}
         </div>
 
-        <div className="form-actions-screenshot" style={{ padding: '20px 25px', borderTop: '1px solid #e5e7eb', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', background: '#fff' }}>
-          <button type="button" onClick={onClose} style={cancelBtnStyle}>Cancel</button>
-          <button type="submit" disabled={isSubmitting} style={{...saveBtnStyle, opacity: isSubmitting ? 0.7 : 1}}>
+        <div className="form-actions-v3">
+          <button type="button" onClick={onClose} className="modal-btn-cancel">Cancel</button>
+          <button type="submit" disabled={isSubmitting} className="modal-btn-submit">
             {isSubmitting ? "Submitting..." : "Send Message"}
           </button>
         </div>
@@ -623,5 +766,20 @@ const textareaStyle = { width: '100%', padding: '12px 16px', border: '1px solid 
 const cancelBtnStyle = { padding: '12px', background: '#6c757d', color: '#fff', border: 'none', borderRadius: '10px', fontSize: '0.95rem', fontWeight: '600', cursor: 'pointer' };
 const saveBtnStyle = { padding: '12px', background: '#ed1c24', color: '#fff', border: 'none', borderRadius: '10px', fontSize: '0.95rem', fontWeight: '800', cursor: 'pointer', transition: '0.3s' };
 const errorTextStyle = { color: '#ED1C24', fontSize: '0.7rem', marginTop: '4px', display: 'block', fontWeight: '600' };
+const dropdownMenuStyle = {
+  position: 'absolute',
+  top: '100%',
+  left: 0,
+  width: '100%',
+  background: '#fff',
+  border: '1px solid #e2e8f0',
+  borderRadius: '10px',
+  marginTop: '5px',
+  boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
+  zIndex: 100,
+  maxHeight: '200px',
+  overflowY: 'auto',
+  padding: '10px'
+};
 
 export default EnquiryForm;

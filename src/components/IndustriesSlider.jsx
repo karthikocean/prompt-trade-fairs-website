@@ -26,24 +26,43 @@ const IndustriesSlider = () => {
   useEffect(() => {
     const fetchExpos = async () => {
       try {
-        const res = await getUpcomingExpos();
-        if (res.data && Array.isArray(res.data.data)) {
-          const mapped = res.data.data.map(item => ({
-            _id: item._id,
-            expoName: item.expoName, 
-            title: item.expoName,
-            meta: item.products?.length > 0 
-              ? `${item.products.slice(0, 3).map(p => p.productName).join(", ")} & more.`
-              : `Explore the latest innovations in ${item.category?.name || 'various industries'}.`,
-            date: formatDate(item.startDate, item.endDate),
-            location: item.venue,
-            badge: item.category?.name || "Trade Fair",
-            img: getImageUrl(item.expoImage)
-          }));
-          setExpos(mapped);
+        const [upcomingRes, presentRes] = await Promise.all([
+          getUpcomingExpos(),
+          getPresentExpos()
+        ]);
+
+        let combinedData = [];
+        if (upcomingRes.data && Array.isArray(upcomingRes.data.data)) {
+          combinedData = [...upcomingRes.data.data];
         }
+        if (presentRes.data && Array.isArray(presentRes.data.data)) {
+          // Add present expos that are not already in the list
+          const presentExpos = presentRes.data.data.filter(pe => !combinedData.some(ue => ue._id === pe._id));
+          combinedData = [...combinedData, ...presentExpos];
+        }
+
+        // Sort by start date
+        combinedData.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+
+        const mapped = combinedData.map(item => ({
+          _id: item._id,
+          expoName: item.expoName, 
+          title: item.expoName,
+          meta: item.products?.length > 0 
+            ? `${item.products.slice(0, 3).map(p => p.productName).join(", ")} & more.`
+            : `Explore the latest innovations in ${item.category?.name || 'various industries'}.`,
+          date: formatDate(item.startDate, item.endDate),
+          location: item.venue,
+          manager: item.eventManager?.name || "N/A",
+          categoryName: item.category?.name || "Trade Fair",
+          badge: item.category?.name || "Trade Fair",
+          img: getImageUrl(item.expoImage),
+          layout: item.layoutImage ? getImageUrl(item.layoutImage) : null,
+          brochure: item.brochure ? getImageUrl(item.brochure) : null
+        }));
+        setExpos(mapped);
       } catch (error) {
-        console.error("Error fetching upcoming expos:", error);
+        console.error("Error fetching expos:", error);
       } finally {
         setLoading(false);
       }
@@ -91,7 +110,7 @@ const IndustriesSlider = () => {
         <div className="premium-header-box centered" style={{ textAlign: 'center', marginBottom: '50px' }}>
           <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px', marginBottom: '15px' }}>
             <div className="header-accent-line" style={{ height: '1px', width: '30px', background: '#ED1C24' }}></div>
-            <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '0.8rem' }}>Future Expo</span>
+            <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>Future Expo</span>
             <div className="header-accent-line" style={{ height: '1px', width: '30px', background: '#ED1C24' }}></div>
           </div>
           <h2 className="header-main-title" style={{ fontSize: '2.5rem', fontWeight: '800', color: '#1a1a1a' }}>
@@ -149,10 +168,32 @@ const IndustriesSlider = () => {
                         <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24', fontSize: '1.1rem' }}></i>
                         <span style={{ fontWeight: '800' }}>{expo.location}</span>
                       </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', color: '#111' }}>
+                        <i className="fas fa-user-tie" style={{ color: '#ED1C24', fontSize: '1.1rem' }}></i>
+                        <span style={{ fontWeight: '800' }}>{expo.manager}</span>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', color: '#111' }}>
+                        <i className="fas fa-tags" style={{ color: '#ED1C24', fontSize: '1.1rem' }}></i>
+                        <span style={{ fontWeight: '800' }}>{expo.categoryName}</span>
+                      </div>
                     </div>
                   </div>
 
                   <p style={{ fontSize: '0.95rem', color: '#666', marginBottom: '25px', lineHeight: '1.6' }}>{expo.meta}</p>
+
+                  {/* ACTION BUTTONS (Task 8) */}
+                  <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                    {expo.layout && (
+                      <a href={expo.layout} target="_blank" rel="noopener noreferrer" style={smallBtnStyle}>
+                        <i className="fas fa-map"></i> Layout
+                      </a>
+                    )}
+                    {expo.brochure && (
+                      <a href={expo.brochure} target="_blank" rel="noopener noreferrer" style={smallBtnStyle}>
+                        <i className="fas fa-file-download"></i> Brochure
+                      </a>
+                    )}
+                  </div>
 
                   {/* RED INTERESTED BUTTON */}
                   <button
@@ -229,6 +270,23 @@ const IndustriesSlider = () => {
       `}</style>
     </section>
   );
+};
+
+const smallBtnStyle = {
+  flex: 1,
+  padding: '10px',
+  background: '#f1f5f9',
+  color: '#475569',
+  borderRadius: '8px',
+  fontSize: '0.8rem',
+  fontWeight: '700',
+  textDecoration: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '6px',
+  border: '1px solid #e2e8f0',
+  transition: '0.2s'
 };
 
 export default IndustriesSlider;

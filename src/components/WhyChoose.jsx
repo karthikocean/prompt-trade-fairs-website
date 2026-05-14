@@ -39,7 +39,7 @@ const WhyChoose = () => {
                 </div>
                 <div className="feature-text">
                   <h3>Meticulous Planning</h3>
-                  <p>Each exhibition is a custom-oriented project, irrespective of size and budget, ensuring flawless delivery standards through meticulus planning.</p>
+                  <p style={{ fontSize: '16px' }}>Each exhibition is a custom-oriented project, irrespective of size and budget, ensuring flawless delivery standards through meticulus planning.</p>
                 </div>
               </div>
 
@@ -49,7 +49,7 @@ const WhyChoose = () => {
                 </div>
                 <div className="feature-text">
                   <h3>Proven Expertise</h3>
-                  <p>In reality, we have gained a record of more than 10,000 satisfied customers both from India as well as overseas, maintaining high standards of quality.</p>
+                  <p style={{ fontSize: '16px' }}>In reality, we have gained a record of more than 10,000 satisfied customers both from India as well as overseas, maintaining high standards of quality.</p>
                 </div>
               </div>
 
@@ -59,7 +59,7 @@ const WhyChoose = () => {
                 </div>
                 <div className="feature-text">
                   <h3>Strong Visitor Base</h3>
-                  <p>Our exhibitions ensure the best business for exhibitors through a strong base of registered visitors in each location, maximizing promotional opportunities.</p>
+                  <p style={{ fontSize: '16px' }}>Our exhibitions ensure the best business for exhibitors through a strong base of registered visitors in each location, maximizing promotional opportunities.</p>
                 </div>
               </div>
             </div>

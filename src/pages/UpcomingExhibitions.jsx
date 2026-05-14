@@ -134,92 +134,90 @@ const UpcomingExhibitions = () => {
             className="media-modal-overlay"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={() => setSelectedExpo(null)}
-            style={{
-              position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
-              background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(10px)',
-              zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px'
-            }}
           >
             <motion.div
               className="modal-premium-card"
               initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              style={{
-                maxWidth: '850px', width: '100%', background: '#fff',
-                boxShadow: '0 40px 80px rgba(0,0,0,0.12)',
-                maxHeight: '98vh', overflowY: 'auto',
-                borderRadius: '16px', position: 'relative',
-                display: 'flex', flexDirection: 'column', overflow: 'hidden'
-              }}
             >
-              <div style={{ background: '#ED1C24', padding: '15px 25px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h2 style={{ color: '#fff', fontSize: '1.2rem', fontWeight: '800', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              <div className="modal-header-v3">
+                <h2 className="modal-title-v3">
                   {selectedExpo.expoName}
                 </h2>
                 <div
+                  className="modal-close-v3"
                   onClick={() => setSelectedExpo(null)}
-                  style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: '0.3s' }}
-                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.3)'}
-                  onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.2)'}
                 >
-                  <i className="fas fa-times" style={{ color: '#fff', fontSize: '14px' }}></i>
+                  <i className="fas fa-times"></i>
                 </div>
               </div>
 
-              <div style={{ padding: '25px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: '25px', alignItems: 'center' }}>
-                  <div style={{ borderRadius: '12px', overflow: 'hidden', height: '180px', boxShadow: '0 8px 25px rgba(0,0,0,0.08)' }}>
-                    <img src={getImageUrl(selectedExpo.expoImage)} alt="Expo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div className="modal-body-v3">
+                <div className="modal-main-grid">
+                  <div className="modal-image-wrapper">
+                    <img src={getImageUrl(selectedExpo.expoImage)} alt="Expo" />
                   </div>
 
-                  <div className="modal-details-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '12px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                      <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}><i className="fas fa-user-tie" style={{ fontSize: '14px' }}></i></div>
-                      <div><p style={{ fontSize: '10px', color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: '700' }}>Manager</p><p style={{ fontWeight: '800', margin: 0, fontSize: '0.9rem' }}>{selectedExpo.eventManager?.name || "N/A"}</p></div>
+                  <div className="modal-details-col">
+                    <div className="detail-item-lite">
+                      <div className="detail-icon"><i className="fas fa-user-tie"></i></div>
+                      <div className="detail-text">
+                        <p className="detail-label">Manager</p>
+                        <p className="detail-value">{selectedExpo.eventManager?.name || "N/A"}</p>
+                      </div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                      <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}><i className="fas fa-map-marker-alt" style={{ fontSize: '14px' }}></i></div>
-                      <div><p style={{ fontSize: '10px', color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: '700' }}>Location</p><p style={{ fontWeight: '800', margin: 0, fontSize: '0.9rem' }}>{selectedExpo.venue}</p></div>
+                    <div className="detail-item-lite">
+                      <div className="detail-icon"><i className="fas fa-map-marker-alt"></i></div>
+                      <div className="detail-text">
+                        <p className="detail-label">Location</p>
+                        <p className="detail-value">{selectedExpo.venue}</p>
+                      </div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                      <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}><i className="fas fa-calendar-check" style={{ fontSize: '14px' }}></i></div>
-                      <div><p style={{ fontSize: '10px', color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: '700' }}>Duration</p><p style={{ fontWeight: '800', margin: 0, fontSize: '0.9rem' }}>{formatDate(selectedExpo.startDate)} - {formatDate(selectedExpo.endDate)}</p></div>
+                    <div className="detail-item-lite">
+                      <div className="detail-icon"><i className="fas fa-calendar-check"></i></div>
+                      <div className="detail-text">
+                        <p className="detail-label">Duration</p>
+                        <p className="detail-value">{formatDate(selectedExpo.startDate)} - {formatDate(selectedExpo.endDate)}</p>
+                      </div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                      <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}><i className="fas fa-clock" style={{ fontSize: '14px' }}></i></div>
-                      <div><p style={{ fontSize: '10px', color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: '700' }}>Timings</p><p style={{ fontWeight: '800', margin: 0, fontSize: '0.9rem' }}>{selectedExpo.startTime} - {selectedExpo.endTime}</p></div>
+                    <div className="detail-item-lite">
+                      <div className="detail-icon"><i className="fas fa-clock"></i></div>
+                      <div className="detail-text">
+                        <p className="detail-label">Timings</p>
+                        <p className="detail-value">{selectedExpo.startTime} - {selectedExpo.endTime}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div style={{ padding: '20px', background: '#f9fafb', borderRadius: '12px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                  <p style={{ color: '#555', fontSize: '13.5px', lineHeight: '1.6', margin: 0, textAlign: 'center' }}>
+                <div className="modal-stats-container">
+                  <p className="modal-description">
                     Join us for {selectedExpo.expoName} at {selectedExpo.venue}. Experience the premier trade event featuring the latest innovations.
                   </p>
 
-                  <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', paddingTop: '15px', borderTop: '1px solid #eee' }}>
-                    <div style={{ textAlign: 'center' }}>
-                      <p style={{ fontSize: '10px', color: '#999', margin: '0 0 3px', textTransform: 'uppercase', fontWeight: '800' }}>Available Stalls:</p>
-                      <p style={{ fontSize: '1.5rem', fontWeight: '900', color: '#10b981', margin: 0 }}>{selectedExpo.stats?.stallAvailable || 0}</p>
+                  <div className="modal-stats-row">
+                    <div className="stat-unit">
+                      <p className="stat-label">Available Stalls:</p>
+                      <p className="stat-value available">{selectedExpo.stats?.stallAvailable || 0}</p>
                     </div>
-                    <div style={{ width: '1px', height: '30px', background: '#ddd' }}></div>
-                    <div style={{ textAlign: 'center' }}>
-                      <p style={{ fontSize: '10px', color: '#999', margin: '0 0 3px', textTransform: 'uppercase', fontWeight: '800' }}>Booked Stalls:</p>
-                      <p style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ED1C24', margin: 0 }}>{selectedExpo.stats?.stallBooked || 0}</p>
+                    <div className="stat-divider"></div>
+                    <div className="stat-unit">
+                      <p className="stat-label">Booked Stalls:</p>
+                      <p className="stat-value booked">{selectedExpo.stats?.stallBooked || 0}</p>
                     </div>
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1.2fr', gap: '12px' }}>
-                  <a href={getImageUrl(selectedExpo.layoutImage)} target="_blank" rel="noopener noreferrer" style={actionBtnStyle}>
+                <div className="modal-actions-v3">
+                  <a href={getImageUrl(selectedExpo.layoutImage)} target="_blank" rel="noopener noreferrer" className="modal-btn-secondary">
                     <i className="fas fa-download"></i> Layout
                   </a>
-                  <a href={getImageUrl(selectedExpo.brochure)} target="_blank" rel="noopener noreferrer" style={actionBtnStyle}>
+                  <a href={getImageUrl(selectedExpo.brochure)} target="_blank" rel="noopener noreferrer" className="modal-btn-secondary">
                     <i className="fas fa-download"></i> Brochure
                   </a>
                   <button
                     onClick={() => setIsEnquiryModalOpen(true)}
-                    style={{ padding: '12px', background: '#ED1C24', border: 'none', borderRadius: '10px', color: '#fff', fontWeight: '800', fontSize: '13px', cursor: 'pointer', boxShadow: '0 6px 15px rgba(237,28,36,0.2)', textTransform: 'uppercase' }}
+                    className="modal-btn-primary"
                   >
                     Register Now
                   </button>
@@ -233,14 +231,13 @@ const UpcomingExhibitions = () => {
       <AnimatePresence>
         {isEnquiryModalOpen && (
           <motion.div
-            className="media-modal-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="media-modal-overlay dark" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={() => setIsEnquiryModalOpen(false)}
-            style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.6)', zIndex: 10000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', backdropFilter: 'blur(8px)' }}
           >
             <motion.div
+              className="register-modal-form"
               initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              style={{ width: '100%', maxWidth: '650px', background: '#fff', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 30px 60px rgba(0,0,0,0.4)' }}
             >
               <EnquiryForm
                 isExpoRegistration={true}
@@ -261,18 +258,18 @@ const UpcomingExhibitions = () => {
   );
 };
 
-const actionBtnStyle = { 
-  padding: '12px', 
-  background: '#f4f6f9', 
-  border: 'none', 
-  borderRadius: '10px', 
-  display: 'flex', 
-  alignItems: 'center', 
-  justifyContent: 'center', 
-  gap: '8px', 
-  color: '#1a2b4a', 
-  fontWeight: '700', 
-  fontSize: '13px', 
+const actionBtnStyle = {
+  padding: '12px',
+  background: '#f4f6f9',
+  border: 'none',
+  borderRadius: '10px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '8px',
+  color: '#1a2b4a',
+  fontWeight: '700',
+  fontSize: '13px',
   cursor: 'pointer',
   textDecoration: 'none'
 };

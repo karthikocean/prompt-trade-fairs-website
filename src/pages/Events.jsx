@@ -18,6 +18,12 @@ const Events = () => {
   const [visibleCount, setVisibleCount] = useState(6);
 
   useEffect(() => {
+    if (window.innerWidth <= 768) {
+      setVisibleCount(3);
+    }
+  }, []);
+
+  useEffect(() => {
     const fetchPastExpos = async () => {
       try {
         const response = await getPastExpos();
@@ -94,15 +100,15 @@ const Events = () => {
                       <i className="far fa-calendar-alt"></i> {formatDate(item.startDate)}
                     </div>
 
-                    <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#111', lineHeight: '1.4', marginBottom: '10px' }}>
+                    <h3 className="modern-card-title" style={{ fontSize: '1.25rem', fontWeight: '800', color: '#111', lineHeight: '1.4', marginBottom: '10px' }}>
                       {item.expoName}
                     </h3>
 
-                    <p style={{ color: '#666', fontSize: '14px', lineHeight: '1.6', margin: 0, display: '-webkit-box', WebkitLineClamp: '2', WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                    <p className="modern-card-desc" style={{ color: '#666', fontSize: '14px', lineHeight: '1.6', margin: 0, display: '-webkit-box', WebkitLineClamp: '2', WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                       Experience the highlights of {item.expoName} held at {item.venue}. A premier networking event featuring industry leaders.
                     </p>
 
-                    <div style={{ marginTop: '20px', color: '#ED1C24', fontWeight: '700', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    <div className="modern-card-link" style={{ marginTop: '20px', color: '#ED1C24', fontWeight: '700', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '5px' }}>
                       View Highlights <i className="fas fa-arrow-right" style={{ fontSize: '12px' }}></i>
                     </div>
                   </div>
@@ -116,7 +122,6 @@ const Events = () => {
               <button
                 onClick={handleLoadMore}
                 className="premium-load-btn"
-                style={{ padding: '12px 50px', borderRadius: '50px', background: '#fff', color: '#ED1C24', border: '2px solid #ED1C24', fontWeight: '800', fontSize: '1rem', cursor: 'pointer', textTransform: 'uppercase' }}
               >
                 View More Events
               </button>
