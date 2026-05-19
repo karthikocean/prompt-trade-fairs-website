@@ -59,7 +59,8 @@ const NextExpoSection = () => {
         <div className="premium-header-box centered" style={{ textAlign: 'center', marginBottom: '50px' }}>
           <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px', marginBottom: '15px' }}>
             <div className="header-accent-line" style={{ height: '1px', width: '30px', background: '#ED1C24' }}></div>
-            <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>Present Expo</span>
+            <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>Current Expo
+</span>
             <div className="header-accent-line" style={{ height: '1px', width: '30px', background: '#ED1C24' }}></div>
           </div>
           <h2 className="header-main-title" style={{ fontSize: '2.5rem', fontWeight: '800', color: '#1a1a1a' }}>
@@ -102,7 +103,7 @@ const NextExpoSection = () => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.5 }}
-                  style={{ height: '380px' }}
+                  style={{ height: '480px' }}
                 >
                   <img src={getImageUrl(currentExpo.expoImage)} alt={currentExpo.expoName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </motion.div>
@@ -116,58 +117,60 @@ const NextExpoSection = () => {
                 {currentExpo.expoName}
               </h3>
               
-              <div className="details-grid-v2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '25px', marginBottom: '30px' }}>
-                <div className="detail-item-v2" style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-                  {currentExpo.eventManager?.profileImage ? (
-                    <img src={getImageUrl(currentExpo.eventManager.profileImage)} style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #ED1C24' }} alt="manager" />
-                  ) : (
-                    <i className="fas fa-user-tie" style={{ color: '#ED1C24', background: 'rgba(237, 28, 36, 0.05)', padding: '10px', borderRadius: '8px' }}></i>
-                  )}
+              <div className="details-grid-v2" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '25px', marginBottom: '30px' }}>
+                <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                  <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
+                    <i className="fas fa-calendar-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
+                  </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', fontWeight: '800', color: '#999', marginBottom: '3px' }}>Manager</label>
-                    <p style={{ margin: 0, fontSize: '0.95rem', fontWeight: '700', color: '#333' }}>{currentExpo.eventManager?.name || "N/A"}</p>
+                    <h4 style={{ margin: '0 0 4px 0', fontSize: '1.1rem', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                      {formatDate(currentExpo.startDate)} - {formatDate(currentExpo.endDate)}
+                    </h4>
+                    <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Exhibition Duration</p>
                   </div>
                 </div>
 
-                <div className="detail-item-v2" style={{ display: 'flex', gap: '15px', alignItems: 'flex-start' }}>
-                  <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24', background: 'rgba(237, 28, 36, 0.05)', padding: '10px', borderRadius: '8px' }}></i>
+                <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                  <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
+                    <i className="fas fa-map-marker-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
+                  </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', fontWeight: '800', color: '#999', marginBottom: '3px' }}>Location</label>
-                    <p style={{ margin: 0, fontSize: '0.95rem', fontWeight: '700', color: '#333' }}>{currentExpo.venue}</p>
+                    <h4 style={{ margin: '0 0 4px 0', fontSize: '1.1rem', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                      {currentExpo.venue}
+                    </h4>
+                    <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Event Location</p>
                   </div>
                 </div>
 
-                <div className="detail-item-v2" style={{ display: 'flex', gap: '15px', alignItems: 'flex-start' }}>
-                  <i className="fas fa-calendar-check" style={{ color: '#ED1C24', background: 'rgba(237, 28, 36, 0.05)', padding: '10px', borderRadius: '8px' }}></i>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', fontWeight: '800', color: '#999', marginBottom: '3px' }}>Duration</label>
-                    <p style={{ margin: 0, fontSize: '0.95rem', fontWeight: '700', color: '#333' }}>{formatDate(currentExpo.startDate)} - {formatDate(currentExpo.endDate)}</p>
+                <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                  <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
+                    <i className="fas fa-clock" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
                   </div>
-                </div>
-
-                <div className="detail-item-v2" style={{ display: 'flex', gap: '15px', alignItems: 'flex-start' }}>
-                  <i className="fas fa-clock" style={{ color: '#ED1C24', background: 'rgba(237, 28, 36, 0.05)', padding: '10px', borderRadius: '8px' }}></i>
                   <div>
-                    <label style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', fontWeight: '800', color: '#999', marginBottom: '3px' }}>Timings</label>
-                    <p style={{ margin: 0, fontSize: '0.95rem', fontWeight: '700', color: '#333' }}>{currentExpo.startTime} - {currentExpo.endTime}</p>
+                    <h4 style={{ margin: '0 0 4px 0', fontSize: '1.1rem', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                      {currentExpo.startTime} - {currentExpo.endTime}
+                    </h4>
+                    <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Daily Timings</p>
                   </div>
                 </div>
 
                 {currentExpo.stats && (
-                  <div className="detail-item-v2" style={{ display: 'flex', gap: '15px', alignItems: 'flex-start', gridColumn: 'span 2' }}>
-                    <i className="fas fa-chart-pie" style={{ color: '#ED1C24', background: 'rgba(237, 28, 36, 0.05)', padding: '10px', borderRadius: '8px' }}></i>
-                    <div style={{ display: 'flex', gap: '30px' }}>
+                  <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center', marginTop: '10px' }}>
+                    <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
+                      <i className="fas fa-chart-pie" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
+                    </div>
+                    <div style={{ display: 'flex', gap: '25px', flexWrap: 'wrap' }}>
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', fontWeight: '800', color: '#999', marginBottom: '3px' }}>Stalls Available</label>
-                        <p style={{ margin: 0, fontSize: '0.95rem', fontWeight: '700', color: '#2ecc71' }}>{currentExpo.stats.stallAvailable}</p>
+                        <label style={{ display: 'block', fontSize: '0.75rem', textTransform: 'uppercase', fontWeight: '800', color: '#999', marginBottom: '3px' }}>Available</label>
+                        <p style={{ margin: 0, fontSize: '1.1rem', fontWeight: '800', color: '#2ecc71' }}>{currentExpo.stats.stallAvailable}</p>
                       </div>
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', fontWeight: '800', color: '#999', marginBottom: '3px' }}>Stalls Booked</label>
-                        <p style={{ margin: 0, fontSize: '0.95rem', fontWeight: '700', color: '#ED1C24' }}>{currentExpo.stats.stallBooked}</p>
+                        <label style={{ display: 'block', fontSize: '0.75rem', textTransform: 'uppercase', fontWeight: '800', color: '#999', marginBottom: '3px' }}>Booked</label>
+                        <p style={{ margin: 0, fontSize: '1.1rem', fontWeight: '800', color: '#E31E24' }}>{currentExpo.stats.stallBooked}</p>
                       </div>
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', fontWeight: '800', color: '#999', marginBottom: '3px' }}>Visitors Registered</label>
-                        <p style={{ margin: 0, fontSize: '0.95rem', fontWeight: '700', color: '#3498db' }}>{currentExpo.stats.visitorBooked}</p>
+                        <label style={{ display: 'block', fontSize: '0.75rem', textTransform: 'uppercase', fontWeight: '800', color: '#999', marginBottom: '3px' }}>Visitors</label>
+                        <p style={{ margin: 0, fontSize: '1.1rem', fontWeight: '800', color: '#3498db' }}>{currentExpo.stats.visitorBooked}</p>
                       </div>
                     </div>
                   </div>
@@ -179,10 +182,22 @@ const NextExpoSection = () => {
               </p>
 
               <div className="present-expo-actions">
-                <a href={getImageUrl(currentExpo.layoutImage)} target="_blank" rel="noopener noreferrer" className="expo-action-link layout-btn">
+                <a 
+                  href={currentExpo.layoutImage ? getImageUrl(currentExpo.layoutImage) : undefined} 
+                  target={currentExpo.layoutImage ? "_blank" : undefined} 
+                  rel="noopener noreferrer" 
+                  className="expo-action-link layout-btn"
+                  style={!currentExpo.layoutImage ? { pointerEvents: 'none', opacity: 0.5 } : {}}
+                >
                   <i className="fas fa-download"></i> Layout
                 </a>
-                <a href={getImageUrl(currentExpo.brochure)} target="_blank" rel="noopener noreferrer" className="expo-action-link brochure-btn">
+                <a 
+                  href={currentExpo.brochure ? getImageUrl(currentExpo.brochure) : undefined} 
+                  target={currentExpo.brochure ? "_blank" : undefined} 
+                  rel="noopener noreferrer" 
+                  className="expo-action-link brochure-btn"
+                  style={!currentExpo.brochure ? { pointerEvents: 'none', opacity: 0.5 } : {}}
+                >
                   <i className="fas fa-download"></i> Brochure
                 </a>
                 <button 
