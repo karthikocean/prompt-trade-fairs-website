@@ -1,79 +1,48 @@
-import React from 'react';
-import { useInView, useSpring, useTransform, motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+const fs = require('fs');
+const path = require('path');
 
-const Counter = ({ value, suffix = "" }) => {
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
-  
-  const spring = useSpring(0, {
-    mass: 1,
-    stiffness: 100,
-    damping: 30
-  });
-  
-  const display = useTransform(spring, (current) => {
-    const num = Math.floor(current);
-    if (num >= 1000000) return (num / 1000000).toFixed(0) + "M" + suffix;
-    if (num >= 1000) return (num / 1000).toFixed(0) + "K" + suffix;
-    return num.toLocaleString() + suffix;
-  });
+const filePath = 'c:\\Users\\DELL\\Desktop\\vicky\\prompt-trade-fairs-website\\src\\pages\\About.jsx';
+let content = fs.readFileSync(filePath, 'utf8');
 
-  React.useEffect(() => {
-    if (isInView) {
-      spring.set(value);
+// Normalize line endings to LF
+content = content.replace(/\r\n/g, '\n');
+
+// Let's print out what splits we find
+const sections = [
+  '{/* 2. CORPORATE SUMMARY SECTION */}',
+  '{/* 3. SPECIALIZED SEGMENTS SECTION */}',
+  '{/* 4. STRONG PRESENCE (PAN-INDIA MAP & CITIES) */}',
+  '{/* 5. EXCELLENCE IN MANAGEMENT SECTION */}',
+  '{/* 6. ROUNDED STATS SECTION (COUNTER UPDATED) */}'
+];
+
+let parts = [];
+let lastIdx = 0;
+
+for (const sec of sections) {
+    const idx = content.indexOf(sec);
+    if (idx === -1) {
+        console.error("Could not find section comment:", sec);
+        process.exit(1);
     }
-  }, [isInView, spring, value]);
+    parts.push(content.substring(lastIdx, idx));
+    lastIdx = idx;
+}
+parts.push(content.substring(lastIdx));
 
-  return <motion.span ref={ref} className="stat-v3-num">{display}</motion.span>;
-};
+console.log("Successfully split the file into", parts.length, "parts!");
 
-const About = () => {
-  const [showAll, setShowAll] = React.useState(false);
-  const segments = [
-    { name: "Property Fair Organiser", icon: "fa-building" },
-    { name: "Build Expo Organiser", icon: "fa-tools" },
-    { name: "Furniture Expo Organiser", icon: "fa-couch" },
-    { name: "Poultry Expo Organiser", icon: "fa-egg" },
-    { name: "Construction Materials Expo Organiser", icon: "fa-hard-hat" },
-    { name: "Architecture & Interior Expo Organiser", icon: "fa-pencil-ruler" },
-    { name: "Jewellery Exhibition Organiser", icon: "fa-gem" },
-    { name: "Dairy & Livestock Show Organiser", icon: "fa-cow" },
-    { name: "Educational Fair Organiser", icon: "fa-graduation-cap" },
-    { name: "Consumer Shopping Exhibition Organiser", icon: "fa-shopping-bag" }
-  ];
+// Parts indices:
+// parts[0]: Before Section 2 (Header, Intro page styling, etc.)
+// parts[1]: Section 2 (starts with '{/* 2. CORPORATE SUMMARY SECTION %}')
+// parts[2]: Section 3 (starts with '{/* 3. SPECIALIZED SEGMENTS SECTION %}')
+// parts[3]: Section 4 (starts with '{/* 4. STRONG PRESENCE %}')
+// parts[4]: Section 5 (starts with '{/* 5. EXCELLENCE IN MANAGEMENT SECTION %}')
+// parts[5]: Section 6 and beyond
 
-  const cities = [
-    "Chennai", "Bengaluru", "Hyderabad", "Ahmedabad", 
-    "Coimbatore", "Salem", "Vijayawada", "Visakhapatnam", 
-    "Warangal", "Rajahmundry"
-  ];
-
-  return (
-    <main className="about-v3-main">
-      {/* 1. HERO SECTION */}
-      <section className="about-v3-hero" style={{ backgroundImage: "url('/aboutusbanner.svg')" }}>
-        <div className="v3-hero-overlay-dark"></div>
-        <div className="container v3-hero-container">
-          <div className="v3-hero-content">
-            <motion.div 
-               initial={{ opacity: 0, x: -30 }}
-               animate={{ opacity: 1, x: 0 }}
-               transition={{ duration: 0.8 }}
-            >
-              <div className="v3-breadcrumb">
-                <Link to="/">Home</Link> <span>/</span> <span className="current">About Us</span>
-              </div>
-              <h1 className="v3-hero-title">About <span>Us</span></h1>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. CORPORATE SUMMARY SECTION */}
-      <section className="about-v3-intro" style={{ padding: '100px 0 60px', background: '#fff' }}>
-        <div className="container">
-          <div className="about-v3-grid">
+// Let's modify parts[1] (Section 2)
+let sec2Content = parts[1];
+const newSec2Grid = `<div className="about-v3-grid">
             <div className="v3-intro-header-col">
               <motion.div 
                  className="v3-intro-header"
@@ -88,7 +57,7 @@ const About = () => {
                     <span className="header-accent-tag" style={{ fontSize: '0.85rem', fontWeight: '800', color: '#ED1C24', letterSpacing: '1px' }}>BUSINESS EXCELLENCE</span>
                   </div>
                   <h2 className="header-main-title" style={{ fontSize: '2.5rem', fontWeight: '900', color: '#111' }}>
-                    Prompt Trade Fairs India Pvt. Ltd
+                    Prompt Trade Fairs <span>India Pvt. Ltd.</span>
                   </h2>
                   <h4 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#555', marginTop: '10px', lineHeight: '1.4' }}>
                     Creating Exceptional Platforms for Business Success
@@ -133,90 +102,16 @@ const About = () => {
                 </p>
               </motion.div>
             </div>
-          </div>
-        </div>
-      </section>
+          </div>`;
 
-      {/* 3. SPECIALIZED SEGMENTS SECTION */}
-      <section className="v3-segments-section">
-        <div className="container">
-          <div className="premium-header-box centered" style={{ textAlign: 'center', marginBottom: '60px' }}>
-            <div className="header-accent-row centered" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-              <div className="header-accent-line" style={{ width: '30px', height: '2px', background: '#ED1C24' }}></div>
-              <span className="header-accent-tag" style={{ fontSize: '0.85rem', fontWeight: '800', color: '#ED1C24' }}>INDUSTRY DIVERSIFICATION</span>
-              <div className="header-accent-line" style={{ width: '30px', height: '2px', background: '#ED1C24' }}></div>
-            </div>
-            <h2 className="header-main-title" style={{ fontSize: '2.5rem', fontWeight: '900', color: '#111' }}>
-              Specialized Exhibition Segments
-            </h2>
-            <p style={{ color: '#555', fontSize: '1.1rem', maxWidth: '600px', margin: '15px auto 0', lineHeight: '1.6' }}>
-              Every exhibition organized by PROMPT is designed to create maximum business exposure, 
-high visitor engagement, and excellent networking opportunities for exhibitors and brands. 
-            </p>
-          </div>
+// Replace about-v3-grid in sec2Content
+sec2Content = sec2Content.replace(/<div className="about-v3-grid"[\s\S]*?<\/div>\s*<\/div>/, newSec2Grid);
+parts[1] = sec2Content;
+console.log("Updated Section 2!");
 
-          <div className="v3-segments-grid">
-            {(showAll ? segments : segments.slice(0, 6)).map((item, idx) => (
-              <motion.div 
-                key={idx} 
-                className="v3-segment-card"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: (idx % 6) * 0.05 }}
-              >
-                <div className="card-border-accent"></div>
-                <div className="card-top">
-                   <div className="card-icon">
-                     <i className={`fas ${item.icon}`}></i>
-                   </div>
-                   <span className="card-num">{String(idx + 1).padStart(2, '0')}</span>
-                </div>
-                <h3>{item.name}</h3>
-              </motion.div>
-            ))}
-          </div>
-
-          <div style={{ textAlign: 'center', marginTop: '40px' }}>
-            <button 
-              onClick={() => setShowAll(!showAll)}
-              style={{
-                background: '#ED1C24',
-                color: '#fff',
-                border: 'none',
-                padding: '14px 35px',
-                borderRadius: '30px',
-                fontSize: '1rem',
-                fontWeight: '700',
-                cursor: 'pointer',
-                boxShadow: '0 8px 25px rgba(237, 28, 36, 0.2)',
-                transition: 'all 0.3s ease',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.background = '#d61820';
-                e.target.style.transform = 'translateY(-2px)';
-                e.target.style.boxShadow = '0 12px 30px rgba(237, 28, 36, 0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.background = '#ED1C24';
-                e.target.style.transform = 'none';
-                e.target.style.boxShadow = '0 8px 25px rgba(237, 28, 36, 0.2)';
-              }}
-            >
-              <span>{showAll ? 'Show Less' : 'Show More'}</span>
-              <i className={`fas ${showAll ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. STRONG PRESENCE (PAN-INDIA MAP & CITIES) */}
-      <section className="v3-presence-section">
-        <div className="container">
-          <div className="presence-grid">
+// Let's modify parts[3] (Section 4)
+let sec4Content = parts[3];
+const newSec4Grid = `<div className="presence-grid">
             <div className="presence-header-col">
               <motion.div 
                  initial={{ opacity: 0, x: -30 }}
@@ -230,7 +125,7 @@ high visitor engagement, and excellent networking opportunities for exhibitors a
                       <span className="header-accent-tag" style={{ fontSize: '0.85rem', fontWeight: '800', color: '#ED1C24' }}>PAN-INDIA NETWORK</span>
                     </div>
                     <h2 className="header-main-title" style={{ fontSize: '2.5rem', fontWeight: '900', color: '#111' }}>
-                      Strong Presence Across India
+                      Strong Presence <span>Across India</span>
                     </h2>
                  </div>
               </motion.div>
@@ -267,14 +162,15 @@ high visitor engagement, and excellent networking opportunities for exhibitors a
                  </p>
               </motion.div>
             </div>
-          </div>
-        </div>
-      </section>
+          </div>`;
 
-      {/* 5. EXCELLENCE IN MANAGEMENT SECTION */}
-      <section className="v3-management-section">
-        <div className="container">
-          <div className="management-grid">
+sec4Content = sec4Content.replace(/<div className="presence-grid">[\s\S]*?<\/div>\s*<\/div>/, newSec4Grid);
+parts[3] = sec4Content;
+console.log("Updated Section 4!");
+
+// Let's modify parts[4] (Section 5)
+let sec5Content = parts[4];
+const newSec5Grid = `<div className="management-grid">
             <div className="management-header-col">
               <motion.div 
                  initial={{ opacity: 0, y: 30 }}
@@ -324,36 +220,13 @@ high visitor engagement, and excellent networking opportunities for exhibitors a
                  </p>
               </motion.div>
             </div>
-          </div>
-        </div>
-      </section>
+          </div>`;
 
-      {/* 6. ROUNDED STATS SECTION (COUNTER UPDATED) */}
-      {/* <section className="v3-stats-section" style={{ padding: '80px 0', background: '#fff' }}>
-        <div className="container">
-          <div className="v3-stats-wrapper" style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap', gap: '30px', padding: '40px', background: '#ED1C24', borderRadius: '30px', color: '#fff', boxShadow: '0 20px 45px rgba(237, 28, 36, 0.15)' }}>
-             <div className="v3-stat-item" style={{ textAlign: 'center', flex: '1 1 200px' }}>
-                <Counter value={5000} suffix="+" />
-                <span className="stat-v3-label" style={{ display: 'block', fontSize: '0.85rem', fontWeight: '800', marginTop: '10px', letterSpacing: '1px', opacity: 0.85 }}>HAPPY EXHIBITORS</span>
-             </div>
-             <div className="v3-stat-item" style={{ textAlign: 'center', flex: '1 1 200px' }}>
-                <Counter value={1000000} suffix="+" />
-                <span className="stat-v3-label" style={{ display: 'block', fontSize: '0.85rem', fontWeight: '800', marginTop: '10px', letterSpacing: '1px', opacity: 0.85 }}>QUALITY FOOTFALL</span>
-             </div>
-             <div className="v3-stat-item" style={{ textAlign: 'center', flex: '1 1 200px' }}>
-                <Counter value={900} suffix="+" />
-                <span className="stat-v3-label" style={{ display: 'block', fontSize: '0.85rem', fontWeight: '800', marginTop: '10px', letterSpacing: '1px', opacity: 0.85 }}>COMPLETED EXHIBITIONS</span>
-             </div>
-             <div className="v3-stat-item" style={{ textAlign: 'center', flex: '1 1 200px' }}>
-                <Counter value={25} suffix="+" />
-                <span className="stat-v3-label" style={{ display: 'block', fontSize: '0.85rem', fontWeight: '800', marginTop: '10px', letterSpacing: '1px', opacity: 0.85 }}>YEARS OF EXCELLENCE</span>
-             </div>
-          </div>
-        </div>
-      </section> */}
-      
-    </main>
-  );
-};
+sec5Content = sec5Content.replace(/<div className="management-grid">[\s\S]*?<\/div>\s*<\/div>/, newSec5Grid);
+parts[4] = sec5Content;
+console.log("Updated Section 5!");
 
-export default About;
+// Reassemble and write back
+const output = parts.join('');
+fs.writeFileSync(filePath, output, 'utf8');
+console.log("Reassembled and wrote file successfully!");

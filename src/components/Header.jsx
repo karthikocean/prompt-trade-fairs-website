@@ -57,10 +57,10 @@ const Header = () => {
 
             <div className={`dropdown-menu ${activeDropdown === 'exhibitions' ? "show" : ""}`}>
               <NavLink to="/upcoming-exhibitions" onClick={() => { setActiveDropdown(null); setIsMenuOpen(false); }}>
-                Present Exhibitions
+                Current Exhibitions
               </NavLink>
               <NavLink to="/previous-exhibitions" onClick={() => { setActiveDropdown(null); setIsMenuOpen(false); }}>
-                Future Exhibitions
+                Upcoming Exhibitions
               </NavLink>
             </div>
           </div>

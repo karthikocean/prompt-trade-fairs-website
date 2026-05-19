@@ -50,8 +50,8 @@ const Footer = () => {
         <div className="footer-col">
           <h3>Company</h3>
           <ul>
-            <li><Link to="/previous-exhibitions"><i className="fas fa-chevron-right"></i>Future Exhibitions</Link></li>
-            <li><Link to="/upcoming-exhibitions"><i className="fas fa-chevron-right"></i>Present Exhibitions</Link></li>
+            <li><Link to="/previous-exhibitions"><i className="fas fa-chevron-right"></i>Upcoming Exhibitions</Link></li>
+            <li><Link to="/upcoming-exhibitions"><i className="fas fa-chevron-right"></i>Current Exhibitions</Link></li>
             <li><Link to="/events"><i className="fas fa-chevron-right"></i>Events</Link></li>
             <li><Link to="/payment-terms"><i className="fas fa-chevron-right"></i>Payment Terms</Link></li>
             <li><Link to="/privacy-policy"><i className="fas fa-chevron-right"></i>Privacy Policy</Link></li>

@@ -59,8 +59,8 @@ const UpcomingExhibitions = () => {
         <div className="container v3-hero-container">
           <div className="v3-hero-content">
             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-              <div className="v3-breadcrumb"><Link to="/">Home</Link> <span>/</span> <span className="current">Present Exhibitions</span></div>
-              <h1 className="v3-hero-title">Present <span>Exhibitions</span></h1>
+              <div className="v3-breadcrumb"><Link to="/">Home</Link> <span>/</span> <span className="current">Current Exhibitions</span></div>
+              <h1 className="v3-hero-title">Current <span>Exhibitions</span></h1>
             </motion.div>
           </div>
         </div>
@@ -69,7 +69,7 @@ const UpcomingExhibitions = () => {
       <section className="upcoming-grid-v3" style={{ padding: '120px 0', background: '#f8f9fa' }}>
         <div className="container">
           <div className="premium-header-box centered">
-            <div className="header-accent-row"><div className="header-accent-line"></div><span className="header-accent-tag">Present Exhibitions</span><div className="header-accent-line"></div></div>
+            <div className="header-accent-row"><div className="header-accent-line"></div><span className="header-accent-tag">Current Exhibitions</span><div className="header-accent-line"></div></div>
             <h2 className="header-main-title">Book Your Expo</h2>
           </div>
 
