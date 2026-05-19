@@ -28,27 +28,27 @@ const IndustriesSlider = () => {
       try {
         const [upcomingRes, presentRes] = await Promise.all([
           getUpcomingExpos(),
-          getPresentExpos()
+          // getPresentExpos()
         ]);
-
+        console.log(upcomingRes, "uuuuuuu");
         let combinedData = [];
         if (upcomingRes.data && Array.isArray(upcomingRes.data.data)) {
           combinedData = [...upcomingRes.data.data];
         }
-        if (presentRes.data && Array.isArray(presentRes.data.data)) {
-          // Add present expos that are not already in the list
-          const presentExpos = presentRes.data.data.filter(pe => !combinedData.some(ue => ue._id === pe._id));
-          combinedData = [...combinedData, ...presentExpos];
-        }
+        // if (presentRes.data && Array.isArray(presentRes.data.data)) {
+        //   // Add present expos that are not already in the list
+        //   const presentExpos = presentRes.data.data.filter(pe => !combinedData.some(ue => ue._id === pe._id));
+        //   combinedData = [...combinedData, ...presentExpos];
+        // }
 
         // Sort by start date
         combinedData.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
 
         const mapped = combinedData.map(item => ({
           _id: item._id,
-          expoName: item.expoName, 
+          expoName: item.expoName,
           title: item.expoName,
-          meta: item.products?.length > 0 
+          meta: item.products?.length > 0
             ? `${item.products.slice(0, 3).map(p => p.productName).join(", ")} & more.`
             : `Explore the latest innovations in ${item.category?.name || 'various industries'}.`,
           date: formatDate(item.startDate, item.endDate),
@@ -69,7 +69,7 @@ const IndustriesSlider = () => {
     };
     fetchExpos();
   }, []);
-  
+
   useEffect(() => {
     const handleResize = () => {
       setItemsPerPage(window.innerWidth <= 768 ? 1 : 2);
@@ -143,11 +143,11 @@ const IndustriesSlider = () => {
             </>
           )}
 
-          <div className="expo-grid-v2" style={{ 
-            display: 'grid', 
-            gridTemplateColumns: itemsPerPage === 1 ? '1fr' : '1fr 1fr', 
+          <div className="expo-grid-v2" style={{
+            display: 'grid',
+            gridTemplateColumns: (itemsPerPage === 1 || expos.length === 1) ? '1fr' : '1fr 1fr',
             gap: '30px',
-            maxWidth: itemsPerPage === 1 ? '550px' : '100%',
+            maxWidth: (itemsPerPage === 1 || expos.length === 1) ? '550px' : '100%',
             margin: '0 auto'
           }}>
             {items.map((expo, i) => (
@@ -168,10 +168,7 @@ const IndustriesSlider = () => {
                         <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24', fontSize: '1.1rem' }}></i>
                         <span style={{ fontWeight: '800' }}>{expo.location}</span>
                       </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', color: '#111' }}>
-                        <i className="fas fa-user-tie" style={{ color: '#ED1C24', fontSize: '1.1rem' }}></i>
-                        <span style={{ fontWeight: '800' }}>{expo.manager}</span>
-                      </div>
+
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', color: '#111' }}>
                         <i className="fas fa-tags" style={{ color: '#ED1C24', fontSize: '1.1rem' }}></i>
                         <span style={{ fontWeight: '800' }}>{expo.categoryName}</span>
@@ -183,16 +180,22 @@ const IndustriesSlider = () => {
 
                   {/* ACTION BUTTONS (Task 8) */}
                   <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-                    {expo.layout && (
-                      <a href={expo.layout} target="_blank" rel="noopener noreferrer" style={smallBtnStyle}>
-                        <i className="fas fa-map"></i> Layout
-                      </a>
-                    )}
-                    {expo.brochure && (
-                      <a href={expo.brochure} target="_blank" rel="noopener noreferrer" style={smallBtnStyle}>
-                        <i className="fas fa-file-download"></i> Brochure
-                      </a>
-                    )}
+                    <a 
+                      href={expo.layout || undefined} 
+                      target={expo.layout ? "_blank" : undefined} 
+                      rel="noopener noreferrer" 
+                      style={{ ...smallBtnStyle, ...(!expo.layout ? { pointerEvents: 'none', opacity: 0.5 } : {}) }}
+                    >
+                      <i className="fas fa-map"></i> Layout
+                    </a>
+                    <a 
+                      href={expo.brochure || undefined} 
+                      target={expo.brochure ? "_blank" : undefined} 
+                      rel="noopener noreferrer" 
+                      style={{ ...smallBtnStyle, ...(!expo.brochure ? { pointerEvents: 'none', opacity: 0.5 } : {}) }}
+                    >
+                      <i className="fas fa-file-download"></i> Brochure
+                    </a>
                   </div>
 
                   {/* RED INTERESTED BUTTON */}

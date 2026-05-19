@@ -23,7 +23,7 @@ const Header = () => {
         <div className="nav-logo">
           <Link to="/">
             <img
-              src={isScrolled ? "/promt orignal.png" : "/promt orignal.png"}
+              src={isScrolled ? "/promt orignal.png" : "/prompt-logo-NEW.png"}
               alt="Prompt Logo"
             />
           </Link>
