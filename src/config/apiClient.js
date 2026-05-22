@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const APP_ENV = import.meta.env.VITE_APP_ENV || "production";
+const APP_ENV = import.meta.env.VITE_APP_ENV || "dev";
 
 let IMAGE_BASE_URL = "";
 let BASE_URL = "";
@@ -8,9 +8,9 @@ let server = "";
 
 switch (APP_ENV) {
     case "dev":
-        IMAGE_BASE_URL = "http://192.168.1.14:2001/public";
-        BASE_URL = "http://192.168.1.14:2001/api/website";
-        server = "http://192.168.1.14:2001";
+        IMAGE_BASE_URL = "http://192.168.1.23:2001/public";
+        BASE_URL = "http://192.168.1.23:2001/api/website";
+        server = "http://192.168.1.23:2001";
         break;
 
     case "production":
