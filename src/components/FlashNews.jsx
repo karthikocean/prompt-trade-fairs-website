@@ -6,15 +6,17 @@ const FlashNews = () => {
   const [loading, setLoading] = useState(true);
   const [flashNews, setFlashNews] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const imageUrl = flashNews.length > 0 && flashNews[0].image ? getImageUrl(flashNews[0].image) : null;
 
-  // Show modal only once per session
+  // Show modal only once per session when image exists
   useEffect(() => {
+    if (!imageUrl) return;
     const shown = sessionStorage.getItem('flashNewsShown');
     if (!shown) {
       setIsOpen(true);
       sessionStorage.setItem('flashNewsShown', 'true');
     }
-  }, []);
+  }, [imageUrl]);
 
   // Fetch flash news on component mount
   useEffect(() => {
@@ -54,7 +56,7 @@ const FlashNews = () => {
     document.body.style.overflow = '';
   };
 
-  const imageUrl = getImageUrl(flashNews.map(item => item.image)[0]);
+
 
   const openInNewTab = () => {
     if (imageUrl) {
@@ -62,19 +64,21 @@ const FlashNews = () => {
     }
   };
 
-  if (!isOpen) return null;
+  if (!isOpen || !imageUrl) return null;
 
   return (
     <div className="flashnews-overlay" onClick={closeModal}>
       <div className="flashnews-modal" onClick={e => e.stopPropagation()}>
         <button className="flashnews-close" onClick={closeModal} aria-label="Close">&times;</button>
         {imageUrl && (
-          <img
-            src={imageUrl}
-            alt="Featured"
-            className="flashnews-image"
-            onClick={openInNewTab}
-          />
+          <div className="flashnews-image-wrapper">
+            <img
+              src={imageUrl}
+              alt="Featured"
+              className="flashnews-image"
+              onClick={openInNewTab}
+            />
+          </div>
         )}
       </div>
       <style jsx>{`
@@ -126,18 +130,40 @@ const FlashNews = () => {
           background: #f5f5f5; /* light gray on hover */
           transform: scale(1.08);
         }
+                  .flashnews-image-wrapper {
+            width: 950px;
+            height: 520px;
+            max-width: 95vw;
+            overflow: hidden;
+            border-radius: 24px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #111;
+          }
         .flashnews-image {
           width: 100%;
-          height: auto;
-          max-height: 88vh;
-          object-fit: contain;
-          border-radius: 18px;
+          height: 100%;
+          object-fit: cover;
           display: block;
-          cursor: pointer;
-          box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @media (max-width: 1024px) {
+          .flashnews-image-wrapper {
+            width: 90vw;
+            height: auto;
+            aspect-ratio: 16/9;
+          }
+        }
+        @media (max-width: 480px) {
+          .flashnews-image-wrapper {
+            width: 95vw;
+            height: auto;
+            aspect-ratio: 16/9;
+          }
+        }
         @media (max-width: 768px) {
           .flashnews-close { width: 26px; height: 26px; font-size: 1.2rem; }
         }

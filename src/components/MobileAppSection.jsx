@@ -12,7 +12,7 @@ const MobileAppSection = () => {
                 <div className="header-accent-line"></div>
                 <span className="header-accent-tag">GET THE APP</span>
               </div>
-              <h2 className="header-main-title">Business Growth <br /> <span>Anywhere</span></h2>
+              <h2 className="header-main-title">Business Growth Anywhere</h2>
             </div>
 
             <p className="app-description">
@@ -38,12 +38,12 @@ const MobileAppSection = () => {
 
           {/* RIGHT: MOCKUP */}
           <div className="app-mockup-right">
-             <div className="mockup-container">
-                <div className="mockup-circle-accent"></div>
-                <div className="mockup-img-wrapper scale-in">
-                  <img src="/mobile design screen.svg" alt="Prompt Mobile App Mockup" />
-                </div>
-             </div>
+            <div className="mockup-container">
+              <div className="mockup-circle-accent"></div>
+              <div className="mockup-img-wrapper scale-in">
+                <img src="/mobile design screen.svg" alt="Prompt Mobile App Mockup" />
+              </div>
+            </div>
           </div>
         </div>
       </div>

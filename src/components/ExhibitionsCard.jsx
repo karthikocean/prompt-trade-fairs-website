@@ -46,7 +46,7 @@ const StatsSection = () => {
             <span className="header-accent-tag">ABOUT US</span>
             <div className="header-accent-line"></div>
           </div>
-          <h2 className="header-main-title">Connecting Business <span>Growth</span></h2>
+          <h2 className="header-main-title">Connecting Business Growth</h2>
         </div>
 
         <div className="stats-container">
@@ -79,8 +79,8 @@ const StatsSection = () => {
             <div className="accent-frame blue"></div>
             <img src="/promtbuilding.jpeg" alt="Exhibition Impact" className="main-image shadow-premium" />
             {/* <div className="experience-badge animate-bounce-slow"> */}
-              {/* <span className="years">1200+</span> */}
-              {/* <span className="text">Exhibitions <br /> Organized</span> */}
+            {/* <span className="years">1200+</span> */}
+            {/* <span className="text">Exhibitions <br /> Organized</span> */}
             {/* </div> */}
           </div>
         </div>

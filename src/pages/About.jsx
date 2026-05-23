@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 const Counter = ({ value, suffix = "" }) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
-  
+
   const spring = useSpring(0, {
     mass: 1,
     stiffness: 100,
     damping: 30
   });
-  
+
   const display = useTransform(spring, (current) => {
     const num = Math.floor(current);
     if (num >= 1000000) return (num / 1000000).toFixed(0) + "M" + suffix;
@@ -44,8 +44,8 @@ const About = () => {
   ];
 
   const cities = [
-    "Chennai", "Bengaluru", "Hyderabad", "Ahmedabad", 
-    "Coimbatore", "Salem", "Vijayawada", "Visakhapatnam", 
+    "Chennai", "Bengaluru", "Hyderabad", "Ahmedabad",
+    "Coimbatore", "Salem", "Vijayawada", "Visakhapatnam",
     "Warangal", "Rajahmundry"
   ];
 
@@ -56,10 +56,10 @@ const About = () => {
         <div className="v3-hero-overlay-dark"></div>
         <div className="container v3-hero-container">
           <div className="v3-hero-content">
-            <motion.div 
-               initial={{ opacity: 0, x: -30 }}
-               animate={{ opacity: 1, x: 0 }}
-               transition={{ duration: 0.8 }}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
             >
               <div className="v3-breadcrumb">
                 <Link to="/">Home</Link> <span>/</span> <span className="current">About Us</span>
@@ -75,19 +75,19 @@ const About = () => {
         <div className="container">
           <div className="about-v3-grid">
             <div className="v3-intro-header-col">
-              <motion.div 
-                 className="v3-intro-header"
-                 initial={{ opacity: 0, x: -50 }}
-                 whileInView={{ opacity: 1, x: 0 }}
-                 viewport={{ once: true }}
-                 transition={{ duration: 0.6 }}
+              <motion.div
+                className="v3-intro-header"
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
               >
                 <div className="premium-header-box" style={{ marginBottom: '30px' }}>
                   <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
                     <div className="header-accent-line" style={{ width: '40px', height: '2px', background: '#ED1C24' }}></div>
-                    <span className="header-accent-tag" style={{ fontSize: '0.85rem', fontWeight: '800', color: '#ED1C24', letterSpacing: '1px' }}>BUSINESS EXCELLENCE</span>
+                    <span className="header-accent-tag" style={{ fontWeight: '800', color: '#ED1C24', letterSpacing: '1px' }}>BUSINESS EXCELLENCE</span>
                   </div>
-                  <h2 className="header-main-title" style={{ fontSize: '2.5rem', fontWeight: '900', color: '#111' }}>
+                  <h2 className="header-main-title" style={{ fontWeight: '900', color: '#111' }}>
                     Prompt Trade Fairs India Pvt. Ltd
                   </h2>
                   <h4 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#555', marginTop: '10px', lineHeight: '1.4' }}>
@@ -98,12 +98,12 @@ const About = () => {
             </div>
 
             <div className="v3-intro-image-col">
-              <motion.div 
-                 className="v3-intro-image"
-                 initial={{ opacity: 0, scale: 0.9 }}
-                 whileInView={{ opacity: 1, scale: 1 }}
-                 viewport={{ once: true }}
-                 transition={{ duration: 0.6 }}
+              <motion.div
+                className="v3-intro-image"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
               >
                 <div className="why-choose-image-box">
                   <div className="accent-frame red"></div>
@@ -114,13 +114,13 @@ const About = () => {
             </div>
 
             <div className="v3-intro-content-col">
-              <motion.div 
-                 className="v3-intro-text"
-                 initial={{ opacity: 0, x: -50 }}
-                 whileInView={{ opacity: 1, x: 0 }}
-                 viewport={{ once: true }}
-                 transition={{ duration: 0.6, delay: 0.2 }}
-                 style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.8' }}
+              <motion.div
+                className="v3-intro-text"
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.8' }}
               >
                 <p className="intro-p" style={{ marginBottom: '20px' }}>
                   Prompt Trade Fairs India Pvt. Ltd. is a leading Exhibition Organiser in India with over 25 years of excellence in organizing highly successful trade fairs, business expos, and consumer exhibitions across the country. Known for professionalism, innovation, and quality event management, PROMPT has become one of the most trusted names in the Indian exhibition industry.
@@ -146,19 +146,19 @@ const About = () => {
               <span className="header-accent-tag" style={{ fontSize: '0.85rem', fontWeight: '800', color: '#ED1C24' }}>INDUSTRY DIVERSIFICATION</span>
               <div className="header-accent-line" style={{ width: '30px', height: '2px', background: '#ED1C24' }}></div>
             </div>
-            <h2 className="header-main-title" style={{ fontSize: '2.5rem', fontWeight: '900', color: '#111' }}>
+            <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111' }}>
               Specialized Exhibition Segments
             </h2>
             <p style={{ color: '#555', fontSize: '1.1rem', maxWidth: '600px', margin: '15px auto 0', lineHeight: '1.6' }}>
-              Every exhibition organized by PROMPT is designed to create maximum business exposure, 
-high visitor engagement, and excellent networking opportunities for exhibitors and brands. 
+              Every exhibition organized by PROMPT is designed to create maximum business exposure,
+              high visitor engagement, and excellent networking opportunities for exhibitors and brands.
             </p>
           </div>
 
           <div className="v3-segments-grid">
             {(showAll ? segments : segments.slice(0, 6)).map((item, idx) => (
-              <motion.div 
-                key={idx} 
+              <motion.div
+                key={idx}
                 className="v3-segment-card"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -167,10 +167,10 @@ high visitor engagement, and excellent networking opportunities for exhibitors a
               >
                 <div className="card-border-accent"></div>
                 <div className="card-top">
-                   <div className="card-icon">
-                     <i className={`fas ${item.icon}`}></i>
-                   </div>
-                   <span className="card-num">{String(idx + 1).padStart(2, '0')}</span>
+                  <div className="card-icon">
+                    <i className={`fas ${item.icon}`}></i>
+                  </div>
+                  <span className="card-num">{String(idx + 1).padStart(2, '0')}</span>
                 </div>
                 <h3>{item.name}</h3>
               </motion.div>
@@ -178,7 +178,7 @@ high visitor engagement, and excellent networking opportunities for exhibitors a
           </div>
 
           <div style={{ textAlign: 'center', marginTop: '40px' }}>
-            <button 
+            <button
               onClick={() => setShowAll(!showAll)}
               style={{
                 background: '#ED1C24',
@@ -218,53 +218,53 @@ high visitor engagement, and excellent networking opportunities for exhibitors a
         <div className="container">
           <div className="presence-grid">
             <div className="presence-header-col">
-              <motion.div 
-                 initial={{ opacity: 0, x: -30 }}
-                 whileInView={{ opacity: 1, x: 0 }}
-                 viewport={{ once: true }}
-                 transition={{ duration: 0.6 }}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
               >
-                 <div className="premium-header-box" style={{ marginBottom: '30px' }}>
-                    <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                      <div className="header-accent-line" style={{ width: '40px', height: '2px', background: '#ED1C24' }}></div>
-                      <span className="header-accent-tag" style={{ fontSize: '0.85rem', fontWeight: '800', color: '#ED1C24' }}>PAN-INDIA NETWORK</span>
-                    </div>
-                    <h2 className="header-main-title" style={{ fontSize: '2.5rem', fontWeight: '900', color: '#111' }}>
-                      Strong Presence Across India
-                    </h2>
-                 </div>
+                <div className="premium-header-box" style={{ marginBottom: '30px' }}>
+                  <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                    <div className="header-accent-line" style={{ width: '40px', height: '2px', background: '#ED1C24' }}></div>
+                    <span className="header-accent-tag" style={{ fontSize: '0.85rem', fontWeight: '800', color: '#ED1C24' }}>PAN-INDIA NETWORK</span>
+                  </div>
+                  <h2 className="header-main-title" style={{ fontSize: '2.5rem', fontWeight: '900', color: '#111' }}>
+                    Strong Presence Across India
+                  </h2>
+                </div>
               </motion.div>
             </div>
 
             <div className="presence-image-col">
-              <motion.div 
-                 initial={{ opacity: 0, scale: 0.95 }}
-                 whileInView={{ opacity: 1, scale: 1 }}
-                 viewport={{ once: true }}
-                 transition={{ duration: 0.6, delay: 0.2 }}
-                 style={{ display: 'flex', justifyContent: 'center' }}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                style={{ display: 'flex', justifyContent: 'center' }}
               >
-                 <div className="why-choose-image-box">
-                    <div className="accent-frame red"></div>
-                    <div className="accent-frame blue"></div>
-                    <img src="/exact_india_map_image.png" alt="Exhibition Presence India Map" className="main-image shadow-premium" />
-                 </div>
+                <div className="why-choose-image-box">
+                  <div className="accent-frame red"></div>
+                  <div className="accent-frame blue"></div>
+                  <img src="/exact_india_map_image.png" alt="Exhibition Presence India Map" className="main-image shadow-premium" />
+                </div>
               </motion.div>
             </div>
 
             <div className="presence-content-col">
-              <motion.div 
-                 initial={{ opacity: 0, x: -30 }}
-                 whileInView={{ opacity: 1, x: 0 }}
-                 viewport={{ once: true }}
-                 transition={{ duration: 0.6 }}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
               >
-                 <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8', marginBottom: '20px' }}>
-                   PROMPT has successfully organized exhibitions in major business cities including Chennai, Bengaluru, Hyderabad, Ahmedabad, Coimbatore, Salem, Vijayawada, Visakhapatnam, Warangal, Rajahmundry, and many other key locations across India.
-                 </p>
-                 <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8', marginBottom: '30px' }}>
-                   With a strong database of registered visitors and industry professionals in every region, PROMPT exhibitions consistently attract quality footfall and deliver outstanding business opportunities for exhibitors.
-                 </p>
+                <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8', marginBottom: '20px' }}>
+                  PROMPT has successfully organized exhibitions in major business cities including Chennai, Bengaluru, Hyderabad, Ahmedabad, Coimbatore, Salem, Vijayawada, Visakhapatnam, Warangal, Rajahmundry, and many other key locations across India.
+                </p>
+                <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8', marginBottom: '30px' }}>
+                  With a strong database of registered visitors and industry professionals in every region, PROMPT exhibitions consistently attract quality footfall and deliver outstanding business opportunities for exhibitors.
+                </p>
               </motion.div>
             </div>
           </div>
@@ -276,52 +276,52 @@ high visitor engagement, and excellent networking opportunities for exhibitors a
         <div className="container">
           <div className="management-grid">
             <div className="management-header-col">
-              <motion.div 
-                 initial={{ opacity: 0, y: 30 }}
-                 whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
-                 transition={{ duration: 0.6, delay: 0.2 }}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
               >
-                 <div className="premium-header-box" style={{ marginBottom: '30px' }}>
-                    <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                      <div className="header-accent-line" style={{ width: '40px', height: '2px', background: '#ED1C24' }}></div>
-                      <span className="header-accent-tag" style={{ fontSize: '0.85rem', fontWeight: '800', color: '#ED1C24' }}>END-TO-END SUPPORT</span>
-                    </div>
-                    <h2 className="header-main-title" style={{ fontSize: '2.5rem', fontWeight: '900', color: '#111', lineHeight: '1.2' }}>
-                      Excellence in <br /> Exhibition Management
-                    </h2>
-                 </div>
+                <div className="premium-header-box" style={{ marginBottom: '30px' }}>
+                  <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                    <div className="header-accent-line" style={{ width: '40px', height: '2px', background: '#ED1C24' }}></div>
+                    <span className="header-accent-tag" style={{ fontSize: '0.85rem', fontWeight: '800', color: '#ED1C24' }}>END-TO-END SUPPORT</span>
+                  </div>
+                  <h2 className="header-main-title" style={{ fontWeight: '900', color: '#111', lineHeight: '1.2' }}>
+                    Excellence in Exhibition Management
+                  </h2>
+                </div>
               </motion.div>
             </div>
 
             <div className="management-image-col">
-              <motion.div 
-                 initial={{ opacity: 0, y: 30 }}
-                 whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
-                 transition={{ duration: 0.6 }}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
               >
-                 <div className="why-choose-image-box">
-                    <div className="accent-frame red"></div>
-                    <div className="accent-frame blue"></div>
-                    <img src="/about_img.jpg" alt="Exhibition Management Excellence" className="main-image shadow-premium" onError={(e) => { e.target.src = '/team.png'; }} />
-                 </div>
+                <div className="why-choose-image-box">
+                  <div className="accent-frame red"></div>
+                  <div className="accent-frame blue"></div>
+                  <img src="/about_img.jpg" alt="Exhibition Management Excellence" className="main-image shadow-premium" onError={(e) => { e.target.src = '/team.png'; }} />
+                </div>
               </motion.div>
             </div>
 
             <div className="management-content-col">
-              <motion.div 
-                 initial={{ opacity: 0, y: 30 }}
-                 whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
-                 transition={{ duration: 0.6, delay: 0.2 }}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
               >
-                 <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8', marginBottom: '20px' }}>
-                   Every PROMPT exhibition is conceptualized with detailed planning, innovative marketing strategies, and extensive promotions across digital media, print advertising, outdoor campaigns, and branding platforms. The company focuses on delivering seamless event execution and exceptional customer service, making every exhibition a valuable experience for exhibitors and visitors alike.
-                 </p>
-                 <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8' }}>
-                   As a complete exhibition solutions provider, PROMPT offers end-to-end support for trade fairs, expos, and business events, ensuring operational excellence at every stage. Its commitment to professionalism, quality, and business success has positioned PROMPT as one of the leading trade fair and exhibition organizers in India.
-                 </p>
+                <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8', marginBottom: '20px' }}>
+                  Every PROMPT exhibition is conceptualized with detailed planning, innovative marketing strategies, and extensive promotions across digital media, print advertising, outdoor campaigns, and branding platforms. The company focuses on delivering seamless event execution and exceptional customer service, making every exhibition a valuable experience for exhibitors and visitors alike.
+                </p>
+                <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8' }}>
+                  As a complete exhibition solutions provider, PROMPT offers end-to-end support for trade fairs, expos, and business events, ensuring operational excellence at every stage. Its commitment to professionalism, quality, and business success has positioned PROMPT as one of the leading trade fair and exhibition organizers in India.
+                </p>
               </motion.div>
             </div>
           </div>
@@ -351,7 +351,7 @@ high visitor engagement, and excellent networking opportunities for exhibitors a
           </div>
         </div>
       </section> */}
-      
+
     </main>
   );
 };
