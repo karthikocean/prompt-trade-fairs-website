@@ -72,14 +72,13 @@ const Footer = () => {
 
           <p>
             <i className="fas fa-envelope"></i>
-            project2@prompttradefairs.com<br />
-            prompttradefairs@gmail.com
+            prompttradefairs@gmail.com<br />
+            project2@prompttradefairs.com
           </p>
 
           <p>
-            <i className="fas fa-phone-alt"></i>
-            Phone: +91 44 4214 2483<br />
-            Mobile: +91 93913 91162, +91 99410 08371
+            <i className="fas fa-mobile"></i>
+            Mobile: +91 9543668094, +91 93913 91162, +91 99410 08371
           </p>
         </div>
       </div>

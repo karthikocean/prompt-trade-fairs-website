@@ -17,13 +17,13 @@ const WhyChoose = () => {
         <div className="why-choose-grid">
           {/* Left: Image with accent frames */}
           <div className="why-choose-image-box">
-             <div className="accent-frame red"></div>
-             <div className="accent-frame blue"></div>
-             <img src="/team.png" alt="Prompt Trade Fairs Team" className="main-image shadow-premium" />
-             <div className="experience-badge animate-bounce-slow">
-               <span className="years">20+</span>
-               <span className="text">Years of <br /> Excellence</span>
-             </div>
+            <div className="accent-frame red"></div>
+            <div className="accent-frame blue"></div>
+            <img src="/team.png" alt="Prompt Trade Fairs Team" className="main-image shadow-premium" />
+            <div className="experience-badge animate-bounce-slow">
+              <span className="years">25+</span>
+              <span className="text">Years of <br /> Excellence</span>
+            </div>
           </div>
 
           {/* Right: Content */}
@@ -35,7 +35,7 @@ const WhyChoose = () => {
             <div className="feature-list">
               <div className="feature-item">
                 <div className="feature-icon-new">
-                   <i className="fas fa-check-double"></i>
+                  <i className="fas fa-check-double"></i>
                 </div>
                 <div className="feature-text">
                   <h3>Meticulous Planning</h3>
@@ -45,7 +45,7 @@ const WhyChoose = () => {
 
               <div className="feature-item">
                 <div className="feature-icon-new">
-                   <i className="fas fa-check-double"></i>
+                  <i className="fas fa-check-double"></i>
                 </div>
                 <div className="feature-text">
                   <h3>Proven Expertise</h3>
@@ -55,7 +55,7 @@ const WhyChoose = () => {
 
               <div className="feature-item">
                 <div className="feature-icon-new">
-                   <i className="fas fa-check-double"></i>
+                  <i className="fas fa-check-double"></i>
                 </div>
                 <div className="feature-text">
                   <h3>Strong Visitor Base</h3>

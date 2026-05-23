@@ -74,7 +74,7 @@ h1 {
 }
 
 h2 {
-  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-size: clamp(1.8rem, 4vw, 2rem);
   margin-bottom: 2rem;
   color: var(--secondary-color);
 }
@@ -1578,7 +1578,7 @@ ul {
 
 .testimonial-title-premium {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+  /* font-size: clamp(2.2rem, 3.8vw, 3.2rem); */
   font-weight: 800;
   color: #111218;
   line-height: 1.15;
@@ -2742,7 +2742,7 @@ ul {
 .header-main-title {
   font-family: 'Syne', sans-serif !important;
   font-weight: 800 !important;
-  font-size: clamp(2.2rem, 4.5vw, 3.2rem) !important;
+  /* font-size: clamp(2.2rem, 4.5vw, 3.2rem) !important; */
   color: #111 !important;
   line-height: 1.1 !important;
   letter-spacing: -1.5px !important;
@@ -3182,7 +3182,7 @@ section:not(.hero) {
 
   h2 {
     font-size: 1.8rem !important;
-    /* margin-bottom: 1.5rem !important; */
+    margin-bottom: 1.5rem !important;
   }
 
   .section-tag {
@@ -4130,7 +4130,7 @@ section:not(.hero) {
 .about-v3-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-areas: 
+  grid-template-areas:
     "content image";
   gap: 80px;
   align-items: center;
@@ -4143,7 +4143,9 @@ section:not(.hero) {
   justify-content: center;
 }
 
-.v3-intro-image { grid-area: image; }
+.v3-intro-image {
+  grid-area: image;
+}
 
 .v3-subtag {
   color: #ED1C24;
@@ -4540,7 +4542,7 @@ section:not(.hero) {
 
   .about-v3-grid {
     grid-template-columns: 1fr;
-    grid-template-areas: 
+    grid-template-areas:
       "header"
       "image"
       "bullets"
@@ -4553,9 +4555,17 @@ section:not(.hero) {
     display: contents;
   }
 
-  .v3-intro-header { grid-area: header; }
-  .v3-intro-bullets { grid-area: bullets; }
-  .v3-intro-text { grid-area: text; }
+  .v3-intro-header {
+    grid-area: header;
+  }
+
+  .v3-intro-bullets {
+    grid-area: bullets;
+  }
+
+  .v3-intro-text {
+    grid-area: text;
+  }
 
   .about-v3-grid .header-main-title,
   .about-v3-grid .header-main-title span {
@@ -4818,7 +4828,7 @@ section:not(.hero) {
   transform: translateY(-2px);
 }
 
-.stall-form-grid, 
+.stall-form-grid,
 .visitor-form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -4881,6 +4891,7 @@ section:not(.hero) {
 
 /* 💎 FINAL MOBILE RESPONSIVE OVERRIDES (320px - 768px) 💎 */
 @media (max-width: 768px) {
+
   .modal-premium-card,
   .register-modal-form {
     width: 95% !important;
@@ -4908,7 +4919,7 @@ section:not(.hero) {
 
   /* PREVENT OVERLAP: Force Column Layout */
   .modal-main-grid,
-  .stall-form-grid, 
+  .stall-form-grid,
   .visitor-form-grid,
   .form-inner-grid,
   .form-actions-v3,
@@ -4935,13 +4946,14 @@ section:not(.hero) {
     width: 100% !important;
     max-width: 100% !important;
     margin-bottom: 5px !important;
-    grid-column: span 1 !important; /* Force grid override */
+    grid-column: span 1 !important;
+    /* Force grid override */
   }
 
   .form-group input,
   .form-group select,
   .form-group textarea,
-  .product-dropdown-container > div:first-of-type {
+  .product-dropdown-container>div:first-of-type {
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
@@ -4964,7 +4976,7 @@ section:not(.hero) {
     width: 90% !important;
     max-height: 60vh !important;
     z-index: 10000 !important;
-    box-shadow: 0 0 100px rgba(0,0,0,0.5) !important;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.5) !important;
     border-radius: 16px !important;
   }
 
@@ -5055,7 +5067,9 @@ section:not(.hero) {
    ──────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
-  html, body {
+
+  html,
+  body {
     overflow-x: hidden !important;
     position: relative !important;
     width: 100% !important;
@@ -5097,19 +5111,23 @@ section:not(.hero) {
   }
 
   .v3-initiative-card {
-    padding: 25px 20px !important; /* Reduced card size */
+    padding: 25px 20px !important;
+    /* Reduced card size */
   }
 
   .v3-initiative-card h3 {
-    font-size: 1.25rem !important; /* Smaller title */
+    font-size: 1.25rem !important;
+    /* Smaller title */
   }
 
   .v3-initiative-card p {
-    font-size: 0.85rem !important; /* Smaller desc */
+    font-size: 0.85rem !important;
+    /* Smaller desc */
   }
 
   .coverage-card-v3 {
-    padding: 20px !important; /* Significantly reduced from 40px */
+    padding: 20px !important;
+    /* Significantly reduced from 40px */
     gap: 10px !important;
   }
 
@@ -5132,7 +5150,8 @@ section:not(.hero) {
   .about-v3-intro,
   .v3-initiatives-section,
   .coverage-v3-section {
-    padding: 50px 0 !important; /* Reduced section spacing */
+    padding: 50px 0 !important;
+    /* Reduced section spacing */
   }
 
   .v3-stats-section {
@@ -5159,13 +5178,17 @@ section:not(.hero) {
     min-height: 400px !important;
     padding: 30px 10px 20px !important;
   }
+
   .hero-content {
     margin-top: 0 !important;
-    padding-bottom: 70px !important; /* Space for dots */
+    padding-bottom: 70px !important;
+    /* Space for dots */
   }
+
   .hero-dots {
     bottom: 0 !important;
-    margin-top: 40px !important; /* CLEAR SPACE below main button */
+    margin-top: 40px !important;
+    /* CLEAR SPACE below main button */
     position: relative !important;
     z-index: 5 !important;
     display: flex !important;
@@ -5263,10 +5286,13 @@ section:not(.hero) {
     display: flex !important;
     flex-direction: column !important;
   }
+
   .why-choose-image-box {
-    order: 1 !important; /* Image DIRECTLY BELOW HEADING */
+    order: 1 !important;
+    /* Image DIRECTLY BELOW HEADING */
     margin: 10px 0 25px 0 !important;
   }
+
   .stats-content-main {
     order: 2 !important;
     display: flex !important;
@@ -5274,27 +5300,33 @@ section:not(.hero) {
   }
 
   .stats-box {
-    order: 3 !important; /* Counters AT THE BOTTOM */
+    order: 3 !important;
+    /* Counters AT THE BOTTOM */
     margin-top: 25px !important;
     gap: 15px !important;
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     padding: 0 10px !important;
   }
+
   .stat-item {
     align-items: center !important;
     text-align: center !important;
   }
+
   .stat-item h3 {
     font-size: 1.4rem !important;
     margin-bottom: 2px !important;
   }
+
   .stat-item p {
     font-size: 0.75rem !important;
     margin-bottom: 5px !important;
   }
+
   .stat-item::after {
-    margin: 5px auto 0 !important; /* Center the red line */
+    margin: 5px auto 0 !important;
+    /* Center the red line */
     width: 30px !important;
   }
 
@@ -5534,17 +5566,22 @@ section:not(.hero) {
   }
 
   .why-choose-image-box {
-    order: 1 !important; /* Image after heading */
+    order: 1 !important;
+    /* Image after heading */
     margin-top: 20px !important;
     margin-bottom: 20px !important;
     min-width: 100% !important;
   }
+
   .why-choose-content {
-    order: 2 !important; /* Points after image */
+    order: 2 !important;
+    /* Points after image */
   }
+
   .feature-list {
     margin-top: 20px !important;
   }
+
   .feature-item {
     flex-direction: row !important;
     align-items: flex-start !important;
@@ -5586,7 +5623,8 @@ section:not(.hero) {
 
   /* 12. Next Expo Fixes */
   .next-expo-section {
-    padding: 40px 0 100px !important; /* Added 100px bottom padding to avoid chat bubble hide */
+    padding: 40px 0 100px !important;
+    /* Added 100px bottom padding to avoid chat bubble hide */
   }
 
   .next-expo-grid {
@@ -5599,21 +5637,29 @@ section:not(.hero) {
   }
 
   .next-expo-section .nav-arrow {
-    top: 310px !important; /* Pushed down to align with the image center on mobile */
+    top: 310px !important;
+    /* Pushed down to align with the image center on mobile */
     transform: translateY(-50%) !important;
     z-index: 100 !important;
   }
+
   .next-expo-section .nav-arrow.left {
-    left: 2px !important; /* Slightly closer to edge for safe gutter */
+    left: 2px !important;
+    /* Slightly closer to edge for safe gutter */
   }
+
   .next-expo-section .nav-arrow.right {
-    right: 2px !important; /* Slightly closer to edge for safe gutter */
+    right: 2px !important;
+    /* Slightly closer to edge for safe gutter */
   }
+
   .details-grid-v2 {
-    display: block !important; /* NO FLEX/GRID - Stacked */
+    display: block !important;
+    /* NO FLEX/GRID - Stacked */
     padding: 0 !important;
     text-align: left !important;
   }
+
   .detail-item-v2 {
     margin-bottom: 12px !important;
     display: flex !important;
@@ -5621,9 +5667,11 @@ section:not(.hero) {
     justify-content: flex-start !important;
     gap: 15px !important;
   }
+
   .detail-item-v2 .text-content {
     text-align: left !important;
   }
+
   .next-expo-content-right h3 {
     font-size: 1.5rem !important;
     border-left-width: 4px !important;
@@ -5635,10 +5683,13 @@ section:not(.hero) {
     flex-wrap: wrap !important;
     gap: 12px !important;
     margin-top: 30px !important;
-    justify-content: center !important; /* Centered layout */
+    justify-content: center !important;
+    /* Centered layout */
   }
+
   .present-expo-actions a {
-    flex: 0 1 calc(50% - 8px) !important; /* Layout & Brochure side by side */
+    flex: 0 1 calc(50% - 8px) !important;
+    /* Layout & Brochure side by side */
     min-width: 140px !important;
     font-size: 0.85rem !important;
     padding: 12px 10px !important;
@@ -5647,9 +5698,11 @@ section:not(.hero) {
     justify-content: center !important;
     order: 1 !important;
   }
+
   .present-expo-actions button,
   .present-expo-actions .register-btn-main {
-    flex: 0 1 90% !important; /* Register Now centered but not forced 100% */
+    flex: 0 1 90% !important;
+    /* Register Now centered but not forced 100% */
     order: 2 !important;
     margin-top: 10px !important;
     font-size: 0.95rem !important;
@@ -5672,7 +5725,8 @@ section:not(.hero) {
 
   .modern-testimonial-card.active {
     width: 100% !important;
-    max-width: calc(100vw - 100px) !important; /* Ensure it fits between arrows */
+    max-width: calc(100vw - 100px) !important;
+    /* Ensure it fits between arrows */
     padding: 25px !important;
     margin: 0 auto !important;
   }
@@ -5941,7 +5995,7 @@ select:focus {
     text-align: center;
   }
 
-  .detail-gallery-section > div:first-of-type {
+  .detail-gallery-section>div:first-of-type {
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
@@ -5961,7 +6015,7 @@ select:focus {
   }
 
   .story-content-left {
-    display: contents !important; 
+    display: contents !important;
   }
 
   .culture-header {
@@ -5997,11 +6051,13 @@ select:focus {
 
   .job-info-left h3 {
     font-size: 1.5rem !important;
-    color: #111 !important; /* Position Name Black */
+    color: #111 !important;
+    /* Position Name Black */
   }
 
   .job-info-center {
-    grid-template-columns: 1fr 1fr !important; /* Two by two side by side */
+    grid-template-columns: 1fr 1fr !important;
+    /* Two by two side by side */
     gap: 12px 20px !important;
     margin-bottom: 25px !important;
     width: 100% !important;
@@ -6019,11 +6075,13 @@ select:focus {
   .job-info-right {
     width: 100% !important;
     display: flex !important;
-    justify-content: center !important; /* Apply button centered */
+    justify-content: center !important;
+    /* Apply button centered */
   }
 
   .apply-btn-premium {
-    width: auto !important; /* Reduced size to fit text */
+    width: auto !important;
+    /* Reduced size to fit text */
     padding: 10px 30px !important;
     font-size: 0.9rem !important;
     margin: 0 auto !important;
@@ -6137,7 +6195,7 @@ select:focus {
     text-align: center;
   }
 
-  .detail-gallery-section > div:first-of-type {
+  .detail-gallery-section>div:first-of-type {
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
@@ -6157,7 +6215,7 @@ select:focus {
   }
 
   .story-content-left {
-    display: contents !important; 
+    display: contents !important;
   }
 
   .culture-header {
@@ -6193,11 +6251,13 @@ select:focus {
 
   .job-info-left h3 {
     font-size: 1.5rem !important;
-    color: #111 !important; /* Position Name Black */
+    color: #111 !important;
+    /* Position Name Black */
   }
 
   .job-info-center {
-    grid-template-columns: 1fr 1fr !important; /* Two by two side by side */
+    grid-template-columns: 1fr 1fr !important;
+    /* Two by two side by side */
     gap: 12px 20px !important;
     margin-bottom: 25px !important;
     width: 100% !important;
@@ -6215,11 +6275,13 @@ select:focus {
   .job-info-right {
     width: 100% !important;
     display: flex !important;
-    justify-content: center !important; /* Apply button centered */
+    justify-content: center !important;
+    /* Apply button centered */
   }
 
   .apply-btn-premium {
-    width: auto !important; /* Reduced size to fit text */
+    width: auto !important;
+    /* Reduced size to fit text */
     padding: 10px 30px !important;
     font-size: 0.9rem !important;
     margin: 0 auto !important;
@@ -6242,6 +6304,7 @@ select:focus {
     grid-template-columns: 1fr !important;
     gap: 15px !important;
   }
+
   .job-modal-header {
     border-bottom: none !important;
     margin-bottom: 15px !important;
@@ -6282,13 +6345,13 @@ select:focus {
     gap: 4px;
     margin-bottom: 20px;
   }
-  
+
   .legal-contact-item .label {
     font-size: 1rem;
     color: rgb(17, 17, 17);
     margin-bottom: 2px;
   }
-  
+
   .legal-contact-item .value {
     font-size: 1.1rem;
   }
@@ -6525,7 +6588,8 @@ select:focus {
     grid-template-columns: 1fr;
     gap: 40px;
   }
-  .management-grid > div:first-child {
+
+  .management-grid>div:first-child {
     order: 2;
   }
 }
@@ -6577,7 +6641,7 @@ select:focus {
 /* ── RESPONSIVE ABOUT US GRID STACKING ORDER ── */
 .about-v3-grid {
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:
     "header image"
     "content image";
   grid-template-columns: 1.2fr 0.8fr;
@@ -6599,7 +6663,7 @@ select:focus {
 
 .presence-grid {
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:
     "header image"
     "content image";
   grid-template-columns: 1.2fr 0.8fr;
@@ -6621,7 +6685,7 @@ select:focus {
 
 .management-grid {
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:
     "image header"
     "image content";
   grid-template-columns: 0.8fr 1.2fr;
@@ -6642,8 +6706,11 @@ select:focus {
 }
 
 @media (max-width: 991px) {
-  .about-v3-grid, .presence-grid, .management-grid {
-    grid-template-areas: 
+
+  .about-v3-grid,
+  .presence-grid,
+  .management-grid {
+    grid-template-areas:
       "header"
       "image"
       "content" !important;

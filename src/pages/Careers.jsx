@@ -148,8 +148,7 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
             alignItems: 'center',
             zIndex: 9999,
             padding: '20px',
-            overflowY: 'auto',
-            alignItems: 'flex-start'
+            overflowY: 'auto'
           }}
         >
           <motion.div
@@ -431,7 +430,7 @@ const Careers = () => {
                 <p className="story-p-muted">
                   Whether you're an experienced professional or a fresh graduate, we offer an environment that rewards hard work and provides a platform to lead and innovate within the exhibition industry.
                 </p>
- 
+
                 <div className="milestones-row">
                   <div className="milestone-box">
                     <span className="milestone-num">100+</span>
@@ -555,10 +554,10 @@ const Careers = () => {
                 </motion.div>
               ))
             )}
-            
+
             {jobs.length > visibleCount && (
               <div style={{ textAlign: 'center', marginTop: '50px' }}>
-                <button 
+                <button
                   onClick={() => setVisibleCount(prev => prev + 3)}
                   className="premium-load-btn"
                   style={{
