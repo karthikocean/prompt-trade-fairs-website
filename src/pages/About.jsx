@@ -31,16 +31,16 @@ const Counter = ({ value, suffix = "" }) => {
 const About = () => {
   const [showAll, setShowAll] = React.useState(false);
   const segments = [
-    { name: "Property Fair Organiser", icon: "fa-building" },
-    { name: "Build Expo Organiser", icon: "fa-tools" },
-    { name: "Furniture Expo Organiser", icon: "fa-couch" },
-    { name: "Poultry Expo Organiser", icon: "fa-egg" },
-    { name: "Construction Materials Expo Organiser", icon: "fa-hard-hat" },
-    { name: "Architecture & Interior Expo Organiser", icon: "fa-pencil-ruler" },
-    { name: "Jewellery Exhibition Organiser", icon: "fa-gem" },
-    { name: "Dairy & Livestock Show Organiser", icon: "fa-cow" },
-    { name: "Educational Fair Organiser", icon: "fa-graduation-cap" },
-    { name: "Consumer Shopping Exhibition Organiser", icon: "fa-shopping-bag" }
+    { name: "Property Expo", icon: "fa-building" },
+    { name: "Build Expo", icon: "fa-tools" },
+    { name: "ABI Expo (Architecture, Building, Interior)", icon: "fa-couch" },
+    { name: "Furniture & Home Products Expo", icon: "fa-egg" },
+    { name: "Electronics & Furniture Expo", icon: "fa-hard-hat" },
+    { name: "Jewellery Expo", icon: "fa-pencil-ruler" },
+    { name: "India Poultry Show", icon: "fa-gem" },
+    { name: "India Diary Show", icon: "fa-cow" },
+    { name: "India Livestock Show", icon: "fa-graduation-cap" },
+    { name: "Education Fair", icon: "fa-shopping-bag" }
   ];
 
   const cities = [
@@ -87,7 +87,7 @@ const About = () => {
                     <div className="header-accent-line" style={{ width: '40px', height: '2px', background: '#ED1C24' }}></div>
                     <span className="header-accent-tag" style={{ fontWeight: '800', color: '#ED1C24', letterSpacing: '1px' }}>BUSINESS EXCELLENCE</span>
                   </div>
-                  <h2 className="header-main-title" style={{ fontWeight: '900', color: '#111' }}>
+                  <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111' }}>
                     Prompt Trade Fairs India Pvt. Ltd
                   </h2>
                   <h4 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#555', marginTop: '10px', lineHeight: '1.4' }}>
@@ -122,13 +122,13 @@ const About = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.8' }}
               >
-                <p className="intro-p" style={{ marginBottom: '20px' }}>
+                <p className="intro-p" style={{ marginBottom: '20px', textAlign: 'justify' }}>
                   Prompt Trade Fairs India Pvt. Ltd. is a leading Exhibition Organiser in India with over 25 years of excellence in organizing highly successful trade fairs, business expos, and consumer exhibitions across the country. Known for professionalism, innovation, and quality event management, PROMPT has become one of the most trusted names in the Indian exhibition industry.
                 </p>
-                <p className="intro-p" style={{ marginBottom: '20px' }}>
+                <p className="intro-p" style={{ marginBottom: '20px', textAlign: 'justify' }}>
                   With a strong commitment to delivering business growth opportunities, PROMPT provides exhibitors with the ideal platform to showcase products, launch brands, connect with buyers, and generate valuable business leads. Managed by a dedicated team of industry specialists, every exhibition is strategically planned to meet the evolving needs of exhibitors and target audiences.
                 </p>
-                <p className="intro-p" style={{ marginBottom: '30px', color: '#111' }}>
+                <p className="intro-p" style={{ marginBottom: '30px', textAlign: 'justify' }}>
                   PROMPT has successfully organized more than 900+ exhibitions across diverse industry sectors, making it one of the most sought-after trade fair companies in South India and rapidly expanding across the rest of India.
                 </p>
               </motion.div>
@@ -149,7 +149,7 @@ const About = () => {
             <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111' }}>
               Specialized Exhibition Segments
             </h2>
-            <p style={{ color: '#555', fontSize: '1.1rem', maxWidth: '600px', margin: '15px auto 0', lineHeight: '1.6' }}>
+            <p style={{ color: '#555', fontSize: '1.1rem', maxWidth: '600px', margin: '15px auto 0', lineHeight: '1.6', textAlign: 'center' }}>
               Every exhibition organized by PROMPT is designed to create maximum business exposure,
               high visitor engagement, and excellent networking opportunities for exhibitors and brands.
             </p>
@@ -160,19 +160,17 @@ const About = () => {
               <motion.div
                 key={idx}
                 className="v3-segment-card"
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: (idx % 6) * 0.05 }}
               >
                 <div className="card-border-accent"></div>
-                <div className="card-top">
-                  <div className="card-icon">
-                    <i className={`fas ${item.icon}`}></i>
-                  </div>
-                  <span className="card-num">{String(idx + 1).padStart(2, '0')}</span>
+                <div className="card-icon">
+                  <i className={`fas ${item.icon}`}></i>
                 </div>
-                <h3>{item.name}</h3>
+                <h3 style={{ textAlign: 'center', marginTop: '20px' }}>{item.name}</h3>
               </motion.div>
             ))}
           </div>
@@ -229,7 +227,8 @@ const About = () => {
                     <div className="header-accent-line" style={{ width: '40px', height: '2px', background: '#ED1C24' }}></div>
                     <span className="header-accent-tag" style={{ fontSize: '0.85rem', fontWeight: '800', color: '#ED1C24' }}>PAN-INDIA NETWORK</span>
                   </div>
-                  <h2 className="header-main-title" style={{ fontSize: '2.5rem', fontWeight: '900', color: '#111' }}>
+
+                  <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111' }}>
                     Strong Presence Across India
                   </h2>
                 </div>
@@ -259,10 +258,10 @@ const About = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8', marginBottom: '20px' }}>
+                <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8', marginBottom: '20px', textAlign: 'justify' }}>
                   PROMPT has successfully organized exhibitions in major business cities including Chennai, Bengaluru, Hyderabad, Ahmedabad, Coimbatore, Salem, Vijayawada, Visakhapatnam, Warangal, Rajahmundry, and many other key locations across India.
                 </p>
-                <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8', marginBottom: '30px' }}>
+                <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8', marginBottom: '30px', textAlign: 'justify' }}>
                   With a strong database of registered visitors and industry professionals in every region, PROMPT exhibitions consistently attract quality footfall and deliver outstanding business opportunities for exhibitors.
                 </p>
               </motion.div>
@@ -287,7 +286,7 @@ const About = () => {
                     <div className="header-accent-line" style={{ width: '40px', height: '2px', background: '#ED1C24' }}></div>
                     <span className="header-accent-tag" style={{ fontSize: '0.85rem', fontWeight: '800', color: '#ED1C24' }}>END-TO-END SUPPORT</span>
                   </div>
-                  <h2 className="header-main-title" style={{ fontWeight: '900', color: '#111', lineHeight: '1.2' }}>
+                  <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111', lineHeight: '1.2' }}>
                     Excellence in Exhibition Management
                   </h2>
                 </div>
@@ -316,10 +315,10 @@ const About = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8', marginBottom: '20px' }}>
+                <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8', marginBottom: '20px', textAlign: 'justify' }}>
                   Every PROMPT exhibition is conceptualized with detailed planning, innovative marketing strategies, and extensive promotions across digital media, print advertising, outdoor campaigns, and branding platforms. The company focuses on delivering seamless event execution and exceptional customer service, making every exhibition a valuable experience for exhibitors and visitors alike.
                 </p>
-                <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8' }}>
+                <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8', textAlign: 'justify' }}>
                   As a complete exhibition solutions provider, PROMPT offers end-to-end support for trade fairs, expos, and business events, ensuring operational excellence at every stage. Its commitment to professionalism, quality, and business success has positioned PROMPT as one of the leading trade fair and exhibition organizers in India.
                 </p>
               </motion.div>

@@ -1,34 +1,21 @@
 import React, { useState, useEffect } from "react";
+import "./Testimonials.css";
 
-const testimonials = [
-  {
-    name: "Arun Kumar",
-    role: "CEO, BuildSpace Solutions",
-    img: "businessman1.svg",
-    text: "CNI constant support throughout the Build Expo 2024 was exceptional. The quality of business visitors surpassed our expectations, leading to several high-value contracts.",
-    rating: 5,
-  },
-  {
-    name: "Meera Deshmukh",
-    role: "Director, Global Interior Expo",
-    img: "businesswomen2.svg",
-    text: "The professionalism and platform provided by Prompt Trade Fairs is unmatched. They truly understand the pulse of the market and deliver target-oriented exhibitions.",
-    rating: 5,
-  },
-  {
-    name: "Sanjay Raghavan",
-    role: "Marketing Head, Elite Real Estate",
-    img: "businessman2.svg",
-    text: "We have been participating in their Property Expos for over 5 years. Each event is better managed than the last. Highly recommended for business expansion.",
-    rating: 4,
-  },
-  {
-    name: "Priya Sundaram",
-    role: "Founder, Luxe Living",
-    img: "businesswomen1.svg",
-    text: "A perfect platform for furniture brands. The footfall was consistent and we were able to showcase our premium collections to the right audience.",
-    rating: 5,
-  },
+const videos = [
+  { id: "G9MkoVxABck", url: "https://youtube.com/shorts/G9MkoVxABck" },
+  { id: "ebWVHciHjSY", url: "https://youtube.com/shorts/ebWVHciHjSY" },
+  { id: "u2G4VmK416E", url: "https://youtube.com/shorts/u2G4VmK416E" },
+  { id: "ZOYGA3Qab-8", url: "https://youtube.com/shorts/ZOYGA3Qab-8" },
+  { id: "r-yRVy3ynog", url: "https://youtube.com/shorts/r-yRVy3ynog" },
+  { id: "kDbJ0pz-nL0", url: "https://youtube.com/shorts/kDbJ0pz-nL0" },
+  { id: "c_-Yr-ZLt4k", url: "https://youtube.com/shorts/c_-Yr-ZLt4k" },
+  { id: "qUNzyjqiE8E", url: "https://youtube.com/shorts/qUNzyjqiE8E" },
+  { id: "3HHbCXJousU", url: "https://youtube.com/shorts/3HHbCXJousU" },
+  { id: "OGBnYJhsh_4", url: "https://youtube.com/shorts/OGBnYJhsh_4" },
+  { id: "__sxUfcWOmk", url: "https://youtube.com/shorts/__sxUfcWOmk" },
+  { id: "P1Q4NUPWbqg", url: "https://youtube.com/shorts/P1Q4NUPWbqg" },
+  { id: "kTeg4LF1QJQ", url: "https://youtube.com/shorts/kTeg4LF1QJQ" },
+  { id: "zo7rFnUYolM", url: "https://youtube.com/shorts/zo7rFnUYolM" },
 ];
 
 const Testimonial = () => {
@@ -36,27 +23,22 @@ const Testimonial = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % testimonials.length);
+      setIndex((prev) => (prev + 1) % videos.length);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
 
   const prev = () => setIndex((prev) => Math.max(prev - 1, 0));
-  const next = () => setIndex((prev) => Math.min(prev + 1, testimonials.length - 1));
+  const next = () => setIndex((prev) => Math.min(prev + 1, videos.length - 1));
 
   const getItem = (offset) => {
-    return testimonials[(index + offset + testimonials.length) % testimonials.length];
-  };
-
-  const renderStars = (rating) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <i key={i} className={`fa-star ${i < rating ? "fas" : "far"}`} style={{ color: "#FFB800", fontSize: "12px", marginRight: "3px" }}></i>
-    ));
+    return videos[(index + offset + videos.length) % videos.length];
   };
 
   return (
     <section className="testimonials-section-lite">
       <div className="container">
+        
         {/* CENTERED HEADER */}
         <div className="premium-header-box centered">
           <div className="header-accent-row">
@@ -64,73 +46,79 @@ const Testimonial = () => {
             <span className="header-accent-tag">TESTIMONIALS</span>
             <div className="header-accent-line"></div>
           </div>
-          <h2 className="header-main-title">Trusted Client <span>Voices</span></h2>
+          <h2 className="header-main-title">
+            Trusted Client <span>Voices</span>
+          </h2>
         </div>
 
         <div className="testimonial-container-main">
-          {/* NAVIGATION LEFT */}
+          {/* LEFT ARROW */}
           {index > 0 && (
-            <button className="nav-arrow left" onClick={prev} aria-label="Previous">
+            <button
+              className="nav-arrow left"
+              onClick={prev}
+              aria-label="Previous"
+            >
               <i className="fas fa-chevron-left"></i>
             </button>
           )}
 
+          {/* CARDS */}
           <div className="testimonial-grid-display-premium">
-            {[-1, 0, 1].map((offset) => {
+            {[-2, -1, 0, 1, 2].map((offset) => {
               const item = getItem(offset);
-              const isActive = offset === 0;
-              return (
-                <div key={`${index}-${offset}`} className={`modern-testimonial-card ${isActive ? "active" : "side"}`}>
-                   {/* CARD HEADER: User Image & Bio */}
-                   <div className="card-header-bio">
-                      <div className="bio-avatar-square">
-                         <img src={item.img} alt={item.name} />
-                      </div>
-                      <div className="bio-info-box">
-                         <h4 className="bio-name">{item.name}</h4>
-                         <p className="bio-role">{item.role}</p>
-                      </div>
-                   </div>
+              if (!item) return null;
+              const absOffset = Math.abs(offset);
+              const cardClass = absOffset === 0 ? "active" : absOffset === 1 ? "side-1" : "side-2";
 
-                   {/* CARD BODY: Rating & Text */}
-                   <div className="card-body-content">
-                      <div className="testimonial-stars-lite">
-                         {renderStars(item.rating)}
-                      </div>
-                      
-                      <div className="quote-wrap-red">
-                         <i className="fas fa-quote-left quote-mark start"></i>
-                         <p className="testimonial-main-text" style={{ fontSize: '16px' }}>{item.text}</p>
-                         <i className="fas fa-quote-right quote-mark end"></i>
-                      </div>
-                   </div>
-                   
-                   {/* HOVER ACCENT LINE */}
-                   <div className="card-hover-line"></div>
+              return (
+                <div
+                  key={`${index}-${offset}`}
+                  className={`video-testimonial-card ${cardClass}`}
+                >
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="video-card-link"
+                  >
+                    <img
+                      src={`https://img.youtube.com/vi/${item.id}/maxresdefault.jpg`}
+                      alt="YouTube Shorts thumbnail"
+                      onError={(e) => {
+                        e.target.src = `https://img.youtube.com/vi/${item.id}/hqdefault.jpg`;
+                      }}
+                    />
+                  </a>
                 </div>
               );
             })}
           </div>
 
-          {/* NAVIGATION RIGHT */}
-          {index < testimonials.length - 1 && (
-            <button className="nav-arrow right" onClick={next} aria-label="Next">
+          {/* RIGHT ARROW */}
+          {index < videos.length - 1 && (
+            <button
+              className="nav-arrow right"
+              onClick={next}
+              aria-label="Next"
+            >
               <i className="fas fa-chevron-right"></i>
             </button>
           )}
         </div>
 
-        {/* PAGINATION DOTS */}
+        {/* DOTS */}
         <div className="slider-dots">
-          {testimonials.map((_, i) => (
+          {videos.map((_, i) => (
             <button
               key={i}
               className={`slider-dot ${i === index ? "active" : ""}`}
               onClick={() => setIndex(i)}
-              aria-label={`Go to testimonial ${i + 1}`}
+              aria-label={`Go to video ${i + 1}`}
             />
           ))}
         </div>
+
       </div>
     </section>
   );

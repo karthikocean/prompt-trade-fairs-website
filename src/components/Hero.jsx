@@ -85,7 +85,10 @@ const Hero = () => {
           <div className="overlay"></div>
 
           {/* TEXT CONTENT */}
-          <div className="hero-content">
+          <div
+            className="hero-content"
+
+          >
             <motion.h1
               key={`h1-${currentIndex}`}
               initial={{ y: 20, opacity: 0 }}
@@ -107,6 +110,7 @@ const Hero = () => {
             <Link to={slides[currentIndex].link}>
               <motion.button
                 key={`btn-${currentIndex}`}
+
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.4 }}
@@ -118,24 +122,92 @@ const Hero = () => {
         </motion.div>
       </AnimatePresence>
 
-      {/* ARROWS */}
-      {/* <button className="nav-arrow left" onClick={prevSlide} style={{ left: '30px' }}>
-        <i className="fas fa-chevron-left"></i>
-      </button>
-      <button className="nav-arrow right" onClick={nextSlide} style={{ right: '30px' }}>
-        <i className="fas fa-chevron-right"></i>
-      </button> */}
-
       {/* DOTS */}
-      <div className="slider-dots" style={{ position: 'absolute', bottom: '40px', left: '50%', transform: 'translateX(-50%)', marginTop: 0, zIndex: 10 }}>
+      <div
+        className="slider-dots"
+
+      >
         {slides.map((_, index) => (
           <button
             key={index}
-            className={`slider-dot ${index === currentIndex ? "active" : ""}`}
+            className={`slider-dot ${index === currentIndex ? "active" : ""
+              }`}
             onClick={() => setCurrentIndex(index)}
           ></button>
         ))}
       </div>
+        <style jsx>{`
+          html,
+          body,
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            width: 100%;
+          }
+
+          @media (max-width: 768px) {
+            .hero {
+              width: 100%;
+              overflow: hidden;
+              position: relative;
+            }
+
+            .hero-slide {
+              width: 100%;
+              min-height: 100svh;
+              background-size: cover;
+              background-position: center;
+              background-repeat: no-repeat;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 0 20px;
+              box-sizing: border-box;
+            }
+
+            .hero-content {
+              width: 100%;
+              max-width: 100%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              text-align: center;
+              padding-top: 120px;
+              padding-bottom: 100px;
+              position: relative;
+              z-index: 2;
+            }
+
+            .hero-content h1 {
+              font-size: clamp(42px, 8vw, 56px);
+              line-height: 1.1;
+              margin-bottom: 16px;
+            }
+
+            .hero-content p {
+              font-size: 16px;
+              line-height: 1.6;
+              margin-bottom: 24px;
+            }
+
+            .hero-content button {
+              margin-bottom: 0;
+            }
+
+            .slider-dots {
+              position: absolute;
+              bottom: 25px;
+              left: 50%;
+              transform: translateX(-50%);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 8px;
+              z-index: 10;
+            }
+          }
+        `}</style>
     </section>
   );
 };

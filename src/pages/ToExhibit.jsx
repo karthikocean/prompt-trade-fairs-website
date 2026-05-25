@@ -62,13 +62,12 @@ const ToExhibit = () => {
               >
                 <div className="v3-card-border"></div>
                 <div className="v3-card-content">
-                  <div className="card-top" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div className="card-icon" style={{ fontSize: '2rem', color: '#ED1C24' }}><i className={`fas ${item.icon}`}></i></div>
-                    <span className="card-num" style={{ fontSize: '3rem', opacity: '0.1', fontWeight: '900' }}>{item.num}</span>
+                  <div className="card-top" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+                    <div className="card-icon" style={{ fontSize: '3rem', color: '#ED1C24' }}><i className={`fas ${item.icon}`}></i></div>
                   </div>
-                  <div className="card-line" style={{ height: '2px', background: '#ED1C24', width: '40px', margin: '20px 0' }}></div>
-                  <h3 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '15px', color: '#111' }}>{item.title}</h3>
-                  <p style={{ fontSize: '16px', color: '#555', lineHeight: '1.6' }}>{item.desc}</p>
+                  {/* <div className="card-line" style={{ height: '2px', background: '#ED1C24', width: '40px', margin: '20px 0' }}></div> */}
+                  <h3 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '15px', color: '#111', textAlign: 'center' }}>{item.title}</h3>
+                  <p style={{ fontSize: '16px', color: '#555', lineHeight: '1.6', textAlign: 'center' }}>{item.desc}</p>
                 </div>
                 <span className="v3-card-bottom-text" style={{ position: 'absolute', bottom: '20px', right: '30px', fontSize: '10px', letterSpacing: '2px', fontWeight: '800', opacity: '0.3' }}>{item.status}</span>
               </motion.div>

@@ -424,10 +424,10 @@ const Careers = () => {
                 <h2 className="header-main-title">Work at the <span>Heart of Innovation</span></h2>
               </div>
               <div className="culture-text-content">
-                <p className="story-p-large">
+                <p className="story-p-large" style={{ fontSize: '16px', textAlign: 'justify', color: '#111' }}>
                   At PROMPT, we believe that our people are our greatest asset. We foster a culture of creativity, collaboration, and continuous learning.
                 </p>
-                <p className="story-p-muted">
+                <p className="story-p-muted" style={{ fontSize: '16px', textAlign: 'justify', color: '#111' }}>
                   Whether you're an experienced professional or a fresh graduate, we offer an environment that rewards hard work and provides a platform to lead and innovate within the exhibition industry.
                 </p>
 
@@ -476,8 +476,8 @@ const Careers = () => {
             ) : jobs.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '60px', background: '#fff', borderRadius: '20px' }}>
                 <i className="fas fa-briefcase" style={{ fontSize: '3rem', color: '#eee', marginBottom: '20px' }}></i>
-                <h3 style={{ color: '#666' }}>No current openings available.</h3>
-                <p style={{ color: '#999' }}>Check back later or send us your resume at info@prompttradefairs.com</p>
+                <h3 style={{ fontWeight: '800', color: '#111' }}>No current openings available.</h3>
+                <p style={{ color: '#999' }}>Check back later or send us your resume at prompttradefairs@gmail.com</p>
               </div>
             ) : (
               jobs.slice(0, visibleCount).map((job, idx) => (

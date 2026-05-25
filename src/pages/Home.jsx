@@ -19,7 +19,7 @@ const Home = () => {
       <FlashNews />
       <NextExpoSection />
       <Stats />
-      <PreviousExpo />
+      {/* <PreviousExpo /> */}
       <WhyChoose />
       <EnquirySection />
       <About />

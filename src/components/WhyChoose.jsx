@@ -8,10 +8,10 @@ const WhyChoose = () => {
         <div className="premium-header-box centered">
           <div className="header-accent-row">
             <div className="header-accent-line"></div>
-            <span className="header-accent-tag">WHY US</span>
+            <span className="header-accent-tag">OUR STRENGTH</span>
             <div className="header-accent-line"></div>
           </div>
-          <h2 className="header-main-title">Smart Expo <span>Solutions</span></h2>
+          <h2 className="header-main-title">Why Choose Us</h2>
         </div>
 
         <div className="why-choose-grid">
@@ -28,8 +28,8 @@ const WhyChoose = () => {
 
           {/* Right: Content */}
           <div className="why-choose-content">
-            <p className="main-desc">
-              Founded in 2002, Prompt Trade Fairs India Private Limited has emerged as one of the most reputed and outstanding Exhibition Organizers in India. Led by a team of professionals who have organized over 125 Exhibitions for more than two decades.
+            <p style={{ fontSize: '16px', textAlign: 'justify' }} className="main-desc">
+              Founded in 2002, Prompt Trade Fairs India Private Limited has emerged as one of the most reputed and outstanding Exhibition Organizers in India. Led by a team of professionals who have organized over 900+ Exhibitions for more than two decades.
             </p>
 
             <div className="feature-list">
@@ -39,7 +39,7 @@ const WhyChoose = () => {
                 </div>
                 <div className="feature-text">
                   <h3>Meticulous Planning</h3>
-                  <p style={{ fontSize: '16px' }}>Each exhibition is a custom-oriented project, irrespective of size and budget, ensuring flawless delivery standards through meticulus planning.</p>
+                  <p style={{ fontSize: '16px', textAlign: 'justify', color: '#111' }}>Each exhibition is a custom-oriented project, irrespective of size and budget, ensuring flawless delivery standards through meticulous planning.</p>
                 </div>
               </div>
 
@@ -49,7 +49,7 @@ const WhyChoose = () => {
                 </div>
                 <div className="feature-text">
                   <h3>Proven Expertise</h3>
-                  <p style={{ fontSize: '16px' }}>In reality, we have gained a record of more than 10,000 satisfied customers both from India as well as overseas, maintaining high standards of quality.</p>
+                  <p style={{ fontSize: '16px', textAlign: 'justify', color: '#111' }}>In reality, we have gained a record of more than 10,000 satisfied customers both from India as well as overseas, maintaining high standards of quality.</p>
                 </div>
               </div>
 
@@ -59,7 +59,7 @@ const WhyChoose = () => {
                 </div>
                 <div className="feature-text">
                   <h3>Strong Visitor Base</h3>
-                  <p style={{ fontSize: '16px' }}>Our exhibitions ensure the best business for exhibitors through a strong base of registered visitors in each location, maximizing promotional opportunities.</p>
+                  <p style={{ fontSize: '16px', textAlign: 'justify', color: '#111' }}>Our exhibitions ensure the best business for exhibitors through a strong base of registered visitors in each location, maximizing promotional opportunities.</p>
                 </div>
               </div>
             </div>

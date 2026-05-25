@@ -2335,7 +2335,6 @@ ul {
   font-family: 'Outfit', sans-serif !important;
   font-size: 19px !important;
   font-weight: 700 !important;
-  color: #1a2a47 !important;
   margin-bottom: 6px !important;
 }
 
@@ -4113,7 +4112,7 @@ section:not(.hero) {
 }
 
 .v3-hero-title {
-  font-size: 3.5rem !important;
+  font-size: 3rem !important;
   color: #fff !important;
   font-family: 'Syne', sans-serif !important;
   font-weight: 800 !important;

@@ -60,6 +60,10 @@ export const getAvailableStalls = (expoId) => {
 };
 
 // Enquiry APIs
+export const createEnquiry = (data) => {
+    return apiClient.post('/enquiry/create', data);
+};
+
 export const createStallEnquiry = (data) => {
     return apiClient.post('/enquiry/stall/create', { ...data, source: 'website' });
 };
