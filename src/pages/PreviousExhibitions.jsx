@@ -73,7 +73,7 @@ const PreviousExhibitions = () => {
         <div className="container">
           <div className="premium-header-box centered">
             <div className="header-accent-row"><div className="header-accent-line"></div><span className="header-accent-tag">Upcoming Exhibitions</span><div className="header-accent-line"></div></div>
-            <h2 className="header-main-title">Upcoming <span>Opportunities</span></h2>
+            <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111' }}>Upcoming <span>Opportunities</span></h2>
           </div>
 
           {loading ? (
@@ -123,7 +123,7 @@ const PreviousExhibitions = () => {
                       </div>
 
                       <p style={{ color: 'rgb(17, 17, 17)', fontSize: '14.5px', lineHeight: '1.6', marginBottom: '25px', opacity: 0.8 }}>
-                        {item.products?.length > 0 
+                        {item.products?.length > 0
                           ? `Discover ${item.products.slice(0, 3).map(p => p.productName).join(', ')} and more at ${item.venue}.`
                           : `Join us at ${item.expoName} for a premier networking experience in ${item.venue}.`}
                       </p>

@@ -59,8 +59,8 @@ const UpcomingExhibitions = () => {
         <div className="container v3-hero-container">
           <div className="v3-hero-content">
             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-              <div className="v3-breadcrumb"><Link to="/">Home</Link> <span>/</span> <span className="current">Current Exhibitions</span></div>
-              <h1 className="v3-hero-title">Current <span>Exhibitions</span></h1>
+              <div className="v3-breadcrumb"><Link to="/">Home</Link> <span>/</span> <span className="current">Present Exhibitions</span></div>
+              <h1 className="v3-hero-title">Present <span>Exhibitions</span></h1>
             </motion.div>
           </div>
         </div>
@@ -69,37 +69,51 @@ const UpcomingExhibitions = () => {
       <section className="upcoming-grid-v3" style={{ padding: '120px 0', background: '#f8f9fa' }}>
         <div className="container">
           <div className="premium-header-box centered">
-            <div className="header-accent-row"><div className="header-accent-line"></div><span className="header-accent-tag">Current Exhibitions</span><div className="header-accent-line"></div></div>
-            <h2 className="header-main-title">Book Your Expo</h2>
+            <div className="header-accent-row"><div className="header-accent-line"></div><span className="header-accent-tag">Present Exhibitions</span><div className="header-accent-line"></div></div>
+            <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111' }}>Book Your Expo</h2>
           </div>
 
-          <div className="modern-gallery-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(48%, 1fr))', gap: '30px', marginTop: '60px' }}>
-            {expos.slice(0, visibleCount).map(item => (
-              <motion.div
-                key={item._id} whileHover={{ y: -8 }}
-                className="modern-gallery-card expo-card"
-                onClick={() => setSelectedExpo(item)}
-                style={{ background: '#fff', borderRadius: '16px', border: '1px solid #eee', overflow: 'hidden', padding: '25px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', cursor: 'pointer', position: 'relative', display: 'flex', flexDirection: 'column' }}
-              >
-                <div className="modern-card-inner">
-                  <div className="expo-img" style={{ height: '260px', overflow: 'hidden', borderRadius: '12px' }}>
-                    <img src={getImageUrl(item.expoImage)} alt={item.expoName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          {expos.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '60px', background: '#fff', borderRadius: '20px' }}>
+              <i className="fas fa-briefcase" style={{ fontSize: '3rem', color: '#eee', marginBottom: '20px' }}></i>
+              <h3 style={{ fontWeight: '800', color: '#111' }}>No Present Expo Available.</h3>
+            </div>
+          ) : (
+            <div className="row expo-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', columnGap: '32px', rowGap: '36px' }}>
+              {expos.slice(0, visibleCount).map((expo, index) => (
+                <motion.div
+                  key={expo._id}
+                  whileHover={{ y: -8 }}
+                  className="modern-gallery-card expo-card mb-4"
+                  onClick={() => setSelectedExpo(expo)}
+                  style={{
+                    background: '#fff',
+                    borderRadius: '20px',
+                    border: '1px solid #eee',
+                    overflow: 'hidden',
+                    boxShadow: '0 10px 40px rgba(0,0,0,0.06)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    transition: '0.3s'
+                  }}
+                >
+                  {/* IMAGE */}
+                  <div style={{ position: 'relative', height: '260px', overflow: 'hidden' }}>
+                    <img src={getImageUrl(expo.expoImage)} alt={expo.expoName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
-                  <div style={{ padding: '20px 0 0' }}>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', color: 'rgb(17, 17, 17)', fontWeight: '700', fontSize: '13px', marginBottom: '15px' }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><i className="fas fa-user-tie" style={{ color: '#ED1C24' }}></i> {item.eventManager?.name || "N/A"}</span>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><i className="far fa-calendar-alt" style={{ color: '#ED1C24' }}></i> {formatDate(item.startDate)}</span>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><i className="fas fa-map-marker-alt" style={{ color: '#ED1C24' }}></i> {item.venue}</span>
+                  {/* CONTENT */}
+                  <div style={{ padding: '25px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', columnGap: '32px', rowGap: '36px', justifyContent: 'flex-start', alignItems: 'center', color: 'rgb(17, 17, 17)', fontWeight: '700', fontSize: '13px', marginBottom: '15px' }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><i className="fas fa-user-tie" style={{ color: '#ED1C24' }}></i> {expo.eventManager?.name || "N/A"}</span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><i className="far fa-calendar-alt" style={{ color: '#ED1C24' }}></i> {formatDate(expo.startDate)}</span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><i className="fas fa-map-marker-alt" style={{ color: '#ED1C24' }}></i> {expo.venue}</span>
                     </div>
-
-                    <h3 style={{ fontSize: '1.4rem', fontWeight: '800', color: '#111', lineHeight: '1.3', marginBottom: '0' }}>
-                      {item.expoName}
-                    </h3>
+                    <h3 style={{ fontSize: '1.4rem', fontWeight: '800', color: '#111', lineHeight: '1.3', marginBottom: '0' }}>{expo.expoName}</h3>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
 
           {showLoadMore && (
             <div style={{ textAlign: 'center', marginTop: '70px' }}>
@@ -209,10 +223,22 @@ const UpcomingExhibitions = () => {
                 </div>
 
                 <div className="modal-actions-v3">
-                  <a href={getImageUrl(selectedExpo.layoutImage)} target="_blank" rel="noopener noreferrer" className="modal-btn-secondary">
+                  <a
+                    href={selectedExpo.layoutImage ? getImageUrl(selectedExpo.layoutImage) : undefined}
+                    target={selectedExpo.layoutImage ? "_blank" : undefined}
+                    rel="noopener noreferrer"
+                    className="modal-btn-secondary"
+                    style={!selectedExpo.layoutImage ? { pointerEvents: 'none', opacity: 0.5 } : {}}
+                  >
                     <i className="fas fa-download"></i> Layout
                   </a>
-                  <a href={getImageUrl(selectedExpo.brochure)} target="_blank" rel="noopener noreferrer" className="modal-btn-secondary">
+                  <a
+                    href={selectedExpo.brochure ? getImageUrl(selectedExpo.brochure) : undefined}
+                    target={selectedExpo.brochure ? "_blank" : undefined}
+                    rel="noopener noreferrer"
+                    className="modal-btn-secondary"
+                    style={!selectedExpo.brochure ? { pointerEvents: 'none', opacity: 0.5 } : {}}
+                  >
                     <i className="fas fa-download"></i> Brochure
                   </a>
                   <button
@@ -250,10 +276,10 @@ const UpcomingExhibitions = () => {
       </AnimatePresence>
 
       <style jsx>{`
-        @media (max-width: 992px) {
-          .modern-gallery-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
+          @media (max-width: 768px) {
+            .expo-grid { grid-template-columns: 1fr !important; }
+          }
+        `}</style>
     </main>
   );
 };

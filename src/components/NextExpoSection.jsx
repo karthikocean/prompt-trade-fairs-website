@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import EnquiryForm from "./EnquiryForm";
 import { getPresentExpos } from "../api/common.api";
@@ -59,8 +59,8 @@ const NextExpoSection = () => {
         <div className="premium-header-box centered" style={{ textAlign: 'center', marginBottom: '50px' }}>
           <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px', marginBottom: '15px' }}>
             <div className="header-accent-line" style={{ height: '1px', width: '30px', background: '#ED1C24' }}></div>
-            <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>Current Expo
-</span>
+            <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>Present Expo
+            </span>
             <div className="header-accent-line" style={{ height: '1px', width: '30px', background: '#ED1C24' }}></div>
           </div>
           <h2 className="header-main-title" style={{ fontSize: '2.5rem', fontWeight: '800', color: '#1a1a1a' }}>
@@ -72,18 +72,18 @@ const NextExpoSection = () => {
         {expos.length > 1 && (
           <>
             {currentIndex > 0 && (
-              <button 
-                className="nav-arrow left" 
-                onClick={prevExpo} 
+              <button
+                className="nav-arrow left"
+                onClick={prevExpo}
                 aria-label="Previous Expo"
               >
                 <i className="fas fa-chevron-left"></i>
               </button>
             )}
             {currentIndex < expos.length - 1 && (
-              <button 
-                className="nav-arrow right" 
-                onClick={nextExpo} 
+              <button
+                className="nav-arrow right"
+                onClick={nextExpo}
                 aria-label="Next Expo"
               >
                 <i className="fas fa-chevron-right"></i>
@@ -116,7 +116,7 @@ const NextExpoSection = () => {
               <h3 style={{ fontSize: '2.2rem', fontWeight: '800', color: '#1a1a1a', marginBottom: '25px', borderLeft: '5px solid #ED1C24', paddingLeft: '15px' }}>
                 {currentExpo.expoName}
               </h3>
-              
+
               <div className="details-grid-v2" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '25px', marginBottom: '30px' }}>
                 <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                   <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
@@ -182,25 +182,25 @@ const NextExpoSection = () => {
               </p>
 
               <div className="present-expo-actions">
-                <a 
-                  href={currentExpo.layoutImage ? getImageUrl(currentExpo.layoutImage) : undefined} 
-                  target={currentExpo.layoutImage ? "_blank" : undefined} 
-                  rel="noopener noreferrer" 
+                <a
+                  href={currentExpo.layoutImage ? getImageUrl(currentExpo.layoutImage) : undefined}
+                  target={currentExpo.layoutImage ? "_blank" : undefined}
+                  rel="noopener noreferrer"
                   className="expo-action-link layout-btn"
                   style={!currentExpo.layoutImage ? { pointerEvents: 'none', opacity: 0.5 } : {}}
                 >
                   <i className="fas fa-download"></i> Layout
                 </a>
-                <a 
-                  href={currentExpo.brochure ? getImageUrl(currentExpo.brochure) : undefined} 
-                  target={currentExpo.brochure ? "_blank" : undefined} 
-                  rel="noopener noreferrer" 
+                <a
+                  href={currentExpo.brochure ? getImageUrl(currentExpo.brochure) : undefined}
+                  target={currentExpo.brochure ? "_blank" : undefined}
+                  rel="noopener noreferrer"
                   className="expo-action-link brochure-btn"
                   style={!currentExpo.brochure ? { pointerEvents: 'none', opacity: 0.5 } : {}}
                 >
                   <i className="fas fa-download"></i> Brochure
                 </a>
-                <button 
+                <button
                   onClick={() => setIsModalOpen(true)}
                   className="register-btn-main"
                 >
@@ -228,25 +228,25 @@ const NextExpoSection = () => {
       {/* REGISTRATION MODAL */}
       <AnimatePresence>
         {isModalOpen && (
-          <motion.div 
-            className="expo-modal-overlay" 
+          <motion.div
+            className="expo-modal-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.85)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }} 
+            style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.85)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             onClick={() => setIsModalOpen(false)}
           >
-            <motion.div 
-              className="expo-modal-container" 
+            <motion.div
+              className="expo-modal-container"
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              style={{ maxWidth: '850px', width: '95%', background: 'transparent', position: 'relative' }} 
+              style={{ maxWidth: '850px', width: '95%', background: 'transparent', position: 'relative' }}
               onClick={(e) => e.stopPropagation()}
             >
               {/* REMOVED EXTRA CLOSE BUTTON AND WHITE BACKGROUND AREA */}
-              <EnquiryForm 
-                isExpoRegistration={true} 
+              <EnquiryForm
+                isExpoRegistration={true}
                 expoInfo={currentExpo}
                 onClose={() => setIsModalOpen(false)}
               />
@@ -256,44 +256,96 @@ const NextExpoSection = () => {
       </AnimatePresence>
 
       <style jsx>{`
-        @media (max-width: 1200px) {
-          .external-nav-btn {
-            display: none;
-          }
-        }
-        @media (max-width: 992px) {
-          .next-expo-grid {
-            grid-template-columns: 1fr !important;
-            gap: 30px !important;
-          }
-          .gallery-main-wrapper {
-            height: 250px !important; /* Decreased image size */
-          }
-          .gallery-main-wrapper > div {
-             height: 250px !important;
-          }
-          .next-expo-content-right h3 {
-            font-size: 1.8rem !important;
-            text-align: center;
-          }
-          .details-grid-v2 {
-            grid-template-columns: 1fr !important; /* Vertical alignment for details */
-            gap: 15px !important;
-          }
-          .present-expo-actions {
-            flex-direction: row !important;
-            flex-wrap: nowrap !important;
-            justify-content: space-between !important;
-            gap: 8px !important;
-          }
-          .present-expo-actions a, 
-          .present-expo-actions button {
-            padding: 10px 12px !important;
-            font-size: 0.8rem !important;
-            flex: 1 !important;
-          }
-        }
-      `}</style>
+  .next-expo-section {
+    overflow-x: hidden;
+  }
+
+  @media (max-width: 1200px) {
+    .external-nav-btn {
+      display: none;
+    }
+  }
+
+  @media (max-width: 992px) {
+    .next-expo-grid {
+      grid-template-columns: 1fr !important;
+      gap: 30px !important;
+    }
+    .gallery-main-wrapper {
+      height: 250px !important;
+    }
+    .gallery-main-wrapper > div {
+      height: 250px !important;
+    }
+    .next-expo-content-right h3 {
+      font-size: 1.8rem !important;
+      text-align: center;
+    }
+    .details-grid-v2 {
+      grid-template-columns: 1fr !important;
+      gap: 15px !important;
+    }
+    .present-expo-actions {
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      justify-content: space-between !important;
+      gap: 8px !important;
+    }
+    .present-expo-actions a,
+    .present-expo-actions button {
+      padding: 10px 12px !important;
+      font-size: 0.8rem !important;
+      flex: 1 !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .next-expo-section {
+      padding: 50px 20px !important;
+    }
+    .header-main-title {
+      font-size: clamp(28px, 7vw, 42px) !important;
+      line-height: 1.2 !important;
+      text-align: center !important;
+    }
+    .header-accent-tag,
+    .header-accent-row {
+      text-align: center !important;
+      width: 100% !important;
+      max-width: 320px !important;
+      margin: 0 auto !important;
+    }
+    .present-expo-actions {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 12px !important;
+    }
+    .details-grid-v2 {
+      gap: 15px !important;
+    }
+    .next-expo-content-right p {
+      max-width: 100% !important;
+      font-size: 15px !important;
+      line-height: 1.7 !important;
+      text-align: center !important;
+    }
+    .gallery-main-wrapper {
+      height: 100% !important;
+      display: flex;
+    }
+    .gallery-main-wrapper > div {
+      flex: 1 !important;
+      height: 100% !important;
+    }
+    .gallery-main-wrapper img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      display: block !important;
+      margin-bottom: 0 !important;
+    }
+  }
+`}</style>
     </section>
   );
 };

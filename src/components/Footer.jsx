@@ -16,19 +16,19 @@ const Footer = () => {
           </p>
 
           <div className="socials">
-            <a href="https://www.instagram.com/exhibitions_prompt/?igshid=YmMyMTA2M2Y%3D">
+            <a href="https://www.instagram.com/exhibitions_prompt/?igshid=YmMyMTA2M2Y%3D" target="_blank">
               <i className="fab fa-instagram"></i>
             </a>
-            <a href="https://www.facebook.com/prompttradefairs">
+            <a href="https://www.facebook.com/prompttradefairs" target="_blank">
               <i className="fab fa-facebook-f"></i>
             </a>
-            <a href="https://x.com/tradefairs2013">
+            <a href="https://x.com/tradefairs2013" target="_blank">
               <i className="fab fa-twitter"></i>
             </a>
-            <a href="https://www.youtube.com/@promptexpo123">
+            <a href="https://www.youtube.com/@promptexpo123" target="_blank">
               <i className="fab fa-youtube"></i>
             </a>
-            <a href="https://www.linkedin.com/company/prompt-trade-fairs-india-pvt-ltd">
+            <a href="https://www.linkedin.com/company/prompt-trade-fairs-india-pvt-ltd" target="_blank">
               <i className="fab fa-linkedin-in"></i>
             </a>
           </div>
@@ -50,8 +50,7 @@ const Footer = () => {
         <div className="footer-col">
           <h3>Company</h3>
           <ul>
-            <li><Link to="/previous-exhibitions"><i className="fas fa-chevron-right"></i>Upcoming Exhibitions</Link></li>
-            <li><Link to="/upcoming-exhibitions"><i className="fas fa-chevron-right"></i>Current Exhibitions</Link></li>
+            <li><Link to="/upcoming-exhibitions"><i className="fas fa-chevron-right"></i>Present Exhibitions</Link></li>
             <li><Link to="/events"><i className="fas fa-chevron-right"></i>Events</Link></li>
             <li><Link to="/payment-terms"><i className="fas fa-chevron-right"></i>Payment Terms</Link></li>
             <li><Link to="/privacy-policy"><i className="fas fa-chevron-right"></i>Privacy Policy</Link></li>
@@ -78,7 +77,7 @@ const Footer = () => {
 
           <p>
             <i className="fas fa-mobile"></i>
-            Mobile: +91 9543668094, +91 93913 91162, +91 99410 08371
+            Mobile: +91 9543668094, <br></br>+91 93913 91162, +91 99410 08371
           </p>
         </div>
       </div>
@@ -90,7 +89,7 @@ const Footer = () => {
 
           <p>
             Developed & Maintained By{" "}
-            <a href="https://www.oceansoftwares.com/">
+            <a href="https://www.oceansoftwares.com/" target="_blank">
               <span>Ocean Softwares</span>
             </a>
           </p>

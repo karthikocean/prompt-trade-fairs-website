@@ -15,7 +15,7 @@ const MobileAppSection = () => {
               <h2 className="header-main-title">Business Growth Anywhere</h2>
             </div>
 
-            <p className="app-description">
+            <p className="app-description" style={{ fontSize: '16px', textAlign: 'justify' }}>
               Stay connected with PROMPT Trade Fairs on the go. Get real-time updates, manage schedules, and network effortlessly through our mobile app.
             </p>
 

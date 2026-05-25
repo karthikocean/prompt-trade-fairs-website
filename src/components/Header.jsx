@@ -39,8 +39,12 @@ const Header = () => {
             About Us
           </NavLink>
 
+          <NavLink to="/upcoming-exhibitions" onClick={() => setIsMenuOpen(false)}>
+            Present Expo
+          </NavLink>
+
           {/* DROPDOWN - EXHIBITIONS */}
-          <div 
+          {/* <div 
             className="dropdown" 
             onMouseEnter={() => setActiveDropdown('exhibitions')} 
             onMouseLeave={() => setActiveDropdown(null)}
@@ -63,16 +67,16 @@ const Header = () => {
                 Upcoming Exhibitions
               </NavLink>
             </div>
-          </div>
+          </div> */}
 
           <NavLink to="/events" onClick={() => setIsMenuOpen(false)}>
             Events
           </NavLink>
 
           {/* DROPDOWN - OUR GROUPS */}
-          <div 
-            className="dropdown" 
-            onMouseEnter={() => setActiveDropdown('groups')} 
+          <div
+            className="dropdown"
+            onMouseEnter={() => setActiveDropdown('groups')}
             onMouseLeave={() => setActiveDropdown(null)}
             onClick={(e) => {
               if (window.innerWidth <= 992) {
