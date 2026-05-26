@@ -50,22 +50,22 @@ const Contact = () => {
           </div>
 
           <div className="about-story-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.1fr) minmax(0, 0.9fr)', gap: '60px', alignItems: 'stretch' }}>
-              <div
-                className="story-content-left"
-                  style={{
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    flex: 1
-                  }}
-              >
-                <div className="map-container" style={{ width: '100%', height: '100%', flex: 1, borderRadius: '16px', overflow: 'hidden', marginTop: '20px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', display: 'flex' }}>
-                  <a href="https://www.google.com/maps?q=Prompt+Tower,+Plot+No:+324,+Ram+Nagar+South+12th+Extension,+Off+Radial+Road,+Near+Kamakshi+Hospital,+Pallikaranai,+Chennai+-+600100,+India" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', width: '100%', height: '100%' }}>
-                    <iframe title="Prompt Trade Fairs Location" src="https://www.google.com/maps?q=Prompt+Tower,+Plot+No:+324,+Ram+Nagar+South+12th+Extension,+Off+Radial+Road,+Near+Kamakshi+Hospital,+Pallikaranai,+Chennai+-+600100,+India&output=embed" width="100%" height="100%" style={{ border: 0, pointerEvents: 'none', flex: 1 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
-                  </a>
-                </div>
+            <div
+              className="story-content-left"
+              style={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                flex: 1
+              }}
+            >
+              <div className="map-container" style={{ width: '100%', height: '100%', flex: 1, borderRadius: '16px', overflow: 'hidden', marginTop: '20px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', display: 'flex' }}>
+                <a href="https://www.google.com/maps?q=Prompt+Tower,+Plot+No:+324,+Ram+Nagar+South+12th+Extension,+Off+Radial+Road,+Near+Kamakshi+Hospital,+Pallikaranai,+Chennai+-+600100,+India" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', width: '100%', height: '100%' }}>
+                  <iframe title="Prompt Trade Fairs Location" src="https://www.google.com/maps?q=Prompt+Tower,+Plot+No:+324,+Ram+Nagar+South+12th+Extension,+Off+Radial+Road,+Near+Kamakshi+Hospital,+Pallikaranai,+Chennai+-+600100,+India&output=embed" width="100%" height="100%" style={{ border: 0, pointerEvents: 'none', flex: 1 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+                </a>
               </div>
-              <div className="contact-form-card" style={{ background: '#fff', padding: '25px', borderRadius: '30px', border: '1px solid #eee', height: '100%', display: 'flex', flexDirection: 'column' }}>
+            </div>
+            <div className="contact-form-card" style={{ background: '#fff', padding: '25px', borderRadius: '30px', border: '1px solid #eee', height: '100%', display: 'flex', flexDirection: 'column' }}>
               <div className="form-header" style={{ marginBottom: '20px', textAlign: 'center' }}><span style={{ fontSize: '11px', letterSpacing: '2px', color: '#ED1C24', fontWeight: '800' }}>CONTACT FORM</span><h3 style={{ fontSize: '1.6rem', fontWeight: '900', marginTop: '10px' }}>Get in Touch</h3></div>
               <EnquiryForm title="" isSimplified={true} hideHeader={true} customClass="contact-enquiry-form" />
             </div>
@@ -87,19 +87,19 @@ const Contact = () => {
                 title: "Corporate Office",
                 desc: "Prompt Tower, Plot No: 324, Ram Nagar South 12th Extension, Off Radial Road, Near Kamakshi Hospital, Pallikaranai, Chennai - 600 100, India.",
                 icon: "fa-map-marker-alt",
-                label: "LOCATE US"
+                // label: "LOCATE US"
               },
               {
                 title: "Call Support",
-                desc: "+91 9543668094\n+91 93913 91162\n+91 99410 08371",
+                desc: "+91 95436 68094\n+91 93913 91162\n+91 99410 08371",
                 icon: "fa-phone-alt",
-                label: "TALK TO US"
+                // label: "TALK TO US"
               },
               {
                 title: "Email Inquiry",
                 desc: "prompttradefairs@gmail.com\nproject2@prompttradefairs.com",
                 icon: "fa-envelope-open-text",
-                label: "WRITE TO US"
+                // label: "WRITE TO US"
               }
             ].map((item, idx) => (
               <motion.div key={idx} className="v3-initiative-card" whileHover={{ y: -10 }} style={{ minHeight: '320px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', justifyContent: 'space-between' }}>

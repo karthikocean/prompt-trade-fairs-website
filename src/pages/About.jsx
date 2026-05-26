@@ -82,7 +82,7 @@ const About = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <div className="premium-header-box" style={{ marginBottom: '30px' }}>
+                <div className="premium-header-box" style={{ marginBottom: '10px' }}>
                   <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
                     <div className="header-accent-line" style={{ width: '40px', height: '2px', background: '#ED1C24' }}></div>
                     <span className="header-accent-tag" style={{ fontWeight: '800', color: '#ED1C24', letterSpacing: '1px' }}>BUSINESS EXCELLENCE</span>
@@ -123,7 +123,7 @@ const About = () => {
                 style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.8' }}
               >
                 <p className="intro-p" style={{ marginBottom: '20px', textAlign: 'justify' }}>
-                  Prompt Trade Fairs India Pvt. Ltd. is a leading Exhibition Organiser in India with over 25 years of excellence in organizing highly successful trade fairs, business expos, and consumer exhibitions across the country. Known for professionalism, innovation, and quality event management, PROMPT has become one of the most trusted names in the Indian exhibition industry.
+                  Prompt Trade Fairs India Pvt. Ltd. is a leading Exhibition Organiser in India with over 25 years of excellence in organizing highly successful trade fairs, Business Expos, and Consumer Exhibitions across the country. Known for professionalism, innovation, and quality event management, PROMPT has become one of the most trusted names in the Indian exhibition industry.
                 </p>
                 <p className="intro-p" style={{ marginBottom: '20px', textAlign: 'justify' }}>
                   With a strong commitment to delivering business growth opportunities, PROMPT provides exhibitors with the ideal platform to showcase products, launch brands, connect with buyers, and generate valuable business leads. Managed by a dedicated team of industry specialists, every exhibition is strategically planned to meet the evolving needs of exhibitors and target audiences.
@@ -222,7 +222,7 @@ const About = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <div className="premium-header-box" style={{ marginBottom: '30px' }}>
+                <div className="premium-header-box" style={{ marginBottom: '10px' }}>
                   <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
                     <div className="header-accent-line" style={{ width: '40px', height: '2px', background: '#ED1C24' }}></div>
                     <span className="header-accent-tag" style={{ fontSize: '0.85rem', fontWeight: '800', color: '#ED1C24' }}>PAN-INDIA NETWORK</span>
@@ -257,8 +257,9 @@ const About = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
+                style={{ marginTop: '-80px' }}
               >
-                <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8', marginBottom: '20px', textAlign: 'justify' }}>
+                <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8', marginBottom: '20px', textAlign: 'justify', marginTop: 0 }}>
                   PROMPT has successfully organized exhibitions in major business cities including Chennai, Bengaluru, Hyderabad, Ahmedabad, Coimbatore, Salem, Vijayawada, Visakhapatnam, Warangal, Rajahmundry, and many other key locations across India.
                 </p>
                 <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: '1.8', marginBottom: '30px', textAlign: 'justify' }}>
@@ -281,7 +282,7 @@ const About = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <div className="premium-header-box" style={{ marginBottom: '30px' }}>
+                <div className="premium-header-box" style={{ marginBottom: '10px' }}>
                   <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
                     <div className="header-accent-line" style={{ width: '40px', height: '2px', background: '#ED1C24' }}></div>
                     <span className="header-accent-tag" style={{ fontSize: '0.85rem', fontWeight: '800', color: '#ED1C24' }}>END-TO-END SUPPORT</span>
