@@ -205,15 +205,35 @@ const EnquiryForm = ({
       )}
 
       {!isSimplified && (
-        <div className="enquiry-type-selector" style={{ display: 'flex', gap: '20px', padding: '15px 25px', background: '#fcfcfc', borderBottom: '1px solid #eee' }}>
-          <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontSize: '0.9rem', fontWeight: '600', color: enquiryType === "stalls" ? '#ED1C24' : '#555' }}>
-            <input type="radio" name="enquiryType" value="stalls" checked={enquiryType === "stalls"} onChange={() => setEnquiryType("stalls")} />
-            <span>Stall Booking</span>
-          </label>
-          <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontSize: '0.9rem', fontWeight: '600', color: enquiryType === "visitors" ? '#ED1C24' : '#555' }}>
-            <input type="radio" name="enquiryType" value="visitors" checked={enquiryType === "visitors"} onChange={() => setEnquiryType("visitors")} />
-            <span>Visitor Registration</span>
-          </label>
+        <div className="enquiry-tabs" style={{ display: 'flex', gap: '20px', padding: '15px 25px', background: '#fcfcfc', borderBottom: '1px solid #eee' }}>
+          <button type="button" onClick={() => setEnquiryType("stalls")} style={{
+            flex: 1,
+            padding: '8px 16px',
+            borderRadius: '999px',
+            cursor: 'pointer',
+            background: enquiryType === "stalls" ? '#ED1C24' : '#f3f3f3',
+            color: enquiryType === "stalls" ? '#fff' : '#555',
+            border: 'none',
+            transition: 'background 0.3s, color 0.3s',
+            fontSize: '0.9rem',
+            fontWeight: '600'
+          }}>
+            Stall Booking
+          </button>
+          <button type="button" onClick={() => setEnquiryType("visitors")} style={{
+            flex: 1,
+            padding: '8px 16px',
+            borderRadius: '999px',
+            cursor: 'pointer',
+            background: enquiryType === "visitors" ? '#ED1C24' : '#f3f3f3',
+            color: enquiryType === "visitors" ? '#fff' : '#555',
+            border: 'none',
+            transition: 'background 0.3s, color 0.3s',
+            fontSize: '0.9rem',
+            fontWeight: '600'
+          }}>
+            Visitor Registration
+          </button>
         </div>
       )}
 

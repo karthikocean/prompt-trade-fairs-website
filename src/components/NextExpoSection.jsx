@@ -34,10 +34,19 @@ const NextExpoSection = () => {
     fetchExpos();
   }, []);
 
+  // Auto slide every 5 seconds
+  useEffect(() => {
+    if (expos.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentIndex(prev => (prev === expos.length - 1 ? 0 : prev + 1));
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [expos.length]);
+
   const currentExpo = expos[currentIndex];
 
-  const nextExpo = () => setCurrentIndex((p) => Math.min(p + 1, expos.length - 1));
-  const prevExpo = () => setCurrentIndex((p) => Math.max(p - 1, 0));
+  const nextExpo = () => setCurrentIndex((prev) => prev === expos.length - 1 ? 0 : prev + 1);
+  const prevExpo = () => setCurrentIndex((prev) => prev === 0 ? expos.length - 1 : prev - 1);
 
   if (loading) {
     return (

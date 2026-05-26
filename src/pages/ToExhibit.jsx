@@ -5,9 +5,9 @@ import ResigterForm from '../components/ResigterForm';
 
 const ToExhibit = () => {
   const benefits = [
-    { title: "Direct Sales", desc: "Interact face-to-face with buyers and close deals on the floor.", icon: "fa-shopping-cart", num: "01", status: "SALES" },
-    { title: "Brand Exposure", desc: "Showcase your products to thousands of industry-specific visitors.", icon: "fa-bullhorn", num: "02", status: "VISIBILITY" },
-    { title: "Lead Generation", desc: "Build a high-quality database of qualified leads for long-term growth.", icon: "fa-users", num: "03", status: "LEADS" }
+    { title: "Direct Sales", desc: "Interact face-to-face with buyers and close deals on the floor.", icon: "fa-shopping-cart" },
+    { title: "Brand Exposure", desc: "Showcase your products to thousands of industry-specific visitors.", icon: "fa-bullhorn" },
+    { title: "Lead Generation", desc: "Build a high-quality database of qualified leads for long-term growth.", icon: "fa-users" }
   ];
 
   const coverageItems = [
@@ -40,19 +40,39 @@ const ToExhibit = () => {
         </div>
       </section>
 
-      {/* 2. EXHIBITOR BENEFITS SECTION (SPICY RAT STYLE) - NO CHANGE REQUESTED */}
-      <section className="v3-initiatives-section" style={{ background: '#fff', padding: '120px 0' }}>
+      {/* 2. EXHIBITOR BENEFITS SECTION */}
+      <section
+        className="v3-initiatives-section"
+        style={{ background: '#fff', padding: '50px 0' }}
+      >
         <div className="container">
+
           <div className="premium-header-box centered">
             <div className="header-accent-row">
               <div className="header-accent-line"></div>
-              <span className="header-accent-tag">EXHIBITOR BENEFITS</span>
+
+              <span className="header-accent-tag">
+                EXHIBITOR BENEFITS
+              </span>
+
               <div className="header-accent-line"></div>
             </div>
-            <h2 className="header-main-title">Maximize Your <span>Business Potential</span></h2>
+
+            <h2 className="header-main-title">
+              Maximize Your <span>Business Potential</span>
+            </h2>
           </div>
 
-          <div className="v3-initiatives-grid" style={{ marginTop: '60px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+          <div
+            className="v3-initiatives-grid"
+            style={{
+              marginTop: '30px',
+              display: 'grid',
+              gridTemplateColumns:
+                'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: '15px'
+            }}
+          >
             {benefits.map((item, idx) => (
               <motion.div
                 key={idx}
@@ -61,18 +81,48 @@ const ToExhibit = () => {
                 transition={{ duration: 0.3 }}
               >
                 <div className="v3-card-border"></div>
-                <div className="v3-card-content">
-                  <div className="card-top" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
-                    <div className="card-icon" style={{ fontSize: '3rem', color: '#ED1C24' }}><i className={`fas ${item.icon}`}></i></div>
+                <div className="v3-card-content" style={{
+                  position: 'relative',
+                  minHeight: '200px',
+                  height: '200px',
+                  margin: '0 auto',
+                  padding: '15px 20px',
+                  boxSizing: 'border-box',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center'
+                }}>
+                  <div className="card-top" style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div className="card-icon" style={{ color: '#ED1C24', fontSize: '1.8rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <i className={`fas ${item.icon}`}></i>
+                    </div>
                   </div>
-                  {/* <div className="card-line" style={{ height: '2px', background: '#ED1C24', width: '40px', margin: '20px 0' }}></div> */}
-                  <h3 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '15px', color: '#111', textAlign: 'center' }}>{item.title}</h3>
-                  <p style={{ fontSize: '16px', color: '#555', lineHeight: '1.6', textAlign: 'center' }}>{item.desc}</p>
+                  <div className="card-line" style={{ height: '2px', background: '#ED1C24', width: '30px', margin: '10px auto' }}></div>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '8px' }}>{item.title}</h3>
+                  <p style={{ fontSize: '0.9rem', color: '#666', lineHeight: '1.6', whiteSpace: 'pre-line' }}>{item.desc}</p>
                 </div>
-                <span className="v3-card-bottom-text" style={{ position: 'absolute', bottom: '20px', right: '30px', fontSize: '10px', letterSpacing: '2px', fontWeight: '800', opacity: '0.3' }}>{item.status}</span>
+                <span className="v3-card-bottom-text" style={{
+                  position: 'absolute',
+                  bottom: '5px',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  background: '#fff',
+                  padding: '0 14px',
+                  fontSize: '1.1rem',
+                  fontWeight: '800',
+                  marginBottom: '5px',
+                  textAlign: 'center',
+                  whiteSpace: 'nowrap',
+                  color: '#111'
+                }}>
+                  {item.num}
+                </span>
               </motion.div>
             ))}
           </div>
+
         </div>
       </section>
 
@@ -85,8 +135,8 @@ const ToExhibit = () => {
               <span className="header-accent-tag">EXHIBITION COVERAGE</span>
               <div className="header-accent-line"></div>
             </div>
-            <h2 className="header-main-title">What's Covered in Your <span>Exhibition Plot?</span></h2>
-            <p style={{ maxWidth: '800px', margin: '25px auto 0', color: '#666', fontSize: '16px', lineHeight: '1.8' }}>
+            <h2 className="header-main-title" style={{ textAlign: 'center' }}>What's Covered in Your <span>Exhibition Plot?</span></h2>
+            <p style={{ maxWidth: '800px', margin: '25px auto 0', color: '#666', fontSize: '16px', lineHeight: '1.8', textAlign: 'center' }}>
               We provide a comprehensive ecosystem designed for high-impact brand success.
               From infrastructure to international marketing, everything is managed by our expert team.
             </p>
@@ -109,7 +159,9 @@ const ToExhibit = () => {
                   border: '1px solid rgba(0,0,0,0.05)',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '15px'
+                  gap: '15px',
+                  alignItems: 'center',
+                  textAlign: 'center'
                 }}
               >
                 <div className="cov-icon-box" style={{ width: '60px', height: '60px', background: 'rgba(237, 28, 36, 0.1)', color: '#ED1C24', borderRadius: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>
@@ -125,6 +177,19 @@ const ToExhibit = () => {
 
       {/* 4. REGISTRATION FORM SECTION */}
       <ResigterForm />
+      <style>{`
+        .v3-initiative-card .v3-card-bottom-text {
+          background: #fff !important;
+          color: #111 !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          transition: all 0.3s ease;
+        }
+        .v3-initiative-card:hover .v3-card-bottom-text {
+          background: #ED1C24 !important;
+          color: #fff !important;
+        }
+      `}</style>
     </main>
   );
 };

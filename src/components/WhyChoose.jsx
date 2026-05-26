@@ -11,7 +11,7 @@ const WhyChoose = () => {
             <span className="header-accent-tag">OUR STRENGTH</span>
             <div className="header-accent-line"></div>
           </div>
-          <h2 className="header-main-title">Why Choose Us</h2>
+          <h2 className="header-main-title">Why Prompt</h2>
         </div>
 
         <div className="why-choose-grid">
