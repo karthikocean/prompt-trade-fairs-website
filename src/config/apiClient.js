@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const APP_ENV = import.meta.env.VITE_APP_ENV || "dev";
+const APP_ENV = import.meta.env.VITE_APP_ENV || "production";
 
 let IMAGE_BASE_URL = "";
 let BASE_URL = "";
@@ -14,9 +14,9 @@ switch (APP_ENV) {
         break;
 
     case "production":
-        IMAGE_BASE_URL = "http://13.126.146.21:4000/public";
-        BASE_URL = "http://13.126.146.21:4000/api/website";
-        server = "http://13.126.146.21:4000";
+        IMAGE_BASE_URL = "https://api.prompttradefairs.com/public";
+        BASE_URL = "https://api.prompttradefairs.com/api/website";
+        server = "https://api.prompttradefairs.com";
         break;
 
     case "local":
