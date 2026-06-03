@@ -84,21 +84,12 @@ const PreviousExhibitions = () => {
             </div>
           ) : (
             <>
-              <div className="modern-gallery-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(48%, 1fr))', gap: '30px', marginTop: '60px' }}>
+              <div className="modern-gallery-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(48%, 1fr))', gap: '0', marginTop: '60px' }}>
                 {expos.slice(0, pastVisibleCount).map(item => (
-                  <motion.div
-                    key={item._id} whileHover={{ y: -8 }}
-                    className="modern-gallery-card expo-card"
-                    style={{
-                      background: '#fff',
-                      borderRadius: '20px',
-                      border: '1px solid #eee',
-                      overflow: 'hidden',
-                      boxShadow: '0 10px 40px rgba(0,0,0,0.06)',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      transition: '0.3s'
-                    }}
+                  <div
+                    key={item._id}
+                    className="expo-card"
+                    style={{}}
                   >
                     {/* IMAGE AREA */}
                     <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
@@ -155,7 +146,7 @@ const PreviousExhibitions = () => {
                         </button>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
 

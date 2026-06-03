@@ -77,8 +77,8 @@ const Events = () => {
       <section className="events-gallery-v3" style={{ padding: '100px 0', background: '#f8f9fa' }}>
         <div className="container">
           <div className="premium-header-box centered">
-            <div className="header-accent-row"><div className="header-accent-line"></div><span className="header-accent-tag">VISUAL JOURNEY</span><div className="header-accent-line"></div></div>
-            <h2 className="header-main-title">Moments & Highlights</h2>
+            <div className="header-accent-row"><div className="header-accent-line"></div><span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>VISUAL JOURNEY</span><div className="header-accent-line"></div></div>
+            <h2 className="header-main-title" style={{ fontSize: "2rem" }}>Moments & Highlights</h2>
           </div>
 
           <div className="modern-gallery-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '30px', marginTop: '40px' }}>
