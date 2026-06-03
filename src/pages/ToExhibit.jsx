@@ -51,14 +51,14 @@ const ToExhibit = () => {
             <div className="header-accent-row">
               <div className="header-accent-line"></div>
 
-              <span className="header-accent-tag">
+              <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>
                 EXHIBITOR BENEFITS
               </span>
 
               <div className="header-accent-line"></div>
             </div>
 
-            <h2 className="header-main-title">
+            <h2 className="header-main-title" style={{ fontSize: "2rem" }}>
               Maximize Your <span>Business Potential</span>
             </h2>
           </div>
@@ -132,10 +132,10 @@ const ToExhibit = () => {
           <div className="premium-header-box centered">
             <div className="header-accent-row">
               <div className="header-accent-line"></div>
-              <span className="header-accent-tag">EXHIBITION COVERAGE</span>
+              <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>EXHIBITION COVERAGE</span>
               <div className="header-accent-line"></div>
             </div>
-            <h2 className="header-main-title" style={{ textAlign: 'center' }}>What's Covered in Your <span>Exhibition Plot?</span></h2>
+            <h2 className="header-main-title" style={{ textAlign: 'center', fontSize: '2rem' }}>What's Covered in Your <span>Exhibition Plot?</span></h2>
             <p style={{ maxWidth: '800px', margin: '25px auto 0', color: '#666', fontSize: '16px', lineHeight: '1.8', textAlign: 'center' }}>
               We provide a comprehensive ecosystem designed for high-impact brand success.
               From infrastructure to international marketing, everything is managed by our expert team.

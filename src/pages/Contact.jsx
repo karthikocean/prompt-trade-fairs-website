@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import EnquiryForm from '../components/EnquiryForm';
+import { createContactEnquiry } from '../api/common.api';
+import toast from 'react-hot-toast';
+
 
 const Contact = () => {
   const regionalOffices = [
     {
       // city: "Coimbatore",
-      // address: "54 D, 1st Floor, Jayavarthanavelu Nagar, Masakkalipalayam Road, Peelamedu, Coimbatore – 641004.",
+      // address: "54 D, 1st Floor, Jayavarthanve...",
       // mobile: "+91 91500 86485"
     },
     {
@@ -17,11 +19,69 @@ const Contact = () => {
     },
     {
       // city: "Erode",
-      // address: "Room No.204, 205-Second Floor, No.102/3, Chinna Sengodampalayam, Perundurai Main Road, Nachimuthu Complex (Above Union Bank of India), Erode – 638012.",
+      // address: "Room No.204, 205-Second Floor, No.102/3, ...",
       // mobile: "+91 93620 50255"
     }
-
   ];
+
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    
+    if (name === "name") {
+      // Only allow letters and spaces
+      if (value !== "" && !/^[a-zA-Z\s]*$/.test(value)) {
+        return;
+      }
+    }
+
+    if (name === "phone") {
+      // Only allow digits and max 10 characters
+      if (value !== "" && !/^\d*$/.test(value)) {
+        return;
+      }
+      if (value.length > 10) {
+        return;
+      }
+    }
+
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim()) {
+      toast.error("Please fill in all required fields (Name, Email, and Phone).");
+      return;
+    }
+
+    if (formData.phone.length !== 10) {
+      toast.error("Phone number must be exactly 10 digits.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    const payload = {
+      name: formData.name,
+      phone: formData.phone,
+      email: formData.email,
+      message: formData.message.trim() || "No message provided."
+    };
+    try {
+      await createContactEnquiry(payload);
+      toast.success("Message sent successfully!");
+      setFormData({ name: "", email: "", phone: "", message: "" });
+    } catch (err) {
+      console.error(err);
+      toast.error(err.response?.data?.message || "Failed to send message.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
 
   return (
     <main className="contact-v3-main">
@@ -39,36 +99,360 @@ const Contact = () => {
       </section>
 
       {/* 2. MESSAGE & MAP SECTION (CENTERED HEADINGS) */}
-      <section className="contact-form-v3" style={{ background: '#f8f9fa', padding: '60px 0' }}>
+      <section
+        className="contact-form-v3"
+        style={{ background: "#f8f9fa", padding: "60px 0" }}
+      >
         <div className="container">
-          <div className="premium-header-box centered" style={{ marginBottom: '40px' }}>
-            <div className="header-accent-row"><div className="header-accent-line"></div><span className="header-accent-tag">MESSAGE US</span><div className="header-accent-line"></div></div>
-            <h2 className="header-main-title">Send us a Requirement</h2>
-            <p style={{ marginTop: '20px', color: '#666', maxWidth: '700px', margin: '20px auto 0', fontSize: '1.1rem' }}>
-              Ready to scale your business at our next event? Fill out the form below and one of our specialists will get back to you shortly.
+          <div
+            className="premium-header-box centered"
+            style={{ marginBottom: "40px" }}
+          >
+            <div className="header-accent-row">
+              <div className="header-accent-line"></div>
+              <span
+                className="header-accent-tag"
+                style={{
+                  color: "#ED1C24",
+                  fontWeight: "700",
+                  letterSpacing: "2px",
+                  fontSize: "13.5px",
+                }}
+              >
+                MESSAGE US
+              </span>
+              <div className="header-accent-line"></div>
+            </div>
+
+            <h2 className="header-main-title" style={{ fontSize: "2rem" }}>
+              Send us a Requirement
+            </h2>
+
+            <p
+              style={{
+                marginTop: "20px",
+                maxWidth: "700px",
+                margin: "20px auto 0",
+                fontSize: "16px",
+              }}
+            >
+              Ready to scale your business at our next event? Fill out the form
+              below and one of our specialists will get back to you shortly.
             </p>
           </div>
 
-          <div className="about-story-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.1fr) minmax(0, 0.9fr)', gap: '60px', alignItems: 'stretch' }}>
+          <div
+            className="about-story-grid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "minmax(0, 1.1fr) minmax(0, 0.9fr)",
+              gap: "30px",
+              alignItems: "stretch",
+            }}
+          >
+            {/* MAP */}
             <div
               className="story-content-left"
               style={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                flex: 1
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                flex: 1,
               }}
             >
-              <div className="map-container" style={{ width: '100%', height: '100%', flex: 1, borderRadius: '16px', overflow: 'hidden', marginTop: '20px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', display: 'flex' }}>
-                <a href="https://www.google.com/maps?q=Prompt+Tower,+Plot+No:+324,+Ram+Nagar+South+12th+Extension,+Off+Radial+Road,+Near+Kamakshi+Hospital,+Pallikaranai,+Chennai+-+600100,+India" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', width: '100%', height: '100%' }}>
-                  <iframe title="Prompt Trade Fairs Location" src="https://www.google.com/maps?q=Prompt+Tower,+Plot+No:+324,+Ram+Nagar+South+12th+Extension,+Off+Radial+Road,+Near+Kamakshi+Hospital,+Pallikaranai,+Chennai+-+600100,+India&output=embed" width="100%" height="100%" style={{ border: 0, pointerEvents: 'none', flex: 1 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+              <div
+                className="map-container"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  flex: 1,
+                  borderRadius: "16px",
+                  overflow: "hidden",
+                  marginTop: "20px",
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+                  display: "flex",
+                }}
+              >
+                <a
+                  href="https://www.google.com/maps?q=Prompt+Tower,+Plot+No:+324,+Ram+Nagar+South+12th+Extension,+Off+Radial+Road,+Near+Kamakshi+Hospital,+Pallikaranai,+Chennai+-+600100,+India"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                >
+                  <iframe
+                    title="Prompt Trade Fairs Location"
+                    src="https://www.google.com/maps?q=Prompt+Tower,+Plot+No:+324,+Ram+Nagar+South+12th+Extension,+Off+Radial+Road,+Near+Kamakshi+Hospital,+Pallikaranai,+Chennai+-+600100,+India&output=embed"
+                    width="100%"
+                    height="100%"
+                    style={{
+                      border: 0,
+                      pointerEvents: "none",
+                      flex: 1,
+                    }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
                 </a>
               </div>
             </div>
-            <div className="contact-form-card" style={{ background: '#fff', padding: '25px', borderRadius: '30px', border: '1px solid #eee', height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <div className="form-header" style={{ marginBottom: '20px', textAlign: 'center' }}><span style={{ fontSize: '11px', letterSpacing: '2px', color: '#ED1C24', fontWeight: '800' }}>CONTACT FORM</span><h3 style={{ fontSize: '1.6rem', fontWeight: '900', marginTop: '10px' }}>Get in Touch</h3></div>
-              <EnquiryForm title="" isSimplified={true} hideHeader={true} customClass="contact-enquiry-form" />
+
+            {/* FORM */}
+            <div
+              className="contact-form-card"
+              style={{
+                background: "#fff",
+                padding: "25px",
+                borderRadius: "30px",
+                border: "1px solid #eee",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <div
+                className="form-header"
+                style={{
+                  marginBottom: "20px",
+                  textAlign: "center",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: "11px",
+                    letterSpacing: "2px",
+                    color: "#ED1C24",
+                    fontWeight: "800",
+                  }}
+                >
+                  CONTACT FORM
+                </span>
+
+                <h3
+                  style={{
+                    fontSize: "1.6rem",
+                    fontWeight: "900",
+                    marginTop: "10px",
+                  }}
+                >
+                  Get in Touch
+                </h3>
+              </div>
+
+              <form
+                onSubmit={handleSubmit}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "20px",
+                  flexGrow: 1,
+                  textAlign: "left",
+                }}
+              >
+                {/* Name */}
+                <div className="form-group">
+                  <label
+                    style={{
+                      marginBottom: "8px",
+                      fontWeight: "600",
+                      color: "#111",
+                      display: "block",
+                      textAlign: "left",
+                    }}
+                  >
+                    Name *
+                  </label>
+
+                  <div style={{ position: "relative" }}>
+                    <i
+                      className="fas fa-user"
+                      style={{
+                        position: "absolute",
+                        left: "15px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        color: "#ED1C24",
+                        zIndex: 1,
+                      }}
+                    />
+
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Your Name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      style={{
+                        width: "100%",
+                        height: "56px",
+                        paddingLeft: "45px",
+                        border: "1px solid #ddd",
+                        borderRadius: "8px",
+                        fontSize: "16px",
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Email */}
+                <div className="form-group">
+                  <label
+                    style={{
+                      marginBottom: "8px",
+                      fontWeight: "600",
+                      color: "#111",
+                      display: "block",
+                      textAlign: "left",
+                    }}
+                  >
+                    Email *
+                  </label>
+
+                  <div style={{ position: "relative" }}>
+                    <i
+                      className="fas fa-envelope"
+                      style={{
+                        position: "absolute",
+                        left: "15px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        color: "#ED1C24",
+                        zIndex: 1,
+                      }}
+                    />
+
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Email Address"
+                      value={formData.email}
+                      onChange={handleChange}
+                      style={{
+                        width: "100%",
+                        height: "56px",
+                        paddingLeft: "45px",
+                        border: "1px solid #ddd",
+                        borderRadius: "8px",
+                        fontSize: "16px",
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Phone */}
+                <div className="form-group">
+                  <label
+                    style={{
+                      marginBottom: "8px",
+                      fontWeight: "600",
+                      color: "#111",
+                      display: "block",
+                      textAlign: "left",
+                    }}
+                  >
+                    Phone *
+                  </label>
+
+                  <div style={{ position: "relative" }}>
+                    <i
+                      className="fas fa-phone-alt"
+                      style={{
+                        position: "absolute",
+                        left: "15px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        color: "#ED1C24",
+                        zIndex: 1,
+                      }}
+                    />
+
+                    <input
+                      type="tel"
+                      name="phone"
+                      placeholder="Phone Number"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      style={{
+                        width: "100%",
+                        height: "56px",
+                        paddingLeft: "45px",
+                        border: "1px solid #ddd",
+                        borderRadius: "8px",
+                        fontSize: "16px",
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Message */}
+                <div className="form-group">
+                  <label
+                    style={{
+                      marginBottom: "8px",
+                      fontWeight: "600",
+                      color: "#111",
+                      display: "block",
+                      textAlign: "left",
+                    }}
+                  >
+                    Message
+                  </label>
+
+                  <div style={{ position: "relative" }}>
+                    <i
+                      className="fas fa-comment"
+                      style={{
+                        position: "absolute",
+                        left: "15px",
+                        top: "18px",
+                        color: "#ED1C24",
+                        zIndex: 1,
+                      }}
+                    />
+
+                    <textarea
+                      name="message"
+                      placeholder="Your Message"
+                      rows="6"
+                      value={formData.message}
+                      onChange={handleChange}
+                      style={{
+                        width: "100%",
+                        padding: "15px 15px 15px 45px",
+                        border: "1px solid #ddd",
+                        borderRadius: "8px",
+                        fontSize: "16px",
+                        resize: "vertical",
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  style={{
+                    alignSelf: "center",
+                    padding: "14px 35px",
+                    background: "#ED1C24",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    fontWeight: "600",
+                    fontSize: "16px",
+                    marginTop: "10px",
+                  }}
+                >
+                  {isSubmitting ? "Sending..." : "Send Message"}
+                </button>
+              </form>
             </div>
+
           </div>
         </div>
       </section>

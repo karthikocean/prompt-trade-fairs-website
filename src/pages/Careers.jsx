@@ -419,12 +419,12 @@ const Careers = () => {
               <div className="premium-header-box culture-header">
                 <div className="header-accent-row">
                   <div className="header-accent-line"></div>
-                  <span className="header-accent-tag">OUR CULTURE</span>
+                  <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>OUR CULTURE</span>
                 </div>
-                <h2 className="header-main-title">Work at the <span>Heart of Innovation</span></h2>
+                <h2 className="header-main-title" style={{ fontSize: "2rem" }}>Work at the <span>Heart of Innovation</span></h2>
               </div>
               <div className="culture-text-content">
-                <p className="story-p-large" style={{ fontSize: '16px', textAlign: 'justify', color: '#111' }}>
+                <p className="story-p-muted" style={{ fontSize: '16px', textAlign: 'justify', color: '#111' }}>
                   At PROMPT, we believe that our people are our greatest asset. We foster a culture of creativity, collaboration, and continuous learning.
                 </p>
                 <p className="story-p-muted" style={{ fontSize: '16px', textAlign: 'justify', color: '#111' }}>
@@ -461,10 +461,10 @@ const Careers = () => {
           <div className="premium-header-box centered">
             <div className="header-accent-row">
               <div className="header-accent-line"></div>
-              <span className="header-accent-tag">OPPORTUNITIES</span>
+              <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>OPPORTUNITIES</span>
               <div className="header-accent-line"></div>
             </div>
-            <h2 className="header-main-title">Current <span>Openings</span></h2>
+            <h2 className="header-main-title" style={{ fontSize: "2rem" }}>Current <span>Openings</span></h2>
           </div>
 
           <div className="openings-list-premium" style={{ marginTop: '60px' }}>

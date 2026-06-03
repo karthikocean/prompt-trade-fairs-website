@@ -38,12 +38,12 @@ const Testimonial = () => {
   return (
     <section className="testimonials-section-lite">
       <div className="container">
-        
+
         {/* CENTERED HEADER */}
         <div className="premium-header-box centered">
           <div className="header-accent-row">
             <div className="header-accent-line"></div>
-            <span className="header-accent-tag">TESTIMONIALS</span>
+            <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>TESTIMONIALS</span>
             <div className="header-accent-line"></div>
           </div>
           <h2 className="header-main-title">

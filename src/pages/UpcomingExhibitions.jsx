@@ -69,8 +69,8 @@ const UpcomingExhibitions = () => {
       <section className="upcoming-grid-v3" style={{ padding: '120px 0', background: '#f8f9fa' }}>
         <div className="container">
           <div className="premium-header-box centered">
-            <div className="header-accent-row"><div className="header-accent-line"></div><span className="header-accent-tag">Present Exhibitions</span><div className="header-accent-line"></div></div>
-            <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111' }}>Book Your Expo</h2>
+            <div className="header-accent-row"><div className="header-accent-line"></div><span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>Present Exhibitions</span><div className="header-accent-line"></div></div>
+            <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111', fontSize: '2rem' }}>Book Your Expo</h2>
           </div>
 
           {expos.length === 0 ? (
@@ -79,38 +79,30 @@ const UpcomingExhibitions = () => {
               <h3 style={{ fontWeight: '800', color: '#111' }}>No Present Expo Available.</h3>
             </div>
           ) : (
-            <div className="row expo-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', columnGap: '32px', rowGap: '36px' }}>
+            <div className="row expo-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0' }}>
               {expos.slice(0, visibleCount).map((expo, index) => (
-                <motion.div
+                <div
                   key={expo._id}
-                  whileHover={{ y: -8 }}
-                  className="modern-gallery-card expo-card mb-4"
+                  className="expo-card mb-4"
                   onClick={() => setSelectedExpo(expo)}
-                  style={{
-                    background: '#fff',
-                    borderRadius: '20px',
-                    border: '1px solid #eee',
-                    overflow: 'hidden',
-                    boxShadow: '0 10px 40px rgba(0,0,0,0.06)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    transition: '0.3s'
-                  }}
+                  style={{}}
                 >
                   {/* IMAGE */}
-                  <div style={{ position: 'relative', height: '260px', overflow: 'hidden' }}>
-                    <img src={getImageUrl(expo.expoImage)} alt={expo.expoName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <div style={{ width: '100%', height: '380px', overflow: 'hidden' }}>
+                    <img src={getImageUrl(expo.expoImage)} alt={expo.expoName} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                   </div>
                   {/* CONTENT */}
-                  <div style={{ padding: '25px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', columnGap: '32px', rowGap: '36px', justifyContent: 'flex-start', alignItems: 'center', color: 'rgb(17, 17, 17)', fontWeight: '700', fontSize: '13px', marginBottom: '15px' }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><i className="fas fa-user-tie" style={{ color: '#ED1C24' }}></i> {expo.eventManager?.name || "N/A"}</span>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><i className="far fa-calendar-alt" style={{ color: '#ED1C24' }}></i> {formatDate(expo.startDate)}</span>
+                  <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                    <h3 style={{ fontSize: '1.4rem', fontWeight: '800', color: '#111', lineHeight: '1.3', marginBottom: '15px' }}>{expo.expoName}</h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', color: 'rgb(17, 17, 17)', fontWeight: '700', fontSize: '13px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><i className="far fa-calendar-alt" style={{ color: '#ED1C24' }}></i> {formatDate(expo.startDate)}</span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><i className="fas fa-clock" style={{ color: '#ED1C24' }}></i> {expo.startTime} - {expo.endTime}</span>
+                      </div>
                       <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><i className="fas fa-map-marker-alt" style={{ color: '#ED1C24' }}></i> {expo.venue}</span>
                     </div>
-                    <h3 style={{ fontSize: '1.4rem', fontWeight: '800', color: '#111', lineHeight: '1.3', marginBottom: '0' }}>{expo.expoName}</h3>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           )}
@@ -168,18 +160,18 @@ const UpcomingExhibitions = () => {
 
               <div className="modal-body-v3">
                 <div className="modal-main-grid">
-                  <div className="modal-image-wrapper">
-                    <img src={getImageUrl(selectedExpo.expoImage)} alt="Expo" />
+                  <div className="modal-image-wrapper" style={{ height: 'auto', borderRadius: '12px', overflow: 'hidden' }}>
+                    <img src={getImageUrl(selectedExpo.expoImage)} alt="Expo" style={{ width: '100%', height: 'auto', objectFit: 'contain', display: 'block' }} />
                   </div>
 
                   <div className="modal-details-col">
-                    <div className="detail-item-lite">
+                    {/* <div className="detail-item-lite">
                       <div className="detail-icon"><i className="fas fa-user-tie"></i></div>
                       <div className="detail-text">
                         <p className="detail-label">Manager</p>
                         <p className="detail-value">{selectedExpo.eventManager?.name || "N/A"}</p>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="detail-item-lite">
                       <div className="detail-icon"><i className="fas fa-map-marker-alt"></i></div>
                       <div className="detail-text">
@@ -205,9 +197,9 @@ const UpcomingExhibitions = () => {
                 </div>
 
                 <div className="modal-stats-container">
-                  <p className="modal-description">
+                  {/* <p className="modal-description">
                     Join us for {selectedExpo.expoName} at {selectedExpo.venue}. Experience the premier trade event featuring the latest innovations.
-                  </p>
+                  </p> */}
 
                   <div className="modal-stats-row">
                     <div className="stat-unit">

@@ -8,7 +8,7 @@ const WhyChoose = () => {
         <div className="premium-header-box centered">
           <div className="header-accent-row">
             <div className="header-accent-line"></div>
-            <span className="header-accent-tag">OUR STRENGTH</span>
+            <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>OUR STRENGTH</span>
             <div className="header-accent-line"></div>
           </div>
           <h2 className="header-main-title">Why Prompt</h2>

@@ -10,7 +10,7 @@ const MobileAppSection = () => {
             <div className="premium-header-box">
               <div className="header-accent-row">
                 <div className="header-accent-line"></div>
-                <span className="header-accent-tag">GET THE APP</span>
+                <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>GET THE APP</span>
               </div>
               <h2 className="header-main-title">Business Growth Anywhere</h2>
             </div>

@@ -67,12 +67,12 @@ const NextExpoSection = () => {
       <div className="container" style={{ position: 'relative' }}>
         <div className="premium-header-box centered" style={{ textAlign: 'center', marginBottom: '50px' }}>
           <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px', marginBottom: '15px' }}>
-            <div className="header-accent-line" style={{ height: '1px', width: '30px', background: '#ED1C24' }}></div>
+            <div className="header-accent-line"></div>
             <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>Present Expo
             </span>
-            <div className="header-accent-line" style={{ height: '1px', width: '30px', background: '#ED1C24' }}></div>
+            <div className="header-accent-line"></div>
           </div>
-          <h2 className="header-main-title" style={{ fontSize: '2.5rem', fontWeight: '800', color: '#1a1a1a' }}>
+          <h2 className="header-main-title" style={{ fontSize: '2rem', fontWeight: '800', color: '#1a1a1a' }}>
             Ongoing Business Exhibition
           </h2>
         </div>
@@ -186,9 +186,9 @@ const NextExpoSection = () => {
                 )}
               </div>
 
-              <p style={{ color: '#666', lineHeight: '1.7', marginBottom: '35px', fontSize: '1rem' }}>
+              {/* <p style={{ color: '#666', lineHeight: '1.7', marginBottom: '35px', fontSize: '1rem' }}>
                 Experience South India's premier trade event at {currentExpo.venue}. Join industry leaders and explore the latest innovations in {currentExpo.products?.map(p => p.productName).join(', ') || "various sectors"}.
-              </p>
+              </p> */}
 
               <div className="present-expo-actions">
                 <a
