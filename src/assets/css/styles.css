@@ -1210,7 +1210,8 @@ ul {
 .expo-card::after {
   content: '';
   position: absolute;
-  inset: 3px; /* Border thickness */
+  inset: 3px;
+  /* Border thickness */
   background: #fff;
   border-radius: 17px;
   z-index: -1;
@@ -1991,7 +1992,8 @@ ul {
 /* Text */
 .brand p {
   line-height: 1.6;
-  font-size: 15px;
+  font-size: 16px;
+  text-align: justify;
 }
 
 /* Links */
@@ -2344,7 +2346,7 @@ ul {
 }
 
 .feature-text p {
-  font-size: 14.5px !important;
+  font-size: 14.5px;
   color: #6B7280 !important;
   line-height: 1.6 !important;
 }
@@ -3273,7 +3275,7 @@ section:not(.hero) {
   font-size: 1rem;
   color: #555;
   line-height: 1.8;
-  margin-bottom: 40px;
+  /* margin-bottom: 40px; */
 }
 
 .milestones-row {

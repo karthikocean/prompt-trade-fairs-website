@@ -52,10 +52,10 @@ const StatsSection = () => {
         <div className="stats-container">
           {/* LEFT CONTENT */}
           <div className="stats-content-main">
-            <p style={{ color: '#666', fontSize: '16px', lineHeight: '1.8', textAlign: 'justify', marginBottom: '20px', fontFamily: '"Inter", sans-serif' }}>
+            <p style={{ color: '#666', fontSize: '16px', lineHeight: '1.8', textAlign: 'justify', marginBottom: '20px' }}>
               PROMPT Trade Fairs is a trusted platform dedicated to connecting businesses with the right audience across India. With 25+ years of industry experience, we specialize in organizing impactful exhibitions that help brands grow, network, and expand their market presence.
             </p>
-            <p style={{ color: '#666', fontSize: '16px', lineHeight: '1.8', textAlign: 'justify', marginBottom: '35px', fontFamily: '"Inter", sans-serif' }}>
+            <p style={{ color: '#666', fontSize: '16px', lineHeight: '1.8', textAlign: 'justify', marginBottom: '35px' }}>
               Our events bring together industry leaders, innovators, and professionals under one roof, creating opportunities for meaningful collaborations and business success.
             </p>
 

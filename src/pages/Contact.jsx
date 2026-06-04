@@ -29,7 +29,7 @@ const Contact = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
+
     if (name === "name") {
       // Only allow letters and spaces
       if (value !== "" && !/^[a-zA-Z\s]*$/.test(value)) {
@@ -223,7 +223,7 @@ const Contact = () => {
               >
                 <span
                   style={{
-                    fontSize: "11px",
+                    fontSize: "12px",
                     letterSpacing: "2px",
                     color: "#ED1C24",
                     fontWeight: "800",
@@ -492,7 +492,7 @@ const Contact = () => {
                   <div className="card-top" style={{ display: 'flex', justifyContent: 'center' }}><div className="card-icon" style={{ color: '#ED1C24', fontSize: '1.8rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><i className={`fas ${item.icon}`}></i></div></div>
                   <div className="card-line" style={{ height: '2px', background: '#ED1C24', width: '30px', margin: '20px auto' }}></div>
                   <h3 style={{ fontSize: '1.4rem', fontWeight: '800', marginBottom: '15px' }}>{item.title}</h3>
-                  <p style={{ fontSize: '0.9rem', color: '#666', lineHeight: '1.6', whiteSpace: 'pre-line' }}>{item.desc}</p>
+                  <p style={{ fontSize: '16px', color: '#666', lineHeight: '1.6', whiteSpace: 'pre-line' }}>{item.desc}</p>
                 </div>
                 <span className="v3-card-bottom-text" style={{ position: 'absolute', bottom: '20px', right: '30px', fontSize: '10px', fontWeight: '800', opacity: '0.3', letterSpacing: '2px' }}>{item.label}</span>
               </motion.div>
