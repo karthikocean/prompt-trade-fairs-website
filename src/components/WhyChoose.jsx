@@ -28,7 +28,7 @@ const WhyChoose = () => {
 
           {/* Right: Content */}
           <div className="why-choose-content">
-            <p style={{ fontSize: '16px', textAlign: 'justify' }} className="main-desc">
+            <p style={{ fontSize: '16px', textAlign: 'justify', color: '#111' }} className="main-desc">
               Founded in 2002, Prompt Trade Fairs India Private Limited has emerged as one of the most reputed and outstanding Exhibition Organizers in India. Led by a team of professionals who have organized over 900+ Exhibitions for more than two decades.
             </p>
 
