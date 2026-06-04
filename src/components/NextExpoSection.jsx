@@ -10,6 +10,17 @@ const formatDate = (dateString) => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
+const formatDateRange = (start, end) => {
+  if (!start) return "";
+  const startDate = new Date(start);
+  const endDate = end ? new Date(end) : startDate;
+  const month = startDate.toLocaleString(undefined, { month: 'long' });
+  const year = startDate.getFullYear();
+  const dayStart = startDate.getDate();
+  const dayEnd = endDate.getDate();
+  const days = dayStart === dayEnd ? `${dayStart}` : Array.from({ length: dayEnd - dayStart + 1 }, (_, i) => dayStart + i).join(', ');
+  return `${days} ${month}-${year}`;
+};
 
 const NextExpoSection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -133,7 +144,7 @@ const NextExpoSection = () => {
                   </div>
                   <div>
                     <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
-                      {formatDate(currentExpo.startDate)} - {formatDate(currentExpo.endDate)}
+                      {formatDateRange(currentExpo.startDate, currentExpo.endDate)}
                     </h4>
                     <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Exhibition Duration</p>
                   </div>
@@ -159,7 +170,7 @@ const NextExpoSection = () => {
                     <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
                       {currentExpo.startTime} - {currentExpo.endTime}
                     </h4>
-                    <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Daily Timings</p>
+                    <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Expo Timing</p>
                   </div>
                 </div>
 
