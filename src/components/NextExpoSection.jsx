@@ -132,7 +132,7 @@ const NextExpoSection = () => {
                     <i className="fas fa-calendar-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
                   </div>
                   <div>
-                    <h4 style={{ margin: '0 0 4px 0', fontSize: '1.1rem', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                    <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
                       {formatDate(currentExpo.startDate)} - {formatDate(currentExpo.endDate)}
                     </h4>
                     <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Exhibition Duration</p>
@@ -144,7 +144,7 @@ const NextExpoSection = () => {
                     <i className="fas fa-map-marker-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
                   </div>
                   <div>
-                    <h4 style={{ margin: '0 0 4px 0', fontSize: '1.1rem', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                    <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
                       {currentExpo.venue}
                     </h4>
                     <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Event Location</p>
@@ -156,7 +156,7 @@ const NextExpoSection = () => {
                     <i className="fas fa-clock" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
                   </div>
                   <div>
-                    <h4 style={{ margin: '0 0 4px 0', fontSize: '1.1rem', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                    <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
                       {currentExpo.startTime} - {currentExpo.endTime}
                     </h4>
                     <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Daily Timings</p>
