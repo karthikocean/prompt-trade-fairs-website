@@ -79,13 +79,13 @@ const UpcomingExhibitions = () => {
               <h3 style={{ fontWeight: '800', color: '#111' }}>No Present Expo Available.</h3>
             </div>
           ) : (
-            <div className="row expo-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0' }}>
+            <div className="row expo-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
               {expos.slice(0, visibleCount).map((expo, index) => (
                 <div
                   key={expo._id}
                   className="expo-card mb-4"
                   onClick={() => setSelectedExpo(expo)}
-                  style={{}}
+                  style={{ borderRadius: '12px', background: '#fff', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                 >
                   {/* IMAGE */}
                   <div style={{ width: '100%', height: '380px', overflow: 'hidden' }}>
@@ -94,12 +94,12 @@ const UpcomingExhibitions = () => {
                   {/* CONTENT */}
                   <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                     <h3 style={{ fontSize: '1.4rem', fontWeight: '800', color: '#111', lineHeight: '1.3', marginBottom: '15px' }}>{expo.expoName}</h3>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', color: 'rgb(17, 17, 17)', fontWeight: '700', fontSize: '13px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', color: 'rgb(17, 17, 17)', fontWeight: '700', fontSize: '18px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><i className="far fa-calendar-alt" style={{ color: '#ED1C24' }}></i> {formatDate(expo.startDate)}</span>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><i className="fas fa-clock" style={{ color: '#ED1C24' }}></i> {expo.startTime} - {expo.endTime}</span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><i className="far fa-calendar-alt" style={{ color: '#ED1C24' }}></i> {formatDate(expo.startDate)}</span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><i className="fas fa-clock" style={{ color: '#ED1C24' }}></i> {expo.startTime} - {expo.endTime}</span>
                       </div>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><i className="fas fa-map-marker-alt" style={{ color: '#ED1C24' }}></i> {expo.venue}</span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><i className="fas fa-map-marker-alt" style={{ color: '#ED1C24' }}></i> {expo.venue}</span>
                     </div>
                   </div>
                 </div>
