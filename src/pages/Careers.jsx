@@ -173,7 +173,7 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
           >
             {/* COMPACT RED HEADER */}
             <div style={{ background: '#ED1C24', padding: '15px 25px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h2 style={{ color: '#fff', fontSize: '1.2rem', fontWeight: '800', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              <h2 style={{ color: '#fff', fontSize: '1.2rem', fontWeight: '800', margin: 0, marginTop: '30px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                 Job Application
               </h2>
               <div
@@ -190,7 +190,7 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
               <div className="custom-scrollbar" style={{ padding: '30px 40px', overflowY: 'auto', flex: 1 }}>
                 <div className="job-modal-header" style={{ marginBottom: '25px', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>
                   <h3 style={{ fontSize: '1.8rem', fontWeight: '800', color: '#111', margin: 0 }}>Apply for {job?.jobRole}</h3>
-                  <p style={{ color: '#666', marginTop: '5px', fontSize: '14px' }}>Please fill in the details below to submit your application.</p>
+                  {/* <p style={{ color: '#666', marginTop: '5px', fontSize: '14px' }}>Please fill in the details below to submit your application.</p> */}
                 </div>
 
                 <div style={{ display: 'grid', gap: '15px' }}>
@@ -421,7 +421,7 @@ const Careers = () => {
                   <div className="header-accent-line"></div>
                   <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>OUR CULTURE</span>
                 </div>
-                <h2 className="header-main-title" style={{ fontSize: "2rem" }}>Work at the <span>Heart of Innovation</span></h2>
+                <h2 className="header-main-title" style={{ fontSize: "2rem" }}>Work at the Heart of Innovation</h2>
               </div>
               <div className="culture-text-content">
                 <p className="story-p-muted" style={{ fontSize: '16px', textAlign: 'justify', color: '#111' }}>
@@ -464,7 +464,7 @@ const Careers = () => {
               <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>OPPORTUNITIES</span>
               <div className="header-accent-line"></div>
             </div>
-            <h2 className="header-main-title" style={{ fontSize: "2rem" }}>Current <span>Openings</span></h2>
+            <h2 className="header-main-title" style={{ fontSize: "2rem" }}>Current Openings</h2>
           </div>
 
           <div className="openings-list-premium" style={{ marginTop: '60px' }}>

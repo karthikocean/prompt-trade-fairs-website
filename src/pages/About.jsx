@@ -87,7 +87,7 @@ const About = () => {
                     <div className="header-accent-line"></div>
                     <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>BUSINESS EXCELLENCE</span>
                   </div>
-                  <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111' }}>
+                  <h2 className="header-main-title company-title" style={{ fontWeight: '800', color: '#111' }}>
                     Prompt Trade Fairs India Pvt. Ltd
                   </h2>
                   <h4 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#555', marginTop: '10px', lineHeight: '1.4' }}>
@@ -257,7 +257,7 @@ const About = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                style={{ marginTop: '-80px' }}
+              // style={{ marginTop: '-80px' }}
               >
                 <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '20px', textAlign: 'justify', marginTop: 0 }}>
                   PROMPT has successfully organized exhibitions in major business cities including Chennai, Bengaluru, Hyderabad, Ahmedabad, Coimbatore, Salem, Vijayawada, Visakhapatnam, Warangal, Rajahmundry, and many other key locations across India.

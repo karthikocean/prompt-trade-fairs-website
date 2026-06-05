@@ -239,43 +239,120 @@ const EnquiryForm = ({
 
       <form noValidate onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, overflow: 'hidden', width: '100%', maxWidth: '100%' }}>
         <style>{`
-          .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 24px;
-            width: 100%;
-            margin: 0 auto;
-            max-width: 100%;
-            overflow-x: hidden;
-            box-sizing: border-box;
-          }
-          @media (max-width: 768px) {
-            .form-grid {
-              grid-template-columns: 1fr;
-              width: 100%;
-            }
-            .modal-content,
-            .enquiry-form-container,
-            .modern-enquiry-form {
-              width: 95% !important;
-            }
-          }
-          .modal-content,
-          .enquiry-form-container,
-          .modern-enquiry-form {
-            overflow-x: hidden;
-            width: 90%;
-            max-width: 760px;
-            margin: 0 auto;
-            box-sizing: border-box;
-          }
-          .form-group,
-          .form-group input,
-          .form-group textarea {
-            width: 100% !important;
-            min-width: 0 !important;
-            box-sizing: border-box !important;
-          }
+        .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.remarks-field {
+  grid-column: 1 / -1;
+}
+
+.form-actions-v3 {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 12px !important;
+  flex-wrap: nowrap !important;
+}
+
+.form-actions-v3 button {
+  flex: 1 !important;
+  height: 50px !important;
+  width: auto !important;
+}
+
+@media (max-width: 991px) {
+  .remarks-field {
+    grid-column: auto !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .form-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+  }
+
+  .form-group {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100% !important;
+    display: block !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .form-actions-v3 {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px !important;
+  }
+
+  .form-actions-v3 button {
+    flex: 1 !important;
+    width: auto !important;
+    height: 48px !important;
+    padding: 0 !important;
+  }
+}
+          
+@media (max-width: 768px) {
+ .modern-enquiry-form {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .scrollable-fields-container {
+    padding: 12px !important;
+  }
+
+  .form-header-screenshot {
+    padding: 10px 15px !important;
+  }
+
+  .form-header-screenshot h3 {
+    font-size: 0.85rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 85% !important;
+  }
+
+  .enquiry-tabs {
+    gap: 10px !important;
+    padding: 10px 15px !important;
+  }
+
+  .enquiry-tabs button {
+    padding: 8px !important;
+    font-size: 12px !important;
+  }
+
+  .scrollable-fields-container {
+    padding: 15px !important;
+  }
+
+  // .form-actions-v3 {
+  //   flex-direction: column !important;
+  // }
+
+  // .form-actions-v3 button {
+  //   width: 100% !important;
+  // }
+}
+
+@media (min-width: 769px) and (max-width: 991px) {
+  .modern-enquiry-form {
+    width: 85vw !important;
+  }
+}
         `}</style>
         <div className={`scrollable-fields-container ${customClass}`} style={{
           padding: hideHeader ? '0' : '25px',
@@ -324,7 +401,7 @@ const EnquiryForm = ({
                   <input style={{ ...inputStyle, borderColor: errors.city ? '#ED1C24' : '#e2e8f0' }} type="text" name="city" value={formData.city} onChange={handleChange} placeholder="Enter City" />
                   {errors.city && <span style={errorTextStyle}>{errors.city}</span>}
                 </div>
-                <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+                <div className="form-group remarks-field">
                   <label style={labelStyle}>Remarks</label>
                   <textarea
                     style={{ ...textareaStyle, borderColor: errors.remark ? '#ED1C24' : '#e2e8f0' }}
@@ -373,16 +450,16 @@ const EnquiryForm = ({
 
         </div>
 
-        <div className="form-actions-v3" style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: '18px',
-          padding: '15px 25px',
-          background: '#f8fafc',
-          borderTop: '1px solid #eee',
-          flexShrink: 0,
-          flexWrap: 'wrap'
-        }}>
+        <div
+          className="form-actions-v3"
+          style={{
+            display: "flex",
+            gap: "12px",
+            padding: "15px",
+            background: "#f8fafc",
+            borderTop: "1px solid #eee"
+          }}
+        >
           <button type="button" onClick={onClose} className="modal-btn-cancel" style={cancelBtnStyle}>Cancel</button>
           <button type="submit" disabled={isSubmitting} className="modal-btn-submit" style={saveBtnStyle}>
             {isSubmitting ? "Submitting..." : "Send Message"}
@@ -396,8 +473,39 @@ const EnquiryForm = ({
 const labelStyle = { fontSize: '0.85rem', fontWeight: '700', color: '#4b5563', marginBottom: '6px', display: 'block' };
 const inputStyle = { width: '100%', padding: '12px 16px', border: '1px solid #e2e8f0', borderRadius: '10px', fontSize: '0.9rem', boxSizing: 'border-box', background: '#f8fafc', transition: '0.3s' };
 const textareaStyle = { width: '100%', padding: '12px 16px', border: '1px solid #e2e8f0', borderRadius: '10px', fontSize: '0.9rem', minHeight: '100px', boxSizing: 'border-box', background: '#f8fafc', transition: '0.3s' };
-const cancelBtnStyle = { padding: '12px 24px', background: '#6c757d', color: '#fff', border: 'none', borderRadius: '10px', fontSize: '0.95rem', fontWeight: '600', cursor: 'pointer' };
-const saveBtnStyle = { padding: '12px 24px', background: '#ed1c24', color: '#fff', border: 'none', borderRadius: '10px', fontSize: '0.95rem', fontWeight: '800', cursor: 'pointer', transition: '0.3s' };
+const cancelBtnStyle = {
+  flex: 1,
+  height: '50px',
+  background: '#6c757d',
+  color: '#fff',
+  border: 'none',
+  borderRadius: '10px',
+  fontSize: '0.95rem',
+  fontWeight: '600',
+  cursor: 'pointer',
+
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  lineHeight: '1'
+};
+
+const saveBtnStyle = {
+  flex: 1,
+  height: '50px',
+  background: '#ed1c24',
+  color: '#fff',
+  border: 'none',
+  borderRadius: '10px',
+  fontSize: '0.95rem',
+  fontWeight: '800',
+  cursor: 'pointer',
+
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  lineHeight: '1'
+};
 const errorTextStyle = { color: '#ED1C24', fontSize: '0.7rem', marginTop: '4px', display: 'block', fontWeight: '600' };
 
 export default EnquiryForm;

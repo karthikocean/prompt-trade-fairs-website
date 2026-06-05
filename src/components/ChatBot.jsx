@@ -35,7 +35,15 @@ const ChatBot = () => {
   };
 
   return (
-    <div className="chatbot-wrapper" style={{ position: 'fixed', bottom: '30px', right: '30px', zIndex: 10001 }}>
+    <div
+      className="chatbot-wrapper"
+      style={{
+        position: 'fixed',
+        bottom: window.innerWidth <= 768 ? '90px' : '30px',
+        right: window.innerWidth <= 768 ? '15px' : '30px',
+        zIndex: 10001
+      }}
+    >
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -125,14 +133,14 @@ const ChatBot = () => {
 
       <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {!isOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            style={{ 
-              position: 'absolute', 
-              top: '-55px', 
-              width: '140px', 
-              height: '70px', 
+            style={{
+              position: 'absolute',
+              top: '-55px',
+              width: '140px',
+              height: '70px',
               pointerEvents: 'none',
               zIndex: -1
             }}
@@ -145,7 +153,7 @@ const ChatBot = () => {
                 </textPath>
               </text>
             </svg>
-            <motion.div 
+            <motion.div
               animate={{ rotate: [0, 20, 0, 20, 0] }}
               transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
               style={{ position: 'absolute', bottom: '10px', left: '5px', fontSize: '28px' }}

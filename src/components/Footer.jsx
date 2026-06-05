@@ -35,7 +35,7 @@ const Footer = () => {
         </div>
 
         {/* QUICK LINKS */}
-        <div className="footer-col">
+        <div className="footer-col quick-links">
           <h3>Quick Links</h3>
           <ul>
             <li><Link to="/"><i className="fas fa-chevron-right"></i>Home</Link></li>
@@ -47,7 +47,7 @@ const Footer = () => {
         </div>
 
         {/* COMPANY */}
-        <div className="footer-col">
+        <div className="footer-col company-links">
           <h3>Company</h3>
           <ul>
             <li><Link to="/upcoming-exhibitions"><i className="fas fa-chevron-right"></i>Present Exhibitions</Link></li>
