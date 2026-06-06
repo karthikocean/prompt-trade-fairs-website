@@ -100,7 +100,10 @@ const EnquiryForm = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) return;
+    if (!validateForm()) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
 
     setIsSubmitting(true);
     try {
@@ -404,12 +407,16 @@ const EnquiryForm = ({
                 <div className="form-group remarks-field">
                   <label style={labelStyle}>Remarks</label>
                   <textarea
-                    style={{ ...textareaStyle, borderColor: errors.remark ? '#ED1C24' : '#e2e8f0' }}
+                    rows={1}
+                    style={{
+                      ...textareaStyle,
+                      borderColor: errors.remark ? '#ED1C24' : '#e2e8f0'
+                    }}
                     name="remark"
                     value={formData.remark}
                     onChange={handleChange}
                     placeholder="Enter Remarks"
-                  ></textarea>
+                  />
                 </div>
               </>
             ) : (
@@ -444,6 +451,7 @@ const EnquiryForm = ({
                   {errors.city && <span style={errorTextStyle}>{errors.city}</span>}
                 </div>
               </>
+
             )}
 
           </div>
@@ -471,8 +479,32 @@ const EnquiryForm = ({
 };
 
 const labelStyle = { fontSize: '0.85rem', fontWeight: '700', color: '#4b5563', marginBottom: '6px', display: 'block' };
-const inputStyle = { width: '100%', padding: '12px 16px', border: '1px solid #e2e8f0', borderRadius: '10px', fontSize: '0.9rem', boxSizing: 'border-box', background: '#f8fafc', transition: '0.3s' };
-const textareaStyle = { width: '100%', padding: '12px 16px', border: '1px solid #e2e8f0', borderRadius: '10px', fontSize: '0.9rem', minHeight: '100px', boxSizing: 'border-box', background: '#f8fafc', transition: '0.3s' };
+const inputStyle = {
+  width: '100%',
+  height: '56px',
+  padding: '12px 16px',
+  border: '1px solid #e2e8f0',
+  borderRadius: '10px',
+  fontSize: '0.9rem',
+  boxSizing: 'border-box',
+  background: '#f8fafc',
+  transition: '0.3s'
+};
+
+const textareaStyle = {
+  width: '100%',
+  height: '56px !important',      // input same height
+  padding: '12px 16px',
+  border: '1px solid #e2e8f0',
+  borderRadius: '10px',
+  fontSize: '0.9rem',
+  boxSizing: 'border-box',
+  background: '#f8fafc',
+  transition: '0.3s',
+  resize: 'none'
+};
+
+
 const cancelBtnStyle = {
   flex: 1,
   height: '50px',

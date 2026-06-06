@@ -28,7 +28,7 @@ const NextExpoSection = () => {
   const [expos, setExpos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedExpo, setSelectedExpo] = useState(null);
-
+  const [imageLoaded, setImageLoaded] = useState(false);
   useEffect(() => {
     const fetchExpos = async () => {
       try {
@@ -56,6 +56,10 @@ const NextExpoSection = () => {
   }, [expos.length]);
 
   const currentExpo = expos[currentIndex];
+  // Reset loader when switching to a new expo image
+  React.useEffect(() => {
+    setImageLoaded(false);
+  }, [currentIndex]);
 
   const nextExpo = () => setCurrentIndex((prev) => prev === expos.length - 1 ? 0 : prev + 1);
   const prevExpo = () => setCurrentIndex((prev) => prev === 0 ? expos.length - 1 : prev - 1);
@@ -116,6 +120,12 @@ const NextExpoSection = () => {
         <div className="next-expo-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '50px', alignItems: 'center' }}>
           {/* LEFT: GALLERY CAROUSEL */}
           <div className="next-expo-gallery">
+            {/* Loader shown while the expo image is loading */}
+            {!imageLoaded && (
+              <div className="image-loader">
+                <div className="loader"></div>
+              </div>
+            )}
             <div
               className="gallery-main-wrapper"
               style={{
@@ -134,6 +144,7 @@ const NextExpoSection = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
+                onLoad={() => setImageLoaded(true)}
               />
             </div>
           </div>
@@ -408,7 +419,6 @@ const NextExpoSection = () => {
       max-width: 100% !important;
       font-size: 15px !important;
       line-height: 1.7 !important;
-      text-align: center !important;
     }
     .gallery-main-wrapper {
       height: 100% !important;

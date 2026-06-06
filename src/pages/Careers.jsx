@@ -33,9 +33,7 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
     } else if (formData.mobileNo.length !== 10) {
       newErrors.mobileNo = "Mobile number must be 10 digits";
     }
-    if (!formData.email) {
-      newErrors.email = "Email Address is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Email Address is invalid";
     }
     if (!formData.qualification.trim()) newErrors.qualification = "Qualification is required";
@@ -68,7 +66,7 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
     e.preventDefault();
 
     if (!validateForm()) {
-      toast.error("Please fix the errors in the form.", {
+      toast.error("Please fill in all required fields.", {
         style: {
           border: '1px solid #ED1C24',
           padding: '16px',
@@ -172,7 +170,7 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
             }}
           >
             {/* COMPACT RED HEADER */}
-            <div style={{ background: '#ED1C24', padding: '15px 25px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className="modal-header">
               <h2 style={{ color: '#fff', fontSize: '1.2rem', fontWeight: '800', margin: 0, marginTop: '30px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                 Job Application
               </h2>
@@ -259,7 +257,7 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
                       {errors.mobileNo && <span style={{ color: '#ED1C24', fontSize: '11px', fontWeight: '600', marginTop: '4px', display: 'block' }}>{errors.mobileNo}</span>}
                     </div>
                     <div className="form-group-v3">
-                      <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Email <span style={{ color: '#ED1C24' }}>*</span></label>
+                      <label style={{ display: 'block', fontWeight: '700', color: '#111', marginBottom: '8px', fontSize: '14px' }}>Email</label>
                       <input
                         type="email"
                         placeholder="Email address"
@@ -316,7 +314,7 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
                       style={{ width: '100%', padding: '10px 18px', borderRadius: '12px', border: '1px solid #ddd', outline: 'none', background: '#f9f9f9', fontSize: '14px' }}
                       onChange={(e) => setFormData({ ...formData, resume: e.target.files[0] })}
                     />
-                    <p style={{ fontSize: '11px', color: '#666', marginTop: '5px' }}>Supported formats: PDF, DOC, DOCX (Max 5MB)</p>
+                    <p style={{ fontSize: '11px', color: '#666', marginTop: '5px', marginBottom: '0px' }}>Supported formats: PDF, DOC, DOCX (Max 5MB)</p>
                   </div>
                 </div>
               </div>
@@ -467,7 +465,7 @@ const Careers = () => {
             <h2 className="header-main-title" style={{ fontSize: "2rem" }}>Current Openings</h2>
           </div>
 
-          <div className="openings-list-premium" style={{ marginTop: '60px' }}>
+          <div className="openings-list-premium" style={{ marginTop: '20px' }}>
             {loading ? (
               <div style={{ textAlign: 'center', padding: '40px' }}>
                 <div className="loader" style={{ border: '4px solid #f3f3f3', borderTop: '4px solid #ED1C24', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite', margin: '0 auto' }}></div>

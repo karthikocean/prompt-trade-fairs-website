@@ -67,7 +67,6 @@ const Hero = () => {
       {/* SLIDER */}
       <AnimatePresence mode="sync" initial={false}>
         <motion.div
-          key={currentIndex}
           className="hero-slide"
           style={{ backgroundImage: `url(${slides[currentIndex].img})` }}
           initial={{ opacity: 0.8 }}

@@ -330,44 +330,120 @@ const UpcomingExhibitions = () => {
       </AnimatePresence>
 
       <style jsx>{`
-        @media (min-width: 769px) {
-          .expo-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
-          .media-modal-overlay,
-          .media-modal-overlay.dark {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: auto;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-          }
-          .modal-premium-card,
-          .register-modal-form {
-            max-height: 90vh;
-            overflow-y: auto;
-            width: 90%;
-            max-width: 800px;
-            box-sizing: border-box;
-            background: #fff;
-            border-radius: 12px;
-            padding: 20px;
-          }
-        }
-        @media (max-width: 991px) and (min-width: 769px) {
-          .expo-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
-        }
-        @media (max-width: 768px) {
-          .expo-grid {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
+  @media (min-width: 769px) {
+    .expo-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+  @media (max-width: 991px) and (min-width: 769px) {
+    .expo-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+  @media (max-width: 768px) {
+    .expo-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+
+  /* Tablet modal enhancements */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .media-modal-overlay {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-premium-card {
+      width: 90%;
+      max-width: 800px;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      border-radius: 16px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .modal-image-wrapper {
+      height: auto;
+      max-height: 400px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-image-wrapper img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+    .modal-details-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 10px 0;
+    }
+    .modal-details-col .detail-item-lite {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      justify-content: center;
+    }
+    .modal-details-col .detail-icon i {
+      font-size: 1.2rem;
+      color: var(--primary-color);
+    }
+    .modal-details-col .detail-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .modal-details-col .detail-label {
+      font-weight: 600;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .modal-details-col .detail-value {
+      font-weight: 700;
+      color: var(--text-color);
+      margin: 0;
+    }
+    .modal-stats-container {
+      grid-column: 1 / -1;
+      padding-top: 20px;
+      border-top: 1px solid var(--glass-border);
+    }
+    .modal-stats-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .stat-unit {
+      text-align: center;
+    }
+    .modal-actions-v3 {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: stretch;
+      margin-top: 20px;
+    }
+    .modal-actions-v3 a,
+    .modal-actions-v3 button {
+      width: 100%;
+      justify-content: center;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: var(--transition-speed);
+    }
+  }
+`}</style>
 
     </main>
   );

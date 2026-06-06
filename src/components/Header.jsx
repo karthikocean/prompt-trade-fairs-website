@@ -101,7 +101,8 @@ const Header = () => {
             }}
           >
             <div className="dropdown-toggle">
-              Our Groups <i className="fas fa-chevron-down"></i>
+              <span>Our Groups</span>
+              <i className="fas fa-chevron-down"></i>
             </div>
             <div className={`dropdown-menu ${activeDropdown === 'groups' ? "show" : ""}`}>
               <a href="https://promptpublications.com/" target="_blank" rel="noopener noreferrer" onClick={() => { setActiveDropdown(null); setIsMenuOpen(false); }}>
