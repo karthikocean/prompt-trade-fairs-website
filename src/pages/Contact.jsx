@@ -477,7 +477,7 @@ const Contact = () => {
             <h2 className="header-main-title">Our Head Office</h2>
           </div>
 
-          <div className="v3-initiatives-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '30px' }}>
+          <div className="v3-initiatives-grid">
             {[
               {
                 title: "Corporate Office",

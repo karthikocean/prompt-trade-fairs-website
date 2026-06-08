@@ -67,9 +67,6 @@ const ToExhibit = () => {
             className="v3-initiatives-grid"
             style={{
               marginTop: '30px',
-              display: 'grid',
-              gridTemplateColumns:
-                'repeat(auto-fit, minmax(300px, 1fr))',
               gap: '15px'
             }}
           >
