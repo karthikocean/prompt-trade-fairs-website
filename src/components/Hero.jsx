@@ -34,6 +34,13 @@ const Hero = () => {
   }, []);
 
   useEffect(() => {
+    slides.forEach((slide) => {
+      const img = new Image();
+      img.src = slide.img;
+    });
+  }, [slides]);
+
+  useEffect(() => {
     if (slides.length === 0) return;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % slides.length);
@@ -58,15 +65,14 @@ const Hero = () => {
   return (
     <section className="hero">
       {/* SLIDER */}
-      <AnimatePresence initial={false}>
+      <AnimatePresence mode="sync" initial={false}>
         <motion.div
-          key={currentIndex}
           className="hero-slide"
           style={{ backgroundImage: `url(${slides[currentIndex].img})` }}
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 0.8 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
+          exit={{ opacity: 0.8 }}
+          transition={{ duration: 0.2, ease: "linear" }}
         >
           <div className="overlay"></div>
 
@@ -90,8 +96,9 @@ const Hero = () => {
               {slides[currentIndex].desc}
             </motion.p>
 
-            <Link to={slides[currentIndex].link}>
+            <Link to="/upcoming-exhibitions">
               <motion.button
+                className="hero-btn"
                 key={`btn-${currentIndex}`}
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -105,7 +112,7 @@ const Hero = () => {
       </AnimatePresence>
 
       {/* DOTS */}
-      <div className="slider-dots">
+      {/* <div className="slider-dots">
         {slides.map((_, index) => (
           <button
             key={index}
@@ -113,9 +120,27 @@ const Hero = () => {
             onClick={() => setCurrentIndex(index)}
           ></button>
         ))}
-      </div>
+      </div> */}
 
       <style>{`
+
+      .hero-btn {
+  background: #ED1C24;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hero-btn:hover {
+  background: #c9171e;
+  transform: translateY(-2px);
+}
+  
         .hero--loading {
           min-height: 100svh;
           display: flex;
@@ -142,59 +167,77 @@ const Hero = () => {
 
         @media (max-width: 768px) {
           .hero {
-            width: 100%;
-            overflow: hidden;
-            position: relative;
-          }
-          .hero-slide {
-            width: 100%;
-            min-height: 100svh;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 20px;
-            box-sizing: border-box;
-          }
-          .hero-content {
-            width: 100%;
-            max-width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding-top: 120px;
-            padding-bottom: 100px;
-            position: relative;
-            z-index: 2;
-          }
-          .hero-content h1 {
-            font-size: clamp(42px, 8vw, 56px);
-            line-height: 1.1;
-            margin-bottom: 16px;
-          }
-          .hero-content p {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 24px;
-          }
-          .hero-content button {
-            margin-bottom: 0;
-          }
-          .slider-dots {
-            position: absolute;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            z-index: 10;
-          }
+    height: 100svh !important;
+    min-height: 100svh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+  }
+
+  .hero-slide {
+    position: relative;
+    width: 100%;
+    height: 100svh !important;
+    min-height: 100svh !important;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 20px !important;
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  .hero-content {
+    width: 100%;
+    max-width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center !important;
+
+    padding: 0 !important;
+    margin: 0 auto !important;
+
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-content h1 {
+    font-size: 32px !important;
+    line-height: 1.2;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  .hero-content p {
+    font-size: 15px !important;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .hero-content button {
+    margin: 0 auto;
+  }
+
+  /* Hide dots completely */
+  .slider-dots,
+  .hero-dots {
+    display: none !important;
+  }
+
+  /* Hide arrows if present */
+  .hero-arrows {
+    display: none !important;
+  }
+
         }
       `}</style>
     </section>

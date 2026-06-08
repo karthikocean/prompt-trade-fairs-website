@@ -26,6 +26,7 @@ const Contact = () => {
 
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,13 +49,25 @@ const Contact = () => {
     }
 
     setFormData(prev => ({ ...prev, [name]: value }));
+    setErrors(prev => ({ ...prev, [name]: false }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim()) {
-      toast.error("Please fill in all required fields (Name, Email, and Phone).");
+    if (!formData.name.trim() || !formData.phone.trim()) {
+      // Set errors for empty fields
+      setErrors({
+        name: !formData.name.trim(),
+        phone: !formData.phone.trim(),
+      });
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+
+    if (formData.phone.length !== 10) {
+      setErrors(prev => ({ ...prev, phone: true }));
+      toast.error("Phone number must be exactly 10 digits.");
       return;
     }
 
@@ -163,7 +176,6 @@ const Contact = () => {
               <div
                 className="map-container"
                 style={{
-                  width: "100%",
                   height: "100%",
                   flex: 1,
                   borderRadius: "16px",
@@ -171,6 +183,7 @@ const Contact = () => {
                   marginTop: "20px",
                   boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
                   display: "flex",
+                  // Removed fixed height, added flex:1 for equal height
                 }}
               >
                 <a
@@ -206,18 +219,20 @@ const Contact = () => {
               className="contact-form-card"
               style={{
                 background: "#fff",
-                padding: "25px",
+                padding: "20px",
                 borderRadius: "30px",
                 border: "1px solid #eee",
-                height: "100%",
+                // height: "550px",
+                flex: 1,
                 display: "flex",
                 flexDirection: "column",
+                // Removed fixed height, added flex:1 for equal height
               }}
             >
               <div
                 className="form-header"
                 style={{
-                  marginBottom: "20px",
+                  marginBottom: "10px",
                   textAlign: "center",
                 }}
               >
@@ -248,7 +263,7 @@ const Contact = () => {
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  gap: "20px",
+                  gap: "12px",
                   flexGrow: 1,
                   textAlign: "left",
                 }}
@@ -288,9 +303,9 @@ const Contact = () => {
                       onChange={handleChange}
                       style={{
                         width: "100%",
-                        height: "56px",
+                        height: "48px",
                         paddingLeft: "45px",
-                        border: "1px solid #ddd",
+                        border: errors.name ? "1px solid #ED1C24" : "1px solid #ddd",
                         borderRadius: "8px",
                         fontSize: "16px",
                       }}
@@ -309,7 +324,7 @@ const Contact = () => {
                       textAlign: "left",
                     }}
                   >
-                    Email *
+                    Email
                   </label>
 
                   <div style={{ position: "relative" }}>
@@ -333,7 +348,7 @@ const Contact = () => {
                       onChange={handleChange}
                       style={{
                         width: "100%",
-                        height: "56px",
+                        height: "48px",
                         paddingLeft: "45px",
                         border: "1px solid #ddd",
                         borderRadius: "8px",
@@ -378,9 +393,9 @@ const Contact = () => {
                       onChange={handleChange}
                       style={{
                         width: "100%",
-                        height: "56px",
+                        height: "48px",
                         paddingLeft: "45px",
-                        border: "1px solid #ddd",
+                        border: errors.phone ? "1px solid #ED1C24" : "1px solid #ddd",
                         borderRadius: "8px",
                         fontSize: "16px",
                       }}
@@ -388,48 +403,45 @@ const Contact = () => {
                   </div>
                 </div>
 
-                {/* Message */}
-                <div className="form-group">
-                  <label
+                <label style={{
+  marginBottom: "8px",
+  fontWeight: "600",
+  color: "#111",
+  display: "block",
+  textAlign: "left",
+}}>Message</label>
+<div style={{ position: "relative" }}>
+                  <i
+                    className="fas fa-comment"
                     style={{
-                      marginBottom: "8px",
-                      fontWeight: "600",
-                      color: "#111",
-                      display: "block",
-                      textAlign: "left",
+                      position: "absolute",
+                      left: "15px",
+                      top: "20px",
+                      color: "#ED1C24",
+                      fontSize: "16px",
+                      lineHeight: "1",
+                      pointerEvents: "none",
+                      zIndex: 1,
                     }}
-                  >
-                    Message
-                  </label>
+                  />
 
-                  <div style={{ position: "relative" }}>
-                    <i
-                      className="fas fa-comment"
-                      style={{
-                        position: "absolute",
-                        left: "15px",
-                        top: "18px",
-                        color: "#ED1C24",
-                        zIndex: 1,
-                      }}
-                    />
-
-                    <textarea
-                      name="message"
-                      placeholder="Your Message"
-                      rows="6"
-                      value={formData.message}
-                      onChange={handleChange}
-                      style={{
-                        width: "100%",
-                        padding: "15px 15px 15px 45px",
-                        border: "1px solid #ddd",
-                        borderRadius: "8px",
-                        fontSize: "16px",
-                        resize: "vertical",
-                      }}
-                    />
-                  </div>
+                  <textarea
+                    name="message"
+                    placeholder="Your Message"
+                    rows="4"
+                    value={formData.message}
+                    onChange={handleChange}
+                    style={{
+                      width: "100%",
+                      padding: "15px 15px 15px 45px",
+                      border: "1px solid #ddd",
+                      borderRadius: "8px",
+                      fontSize: "16px",
+                      lineHeight: "24px",
+                      resize: "vertical",
+                      boxSizing: "border-box",
+                    }}
+                  />
                 </div>
 
                 <button
@@ -462,7 +474,7 @@ const Contact = () => {
         <div className="container">
           <div className="premium-header-box centered" style={{ marginBottom: '60px' }}>
             <div className="header-accent-row"><div className="header-accent-line"></div><span className="header-accent-tag">MAIN HUB</span><div className="header-accent-line"></div></div>
-            <h2 className="header-main-title">Our <span>Head Office</span></h2>
+            <h2 className="header-main-title">Our Head Office</h2>
           </div>
 
           <div className="v3-initiatives-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '30px' }}>
@@ -486,7 +498,7 @@ const Contact = () => {
                 // label: "WRITE TO US"
               }
             ].map((item, idx) => (
-              <motion.div key={idx} className="v3-initiative-card" whileHover={{ y: -10 }} style={{ minHeight: '320px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', justifyContent: 'space-between' }}>
+              <motion.div key={idx} className="v3-initiative-card" whileHover={window.innerWidth > 991 ? { y: -10 } : {}} style={{ minHeight: '320px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', justifyContent: 'space-between' }}>
                 <div className="v3-card-border"></div>
                 <div className="v3-card-content">
                   <div className="card-top" style={{ display: 'flex', justifyContent: 'center' }}><div className="card-icon" style={{ color: '#ED1C24', fontSize: '1.8rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><i className={`fas ${item.icon}`}></i></div></div>

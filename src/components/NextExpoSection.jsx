@@ -27,7 +27,8 @@ const NextExpoSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [expos, setExpos] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [selectedExpo, setSelectedExpo] = useState(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
   useEffect(() => {
     const fetchExpos = async () => {
       try {
@@ -55,6 +56,10 @@ const NextExpoSection = () => {
   }, [expos.length]);
 
   const currentExpo = expos[currentIndex];
+  // Reset loader when switching to a new expo image
+  React.useEffect(() => {
+    setImageLoaded(false);
+  }, [currentIndex]);
 
   const nextExpo = () => setCurrentIndex((prev) => prev === expos.length - 1 ? 0 : prev + 1);
   const prevExpo = () => setCurrentIndex((prev) => prev === 0 ? expos.length - 1 : prev - 1);
@@ -115,19 +120,32 @@ const NextExpoSection = () => {
         <div className="next-expo-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '50px', alignItems: 'center' }}>
           {/* LEFT: GALLERY CAROUSEL */}
           <div className="next-expo-gallery">
-            <div className="gallery-main-wrapper" style={{ position: 'relative', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentIndex}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.5 }}
-                  style={{ height: '480px' }}
-                >
-                  <img src={getImageUrl(currentExpo.expoImage)} alt={currentExpo.expoName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                </motion.div>
-              </AnimatePresence>
+            {/* Loader shown while the expo image is loading */}
+            {!imageLoaded && (
+              <div className="image-loader">
+                <div className="loader"></div>
+              </div>
+            )}
+            <div
+              className="gallery-main-wrapper"
+              style={{
+                position: "relative",
+                borderRadius: "24px",
+                overflow: "hidden",
+                boxShadow:
+                  "0 15px 35px rgba(0,0,0,0.12), 0 30px 70px rgba(0,0,0,0.18)",
+              }}
+            >
+              <motion.img
+                key={currentIndex}
+                src={getImageUrl(currentExpo.expoImage)}
+                alt={currentExpo.expoName}
+                style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center' }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                onLoad={() => setImageLoaded(true)}
+              />
             </div>
           </div>
 
@@ -179,7 +197,7 @@ const NextExpoSection = () => {
                     <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
                       <i className="fas fa-chart-pie" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
                     </div>
-                    <div style={{ display: 'flex', gap: '25px', flexWrap: 'wrap' }}>
+                    <div className="stats-row-mobile" style={{ display: 'flex', gap: '25px', flexWrap: 'wrap' }}>
                       <div>
                         <label style={{ display: 'block', fontSize: '0.75rem', textTransform: 'uppercase', fontWeight: '800', color: '#999', marginBottom: '3px' }}>Available</label>
                         <p style={{ margin: 0, fontSize: '1.1rem', fontWeight: '800', color: '#2ecc71' }}>{currentExpo.stats.stallAvailable}</p>
@@ -221,7 +239,10 @@ const NextExpoSection = () => {
                   <i className="fas fa-download"></i> Brochure
                 </a>
                 <button
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={() => {
+                    setSelectedExpo(currentExpo);
+                    setIsModalOpen(true);
+                  }}
                   className="register-btn-main"
                 >
                   Register Now <i className="fas fa-arrow-right"></i>
@@ -267,8 +288,11 @@ const NextExpoSection = () => {
               {/* REMOVED EXTRA CLOSE BUTTON AND WHITE BACKGROUND AREA */}
               <EnquiryForm
                 isExpoRegistration={true}
-                expoInfo={currentExpo}
-                onClose={() => setIsModalOpen(false)}
+                expoInfo={selectedExpo}
+                onClose={() => {
+                  setIsModalOpen(false);
+                  setSelectedExpo(null);
+                }}
               />
             </motion.div>
           </motion.div>
@@ -320,6 +344,20 @@ const NextExpoSection = () => {
   }
 
   @media (max-width: 768px) {
+
+  .stats-row-mobile {
+    width: 100%;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    gap: 10px !important;
+  }
+
+  .stats-row-mobile > div {
+    flex: 1;
+    text-align: center;
+  }
     .next-expo-section {
       padding: 50px 20px !important;
     }
@@ -328,18 +366,52 @@ const NextExpoSection = () => {
       line-height: 1.2 !important;
       text-align: center !important;
     }
-    .header-accent-tag,
+    
     .header-accent-row {
-      text-align: center !important;
-      width: 100% !important;
-      max-width: 320px !important;
-      margin: 0 auto !important;
+      gap: 4px !important;
     }
+
+    .header-accent-line {
+      width: 35px !important;
+      flex-shrink: 0;
+    }
+
+  .header-accent-tag {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
     .present-expo-actions {
-      flex-direction: column !important;
-      align-items: center !important;
-      gap: 12px !important;
-    }
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+
+  // .layout-btn,
+  // .brochure-btn {
+  //   flex: 1 1 calc(50% - 5px) !important;
+  //   width: calc(50% - 5px) !important;
+  // }
+
+  .present-expo-actions {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  .present-expo-actions .expo-action-link,
+  .present-expo-actions .register-btn-main {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+
+    height: 64px !important;
+    box-sizing: border-box !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
     .details-grid-v2 {
       gap: 15px !important;
     }
@@ -347,7 +419,6 @@ const NextExpoSection = () => {
       max-width: 100% !important;
       font-size: 15px !important;
       line-height: 1.7 !important;
-      text-align: center !important;
     }
     .gallery-main-wrapper {
       height: 100% !important;

@@ -47,7 +47,7 @@ const Testimonial = () => {
             <div className="header-accent-line"></div>
           </div>
           <h2 className="header-main-title">
-            Trusted Client <span>Voices</span>
+            Trusted Client Voices
           </h2>
         </div>
 

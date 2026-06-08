@@ -7,6 +7,17 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 991);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 991);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -23,7 +34,11 @@ const Header = () => {
         <div className="nav-logo">
           <Link to="/">
             <img
-              src={isScrolled ? "/promt orignal.png" : "/prompt-logo-NEW.png"}
+              src={
+                isScrolled || window.innerWidth <= 991
+                  ? "/logooooooooooo.png"
+                  : "/prompt-logo-NEW.png"
+              }
               alt="Prompt Logo"
             />
           </Link>
@@ -86,7 +101,8 @@ const Header = () => {
             }}
           >
             <div className="dropdown-toggle">
-              Our Groups <i className="fas fa-chevron-down"></i>
+              <span>Our Groups</span>
+              <i className="fas fa-chevron-down"></i>
             </div>
             <div className={`dropdown-menu ${activeDropdown === 'groups' ? "show" : ""}`}>
               <a href="https://promptpublications.com/" target="_blank" rel="noopener noreferrer" onClick={() => { setActiveDropdown(null); setIsMenuOpen(false); }}>
