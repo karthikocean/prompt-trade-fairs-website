@@ -806,13 +806,19 @@ ul {
 
 /* Mobile/Tablet Dropdown Item Alignment Fix */
 @media (max-width: 991px) {
+  .dropdown-menu {
+    align-items: center !important;
+  }
+
   .dropdown-menu a {
-    padding-left: 16px !important;
+    width: 200px !important;
     text-align: left !important;
+    padding-left: 0 !important;
+    display: block !important;
   }
 
   .dropdown-menu a:hover {
-    padding-left: 16px !important;
+    padding-left: 10px !important;
   }
 }
 
@@ -4526,13 +4532,16 @@ section:not(.hero) {
 }
 
 .v3-initiatives-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 30px;
   margin-top: 60px;
 }
 
 .v3-initiative-card {
+  width: calc(33.333% - 20px);
+  min-width: 300px;
   padding: 55px 45px;
   background: #ffffff;
   border-radius: 20px;
@@ -4862,7 +4871,6 @@ section:not(.hero) {
     justify-content: center !important;
   }
 
-  .v3-initiatives-grid,
   .v3-stats-wrapper,
   .media-cta-content {
     grid-template-columns: 1fr;
@@ -5889,6 +5897,7 @@ section:not(.hero) {
     display: none !important;
     padding: 10px 0 !important;
     border-radius: 8px !important;
+    align-items: center !important;
   }
 
   .dropdown-menu.show {
@@ -5897,10 +5906,12 @@ section:not(.hero) {
   }
 
   .dropdown-menu a {
+    width: 200px !important;
+    text-align: left !important;
     font-size: 1rem !important;
     font-weight: 600 !important;
     border-bottom: none !important;
-    padding: 10px !important;
+    padding: 10px 0 !important;
   }
 
   /* Hero Mobile Fixes */
@@ -7479,5 +7490,25 @@ select:focus {
     justify-content: center;
     background: rgba(255, 255, 255, 0.6);
     z-index: 2;
+  }
+}
+
+/* Centering the last card in v3 initiatives grid on tablet (768px to 1024px) */
+@media (max-width: 1024px) {
+  .v3-initiatives-grid {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 30px !important;
+  }
+
+  .v3-initiative-card {
+    width: calc(50% - 15px) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .v3-initiative-card {
+    width: 100% !important;
   }
 }
