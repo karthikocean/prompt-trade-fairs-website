@@ -48,15 +48,15 @@ const Hero = () => {
     return () => clearInterval(timer);
   }, [slides.length, currentIndex]);
 
-  if (loading) {
-    return (
-      <section className="hero hero--loading">
-        <div className="hero-loader">
-          <div className="hero-loader__spinner"></div>
-        </div>
-      </section>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <section className="hero hero--loading">
+  //       <div className="hero-loader">
+  //         <div className="hero-loader__spinner"></div>
+  //       </div>
+  //     </section>
+  //   );
+  // }
 
   if (slides.length === 0) {
     return null;

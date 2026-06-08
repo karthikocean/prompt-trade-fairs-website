@@ -21,7 +21,8 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
   const [formData, setFormData] = useState(initialFormState);
   const [errors, setErrors] = useState({});
 
-  if (!isOpen) return null;
+
+
 
   const validateForm = () => {
     let newErrors = {};
@@ -62,6 +63,14 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
     }
   };
 
+  // Reset form errors and data when modal is closed
+  useEffect(() => {
+    if (!isOpen) {
+      setErrors({});
+      setFormData(initialFormState);
+    }
+  }, [isOpen]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -80,7 +89,7 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
       });
       return;
     }
-
+    
     setLoading(true);
     try {
       let resumePath = '';
@@ -124,6 +133,8 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
     }
   };
 
+
+if (!isOpen) return null;
   return (
     <AnimatePresence>
       {isOpen && (
@@ -319,7 +330,7 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
                 </div>
               </div>
 
-              <div style={{ padding: '20px 40px', background: '#fff', borderTop: '1px solid #eee', display: 'flex', gap: '15px' }}>
+              <div className="submit-application-btn" style={{ padding: '20px 40px', background: '#fff', borderTop: '1px solid #eee', display: 'flex', gap: '15px' }}>
                 <button
                   type="submit"
                   disabled={loading}

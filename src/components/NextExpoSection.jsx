@@ -64,15 +64,15 @@ const NextExpoSection = () => {
   const nextExpo = () => setCurrentIndex((prev) => prev === expos.length - 1 ? 0 : prev + 1);
   const prevExpo = () => setCurrentIndex((prev) => prev === 0 ? expos.length - 1 : prev - 1);
 
-  if (loading) {
-    return (
-      <div style={{ padding: '100px 0', textAlign: 'center' }}>
-        <div className="loader" style={{ border: '4px solid #f3f3f3', borderTop: '4px solid #ED1C24', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite', margin: '0 auto' }}></div>
-        <p style={{ marginTop: '20px', color: '#666' }}>Loading exhibitions...</p>
-        <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div style={{ padding: '100px 0', textAlign: 'center' }}>
+  //       <div className="loader" style={{ border: '4px solid #f3f3f3', borderTop: '4px solid #ED1C24', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite', margin: '0 auto' }}></div>
+  //       <p style={{ marginTop: '20px', color: '#666' }}>Loading exhibitions...</p>
+  //       <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+  //     </div>
+  //   );
+  // }
 
   if (expos.length === 0) {
     return null; // Or show a placeholder
@@ -358,6 +358,32 @@ const NextExpoSection = () => {
     flex: 1;
     text-align: center;
   }
+
+/* Align stats cards equally on mobile/tablet */
+@media (max-width: 991px) {
+  .stats-row-mobile {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    align-items: start;
+    justify-items: center;
+  }
+  .stats-row-mobile > div {
+    text-align: left !important;
+  }
+    
+}
+
+@media (max-width: 768px) {
+  .stats-row-mobile {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    align-items: start;
+    justify-items: center;
+  }
+}
+
     .next-expo-section {
       padding: 50px 20px !important;
     }

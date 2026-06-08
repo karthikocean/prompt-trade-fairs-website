@@ -46,15 +46,15 @@ const Events = () => {
 
   const showLoadMore = expos.length > visibleCount;
 
-  if (loading) {
-    return (
-      <div style={{ padding: '200px 0', textAlign: 'center' }}>
-        <div className="loader" style={{ border: '4px solid #f3f3f3', borderTop: '4px solid #ED1C24', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite', margin: '0 auto' }}></div>
-        <p style={{ marginTop: '20px', color: '#666' }}>Loading event highlights...</p>
-        <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div style={{ padding: '200px 0', textAlign: 'center' }}>
+  //       <div className="loader" style={{ border: '4px solid #f3f3f3', borderTop: '4px solid #ED1C24', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite', margin: '0 auto' }}></div>
+  //       <p style={{ marginTop: '20px', color: '#666' }}>Loading event highlights...</p>
+  //       <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+  //     </div>
+  //   );
+  // }
 
   return (
     <main className="events-v3-main">
