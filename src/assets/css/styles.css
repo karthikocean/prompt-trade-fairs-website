@@ -1896,6 +1896,10 @@ ul {
   font-family: var(--font-body);
 }
 
+.stats-row-mobile label {
+  color: rgb(10, 25, 47) !important;
+}
+
 /* HOVER EFFECT */
 .modern-testimonial-card:hover {
   transform: translateY(-15px) scale(1.02);
@@ -2181,6 +2185,42 @@ section:not(.hero) {
     left: 10%;
   }
 
+  .mobile-app-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0px !important;
+    text-align: center !important;
+  }
+
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .footer-col ul li a {
+    font-size: 16px !important;
+    line-height: 1.7 !important;
+
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .job-info-center p {
+    font-size: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  .footer-bottom p {
+    color: #bfc9d9;
+    font-size: 12px !important;
+  }
+
   section:not(.hero) {
     padding: 25px 0px 0px 0px !important;
     /* ONLY PADDING FOR NON-HERO SECTIONS */
@@ -2214,6 +2254,25 @@ section:not(.hero) {
     margin: 0 auto;
   }
 
+  /* Brand */
+  .footer-col.brand {
+    width: 40% !important;
+    max-width: 100% !important;
+  }
+
+  .socials {
+    justify-content: center !important;
+    margin-bottom: 30px !important;
+    position: relative !important;
+    /* left: 70% !important; */
+  }
+
+  .footer-logo {
+    /* margin: 0 auto 20px !important; */
+    display: block !important;
+    width: 80px !important;
+  }
+
   .footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 20px 0;
@@ -2224,8 +2283,11 @@ section:not(.hero) {
   }
 
   .present-expo-btn button {
+    margin-top: 20px !important;
     margin-bottom: 20px !important;
   }
+
+
 
   .v3-initiatives-grid {
     padding: 0px 20px !important;
@@ -2246,6 +2308,42 @@ section:not(.hero) {
     margin: 10px 15px !important;
   }
 
+  .about-v3-intro-btn {
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .milestones-row {
+    justify-content: center !important;
+    gap: 180px !important;
+  }
+
+  .coverage-grid {
+    margin-top: 45px !important;
+    margin-bottom: 45px !important;
+  }
+
+  .v3-initiatives-grid {
+    margin-top: 45px !important;
+    margin-bottom: 45px !important;
+  }
+
+  .modal-stats-container {
+    padding: 6px !important;
+  }
+
+  .stat-label p {
+    font-size: 12px !important;
+  }
+
+  .stat-value {
+    font-size: 1rem !important;
+  }
+
+  .present-expo-btn {
+    margin-top: 0px !important;
+  }
+
 }
 
 @media (min-width: 320px) and (max-width: 500px) {
@@ -2258,7 +2356,35 @@ section:not(.hero) {
     text-align: left !important;
     max-width: 100% !important;
     position: relative;
-    left: 5%;
+  }
+
+  .detail-label {
+    color: rgb(10, 25, 47) !important;
+  }
+
+  .stat-label {
+    color: rgb(10, 25, 47) !important;
+  }
+
+  .coverage-card-v3 {
+    margin-bottom: 20px !important;
+  }
+
+  .coverage-grid {
+    margin-top: 0px !important;
+    gap: 0px !important;
+  }
+
+  .app-description {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .job-info-center p {
+    font-size: 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: -1px !important;
   }
 
   .about-v3-intro-btn button {
@@ -2266,8 +2392,18 @@ section:not(.hero) {
     margin-bottom: 20px !important;
   }
 
+  .present-expo-btn {
+    margin-top: 0px !important;
+  }
+
   .present-expo-btn button {
     margin-bottom: 20px !important;
+    margin-top: 20px !important;
+    width: 180px !important;
+    height: 42px !important;
+    padding: 0 !important;
+    font-size: 12px !important;
+    border-radius: 25px !important;
   }
 
 
@@ -2310,6 +2446,123 @@ section:not(.hero) {
 
   .v3-initiatives-grid {
     padding: 0px 12px !important;
+  }
+
+  .stats-container {
+    margin-top: 10px !important;
+  }
+
+  .modal-stats-container {
+    padding: 6px !important;
+  }
+
+  .stat-label p {
+    font-size: 12px !important;
+  }
+
+  .stat-value {
+    font-size: 1rem !important;
+  }
+
+  .v3-card-content {
+    margin: 10px 15px !important;
+  }
+
+  .milestones-row {
+    display: flex !important;
+    gap: 45px !important;
+  }
+
+  .v3-initiatives-grid {
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    padding-left: 0px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 0px !important;
+  }
+
+  .footer-logo {
+    width: 140px;
+    margin-left: 105px;
+    margin-bottom: 20px;
+    align-items: center !important;
+  }
+
+  .expo-card {
+    height: auto !important;
+    min-height: unset !important;
+    flex-grow: 1 !important;
+  }
+
+  .expo-card img {
+    height: 140px !important;
+    margin-bottom: 0 !important;
+  }
+
+  .expo-card>div:last-child {
+    padding: 12px 0px 0px 35px !important;
+    margin-top: 0 !important;
+  }
+
+  .expo-card h3 {
+    margin-top: 0 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .expo-card {
+    max-width: 300px !important;
+    margin: 0 auto 15px !important;
+    height: auto !important;
+  }
+
+  /* Image wrapper */
+  .expo-card>div:first-child {
+    height: 140px !important;
+    overflow: hidden !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Image */
+  .expo-card>div:first-child img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+
+  /* Content wrapper */
+  .expo-card>div:last-child {
+    padding: 12px 0px 0px 35px !important;
+    flex-grow: 0 !important;
+  }
+
+  /* Title */
+  .expo-card h3 {
+    font-size: 1rem !important;
+    margin-bottom: 10px !important;
+  }
+
+  /*content */
+  .expo-content-mobile {
+    font-size: 12px !important;
+  }
+
+  .date-mobile-icon {
+    display: flex !important;
+    gap: 0px !important;
+    flex-direction: column;
+    align-items: flex-start !important;
+    margin-bottom: 6px !important;
+  }
+
+  .location-icon {
+    position: relative;
+    top: 9px !important;
   }
 
 }
@@ -2516,11 +2769,6 @@ section:not(.hero) {
     padding: 0 15px !important;
   }
 
-  /* Brand */
-  .footer-col.brand {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
 
   .quick-links {
     flex: 0.85 !important;
@@ -2541,14 +2789,6 @@ section:not(.hero) {
     font-size: 18px !important;
   }
 
-  .footer-col ul li a {
-    font-size: 13px !important;
-    line-height: 1.7 !important;
-
-    white-space: normal !important;
-    word-break: break-word !important;
-    overflow-wrap: break-word !important;
-  }
 
 }
 
@@ -3529,7 +3769,7 @@ section:not(.hero) {
 @media (max-width: 1100px) {
   .mobile-app-grid {
     grid-template-columns: 1fr;
-    gap: 60px;
+    gap: 0px;
     text-align: center;
   }
 
@@ -5867,6 +6107,10 @@ section:not(.hero) {
   .stat-item p {
     font-size: 0.75rem !important;
     margin-bottom: 5px !important;
+    max-width: 110px;
+    margin: 0 auto;
+    line-height: 1.3;
+    white-space: normal;
   }
 
   .stat-item::after {
@@ -5896,15 +6140,7 @@ section:not(.hero) {
     justify-content: center !important;
   }
 
-  .socials {
-    justify-content: center !important;
-    margin-bottom: 30px !important;
-  }
 
-  .footer-logo {
-    margin: 0 auto 20px !important;
-    display: block !important;
-  }
 
   /* 8. Modern Gallery Grid Mobile Force */
   .modern-gallery-grid {
@@ -6327,13 +6563,6 @@ section:not(.hero) {
     /* Reset to let inner padding take over */
   }
 
-  /* 14. Mobile App Fixes */
-  .mobile-app-grid {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 30px !important;
-    text-align: center !important;
-  }
 
   .app-content-left {
     display: contents !important;
@@ -6583,7 +6812,7 @@ select:focus {
 
   .milestones-row {
     justify-content: center !important;
-    gap: 20px !important;
+    gap: 20px;
     margin-top: 30px !important;
   }
 
@@ -6613,12 +6842,6 @@ select:focus {
     max-width: 100% !important;
   }
 
-  .job-info-center p {
-    font-size: 12px !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-  }
 
   .job-info-right {
     width: 100% !important;
@@ -6783,7 +7006,7 @@ select:focus {
 
   .milestones-row {
     justify-content: center !important;
-    gap: 20px !important;
+    gap: 20px;
     margin-top: 30px !important;
   }
 
@@ -6811,13 +7034,6 @@ select:focus {
     width: 100% !important;
     text-align: left !important;
     max-width: 100% !important;
-  }
-
-  .job-info-center p {
-    font-size: 12px !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 6px !important;
   }
 
   .job-info-right {

@@ -55,46 +55,47 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.name.trim() || !formData.phone.trim()) {
-      // Set errors for empty fields
-      setErrors({
-        name: !formData.name.trim(),
-        phone: !formData.phone.trim(),
-      });
-      toast.error("Please fill in all required fields.");
-      return;
+    let newErrors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
     }
 
-    if (formData.phone.length !== 10) {
-      setErrors(prev => ({ ...prev, phone: true }));
-      toast.error("Phone number must be exactly 10 digits.");
-      return;
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone Number is required";
+    } else if (formData.phone.length !== 10) {
+      newErrors.phone = "Phone Number must be 10 digits";
     }
 
-    if (formData.phone.length !== 10) {
-      toast.error("Phone number must be exactly 10 digits.");
+    if (formData.email.trim() && !/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast.error("Please fix the highlighted fields.");
       return;
     }
 
     setIsSubmitting(true);
-    const payload = {
-      name: formData.name,
-      phone: formData.phone,
-      email: formData.email,
-      message: formData.message.trim() || "No message provided."
-    };
+
     try {
-      await createContactEnquiry(payload);
+      await createContactEnquiry({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        message: formData.message.trim() || "No message provided."
+      });
+
       toast.success("Message sent successfully!");
       setFormData({ name: "", email: "", phone: "", message: "" });
+      setErrors({});
     } catch (err) {
-      console.error(err);
       toast.error(err.response?.data?.message || "Failed to send message.");
     } finally {
       setIsSubmitting(false);
     }
   };
-
 
   return (
     <main className="contact-v3-main">
@@ -270,17 +271,7 @@ const Contact = () => {
               >
                 {/* Name */}
                 <div className="form-group">
-                  <label
-                    style={{
-                      marginBottom: "8px",
-                      fontWeight: "600",
-                      color: "#111",
-                      display: "block",
-                      textAlign: "left",
-                    }}
-                  >
-                    Name *
-                  </label>
+                  <label>Name *</label>
 
                   <div style={{ position: "relative" }}>
                     <i
@@ -291,7 +282,7 @@ const Contact = () => {
                         top: "50%",
                         transform: "translateY(-50%)",
                         color: "#ED1C24",
-                        zIndex: 1,
+                        zIndex: 1
                       }}
                     />
 
@@ -305,12 +296,26 @@ const Contact = () => {
                         width: "100%",
                         height: "48px",
                         paddingLeft: "45px",
-                        border: errors.name ? "1px solid #ED1C24" : "1px solid #ddd",
-                        borderRadius: "8px",
-                        fontSize: "16px",
+                        border: errors.name
+                          ? "1px solid #ED1C24"
+                          : "1px solid #ddd",
+                        borderRadius: "8px"
                       }}
                     />
                   </div>
+
+                  {errors.name && (
+                    <span
+                      style={{
+                        color: "#ED1C24",
+                        fontSize: "12px",
+                        marginTop: "5px",
+                        display: "block"
+                      }}
+                    >
+                      {errors.name}
+                    </span>
+                  )}
                 </div>
 
                 {/* Email */}
@@ -401,16 +406,28 @@ const Contact = () => {
                       }}
                     />
                   </div>
+                  {errors.phone && (
+                    <span
+                      style={{
+                        color: "#ED1C24",
+                        fontSize: "12px",
+                        marginTop: "5px",
+                        display: "block"
+                      }}
+                    >
+                      {errors.phone}
+                    </span>
+                  )}
                 </div>
 
                 <label style={{
-  marginBottom: "8px",
-  fontWeight: "600",
-  color: "#111",
-  display: "block",
-  textAlign: "left",
-}}>Message</label>
-<div style={{ position: "relative" }}>
+                  marginBottom: "8px",
+                  fontWeight: "600",
+                  color: "#111",
+                  display: "block",
+                  textAlign: "left",
+                }}>Message</label>
+                <div style={{ position: "relative" }}>
                   <i
                     className="fas fa-comment"
                     style={{
