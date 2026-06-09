@@ -2246,6 +2246,38 @@ section:not(.hero) {
     margin: 10px 15px !important;
   }
 
+  .about-v3-intro-btn {
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .milestones-row {
+    justify-content: center !important;
+    gap: 180px !important;
+  }
+
+  .coverage-grid {
+    margin-top: 45px !important;
+    margin-bottom: 45px !important;
+  }
+
+  .v3-initiatives-grid {
+    margin-top: 45px !important;
+    margin-bottom: 45px !important;
+  }
+
+  .modal-stats-container {
+    padding: 6px !important;
+  }
+
+  .stat-label p {
+    font-size: 12px !important;
+  }
+
+  .stat-value {
+    font-size: 1rem !important;
+  }
+
 }
 
 @media (min-width: 320px) and (max-width: 500px) {
@@ -2310,6 +2342,36 @@ section:not(.hero) {
 
   .v3-initiatives-grid {
     padding: 0px 12px !important;
+  }
+
+  .stats-container {
+    margin-top: 10px !important;
+  }
+
+  .modal-stats-container {
+    padding: 6px !important;
+  }
+
+  .stat-label p {
+    font-size: 12px !important;
+  }
+
+  .stat-value {
+    font-size: 1rem !important;
+  }
+
+  .v3-card-content {
+    margin: 10px 15px !important;
+  }
+
+  .milestones-row {
+    display: flex !important;
+    gap: 45px !important;
+  }
+
+  .v3-initiatives-grid {
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
   }
 
 }
@@ -5867,6 +5929,10 @@ section:not(.hero) {
   .stat-item p {
     font-size: 0.75rem !important;
     margin-bottom: 5px !important;
+    max-width: 110px;
+    margin: 0 auto;
+    line-height: 1.3;
+    white-space: normal;
   }
 
   .stat-item::after {
