@@ -175,7 +175,7 @@ const About = () => {
             ))}
           </div>
 
-          <div style={{ textAlign: 'center', marginTop: '40px' }}>
+          <div className="about-v3-intro-btn" style={{ textAlign: 'center', marginTop: '40px' }}>
             <button
               onClick={() => setShowAll(!showAll)}
               style={{

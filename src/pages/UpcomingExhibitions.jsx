@@ -58,26 +58,26 @@ const UpcomingExhibitions = () => {
     textDecoration: 'none'
   };
 
-  if (loading) {
-    return (
-      <div style={{ padding: '200px 0', textAlign: 'center' }}>
-        <div
-          className="loader"
-          style={{
-            border: '4px solid #f3f3f3',
-            borderTop: '4px solid #ED1C24',
-            borderRadius: '50%',
-            width: '40px',
-            height: '40px',
-            animation: 'spin 1s linear infinite',
-            margin: '0 auto'
-          }}
-        ></div>
-        <p style={{ marginTop: '20px', color: '#666' }}>Loading exhibitions...</p>
-        <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div style={{ padding: '200px 0', textAlign: 'center' }}>
+  //       <div
+  //         className="loader"
+  //         style={{
+  //           border: '4px solid #f3f3f3',
+  //           borderTop: '4px solid #ED1C24',
+  //           borderRadius: '50%',
+  //           width: '40px',
+  //           height: '40px',
+  //           animation: 'spin 1s linear infinite',
+  //           margin: '0 auto'
+  //         }}
+  //       ></div>
+  //       <p style={{ marginTop: '20px', color: '#666' }}>Loading exhibitions...</p>
+  //       <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+  //     </div>
+  //   );
+  // }
 
   return (
     <main className="upcoming-v3-main">
@@ -157,7 +157,7 @@ const UpcomingExhibitions = () => {
                           <i className="fas fa-clock" style={{ color: '#ED1C24' }}></i> {expo.startTime} - {expo.endTime}
                         </span>
                       </div>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ gap: '8px' }}>
                         <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24' }}></i> {expo.venue}
                       </span>
                     </div>
@@ -168,7 +168,7 @@ const UpcomingExhibitions = () => {
           )}
 
           {showLoadMore && (
-            <div style={{ textAlign: 'center', marginTop: '70px' }}>
+            <div className="present-expo-btn" style={{ textAlign: 'center', marginTop: '40px' }}>
               <button
                 onClick={handleLoadMore}
                 className="premium-load-btn"

@@ -125,7 +125,7 @@ const ToExhibit = () => {
 
       {/* 3. NEW: EXHIBITION COVERAGE & ADVANTAGES SECTION */}
       <section className="coverage-v3-section" style={{ background: '#f8f9fa', padding: '120px 0' }}>
-        <div className="container">
+        <div className="container" style={{ overflow: 'hidden' }}>
           <div className="premium-header-box centered">
             <div className="header-accent-row">
               <div className="header-accent-line"></div>

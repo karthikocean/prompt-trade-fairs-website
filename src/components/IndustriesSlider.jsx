@@ -79,15 +79,15 @@ const IndustriesSlider = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  if (loading) {
-    return (
-      <div style={{ padding: '100px 0', textAlign: 'center' }}>
-        <div className="loader" style={{ border: '4px solid #f3f3f3', borderTop: '4px solid #ED1C24', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite', margin: '0 auto' }}></div>
-        <p style={{ marginTop: '20px', color: '#666' }}>Loading exhibitions...</p>
-        <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div style={{ padding: '100px 0', textAlign: 'center' }}>
+  //       <div className="loader" style={{ border: '4px solid #f3f3f3', borderTop: '4px solid #ED1C24', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite', margin: '0 auto' }}></div>
+  //       <p style={{ marginTop: '20px', color: '#666' }}>Loading exhibitions...</p>
+  //       <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+  //     </div>
+  //   );
+  // }
 
   if (expos.length === 0) {
     return null;
@@ -111,7 +111,7 @@ const IndustriesSlider = () => {
           <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px', marginBottom: '15px' }}>
             <div className="header-accent-line" style={{ height: '1px', width: '30px', background: '#ED1C24' }}></div>
             <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>Upcoming Expo
-</span>
+            </span>
             <div className="header-accent-line" style={{ height: '1px', width: '30px', background: '#ED1C24' }}></div>
           </div>
           <h2 className="header-main-title" style={{ fontSize: '2.5rem', fontWeight: '800', color: '#1a1a1a' }}>
@@ -181,18 +181,18 @@ const IndustriesSlider = () => {
 
                   {/* ACTION BUTTONS (Task 8) */}
                   <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-                    <a 
-                      href={expo.layout || undefined} 
-                      target={expo.layout ? "_blank" : undefined} 
-                      rel="noopener noreferrer" 
+                    <a
+                      href={expo.layout || undefined}
+                      target={expo.layout ? "_blank" : undefined}
+                      rel="noopener noreferrer"
                       style={{ ...smallBtnStyle, ...(!expo.layout ? { pointerEvents: 'none', opacity: 0.5 } : {}) }}
                     >
                       <i className="fas fa-map"></i> Layout
                     </a>
-                    <a 
-                      href={expo.brochure || undefined} 
-                      target={expo.brochure ? "_blank" : undefined} 
-                      rel="noopener noreferrer" 
+                    <a
+                      href={expo.brochure || undefined}
+                      target={expo.brochure ? "_blank" : undefined}
+                      rel="noopener noreferrer"
                       style={{ ...smallBtnStyle, ...(!expo.brochure ? { pointerEvents: 'none', opacity: 0.5 } : {}) }}
                     >
                       <i className="fas fa-file-download"></i> Brochure
