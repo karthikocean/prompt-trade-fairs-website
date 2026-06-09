@@ -148,18 +148,18 @@ const UpcomingExhibitions = () => {
                     <h3 style={{ fontSize: '1.4rem', fontWeight: '800', color: '#111', lineHeight: '1.3', marginBottom: '15px' }}>
                       {expo.expoName}
                     </h3>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', color: 'rgb(17,17,17)', fontWeight: '700', fontSize: '18px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
+                    <div className='expo-content-mobile' style={{ display: 'flex', flexDirection: 'column', gap: '10px', color: 'rgb(17,17,17)', fontWeight: '700', fontSize: '18px' }}>
+                      <div className="date-mobile-icon" style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
                         <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <i className="far fa-calendar-alt" style={{ color: '#ED1C24' }}></i> {formatDate(expo.startDate)}
                         </span>
                         <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <i className="fas fa-clock" style={{ color: '#ED1C24' }}></i> {expo.startTime} - {expo.endTime}
                         </span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '8px', alignItems: 'flex-start' }}>
+                          <i className="fas fa-map-marker-alt location-icon" style={{ color: '#ED1C24', position: 'relative', top: '14px' }}></i> {expo.venue}
+                        </span>
                       </div>
-                      <span style={{ gap: '8px' }}>
-                        <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24' }}></i> {expo.venue}
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -232,21 +232,21 @@ const UpcomingExhibitions = () => {
                     <div className="detail-item-lite">
                       <div className="detail-icon"><i className="fas fa-map-marker-alt"></i></div>
                       <div className="detail-text">
-                        <p className="detail-label">Location</p>
+                        <p className="detail-label " style={{ color: "#111" }}>Location</p>
                         <p className="detail-value">{selectedExpo.venue}</p>
                       </div>
                     </div>
                     <div className="detail-item-lite">
                       <div className="detail-icon"><i className="fas fa-calendar-check"></i></div>
                       <div className="detail-text">
-                        <p className="detail-label">Duration</p>
+                        <p className="detail-label " style={{ color: "#111" }}>Duration</p>
                         <p className="detail-value">{formatDate(selectedExpo.startDate)} - {formatDate(selectedExpo.endDate)}</p>
                       </div>
                     </div>
                     <div className="detail-item-lite">
                       <div className="detail-icon"><i className="fas fa-clock"></i></div>
                       <div className="detail-text">
-                        <p className="detail-label">Timings</p>
+                        <p className="detail-label " style={{ color: "#111" }}>Timings</p>
                         <p className="detail-value">{selectedExpo.startTime} - {selectedExpo.endTime}</p>
                       </div>
                     </div>

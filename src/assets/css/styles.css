@@ -2283,8 +2283,11 @@ section:not(.hero) {
   }
 
   .present-expo-btn button {
+    margin-top: 20px !important;
     margin-bottom: 20px !important;
   }
+
+
 
   .v3-initiatives-grid {
     padding: 0px 20px !important;
@@ -2337,6 +2340,10 @@ section:not(.hero) {
     font-size: 1rem !important;
   }
 
+  .present-expo-btn {
+    margin-top: 0px !important;
+  }
+
 }
 
 @media (min-width: 320px) and (max-width: 500px) {
@@ -2349,7 +2356,6 @@ section:not(.hero) {
     text-align: left !important;
     max-width: 100% !important;
     position: relative;
-    left: 5%;
   }
 
   .detail-label {
@@ -2375,10 +2381,10 @@ section:not(.hero) {
   }
 
   .job-info-center p {
-    font-size: 12px !important;
+    font-size: 14px !important;
     display: flex !important;
     align-items: center !important;
-    gap: 6px !important;
+    gap: -1px !important;
   }
 
   .about-v3-intro-btn button {
@@ -2386,8 +2392,18 @@ section:not(.hero) {
     margin-bottom: 20px !important;
   }
 
+  .present-expo-btn {
+    margin-top: 0px !important;
+  }
+
   .present-expo-btn button {
     margin-bottom: 20px !important;
+    margin-top: 20px !important;
+    width: 180px !important;
+    height: 42px !important;
+    padding: 0 !important;
+    font-size: 12px !important;
+    border-radius: 25px !important;
   }
 
 
@@ -2475,6 +2491,78 @@ section:not(.hero) {
     margin-left: 105px;
     margin-bottom: 20px;
     align-items: center !important;
+  }
+
+  .expo-card {
+    height: auto !important;
+    min-height: unset !important;
+    flex-grow: 1 !important;
+  }
+
+  .expo-card img {
+    height: 140px !important;
+    margin-bottom: 0 !important;
+  }
+
+  .expo-card>div:last-child {
+    padding: 12px 0px 0px 35px !important;
+    margin-top: 0 !important;
+  }
+
+  .expo-card h3 {
+    margin-top: 0 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .expo-card {
+    max-width: 300px !important;
+    margin: 0 auto 15px !important;
+    height: auto !important;
+  }
+
+  /* Image wrapper */
+  .expo-card>div:first-child {
+    height: 140px !important;
+    overflow: hidden !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Image */
+  .expo-card>div:first-child img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+
+  /* Content wrapper */
+  .expo-card>div:last-child {
+    padding: 12px 0px 0px 35px !important;
+    flex-grow: 0 !important;
+  }
+
+  /* Title */
+  .expo-card h3 {
+    font-size: 1rem !important;
+    margin-bottom: 10px !important;
+  }
+
+  /*content */
+  .expo-content-mobile {
+    font-size: 12px !important;
+  }
+
+  .date-mobile-icon {
+    display: flex !important;
+    gap: 0px !important;
+    flex-direction: column;
+    align-items: flex-start !important;
+    margin-bottom: 6px !important;
+  }
+
+  .location-icon {
+    position: relative;
+    top: 9px !important;
   }
 
 }

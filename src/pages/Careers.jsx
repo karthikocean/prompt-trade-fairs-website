@@ -89,7 +89,7 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
       });
       return;
     }
-    
+
     setLoading(true);
     try {
       let resumePath = '';
@@ -134,7 +134,7 @@ const JobApplicationModal = ({ isOpen, onClose, job }) => {
   };
 
 
-if (!isOpen) return null;
+  if (!isOpen) return null;
   return (
     <AnimatePresence>
       {isOpen && (
@@ -514,27 +514,27 @@ const Careers = () => {
                   </div>
 
                   <div className="job-info-center" style={{ flex: '2', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px 30px' }}>
-                    <p style={{ margin: '0', color: '#444', fontSize: '14px', fontWeight: '600' }}>
+                    <p style={{ margin: '0', color: '#444', fontSize: '18px', fontWeight: '600' }}>
                       <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24', width: '20px' }}></i>
                       <span style={{ color: '#888', fontWeight: '500', marginRight: '5px' }}>Location:</span> {job.location}
                     </p>
-                    <p style={{ margin: '0', color: '#444', fontSize: '14px', fontWeight: '600' }}>
+                    <p style={{ margin: '0', color: '#444', fontSize: '18px', fontWeight: '600' }}>
                       <i className="fas fa-clock" style={{ color: '#ED1C24', width: '20px' }}></i>
                       <span style={{ color: '#888', fontWeight: '500', marginRight: '5px' }}>Type:</span> {job.employmentType}
                     </p>
-                    <p style={{ margin: '0', color: '#444', fontSize: '14px', fontWeight: '600' }}>
+                    <p style={{ margin: '0', color: '#444', fontSize: '18px', fontWeight: '600' }}>
                       <i className="fas fa-building" style={{ color: '#ED1C24', width: '20px' }}></i>
                       <span style={{ color: '#888', fontWeight: '500', marginRight: '5px' }}>Mode:</span> {job.workMode}
                     </p>
-                    <p style={{ margin: '0', color: '#444', fontSize: '14px', fontWeight: '600' }}>
+                    <p style={{ margin: '0', color: '#444', fontSize: '18px', fontWeight: '600' }}>
                       <i className="fas fa-history" style={{ color: '#ED1C24', width: '20px' }}></i>
                       <span style={{ color: '#888', fontWeight: '500', marginRight: '5px' }}>Exp:</span> {job.experience}
                     </p>
-                    <p style={{ margin: '0', color: '#444', fontSize: '14px', fontWeight: '600' }}>
+                    <p style={{ margin: '0', color: '#444', fontSize: '18px', fontWeight: '600' }}>
                       <i className="fas fa-wallet" style={{ color: '#ED1C24', width: '20px' }}></i>
                       <span style={{ color: '#888', fontWeight: '500', marginRight: '5px' }}>Salary:</span> ₹{job.salary}
                     </p>
-                    <p style={{ margin: '0', color: '#444', fontSize: '14px', fontWeight: '600' }}>
+                    <p style={{ margin: '0', color: '#444', fontSize: '18px', fontWeight: '600' }}>
                       <i className="fas fa-users" style={{ color: '#ED1C24', width: '20px' }}></i>
                       <span style={{ color: '#888', fontWeight: '500', marginRight: '5px' }}>Openings:</span> {job.openings}
                     </p>
