@@ -105,7 +105,7 @@ const Header = () => {
               <i className="fas fa-chevron-down"></i>
             </div>
             <div className={`dropdown-menu ${activeDropdown === 'groups' ? "show" : ""}`}>
-              <a href="https://promptpublications.com/" target="_blank" rel="noopener noreferrer" onClick={() => { setActiveDropdown(null); setIsMenuOpen(false); }}>
+              <a href="https://www.buildersline.in" target="_blank" rel="noopener noreferrer" onClick={() => { setActiveDropdown(null); setIsMenuOpen(false); }}>
                 Publication
               </a>
               <a href="https://promptdigimart.com/" target="_blank" rel="noopener noreferrer" onClick={() => { setActiveDropdown(null); setIsMenuOpen(false); }}>
@@ -114,7 +114,7 @@ const Header = () => {
               <a href="https://cnibusinessforum.com/" target="_blank" rel="noopener noreferrer" onClick={() => { setActiveDropdown(null); setIsMenuOpen(false); }}>
                 CNI Business Forum
               </a>
-              <a href="https://cnifoundation.org/" target="_blank" rel="noopener noreferrer" onClick={() => { setActiveDropdown(null); setIsMenuOpen(false); }}>
+              <a href="https://cnifoundation.in/" target="_blank" rel="noopener noreferrer" onClick={() => { setActiveDropdown(null); setIsMenuOpen(false); }}>
                 CNI Foundation
               </a>
             </div>
