@@ -102,7 +102,7 @@ const Contact = () => {
       {/* 1. PREMIUM HERO SECTION */}
       <section className="about-v3-hero" style={{ backgroundImage: "url('/contactusbanner.svg')" }}>
         <div className="v3-hero-overlay-dark"></div>
-        <div className="container v3-hero-container">
+        <div className="container v3-hero-container" style={{ overflow: "hidden" }}>
           <div className="v3-hero-content">
             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
               <div className="v3-breadcrumb"><Link to="/">Home</Link> <span>/</span> <span className="current">Contact Us</span></div>

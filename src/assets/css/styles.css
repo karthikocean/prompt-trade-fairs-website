@@ -4877,7 +4877,7 @@ section:not(.hero) {
 .v3-initiative-card {
   width: calc(33.333% - 20px);
   min-width: 300px;
-  padding: 55px 45px;
+  padding: 50px 25px;
   background: #ffffff;
   border-radius: 20px;
   position: relative;
@@ -4905,6 +4905,7 @@ section:not(.hero) {
   position: relative;
   z-index: 2;
   transition: all 0.5s ease-in-out;
+  width: 100%;
 }
 
 .v3-card-bottom-text {
@@ -4931,7 +4932,7 @@ section:not(.hero) {
 }
 
 .v3-initiative-card:hover .v3-card-border {
-  inset: 20px;
+  inset: 12px;
   opacity: 1;
   transform: scale(1);
   border-color: #fff;
@@ -5895,7 +5896,7 @@ section:not(.hero) {
   }
 
   .v3-initiative-card {
-    padding: 25px 20px !important;
+    padding: 25px 25px !important;
     /* Reduced card size */
   }
 
