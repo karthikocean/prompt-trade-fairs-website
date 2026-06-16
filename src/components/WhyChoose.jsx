@@ -11,7 +11,7 @@ const WhyChoose = () => {
             <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>OUR STRENGTH</span>
             <div className="header-accent-line"></div>
           </div>
-          <h2 className="header-main-title">Why Prompt</h2>
+          <h2 className="header-main-title">Why Prompt ?</h2>
         </div>
 
         <div className="why-choose-grid">
@@ -19,7 +19,7 @@ const WhyChoose = () => {
           <div className="why-choose-image-box">
             <div className="accent-frame red"></div>
             <div className="accent-frame blue"></div>
-            <img src="/team.png" alt="Prompt Trade Fairs Team" className="main-image shadow-premium" />
+            <img src="/Prompt Team.jpeg" alt="Prompt Trade Fairs Team" className="main-image shadow-premium" />
             <div className="experience-badge animate-bounce-slow">
               <span className="years">25+</span>
               <span className="text">Years of <br /> Excellence</span>
@@ -29,7 +29,7 @@ const WhyChoose = () => {
           {/* Right: Content */}
           <div className="why-choose-content">
             <p style={{ fontSize: '16px', textAlign: 'justify', color: '#111' }} className="main-desc">
-              Founded in 2002, Prompt Trade Fairs India Private Limited has emerged as one of the most reputed and outstanding Exhibition Organizers in India. Led by a team of professionals who have organized over 900+ Exhibitions for more than two decades.
+              Founded in 2000, Prompt Trade Fairs India Private Limited has emerged as one of the most reputed and outstanding Exhibition Organizers in India. Led by a team of professionals who have organized over 900+ Exhibitions for more than two decades.
             </p>
 
             <div className="feature-list">
@@ -49,7 +49,7 @@ const WhyChoose = () => {
                 </div>
                 <div className="feature-text">
                   <h3>Proven Expertise</h3>
-                  <p style={{ fontSize: '16px', textAlign: 'justify', color: '#111' }}>In reality, we have gained a record of more than 10,000 satisfied customers both from India as well as overseas, maintaining high standards of quality.</p>
+                  <p style={{ fontSize: '16px', textAlign: 'justify', color: '#111' }}>In reality, we have gained a record of more than 10,000 Satisfied Exhibitors both from India as well as overseas, maintaining high standards of quality.</p>
                 </div>
               </div>
 

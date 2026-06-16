@@ -56,7 +56,7 @@ const PreviousExhibitions = () => {
   return (
     <main className="previous-v3-main">
       {/* HERO SECTION */}
-      <section className="about-v3-hero" style={{ backgroundImage: "url('/expobanner.svg')" }}>
+      <section className="about-v3-hero" style={{ backgroundImage: "url('/aboutusbanner.png')" }}>
         <div className="v3-hero-overlay-dark"></div>
         <div className="container v3-hero-container">
           <div className="v3-hero-content">
@@ -79,7 +79,7 @@ const PreviousExhibitions = () => {
           {loading ? (
             <div style={{ padding: '100px 0', textAlign: 'center' }}>
               <div className="loader" style={{ border: '4px solid #f3f3f3', borderTop: '4px solid #ED1C24', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite', margin: '0 auto' }}></div>
-              <p style={{ marginTop: '20px', color: '#666' }}>Loading upcoming exhibitions...</p>
+              <p style={{ marginTop: '10px', color: '#666' }}>Loading upcoming exhibitions...</p>
               <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
             </div>
           ) : (

@@ -10,20 +10,32 @@ const StatsSection = () => {
     let visitor = 0;
 
     const interval = setInterval(() => {
-      if (expo < 1200) {
-        expo += 20;
+      let isExpoDone = false;
+      let isVisitorDone = false;
+
+      if (expo < 900000) {
+        if (expo < 890000) {
+          expo += 25000; // Counts up rapidly to 890K
+          if (expo > 890000) expo = 890000;
+        } else {
+          expo += 1000; // Increments slowly and smoothly by 1K from 890K to 900K
+        }
         setExpoCount(expo);
+      } else {
+        isExpoDone = true;
       }
 
       if (visitor < 50000) {
-        visitor += 500;
+        visitor += 1100; // Counts up to 50000 in alignment with expo steps
         setVisitorCount(visitor);
+      } else {
+        isVisitorDone = true;
       }
 
-      if (expo >= 1200 && visitor >= 50000) {
+      if (isExpoDone && isVisitorDone) {
         clearInterval(interval);
       }
-    }, 30);
+    }, 30); // 30ms interval for clear, visible transitions in the UI
 
     return () => clearInterval(interval);
   }, []);

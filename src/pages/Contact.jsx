@@ -100,7 +100,7 @@ const Contact = () => {
   return (
     <main className="contact-v3-main">
       {/* 1. PREMIUM HERO SECTION */}
-      <section className="about-v3-hero" style={{ backgroundImage: "url('/contactusbanner.svg')" }}>
+      <section className="about-v3-hero" style={{ backgroundImage: "url('/aboutusbanner.png')" }}>
         <div className="v3-hero-overlay-dark"></div>
         <div className="container v3-hero-container" style={{ overflow: "hidden" }}>
           <div className="v3-hero-content">
@@ -498,13 +498,13 @@ const Contact = () => {
             {[
               {
                 title: "Corporate Office",
-                desc: "Prompt Tower, Plot No: 324, Ram Nagar South 12th Extension, Off Radial Road, Near Kamakshi Hospital, Pallikaranai, Chennai - 600 100, India.",
+                desc: "Prompt Tower, Plot No : 324, Ram Nagar South Extn 12th Street, Off Radial Road, Pallikaranai, Chennai - 600 100.",
                 icon: "fa-map-marker-alt",
                 // label: "LOCATE US"
               },
               {
                 title: "Call Support",
-                desc: "+91 95436 68094\n+91 93913 91162\n+91 99410 08371",
+                desc: "+91 95436 68094\n+91 93913 91162\n+91 7845769348",
                 icon: "fa-phone-alt",
                 // label: "TALK TO US"
               },

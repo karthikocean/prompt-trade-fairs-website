@@ -59,7 +59,7 @@ const Events = () => {
   return (
     <main className="events-v3-main">
       {/* 1. HERO SECTION */}
-      <section className="about-v3-hero" style={{ backgroundImage: "url('/eventbanner.svg')" }}>
+      <section className="about-v3-hero" style={{ backgroundImage: "url('/aboutusbanner.png')" }}>
         <div className="v3-hero-overlay-dark"></div>
         <div className="container v3-hero-container">
           <div className="v3-hero-content">

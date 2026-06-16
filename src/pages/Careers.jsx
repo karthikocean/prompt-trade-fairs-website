@@ -402,7 +402,7 @@ const Careers = () => {
         job={selectedJob}
       />
       {/* 1. PREMIUM HERO SECTION (ABOUT US STYLE) */}
-      <section className="about-v3-hero" style={{ backgroundImage: "url('/contactusbanner.svg')" }}>
+      <section className="about-v3-hero" style={{ backgroundImage: "url('/aboutusbanner.png')" }}>
         <div className="v3-hero-overlay"></div>
         <div className="container v3-hero-container">
           <div className="v3-hero-content">

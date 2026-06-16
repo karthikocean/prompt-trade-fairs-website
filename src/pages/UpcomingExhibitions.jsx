@@ -83,7 +83,7 @@ const UpcomingExhibitions = () => {
     <main className="upcoming-v3-main">
 
       {/* HERO */}
-      <section className="about-v3-hero" style={{ backgroundImage: "url('/expobanner.svg')" }}>
+      <section className="about-v3-hero" style={{ backgroundImage: "url('/aboutusbanner.png')" }}>
         <div className="v3-hero-overlay-dark"></div>
         <div className="container v3-hero-container">
           <div className="v3-hero-content">
@@ -111,7 +111,7 @@ const UpcomingExhibitions = () => {
                 className="header-accent-tag"
                 style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}
               >
-                Present Exhibitions
+                Current Exhibitions
               </span>
               <div className="header-accent-line"></div>
             </div>
@@ -253,7 +253,7 @@ const UpcomingExhibitions = () => {
                   </div>
                 </div>
 
-                <div className="modal-stats-container">
+                {/* <div className="modal-stats-container">
                   <div className="modal-stats-row">
                     <div className="stat-unit">
                       <p className="stat-label">Available Stalls:</p>
@@ -265,7 +265,7 @@ const UpcomingExhibitions = () => {
                       <p className="stat-value booked">{selectedExpo.stats?.stallBooked || 0}</p>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="modal-actions-v3">
 
                   <a
