@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import EnquiryForm from '../components/EnquiryForm';
+import { motion } from 'framer-motion';
+import { Link, useNavigate } from 'react-router-dom';
 import { getPresentExpos } from '../api/common.api';
 import { getImageUrl } from '../config/apiClient';
 import toast from 'react-hot-toast';
+
+const slugify = (text) => {
+  if (!text) return "";
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-');
+};
 
 const formatDate = (dateString) => {
   if (!dateString) return "";
@@ -13,11 +23,10 @@ const formatDate = (dateString) => {
 };
 
 const UpcomingExhibitions = () => {
+  const navigate = useNavigate();
   const [expos, setExpos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedExpo, setSelectedExpo] = useState(null);
   const [visibleCount, setVisibleCount] = useState(4);
-  const [isEnquiryModalOpen, setIsEnquiryModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchExpos = async () => {
@@ -93,9 +102,9 @@ const UpcomingExhibitions = () => {
               transition={{ duration: 0.8 }}
             >
               <div className="v3-breadcrumb">
-                <Link to="/">Home</Link> <span>/</span> <span className="current">Present Exhibitions</span>
+                <Link to="/">Home</Link> <span>/</span> <span className="current">Current Exhibitions</span>
               </div>
-              <h1 className="v3-hero-title">Present <span>Exhibitions</span></h1>
+              <h1 className="v3-hero-title">Current <span>Exhibitions</span></h1>
             </motion.div>
           </div>
         </div>
@@ -123,7 +132,7 @@ const UpcomingExhibitions = () => {
           {expos.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '60px', background: '#fff', borderRadius: '20px' }}>
               <i className="fas fa-briefcase" style={{ fontSize: '3rem', color: '#eee', marginBottom: '20px' }}></i>
-              <h3 style={{ fontWeight: '800', color: '#111' }}>No Present Expo Available.</h3>
+              <h3 style={{ fontWeight: '800', color: '#111' }}>No Current Expo Available.</h3>
             </div>
           ) : (
             <div
@@ -134,7 +143,7 @@ const UpcomingExhibitions = () => {
                 <div
                   key={expo._id}
                   className="expo-card mb-4"
-                  onClick={() => setSelectedExpo(expo)}
+                  onClick={() => navigate(`/upcoming-exhibitions/${slugify(expo.expoName)}`)}
                   style={{ borderRadius: '12px', background: '#fff', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', cursor: 'pointer' }}
                 >
                   <div style={{ width: '100%', height: '380px', overflow: 'hidden' }}>
@@ -156,7 +165,7 @@ const UpcomingExhibitions = () => {
                         <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <i className="fas fa-clock" style={{ color: '#ED1C24' }}></i> {expo.startTime} - {expo.endTime}
                         </span>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '8px', alignItems: 'flex-start' }}>
+                        <span style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
                           <i className="fas fa-map-marker-alt location-icon" style={{ color: '#ED1C24', position: 'relative', top: '14px' }}></i> {expo.venue}
                         </span>
                       </div>
@@ -194,140 +203,7 @@ const UpcomingExhibitions = () => {
         </div>
       </section>
 
-      {/* EXPO DETAIL MODAL */}
-      <AnimatePresence>
-        {selectedExpo && (
-          <motion.div
-            className="media-modal-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedExpo(null)}
-          >
-            <motion.div
-              className="modal-premium-card"
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="modal-header-v3">
-                <h2 className="modal-title-v3">{selectedExpo.expoName}</h2>
-                <div className="modal-close-v3" onClick={() => setSelectedExpo(null)}>
-                  <i className="fas fa-times"></i>
-                </div>
-              </div>
 
-              <div className="modal-body-v3">
-                <div className="modal-main-grid">
-                  <div className="modal-image-wrapper" style={{ height: 'auto', borderRadius: '12px', overflow: 'hidden' }}>
-                    <img
-                      src={getImageUrl(selectedExpo.expoImage)}
-                      alt="Expo"
-                      style={{ width: '100%', height: 'auto', objectFit: 'contain', display: 'block' }}
-                    />
-                  </div>
-
-                  <div className="modal-details-col">
-                    <div className="detail-item-lite">
-                      <div className="detail-icon"><i className="fas fa-map-marker-alt"></i></div>
-                      <div className="detail-text">
-                        <p className="detail-label " style={{ color: "#111" }}>Location</p>
-                        <p className="detail-value">{selectedExpo.venue}</p>
-                      </div>
-                    </div>
-                    <div className="detail-item-lite">
-                      <div className="detail-icon"><i className="fas fa-calendar-check"></i></div>
-                      <div className="detail-text">
-                        <p className="detail-label " style={{ color: "#111" }}>Duration</p>
-                        <p className="detail-value">{formatDate(selectedExpo.startDate)} - {formatDate(selectedExpo.endDate)}</p>
-                      </div>
-                    </div>
-                    <div className="detail-item-lite">
-                      <div className="detail-icon"><i className="fas fa-clock"></i></div>
-                      <div className="detail-text">
-                        <p className="detail-label " style={{ color: "#111" }}>Timings</p>
-                        <p className="detail-value">{selectedExpo.startTime} - {selectedExpo.endTime}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* <div className="modal-stats-container">
-                  <div className="modal-stats-row">
-                    <div className="stat-unit">
-                      <p className="stat-label">Available Stalls:</p>
-                      <p className="stat-value available">{selectedExpo.stats?.stallAvailable || 0}</p>
-                    </div>
-                    <div className="stat-divider"></div>
-                    <div className="stat-unit">
-                      <p className="stat-label">Booked Stalls:</p>
-                      <p className="stat-value booked">{selectedExpo.stats?.stallBooked || 0}</p>
-                    </div>
-                  </div>
-                </div> */}
-                <div className="modal-actions-v3">
-
-                  <a
-                    href={selectedExpo.layoutImage ? getImageUrl(selectedExpo.layoutImage) : undefined}
-                    target={selectedExpo.layoutImage ? "_blank" : undefined}
-                    rel="noopener noreferrer"
-                    className="modal-btn-secondary"
-                    style={!selectedExpo.layoutImage ? { pointerEvents: 'none', opacity: 0.5 } : {}}
-                  >
-                    <i className="fas fa-download"></i> Layout
-                  </a>
-
-                  <a
-                    href={selectedExpo.brochure ? getImageUrl(selectedExpo.brochure) : undefined}
-                    target={selectedExpo.brochure ? "_blank" : undefined}
-                    rel="noopener noreferrer"
-                    className="modal-btn-secondary"
-                    style={!selectedExpo.brochure ? { pointerEvents: 'none', opacity: 0.5 } : {}}
-                  >
-                    <i className="fas fa-download"></i> Brochure
-                  </a>
-
-                  <button
-                    onClick={() => setIsEnquiryModalOpen(true)}
-                    className="modal-btn-primary"
-                  >
-                    Register Now
-                  </button>
-
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ENQUIRY MODAL */}
-      <AnimatePresence>
-        {isEnquiryModalOpen && (
-          <motion.div
-            className="media-modal-overlay dark"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsEnquiryModalOpen(false)}
-          >
-            <motion.div
-              className="register-modal-form"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <EnquiryForm
-                isExpoRegistration={true}
-                expoInfo={selectedExpo}
-                onClose={() => setIsEnquiryModalOpen(false)}
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <style jsx>{`
   @media (min-width: 769px) {
