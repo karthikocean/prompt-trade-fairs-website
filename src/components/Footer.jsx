@@ -50,8 +50,8 @@ const Footer = () => {
         <div className="footer-col company-links">
           <h3>Company</h3>
           <ul>
-            <li><Link to="/upcoming-exhibitions"><i className="fas fa-chevron-right"></i>Present Exhibitions</Link></li>
-            <li><Link to="/events"><i className="fas fa-chevron-right"></i>Events</Link></li>
+            <li><Link to="/upcoming-exhibitions"><i className="fas fa-chevron-right"></i>Current Exhibitions</Link></li>
+            {/* <li><Link to="/events"><i className="fas fa-chevron-right"></i>Events</Link></li> */}
             <li><Link to="/payment-terms"><i className="fas fa-chevron-right"></i>Payment Terms</Link></li>
             <li><Link to="/privacy-policy"><i className="fas fa-chevron-right"></i>Privacy Policy</Link></li>
             <li><Link to="/refund-policy"><i className="fas fa-chevron-right"></i>Refund Policy</Link></li>
@@ -64,9 +64,7 @@ const Footer = () => {
 
           <p>
             <i className="fas fa-map-marker-alt"></i>
-            Prompt Tower, Plot No: 324, Ram Nagar South 12th Extension,
-            Off Radial Road, Near Kamakshi Hospital,
-            Pallikaranai, Chennai - 600 100, India.
+            Prompt Tower, Plot No : 324, Ram Nagar South Extn 12th Street, Off Radial Road, Pallikaranai, Chennai - 600 100
           </p>
 
           <p>
@@ -77,7 +75,7 @@ const Footer = () => {
 
           <p>
             <i className="fas fa-mobile"></i>
-            +91 95436 68094, <br></br>+91 93913 91162, <br />+91 99410 08371
+            +91 95436 68094, <br></br>+91 93913 91162, <br />+91 7845769348
           </p>
         </div>
       </div>

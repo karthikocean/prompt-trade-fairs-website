@@ -52,7 +52,7 @@ const About = () => {
   return (
     <main className="about-v3-main">
       {/* 1. HERO SECTION */}
-      <section className="about-v3-hero" style={{ backgroundImage: "url('/aboutusbanner.svg')" }}>
+      <section className="about-v3-hero" style={{ backgroundImage: "url('/aboutusbanner.png')" }}>
         <div className="v3-hero-overlay-dark"></div>
         <div className="container v3-hero-container">
           <div className="v3-hero-content">
@@ -123,13 +123,13 @@ const About = () => {
                 style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.8' }}
               >
                 <p className="intro-p" style={{ marginBottom: '20px', textAlign: 'justify', fontSize: "16px" }}>
-                  Prompt Trade Fairs India Pvt. Ltd. is a leading Exhibition Organiser in India with over 25 years of excellence in organizing highly successful trade fairs, Business Expos, and Consumer Exhibitions across the country. Known for professionalism, innovation, and quality event management, PROMPT has become one of the most trusted names in the Indian exhibition industry.
+                  Prompt Trade Fairs India Pvt. Ltd. is a leading Exhibition Organiser in India with over 25 years of excellence in organizing highly successful Trade Fairs, Business Expos, and Consumer Exhibitions across the country. Known for professionalism, innovation and quality event management, PROMPT has become one of the most trusted names in the Indian exhibition industry.
                 </p>
                 <p className="intro-p" style={{ marginBottom: '20px', textAlign: 'justify', fontSize: "16px" }}>
-                  With a strong commitment to delivering business growth opportunities, PROMPT provides exhibitors with the ideal platform to showcase products, launch brands, connect with buyers, and generate valuable business leads. Managed by a dedicated team of industry specialists, every exhibition is strategically planned to meet the evolving needs of exhibitors and target audiences.
+                  With a strong commitment to delivering business growth opportunities, PROMPT provides exhibitors with the ideal platform to showcase products, launch brands, connect with buyers and generate valuable business leads. Managed by a dedicated team of industry specialists, every exhibition is strategically planned to meet the evolving needs of exhibitors and target audiences.
                 </p>
                 <p className="intro-p" style={{ marginBottom: '30px', textAlign: 'justify', fontSize: "16px" }}>
-                  PROMPT has successfully organized more than 900+ exhibitions across diverse industry sectors, making it one of the most sought-after trade fair companies in South India and rapidly expanding across the rest of India.
+                  PROMPT has successfully organized more than 900+ exhibitions across diverse industry sectors, making it one of the most sought-after trade fair companies in South India and rapidly expanding across rest of India.
                 </p>
               </motion.div>
             </div>
@@ -320,7 +320,7 @@ const About = () => {
                   Every PROMPT exhibition is conceptualized with detailed planning, innovative marketing strategies, and extensive promotions across digital media, print advertising, outdoor campaigns, and branding platforms. The company focuses on delivering seamless event execution and exceptional customer service, making every exhibition a valuable experience for exhibitors and visitors alike.
                 </p>
                 <p style={{ fontSize: '16px', lineHeight: '1.8', textAlign: 'justify' }}>
-                  As a complete exhibition solutions provider, PROMPT offers end-to-end support for trade fairs, expos, and business events, ensuring operational excellence at every stage. Its commitment to professionalism, quality, and business success has positioned PROMPT as one of the leading trade fair and exhibition organizers in India.
+                  As a complete exhibition solutions provider, PROMPT offers end-to-end support for Trade Fairs, Expos and Business Events, ensuring operational excellence at every stage. Its commitment to professionalism, quality, and business success has positioned PROMPT as one of the leading Trade air and exhibition organizers in India.
                 </p>
               </motion.div>
             </div>

@@ -33,32 +33,32 @@ const PaymentTerms = () => {
            <div className="legal-doc-wrap" style={{lineHeight: '1.8', color: '#444'}}>
              
 
-              <h2 style={{fontSize: '2rem', fontWeight: '800', color: '#111', marginBottom: '30px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>1. Payment Obligations</h2>
+              <h2 style={{fontSize: '1.8rem', fontWeight: '800', color: '#111', marginBottom: '10px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>1. Payment Obligations</h2>
               
-              <h3 style={{fontSize: '1.3rem', fontWeight: '700', color: '#ED1C24', marginTop: '30px'}}>1.1 Exhibitor Participation Charges</h3>
+              <h3 style={{fontSize: '1.3rem', fontWeight: '700', color: '#ED1C24', marginTop: '10px'}}>1.1 Exhibitor Participation Charges</h3>
               <p style={{marginBottom: '20px'}}>
                 By participating in exhibitions organized by Prompt Trade Fairs India Private Limited, exhibitors agree to pay all applicable participation and stall charges as specified in the official Exhibitor Agreement or Contract Form.
               </p>
 
-              <h3 style={{fontSize: '1.3rem', fontWeight: '700', color: '#ED1C24', marginTop: '30px'}}>1.2 Payment Schedule</h3>
-              <ul style={{paddingLeft: '20px', marginBottom: '30px'}}>
+              <h3 style={{fontSize: '1.3rem', fontWeight: '700', color: '#ED1C24', marginTop: '10px'}}>1.2 Payment Schedule</h3>
+              <ul style={{listStyleType: 'disc', paddingLeft: '20px', marginBottom: '30px'}}>
                 <li style={{marginBottom: '10px'}}>A minimum advance payment of 50% of the total stall charges must accompany the duly completed Contract Form at the time of booking confirmation.</li>
                 <li style={{marginBottom: '10px'}}>The remaining balance towards stall charges, along with charges for additional facilities such as furniture, spotlights, electrical fittings, branding, or any other requested services, must be paid in full prior to the commencement of the exhibition.</li>
                 <li style={{marginBottom: '10px'}}>Possession and allotment of exhibition stalls will be granted only upon receipt of full payment.</li>
                 <li style={{marginBottom: '10px'}}>All payments must be made through Demand Draft or Bank Transfer (IMPS, UPI, NEFT) in favour of <strong>Prompt Trade Fairs (India) Pvt. Ltd.</strong>, payable at Chennai.</li>
               </ul>
 
-              <h2 style={{fontSize: '2rem', fontWeight: '800', color: '#111', margin: '60px 0 30px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>2. Additional Charges</h2>
-              <h3 style={{fontSize: '1.3rem', fontWeight: '700', color: '#ED1C24', marginTop: '30px'}}>2.1 Additional Services and Facilities</h3>
+              <h2 style={{fontSize: '1.8rem', fontWeight: '800', color: '#111', margin: '10px 0 0px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>2. Additional Charges</h2>
+              <h3 style={{fontSize: '1.3rem', fontWeight: '700', color: '#ED1C24', marginTop: '10px'}}>2.1 Additional Services and Facilities</h3>
               <p style={{marginBottom: '20px'}}>
-                Any additional services or facilities requested by exhibitors beyond the standard stall package may attract supplementary charges.
+                Any additional services or facilities requested by exhibitors beyond the standard stall package may attract Additional charges.
               </p>
-              <ul style={{paddingLeft: '20px', marginBottom: '30px'}}>
+              <ul style={{listStyleType: 'disc', paddingLeft: '20px', marginBottom: '30px'}}>
                 <li style={{marginBottom: '10px'}}>Applicable charges will be communicated in advance.</li>
                 <li style={{marginBottom: '10px'}}>Services will be provided only upon confirmation and acceptance of the additional charges by the exhibitor.</li>
               </ul>
 
-              <h2 style={{fontSize: '2rem', fontWeight: '800', color: '#111', margin: '60px 0 30px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>3. Contact Information</h2>
+              <h2 style={{fontSize: '1.8rem', fontWeight: '800', color: '#111', margin: '10px 0 10px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>3. Contact Information</h2>
               <p style={{marginBottom: '20px'}}>
                 For any clarification or assistance regarding payment terms, please contact:
               </p>
@@ -72,11 +72,14 @@ const PaymentTerms = () => {
                    </div>
                    <div className="legal-contact-item">
                      <span className="label">Contact Number<span className="colon">:</span></span>
-                     <a href="tel:+919543668094" className="value">+91 95436 68094</a>
+                     <a href="tel:+919543668094" className="value">+91 95436 68094,</a>
+                     <a href="tel:+919391391162" className="value">+91 93913 91162,</a>
+                     <a href="tel:+917845769348" className="value">+91 78457 69348</a>
                    </div>
                    <div className="legal-contact-item">
                      <span className="label">Email<span className="colon">:</span></span>
-                     <a href="mailto:mktg@prompttradefairs.com" className="value">mktg@prompttradefairs.com</a>
+                     <a href="mailto:prompttradefairs@gmail.com" className="value">prompttradefairs@gmail.com,</a>
+                     <a href="mailto:project2@prompttradefairs.com" className="value">project2@prompttradefairs.com</a>
                    </div>
                  </div>
               </div>

@@ -55,7 +55,7 @@ const Header = () => {
           </NavLink>
 
           <NavLink to="/upcoming-exhibitions" onClick={() => setIsMenuOpen(false)}>
-            Present Expo
+            Current Expo
           </NavLink>
 
           {/* DROPDOWN - EXHIBITIONS */}
@@ -84,9 +84,9 @@ const Header = () => {
             </div>
           </div> */}
 
-          <NavLink to="/events" onClick={() => setIsMenuOpen(false)}>
+          {/* <NavLink to="/events" onClick={() => setIsMenuOpen(false)}>
             Events
-          </NavLink>
+          </NavLink> */}
 
           {/* DROPDOWN - OUR GROUPS */}
           <div

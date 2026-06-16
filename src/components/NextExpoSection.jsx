@@ -22,6 +22,13 @@ const formatDateRange = (start, end) => {
   return `${days} ${month}-${year}`;
 };
 
+const toTitleCase = (str) => {
+  if (!str) return "";
+  return str
+    .toLowerCase()
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
 const NextExpoSection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -134,13 +141,7 @@ const NextExpoSection = () => {
           }}
         >
           {/* LEFT: GALLERY CAROUSEL */}
-          <div className="next-expo-gallery">
-            {/* Loader shown while the expo image is loading */}
-            {!imageLoaded && (
-              <div className="image-loader">
-                <div className="loader"></div>
-              </div>
-            )}
+          <div className="next-expo-gallery" style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
             <div
               className="gallery-main-wrapper"
               onMouseEnter={() => setIsHovered(true)}
@@ -151,9 +152,22 @@ const NextExpoSection = () => {
                 overflow: "hidden",
                 boxShadow:
                   "0 15px 35px rgba(0,0,0,0.12), 0 30px 70px rgba(0,0,0,0.18)",
-                cursor: 'pointer'
+                cursor: 'pointer',
+                width: '100%',
+                maxWidth: '500px',
+                height: '500px',
+                background: '#f8f9fa',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
               }}
             >
+              {/* Loader shown while the expo image is loading */}
+              {!imageLoaded && (
+                <div className="image-loader" style={{ borderRadius: '24px' }}>
+                  <div className="loader"></div>
+                </div>
+              )}
               <motion.img
                 key={currentIndex}
                 src={getImageUrl(currentExpo.expoImage)}
@@ -169,8 +183,8 @@ const NextExpoSection = () => {
 
           <div className="next-expo-content-right">
             <div className="present-expo-card-v2">
-              <h3 style={{ fontSize: '2.2rem', fontWeight: '800', color: '#1a1a1a', marginBottom: '25px', borderLeft: '5px solid #ED1C24', paddingLeft: '15px' }}>
-                {currentExpo.expoName}
+              <h3 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2.2rem)', fontWeight: '800', color: '#1a1a1a', marginBottom: '25px', borderLeft: '5px solid #ED1C24', paddingLeft: '15px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {toTitleCase(currentExpo.expoName)}
               </h3>
 
               <div className="details-grid-v2" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '25px', marginBottom: '30px' }}>
@@ -191,8 +205,8 @@ const NextExpoSection = () => {
                     <i className="fas fa-map-marker-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
                   </div>
                   <div>
-                    <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
-                      {currentExpo.venue}
+                    <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f' }}>
+                      {toTitleCase(currentExpo.venue)}
                     </h4>
                     <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Event Location</p>
                   </div>
@@ -217,16 +231,10 @@ const NextExpoSection = () => {
                     </div>
                     <div className="stats-row-mobile" style={{ display: 'flex', gap: '25px', flexWrap: 'wrap' }}>
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.75rem', textTransform: 'uppercase', fontWeight: '800', color: '#999', marginBottom: '3px' }}>Available</label>
-                        <p style={{ margin: 0, fontSize: '1.1rem', fontWeight: '800', color: '#2ecc71' }}>{currentExpo.stats.stallAvailable}</p>
-                      </div>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.75rem', textTransform: 'uppercase', fontWeight: '800', color: '#999', marginBottom: '3px' }}>Booked</label>
-                        <p style={{ margin: 0, fontSize: '1.1rem', fontWeight: '800', color: '#E31E24' }}>{currentExpo.stats.stallBooked}</p>
-                      </div>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.75rem', textTransform: 'uppercase', fontWeight: '800', color: '#999', marginBottom: '3px' }}>Visitors</label>
-                        <p style={{ margin: 0, fontSize: '1.1rem', fontWeight: '800', color: '#3498db' }}>{currentExpo.stats.visitorBooked}</p>
+                        <label style={{ display: 'block', fontSize: '0.75rem', textTransform: 'uppercase', fontWeight: '800', color: '#999', marginBottom: '3px' }}>Visitor Entry</label>
+                        <p style={{ margin: 0, fontSize: '1.1rem', fontWeight: '800', color: currentExpo.entryType === 'Free' ? '#2ecc71' : '#E31E24' }}>
+                          {currentExpo.entryType === 'Free' ? 'Free' : (currentExpo.entryType === 'Both' ? 'Free / Paid' : (currentExpo.entryFee ? `₹${currentExpo.entryFee}` : '₹100'))}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -381,7 +389,7 @@ const NextExpoSection = () => {
 @media (max-width: 991px) {
   .stats-row-mobile {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
     gap: 10px;
     align-items: start;
     justify-items: center;
@@ -395,7 +403,7 @@ const NextExpoSection = () => {
 @media (max-width: 768px) {
   .stats-row-mobile {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
     gap: 8px;
     align-items: start;
     justify-items: center;
