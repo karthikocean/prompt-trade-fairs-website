@@ -36,7 +36,7 @@ const IndustriesSlider = () => {
           combinedData = [...upcomingRes.data.data];
         }
         // if (presentRes.data && Array.isArray(presentRes.data.data)) {
-        //   // Add present expos that are not already in the list
+        //   // Add Current expos that are not already in the list
         //   const presentExpos = presentRes.data.data.filter(pe => !combinedData.some(ue => ue._id === pe._id));
         //   combinedData = [...combinedData, ...presentExpos];
         // }

@@ -10,6 +10,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Events from './pages/Events';
 import UpcomingExhibitions from './pages/UpcomingExhibitions';
+import UpcomingExpoDetail from './pages/UpcomingExpoDetail';
 import PreviousExhibitions from './pages/PreviousExhibitions';
 import OurGroups from './pages/OurGroups';
 import Careers from './pages/Careers';
@@ -34,6 +35,7 @@ function App() {
                     <Route path="/events" element={<Events />} />
                     <Route path="/event/:id" element={<EventDetail />} />
                     <Route path="/upcoming-exhibitions" element={<UpcomingExhibitions />} />
+                    <Route path="/upcoming-exhibitions/:slug" element={<UpcomingExpoDetail />} />
                     <Route path="/previous-exhibitions" element={<PreviousExhibitions />} />
                     <Route path="/our-groups" element={<OurGroups />} />
                     <Route path="/careers" element={<Careers />} />

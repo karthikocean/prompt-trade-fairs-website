@@ -468,7 +468,7 @@ const EnquiryForm = ({
             borderTop: "1px solid #eee"
           }}
         >
-          <button type="button" onClick={onClose} className="modal-btn-cancel" style={cancelBtnStyle}>Cancel</button>
+          {!hideHeader && <button type="button" onClick={onClose} className="modal-btn-cancel" style={cancelBtnStyle}>Cancel</button>}
           <button type="submit" disabled={isSubmitting} className="modal-btn-submit" style={saveBtnStyle}>
             {isSubmitting ? "Submitting..." : "Send Message"}
           </button>

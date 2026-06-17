@@ -497,50 +497,34 @@ const Careers = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  style={{
-                    background: '#fff',
-                    borderRadius: '15px',
-                    padding: '30px',
-                    marginBottom: '20px',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    boxShadow: '0 5px 15px rgba(0,0,0,0.03)',
-                    border: '1px solid rgba(0,0,0,0.05)'
-                  }}
                 >
-                  <div className="job-info-left" style={{ flex: '1.2' }}>
-                    <h3 style={{ fontSize: '1.6rem', fontWeight: '800', color: '#111', margin: 0 }}>{job.jobRole}</h3>
+                  <div className="job-card-main-content">
+                    <h3 className="job-title-text">{job.jobRole}</h3>
+                    <div className="job-details-grid">
+                      <p className="job-detail-item">
+                        <i className="fas fa-map-marker-alt"></i>
+                        <span className="job-detail-label">Location:</span> {job.location}
+                      </p>
+                      <p className="job-detail-item">
+                        <i className="fas fa-building"></i>
+                        <span className="job-detail-label">Mode:</span> {job.workMode}
+                      </p>
+                      <p className="job-detail-item">
+                        <i className="fas fa-clock"></i>
+                        <span className="job-detail-label">Type:</span> {job.employmentType}
+                      </p>
+                      <p className="job-detail-item">
+                        <i className="fas fa-history"></i>
+                        <span className="job-detail-label">Exp:</span> {job.experience}
+                      </p>
+                      <p className="job-detail-item">
+                        <i className="fas fa-users"></i>
+                        <span className="job-detail-label">Openings:</span> {job.openings}
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="job-info-center" style={{ flex: '2', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px 30px' }}>
-                    <p style={{ margin: '0', color: '#444', fontSize: '18px', fontWeight: '600' }}>
-                      <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24', width: '20px' }}></i>
-                      <span style={{ color: '#888', fontWeight: '500', marginRight: '5px' }}>Location:</span> {job.location}
-                    </p>
-                    <p style={{ margin: '0', color: '#444', fontSize: '18px', fontWeight: '600' }}>
-                      <i className="fas fa-clock" style={{ color: '#ED1C24', width: '20px' }}></i>
-                      <span style={{ color: '#888', fontWeight: '500', marginRight: '5px' }}>Type:</span> {job.employmentType}
-                    </p>
-                    <p style={{ margin: '0', color: '#444', fontSize: '18px', fontWeight: '600' }}>
-                      <i className="fas fa-building" style={{ color: '#ED1C24', width: '20px' }}></i>
-                      <span style={{ color: '#888', fontWeight: '500', marginRight: '5px' }}>Mode:</span> {job.workMode}
-                    </p>
-                    <p style={{ margin: '0', color: '#444', fontSize: '18px', fontWeight: '600' }}>
-                      <i className="fas fa-history" style={{ color: '#ED1C24', width: '20px' }}></i>
-                      <span style={{ color: '#888', fontWeight: '500', marginRight: '5px' }}>Exp:</span> {job.experience}
-                    </p>
-                    <p style={{ margin: '0', color: '#444', fontSize: '18px', fontWeight: '600' }}>
-                      <i className="fas fa-wallet" style={{ color: '#ED1C24', width: '20px' }}></i>
-                      <span style={{ color: '#888', fontWeight: '500', marginRight: '5px' }}>Salary:</span> ₹{job.salary}
-                    </p>
-                    <p style={{ margin: '0', color: '#444', fontSize: '18px', fontWeight: '600' }}>
-                      <i className="fas fa-users" style={{ color: '#ED1C24', width: '20px' }}></i>
-                      <span style={{ color: '#888', fontWeight: '500', marginRight: '5px' }}>Openings:</span> {job.openings}
-                    </p>
-                  </div>
-
-                  <div className="job-info-right" style={{ flex: '0.8', display: 'flex', justifyContent: 'flex-end' }}>
+                  <div className="job-card-action">
                     <button
                       className="apply-btn-premium"
                       onClick={() => handleApplyClick(job)}
@@ -554,7 +538,10 @@ const Careers = () => {
                         cursor: 'pointer',
                         transition: 'all 0.3s ease',
                         boxShadow: '0 8px 20px rgba(237, 28, 36, 0.2)',
-                        fontSize: '15px'
+                        fontSize: '15px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
                       }}
                     >
                       Apply <i className="fas fa-arrow-right" style={{ marginLeft: '10px' }}></i>
@@ -591,7 +578,100 @@ const Careers = () => {
           </div>
         </div>
       </section>
-      <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+      <style>{`
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .job-card-modern {
+          background: #fff;
+          border-radius: 15px;
+          padding: 30px;
+          margin-bottom: 20px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          gap: 30px;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+          border: 1px solid rgba(0,0,0,0.05);
+          transition: all 0.3s ease;
+        }
+        
+        .job-card-modern:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+        }
+        
+        .job-card-main-content {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+        
+        .job-title-text {
+          font-size: 1.6rem;
+          font-weight: 800;
+          color: #111;
+          margin: 0;
+        }
+        
+        .job-details-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-auto-flow: column;
+          grid-template-rows: repeat(3, auto);
+          gap: 15px 30px;
+          width: 100%;
+        }
+        
+        .job-detail-item {
+          margin: 0;
+          color: #444;
+          font-size: 18px;
+          font-weight: 600;
+          display: flex;
+          align-items: center;
+        }
+        
+        .job-detail-item i {
+          color: #ED1C24;
+          width: 20px;
+          margin-right: 8px;
+        }
+        
+        .job-detail-label {
+          color: #888;
+          font-weight: 500;
+          margin-right: 5px;
+        }
+        
+        .job-card-action {
+          flex-shrink: 0;
+          display: flex;
+          align-items: center;
+        }
+        
+        @media (max-width: 768px) {
+          .job-card-modern {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 20px;
+          }
+          
+          .job-card-action .apply-btn-premium {
+            width: 100%;
+            text-align: center;
+            justify-content: center;
+          }
+          
+          .job-details-grid {
+            grid-template-columns: 1fr;
+            grid-auto-flow: row;
+            grid-template-rows: unset;
+            gap: 12px;
+          }
+        }
+      `}</style>
     </main>
   );
 };

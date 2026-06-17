@@ -45,7 +45,7 @@ const NextExpoSection = () => {
           setExpos(response.data.data);
         }
       } catch (error) {
-        console.error("Error fetching present expos:", error);
+        console.error("Error fetching Current expos:", error);
         // toast.error("Failed to load ongoing exhibitions");
       } finally {
         setLoading(false);
@@ -96,7 +96,7 @@ const NextExpoSection = () => {
         <div className="premium-header-box centered" style={{ textAlign: 'center', marginBottom: '50px' }}>
           <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px', marginBottom: '15px' }}>
             <div className="header-accent-line"></div>
-            <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>Present Expo
+            <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>Current Expo
             </span>
             <div className="header-accent-line"></div>
           </div>
