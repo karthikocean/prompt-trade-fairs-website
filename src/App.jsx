@@ -7,6 +7,7 @@ import ScrollToTop from './components/ScrollToTop';
 import ChatBot from './components/ChatBot';
 import Home from './pages/Home';
 import About from './pages/About';
+import AboutExpo from './pages/AboutExpo';
 import Contact from './pages/Contact';
 import Events from './pages/Events';
 import UpcomingExhibitions from './pages/UpcomingExhibitions';
@@ -31,6 +32,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
+                    <Route path="/about-expo" element={<AboutExpo />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/events" element={<Events />} />
                     <Route path="/event/:id" element={<EventDetail />} />

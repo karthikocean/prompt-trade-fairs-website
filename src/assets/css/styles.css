@@ -2055,15 +2055,39 @@ ul {
   padding-top: 70px;
 }
 
+.footer-col ul {
+  padding-left: 0 !important;
+}
+
 /* CONTAINER */
 .footer-container {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr 1.2fr;
-  gap: 60px;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 40px;
-  align-items: stretch;
+  align-items: flex-start;
+}
+
+@media (min-width: 992px) {
+  .footer-col.brand {
+    width: 320px;
+    max-width: 320px;
+  }
+
+  .footer-col.quick-links {
+    width: 180px;
+  }
+
+  .footer-col.company-links {
+    width: 200px;
+  }
+
+  .footer-container>.footer-col:last-child {
+    width: 350px;
+    max-width: 350px;
+  }
 }
 
 @media (max-width: 1200px) {
@@ -2137,10 +2161,6 @@ ul {
 
   .footer-container>.footer-col:last-child {
     grid-column: 1 / -1 !important;
-  }
-
-  .footer-col ul {
-    padding-left: 0 !important;
   }
 
   .footer-col h3 {
@@ -2305,9 +2325,9 @@ section:not(.hero) {
     flex: none !important;
   }
 
-  .v3-card-content {
+  /* .v3-card-content {
     margin: 10px 15px !important;
-  }
+  } */
 
   .about-v3-intro-btn {
     margin-top: 20px !important;
@@ -2465,9 +2485,9 @@ section:not(.hero) {
     font-size: 1rem !important;
   }
 
-  .v3-card-content {
+  /* .v3-card-content {
     margin: 10px 15px !important;
-  }
+  } */
 
   .milestones-row {
     display: flex !important;
@@ -2487,11 +2507,24 @@ section:not(.hero) {
     gap: 0px !important;
   }
 
-  .footer-logo {
-    width: 140px;
-    margin-left: 105px;
-    margin-bottom: 20px;
+  .footer-col.brand {
+    display: flex !important;
+    flex-direction: column !important;
     align-items: center !important;
+    text-align: center !important;
+  }
+
+  .footer-col.brand>a {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  .footer-logo {
+    width: 140px !important;
+    margin-bottom: 20px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 
   .expo-card {
@@ -3189,7 +3222,7 @@ section:not(.hero) {
 
 .expo-action-link {
   text-decoration: none;
-  padding: 12px 25px;
+  padding: 0 20px;
   border-radius: 8px;
   font-weight: 700;
   display: flex;
@@ -3200,10 +3233,13 @@ section:not(.hero) {
   background: #f3f4f6;
   color: #374151;
   transition: all 0.3s ease;
+  height: 48px;
+  box-sizing: border-box;
+  white-space: nowrap !important;
 }
 
 .register-btn-main {
-  padding: 14px 30px;
+  padding: 0 25px;
   border-radius: 8px;
   font-weight: 700;
   display: flex;
@@ -3214,9 +3250,12 @@ section:not(.hero) {
   background: #ED1C24;
   color: #fff;
   box-shadow: 0 4px 15px rgba(237, 28, 36, 0.3);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  height: 48px;
+  box-sizing: border-box;
+  white-space: nowrap !important;
 }
 
 .register-btn-main:hover {
@@ -3277,18 +3316,8 @@ section:not(.hero) {
 
 
 @media (max-width: 992px) {
-  .next-expo-grid {
-    grid-template-columns: 1fr;
-    gap: 50px;
-    text-align: center;
-  }
-
   .cta-left {
     justify-content: center;
-  }
-
-  .next-expo-content-right {
-    text-align: center;
   }
 
   .detail-item-lite {
@@ -6407,97 +6436,7 @@ section:not(.hero) {
     font-size: 24px !important;
   }
 
-  /* 12. Next Expo Fixes */
-  .next-expo-section {
-    padding: 40px 0 100px !important;
-    /* Added 100px bottom padding to avoid chat bubble hide */
-  }
 
-  .next-expo-grid {
-    grid-template-columns: 1fr !important;
-    gap: 30px !important;
-  }
-
-  .gallery-main-wrapper {
-    height: 240px !important;
-  }
-
-  .next-expo-section .nav-arrow {
-    top: 310px !important;
-    /* Pushed down to align with the image center on mobile */
-    transform: translateY(-50%) !important;
-    z-index: 100 !important;
-  }
-
-  .next-expo-section .nav-arrow.left {
-    left: 2px !important;
-    /* Slightly closer to edge for safe gutter */
-  }
-
-  .next-expo-section .nav-arrow.right {
-    right: 2px !important;
-    /* Slightly closer to edge for safe gutter */
-  }
-
-  .details-grid-v2 {
-    display: block !important;
-    /* NO FLEX/GRID - Stacked */
-    padding: 0 !important;
-    text-align: left !important;
-  }
-
-  .detail-item-v2 {
-    margin-bottom: 12px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    gap: 15px !important;
-  }
-
-  .detail-item-v2 .text-content {
-    text-align: left !important;
-  }
-
-  .next-expo-content-right h3 {
-    font-size: 1.5rem !important;
-    border-left-width: 4px !important;
-    padding-left: 12px !important;
-  }
-
-  .present-expo-actions {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 12px !important;
-    margin-top: 30px !important;
-    justify-content: center !important;
-    /* Centered layout */
-  }
-
-  .present-expo-actions a {
-    flex: 0 1 calc(50% - 8px) !important;
-    /* Layout & Brochure side by side */
-    min-width: 140px !important;
-    font-size: 0.85rem !important;
-    padding: 12px 10px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    order: 1 !important;
-  }
-
-  .present-expo-actions button,
-  .present-expo-actions .register-btn-main {
-    flex: 0 1 90% !important;
-    /* Register Now centered but not forced 100% */
-    order: 2 !important;
-    margin-top: 10px !important;
-    font-size: 0.95rem !important;
-    padding: 15px 25px !important;
-    white-space: nowrap !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
 
   /* 13. Testimonials Fixes */
   .testimonial-grid-display-premium {
@@ -7201,6 +7140,29 @@ select:focus {
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
+.v3-segment-card .card-image {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #f8f9fa;
+  margin-bottom: 15px;
+}
+
+.v3-segment-card .card-image img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.v3-segment-card:hover .card-image img {
+  transform: scale(1.08);
+}
+
 .v3-segment-card .card-num {
   font-size: 1.6rem;
   font-weight: 800;
@@ -7250,6 +7212,18 @@ select:focus {
   }
 }
 
+@media (min-width: 767px) {
+  .v3-segments-grid {
+    grid-template-columns: 2fr 2fr !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .v3-segments-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 .card-icon {
   width: 60px;
   height: 60px;
@@ -7271,6 +7245,7 @@ select:focus {
     transform: none !important;
   }
 }
+
 
 /* ── PAN-INDIA NETWORK / STRONG PRESENCE ── */
 .v3-presence-section {
@@ -7789,12 +7764,7 @@ select:focus {
     padding: 12px 20px !important;
   }
 
-  /* Fixed height for expo gallery on mobile to prevent layout shift */
-  .gallery-main-wrapper {
-    height: 260px;
-    /* adjust as needed */
-    position: relative;
-  }
+
 
   .image-loader {
     position: absolute;
@@ -7824,5 +7794,108 @@ select:focus {
 @media (max-width: 767px) {
   .v3-initiative-card {
     width: 100% !important;
+  }
+}
+
+/* Global Expo Form Cards Styling */
+.expo-form-section-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* padding: 0 20px; */
+  box-sizing: border-box;
+}
+
+.expo-form-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  width: 100%;
+  max-width: 900px;
+}
+
+.expo-form-heading {
+  padding: 30px 30px 10px 30px;
+  background: #ffffff;
+}
+
+.expo-form-heading h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ED1C24;
+  /* Make title brand red color */
+  margin-bottom: 8px;
+}
+
+.expo-form-heading p {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.expo-form-body-wrapper {
+  padding: 0 30px 30px 30px;
+  width: 100%;
+}
+
+/* Responsive Spacing Between Page Hero and Content Sections */
+.about-v3-hero+section {
+  padding-top: 80px !important;
+}
+
+.about-v3-hero+.expo-form-section-container {
+  margin-top: 60px !important;
+}
+
+@media (max-width: 991px) {
+  .about-v3-hero+section {
+    padding-top: 50px !important;
+  }
+
+  .about-v3-hero+.expo-form-section-container {
+    margin-top: 40px !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .about-v3-hero+section {
+    padding-top: 40px !important;
+  }
+
+  .about-v3-hero+.expo-form-section-container {
+    margin-top: 30px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .upcoming-detail-v3,
+  .upcoming-detail-v3 .container,
+  .expo-main-card,
+  .expo-detail-split-row,
+  .expo-banner-container-full,
+  .expo-info-body-full {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .expo-main-card {
+    touch-action: auto;
+  }
+
+  .expo-banner-image-full {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .expo-info-body-full {
+    padding: 24px 18px;
+  }
+
+  .expo-downloads-row {
+    flex-direction: column;
   }
 }

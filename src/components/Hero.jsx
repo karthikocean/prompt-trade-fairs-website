@@ -19,8 +19,8 @@ const Hero = () => {
             img: getImageUrl(banner.image),
             title: banner.title || "",
             desc: banner.description || banner.desc || "",
-            btnText: banner.buttonText || banner.btn_text || "Learn More",
-            link: banner.link || banner.url || "/",
+            btnText: banner.buttonText || banner.btn_text || "About the Expo",
+            link: "/about-expo",
           }));
           setSlides(apiBanners);
         }
@@ -96,7 +96,7 @@ const Hero = () => {
               {slides[currentIndex].desc}
             </motion.p>
 
-            <Link to="/upcoming-exhibitions">
+            <Link to={slides[currentIndex].link || "/upcoming-exhibitions"}>
               <motion.button
                 className="hero-btn"
                 key={`btn-${currentIndex}`}

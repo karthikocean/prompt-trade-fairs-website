@@ -40,6 +40,7 @@ const Footer = () => {
           <ul>
             <li><Link to="/"><i className="fas fa-chevron-right"></i>Home</Link></li>
             <li><Link to="/about"><i className="fas fa-chevron-right"></i>About Us</Link></li>
+            {/* <li><Link to="/about-expo"><i className="fas fa-chevron-right"></i>About the Expo</Link></li> */}
             <li><Link to="/careers"><i className="fas fa-chevron-right"></i>Careers</Link></li>
             <li><Link to="/to-export"><i className="fas fa-chevron-right"></i>To Exhibit</Link></li>
             <li><Link to="/contact"><i className="fas fa-chevron-right"></i>Contact Us</Link></li>
