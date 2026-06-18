@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { getPresentExpos } from '../api/common.api';
+
+const slugify = (text) => {
+  if (!text) return "";
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-');
+};
 
 const AboutExpo = () => {
+  const { slug } = useParams();
+  const [expo, setExpo] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const highlights = [
     {
       title: "Proven Expertise",
@@ -61,6 +77,89 @@ const AboutExpo = () => {
     "Furniture", "Hardware Door Handles", "Knobs Suppliers", "Furniture Manufacturers and Dealers"
   ];
 
+  useEffect(() => {
+    const fetchExpoDetails = async () => {
+      try {
+        const response = await getPresentExpos();
+        if (response.data && response.data.data) {
+          const list = response.data.data;
+          let matched = null;
+          if (slug) {
+            matched = list.find(e => slugify(e.expoName) === slug);
+          } else {
+            // Find first expo that has some custom aboutExpo content
+            matched = list.find(e => e.aboutExpo && (
+              (e.aboutExpo.expoProfile?.paragraphs && e.aboutExpo.expoProfile.paragraphs.some(p => p.trim() !== "")) ||
+              (e.aboutExpo.exhibitionHighlights?.highlights && e.aboutExpo.exhibitionHighlights.highlights.length > 0)
+            ));
+            if (!matched && list.length > 0) {
+              matched = list[0];
+            }
+          }
+          setExpo(matched || null);
+        }
+      } catch (error) {
+        console.error("Error fetching expo details in AboutExpo page:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchExpoDetails();
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div style={{ padding: '200px 0', textAlign: 'center' }}>
+        <div className="loader" style={{ border: '4px solid #f3f3f3', borderTop: '4px solid #ED1C24', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite', margin: '0 auto' }}></div>
+        <p style={{ marginTop: '20px', color: '#666' }}>Loading exhibition details...</p>
+        <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+      </div>
+    );
+  }
+
+  // Dynamic fallback logic
+  const defaultHeader = "Dear Exhibitors,";
+  const defaultParagraphs = [
+    `We are delighted to welcome you to ABI Expo 2026, an exclusive exhibition organized by Prompt Trade Fairs (I) Pvt. Ltd., a pioneer in professional exhibition management and a trusted leader in the industry.`,
+    `Established in 2002 with a strong commitment to excellence, Prompt Trade Fairs has grown into one of India's most respected exhibition organizers. Over the years, we have earned recognition for creating dynamic business platforms that connect exhibitors with quality buyers, decision-makers, and industry professionals from across India and abroad.`,
+    `ABI Expo 2026 is designed to provide exhibitors with maximum visibility, meaningful business interactions, and long-term growth opportunities. Through our proven expertise, strategic promotional activities, and extensive industry outreach, we are confident that your participation will lead to valuable networking opportunities, enhanced brand recognition, and significant business expansion.`,
+    `We look forward to your active participation and assure you of our complete support in making your experience at ABI Expo 2026 productive, seamless, and rewarding.`
+  ];
+
+  const hasExpoProfile = expo?.aboutExpo?.expoProfile?.paragraphs && expo.aboutExpo.expoProfile.paragraphs.some(p => p.trim() !== "");
+  const hasHighlights = expo?.aboutExpo?.exhibitionHighlights?.highlights && expo.aboutExpo.exhibitionHighlights.highlights.length > 0;
+  const hasExhibitors = expo?.aboutExpo?.exhibitorProfile?.points && expo.aboutExpo.exhibitorProfile.points.some(pt => pt.trim() !== "");
+  const hasVisitors = expo?.aboutExpo?.visitorProfile?.points && expo.aboutExpo.visitorProfile.points.some(pt => pt.trim() !== "");
+
+  const profileHeader = hasExpoProfile ? expo.aboutExpo.expoProfile.header : defaultHeader;
+  const profileParagraphs = hasExpoProfile ? expo.aboutExpo.expoProfile.paragraphs : defaultParagraphs;
+
+  const displayHighlights = hasHighlights
+    ? expo.aboutExpo.exhibitionHighlights.highlights.map(h => ({ title: h.title, desc: h.description }))
+    : highlights;
+  const highlightsTitle = hasHighlights && expo.aboutExpo.exhibitionHighlights.title
+    ? "2. Exhibition Highlights"
+    : "2. Exhibition Highlights";
+
+  const displayExhibitors = hasExhibitors
+    ? expo.aboutExpo.exhibitorProfile.points.filter(pt => pt.trim() !== "")
+    : exhibitors;
+  const exhibitorsTitle = (hasExhibitors && expo.aboutExpo.exhibitorProfile.title)
+    ? expo.aboutExpo.exhibitorProfile.title
+    : "ABI Expo features a wide-ranging, comprehensive showcase of products, materials, designs, and services representing the following business sectors:";
+
+  const displayVisitors = hasVisitors
+    ? expo.aboutExpo.visitorProfile.points.filter(pt => pt.trim() !== "")
+    : visitors;
+  const visitorsTitle = (hasVisitors && expo.aboutExpo.visitorProfile.title)
+    ? expo.aboutExpo.visitorProfile.title
+    : "The exhibition attracts a highly targeted audience of trade visitors, developers, and industry professionals, including:";
+
+  const pageTitle = expo ? expo.expoName : "About the Expo";
+  const pageSubtitle = expo
+    ? `${expo.expoName} - South India's Premier Construction & Prompt Trade Fair`
+    : "ABI Expo 2026 - South India's Premier Construction & Design Trade Fair";
+
   return (
     <main className="legal-page-v3">
       {/* HERO SECTION */}
@@ -68,17 +167,26 @@ const AboutExpo = () => {
         <div className="v3-hero-overlay-dark"></div>
         <div className="container v3-hero-container">
           <div className="v3-hero-content">
-            <motion.div 
-               initial={{ opacity: 0, x: -30 }}
-               animate={{ opacity: 1, x: 0 }}
-               transition={{ duration: 0.8 }}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
             >
               <div className="v3-breadcrumb">
                 <Link to="/">Home</Link> <span>/</span> <span className="current">About the Expo</span>
               </div>
-              <h1 className="v3-hero-title">About <span>the Expo</span></h1>
-              <p className="v3-hero-subtitle" style={{color: '#fff', opacity: '0.8', maxWidth: '600px', marginTop: '15px'}}>
-                ABI Expo 2026 - South India's Premier Construction & Design Trade Fair
+              <h1 className="v3-hero-title">
+                {pageTitle.includes(" ") ? (
+                  <>
+                    {pageTitle.substring(0, pageTitle.lastIndexOf(" "))}{' '}
+                    <span>{pageTitle.substring(pageTitle.lastIndexOf(" ") + 1)}</span>
+                  </>
+                ) : (
+                  <span>{pageTitle}</span>
+                )}
+              </h1>
+              <p className="v3-hero-subtitle" style={{ color: '#fff', opacity: '0.8', maxWidth: '600px', marginTop: '15px' }}>
+                {pageSubtitle}
               </p>
             </motion.div>
           </div>
@@ -86,71 +194,70 @@ const AboutExpo = () => {
       </section>
 
       {/* CONTENT SECTION */}
-      <section className="legal-content-section" style={{padding: '100px 0', background: '#fff'}}>
+      <section className="legal-content-section" style={{ padding: '100px 0', background: '#fff' }}>
         <div className="container">
-           <div className="legal-doc-wrap" style={{lineHeight: '1.8', color: '#444'}}>
-              
-              {/* SECTION 1: Expo Profile */}
-              <div className="about-expo-doc-section">
-                <h2 style={{fontSize: '1.8rem', fontWeight: '800', color: '#111', marginBottom: '20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>1. Expo Profile</h2>
-                <p style={{marginBottom: '20px', fontSize: '1.05rem', fontWeight: 'bold', color: '#ED1C24'}}>Dear Exhibitors,</p>
-                <p style={{marginBottom: '20px'}}>
-                  We are delighted to welcome you to <strong>ABI Expo 2026</strong>, an exclusive exhibition organized by <strong>Prompt Trade Fairs (I) Pvt. Ltd.</strong>, a pioneer in professional exhibition management and a trusted leader in the industry.
-                </p>
-                <p style={{marginBottom: '20px'}}>
-                  Established in 2002 with a strong commitment to excellence, Prompt Trade Fairs has grown into one of India's most respected exhibition organizers. Over the years, we have earned recognition for creating dynamic business platforms that connect exhibitors with quality buyers, decision-makers, and industry professionals from across India and abroad.
-                </p>
-                <p style={{marginBottom: '20px'}}>
-                  <strong>ABI Expo 2026</strong> is designed to provide exhibitors with maximum visibility, meaningful business interactions, and long-term growth opportunities. Through our proven expertise, strategic promotional activities, and extensive industry outreach, we are confident that your participation will lead to valuable networking opportunities, enhanced brand recognition, and significant business expansion.
-                </p>
-                <p style={{marginBottom: '0'}}>
-                  We look forward to your active participation and assure you of our complete support in making your experience at ABI Expo 2026 productive, seamless, and rewarding.
-                </p>
-              </div>
+          <div className="legal-doc-wrap" style={{ lineHeight: '1.8', color: '#444' }}>
 
-              {/* SECTION 2: Exhibition Highlights */}
-              <div className="about-expo-doc-section">
-                <h2 style={{fontSize: '1.8rem', fontWeight: '800', color: '#111', marginBottom: '20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>2. Exhibition Highlights</h2>
-                <ul style={{paddingLeft: '20px', marginBottom: '0', listStyleType: 'square'}}>
-                  {highlights.map((item, idx) => (
-                    <li key={idx} style={{marginBottom: '15px'}}>
-                      <strong>{item.title}</strong>: {item.desc}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* SECTION 3: Exhibitor Profile */}
-              <div className="about-expo-doc-section">
-                <h2 style={{fontSize: '1.8rem', fontWeight: '800', color: '#111', marginBottom: '20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>3. Exhibitor Profile</h2>
-                <p style={{marginBottom: '20px'}}>
-                  ABI Expo features a wide-ranging, comprehensive showcase of products, materials, designs, and services representing the following business sectors:
+            {/* SECTION 1: Expo Profile */}
+            <div className="about-expo-doc-section">
+              <h2 style={{ fontSize: '1.7rem', fontWeight: '800', color: '#111', marginBottom: '20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px' }}>1. Expo Profile</h2>
+              {profileHeader && (
+                <p style={{ marginBottom: '20px', fontSize: '1.05rem', fontWeight: 'bold', color: '#ED1C24' }}>{profileHeader}</p>
+              )}
+              {profileParagraphs.map((para, idx) => (
+                <p key={idx} style={{ marginBottom: idx === profileParagraphs.length - 1 ? '0' : '20px', whiteSpace: 'pre-line' }}>
+                  {para}
                 </p>
-                <ul className="profile-column-list" style={{paddingLeft: '20px', marginBottom: '0', listStyleType: 'square'}}>
-                  {exhibitors.map((item, idx) => (
-                    <li key={idx}>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              ))}
+            </div>
 
-              {/* SECTION 4: Visitor Profile */}
-              <div className="about-expo-doc-section">
-                <h2 style={{fontSize: '1.8rem', fontWeight: '800', color: '#111', marginBottom: '20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>4. Visitor Profile</h2>
-                <p style={{marginBottom: '20px'}}>
-                  The exhibition attracts a highly targeted audience of trade visitors, developers, and industry professionals, including:
+            {/* SECTION 2: Exhibition Highlights */}
+            <div className="about-expo-doc-section">
+              <h2 style={{ fontSize: '1.7rem', fontWeight: '800', color: '#111', marginBottom: '20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px' }}>{highlightsTitle}</h2>
+              <ul style={{ paddingLeft: '20px', marginBottom: '0', listStyleType: 'square' }}>
+                {displayHighlights.map((item, idx) => (
+                  <li key={idx} style={{ marginBottom: '15px' }}>
+                    <strong>{item.title}</strong>: {item.desc}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* SECTION 3: Exhibitor Profile */}
+            <div className="about-expo-doc-section">
+              <h2 style={{ fontSize: '1.7rem', fontWeight: '800', color: '#111', marginBottom: '20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px' }}>3. Exhibitor Profile</h2>
+              {exhibitorsTitle && (
+                <p style={{ marginBottom: '20px', whiteSpace: 'pre-line' }}>
+                  {exhibitorsTitle}
                 </p>
-                <ul className="profile-column-list" style={{paddingLeft: '20px', marginBottom: '0', listStyleType: 'square'}}>
-                  {visitors.map((item, idx) => (
-                    <li key={idx}>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              )}
+              <ul className="profile-column-list" style={{ paddingLeft: '20px', marginBottom: '0', listStyleType: 'square' }}>
+                {displayExhibitors.map((item, idx) => (
+                  <li key={idx}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-           </div>
+            {/* SECTION 4: Visitor Profile */}
+            <div className="about-expo-doc-section">
+              <h2 style={{ fontSize: '1.7rem', fontWeight: '800', color: '#111', marginBottom: '20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px' }}>4. Visitor Profile</h2>
+              {visitorsTitle && (
+                <p style={{ marginBottom: '20px', whiteSpace: 'pre-line' }}>
+                  {visitorsTitle}
+                </p>
+              )}
+              <ul className="profile-column-list" style={{ paddingLeft: '20px', marginBottom: '0', listStyleType: 'square' }}>
+                {displayVisitors.map((item, idx) => (
+                  <li key={idx}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
         </div>
       </section>
 

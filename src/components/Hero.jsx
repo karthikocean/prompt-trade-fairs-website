@@ -5,6 +5,17 @@ import { Link } from "react-router-dom";
 import { getBanners } from "../api/common.api";
 import { getImageUrl } from "../config/apiClient";
 
+const slugify = (text) => {
+  if (!text) return "";
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-');
+};
+
 const Hero = () => {
   const [slides, setSlides] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -20,7 +31,9 @@ const Hero = () => {
             title: banner.title || "",
             desc: banner.description || banner.desc || "",
             btnText: banner.buttonText || banner.btn_text || "About the Expo",
-            link: "/about-expo",
+            link: banner.expoId 
+              ? `/about-expo/${banner.expoId.slug || slugify(banner.expoId.expoName)}`
+              : "/about-expo",
           }));
           setSlides(apiBanners);
         }

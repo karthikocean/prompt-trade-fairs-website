@@ -30,6 +30,17 @@ const toTitleCase = (str) => {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 };
 
+const slugify = (text) => {
+  if (!text) return "";
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-');
+};
+
 const NextExpoSection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -248,7 +259,7 @@ const NextExpoSection = () => {
 
               <div className="present-expo-actions">
                 <Link
-                  to="/about-expo"
+                  to={currentExpo ? `/about-expo/${slugify(currentExpo.expoName)}` : "/about-expo"}
                   className="expo-action-link about-expo-btn"
                 >
                   <i className="fas fa-info-circle"></i> About the Expo

@@ -206,7 +206,7 @@ const UpcomingExpoDetail = () => {
               <div className="expo-downloads-row">
                 <div className="present-expo-actions">
                   <Link
-                    to="/about-expo"
+                    to={`/about-expo/${slug}`}
                     className="expo-action-link about-expo-btn"
                   >
                     <i className="fas fa-info-circle"></i> About the Expo
