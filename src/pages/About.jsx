@@ -30,19 +30,23 @@ const Counter = ({ value, suffix = "" }) => {
 
 const About = () => {
   const [showAll, setShowAll] = React.useState(false);
-  const segments = [
-    { name: "Property Expo", icon: "fa-building" },
-    { name: "Build Expo", icon: "fa-tools" },
-    { name: "ABI Expo (Architecture, Building, Interior)", icon: "fa-couch" },
-    { name: "Furniture & Home Products Expo", icon: "fa-egg" },
-    { name: "Electronics & Furniture Expo", icon: "fa-hard-hat" },
-    { name: "Jewellery Expo", icon: "fa-pencil-ruler" },
-    { name: "India Poultry Show", icon: "fa-gem" },
-    { name: "India Diary Show", icon: "fa-cow" },
-    { name: "India Livestock Show", icon: "fa-graduation-cap" },
-    { name: "Education Fair", icon: "fa-shopping-bag" }
-  ];
+  const brandExpoImages = import.meta.glob(
+    '/src/assets/images/Our_Brand_Expo/*.{png,jpg,jpeg,webp}',
+    {
+      eager: true,
+      query: '?url',
+      import: 'default',
+    }
+  );
 
+  const segments = Object.entries(brandExpoImages).map(([path, src]) => {
+    const fileName = path.split('/').pop().replace(/\.[^/.]+$/, '');
+
+    return {
+      name: fileName,
+      link: src,
+    };
+  });
   const cities = [
     "Chennai", "Bengaluru", "Hyderabad", "Ahmedabad",
     "Coimbatore", "Salem", "Vijayawada", "Visakhapatnam",
@@ -155,8 +159,15 @@ const About = () => {
             </p>
           </div>
 
-          <div className="v3-segments-grid">
-            {(showAll ? segments : segments.slice(0, 6)).map((item, idx) => (
+          <div
+            className="v3-segments-grid"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '28px',
+            }}
+          >
+            {(showAll ? segments : segments.slice(0, 8)).map((item, idx) => (
               <motion.div
                 key={idx}
                 className="v3-segment-card"
@@ -164,12 +175,11 @@ const About = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: (idx % 6) * 0.05 }}
+                transition={{ duration: 0.5, delay: (idx % 8) * 0.05 }}
               >
                 <div className="card-border-accent"></div>
-                <div className="card-icon">
-                  <i className={`fas ${item.icon}`}></i>
-                </div>
+                <div className="card-image">
+                  <img src={item.link} alt={item.name} />                </div>
                 <h3 style={{ textAlign: 'center', marginTop: '20px' }}>{item.name}</h3>
               </motion.div>
             ))}

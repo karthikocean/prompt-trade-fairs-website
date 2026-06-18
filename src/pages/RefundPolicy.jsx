@@ -29,7 +29,7 @@ Prompt Trade Fairs (India) Private Limited
 
       {/* CONTENT SECTION */}
       <section className="legal-content-section" style={{padding: '100px 0', background: '#fff'}}>
-        <div className="container" style={{maxWidth: '900px'}}>
+        <div className="container">
            <div className="legal-doc-wrap" style={{lineHeight: '1.8', color: '#444'}}>
               <p style={{marginBottom: '30px'}}>
                 Welcome to Prompt Trade Fairs India Private Limited. This Refund & Cancellation Policy governs cancellations, refunds, taxes, and related terms applicable to exhibitors participating in exhibitions organized by Prompt Trade Fairs India Private Limited (“Company”, “Organizer”, “we”, “our”, or “us”).
@@ -84,7 +84,7 @@ Prompt Trade Fairs (India) Private Limited
                 Stall bookings, participation rights, or allocated exhibition spaces shall not be transferred, assigned, sublicensed, or resold to any third party without prior written approval from the Organizer.
               </p>
 
-              <h2 style={{fontSize: '2rem', fontWeight: '800', color: '#111', margin: '50px 0 20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>2. Taxes & Statutory Charges</h2>
+              <h2 style={{fontSize: '2rem', fontWeight: '800', color: '#111', margin: '20px 0 20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>2. Taxes & Statutory Charges</h2>
               
               <h3 style={{fontSize: '1.3rem', fontWeight: '700', color: '#ED1C24', marginTop: '20px', marginBottom: '10px'}}>2.1 Tax Liability</h3>
               <p style={{marginBottom: '20px'}}>
@@ -94,7 +94,7 @@ Prompt Trade Fairs (India) Private Limited
                 Unless expressly stated otherwise, all fees, charges, and quotations provided by the Organizer are exclusive of applicable Goods and Services Tax (GST) and other statutory taxes.
               </p>
 
-              <h2 style={{fontSize: '2rem', fontWeight: '800', color: '#111', margin: '50px 0 20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>3. Termination of Participation</h2>
+              <h2 style={{fontSize: '2rem', fontWeight: '800', color: '#111', margin: '20px 0 20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>3. Termination of Participation</h2>
               
               <h3 style={{fontSize: '1.3rem', fontWeight: '700', color: '#ED1C24', marginTop: '20px', marginBottom: '10px'}}>3.1 Organizer’s Right to Terminate</h3>
               <p style={{marginBottom: '15px'}}>
@@ -110,7 +110,7 @@ Prompt Trade Fairs (India) Private Limited
                 The Organizer’s decision in such matters shall be final and binding.
               </p>
 
-              <h2 style={{fontSize: '2rem', fontWeight: '800', color: '#111', margin: '50px 0 20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>4. Modification of Terms</h2>
+              <h2 style={{fontSize: '2rem', fontWeight: '800', color: '#111', margin: '20px 0 20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>4. Modification of Terms</h2>
               
               <h3 style={{fontSize: '1.3rem', fontWeight: '700', color: '#ED1C24', marginTop: '20px', marginBottom: '10px'}}>4.1 Changes to Refund Policy</h3>
               <p style={{marginBottom: '20px'}}>
@@ -120,7 +120,7 @@ Prompt Trade Fairs (India) Private Limited
                 Any revised terms shall become effective upon publication on the Company’s official website or upon written communication to exhibitors.
               </p>
 
-              <h2 style={{fontSize: '2rem', fontWeight: '800', color: '#111', margin: '50px 0 20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>5. Force Majeure</h2>
+              <h2 style={{fontSize: '2rem', fontWeight: '800', color: '#111', margin: '20px 0 20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>5. Force Majeure</h2>
               <p style={{marginBottom: '20px'}}>
                 The Organizer shall not be held liable for cancellation, postponement, delay, or modification of any exhibition arising from events beyond reasonable control, including but not limited to natural disasters, government restrictions, pandemics, labor disputes, fire, war, terrorism, civil unrest, or other force majeure events.
               </p>
@@ -128,7 +128,7 @@ Prompt Trade Fairs (India) Private Limited
                 In such circumstances, the Organizer reserves the right to reschedule the exhibition or adjust participation terms at its discretion.
               </p>
 
-              <h2 style={{fontSize: '2rem', fontWeight: '800', color: '#111', margin: '50px 0 20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>6. Contact Information</h2>
+              <h2 style={{fontSize: '2rem', fontWeight: '800', color: '#111', margin: '20px 0 20px', borderBottom: '2px solid #ED1C24', display: 'inline-block', paddingBottom: '10px'}}>6. Contact Information</h2>
               <p style={{marginBottom: '25px'}}>
                 For any questions, refund requests, or concerns regarding this Refund & Cancellation Policy, please contact:
               </p>
@@ -142,11 +142,14 @@ Prompt Trade Fairs (India) Private Limited
                    </div>
                    <div className="legal-contact-item">
                      <span className="label">Contact Number<span className="colon">:</span></span>
-                     <a href="tel:+919543668094" className="value">+91 95436 68094</a>
+                     <a href="tel:+919543668094" className="value">+91 95436 68094,</a>
+                     <a href="tel:+919391391162" className="value">+91 93913 91162,</a>
+                     <a href="tel:+917845769348" className="value">+91 78457 69348</a>
                    </div>
                    <div className="legal-contact-item">
                      <span className="label">Email ID<span className="colon">:</span></span>
-                     <a href="mailto:mktg@prompttradefairs.com" className="value">mktg@prompttradefairs.com</a>
+                     <a href="mailto:prompttradefairs@gmail.com" className="value">prompttradefairs@gmail.com,</a>
+                     <a href="mailto:project2@prompttradefairs.com" className="value">project2@prompttradefairs.com</a>
                    </div>
                  </div>
               </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import EnquiryForm from "./EnquiryForm";
 import { getPresentExpos } from "../api/common.api";
 import { getImageUrl } from "../config/apiClient";
@@ -27,6 +28,17 @@ const toTitleCase = (str) => {
   return str
     .toLowerCase()
     .replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
+const slugify = (text) => {
+  if (!text) return "";
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-');
 };
 
 const NextExpoSection = () => {
@@ -91,7 +103,7 @@ const NextExpoSection = () => {
   }
 
   return (
-    <section className="next-expo-section" style={{ padding: '80px 0', background: '#fff', position: 'relative' }}>
+    <section className="next-expo-section" style={{ padding: '80px 0', background: '#fff', position: 'relative', overflow: 'hidden' }}>
       <div className="container" style={{ position: 'relative' }}>
         <div className="premium-header-box centered" style={{ textAlign: 'center', marginBottom: '50px' }}>
           <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px', marginBottom: '15px' }}>
@@ -246,6 +258,12 @@ const NextExpoSection = () => {
               </p> */}
 
               <div className="present-expo-actions">
+                <Link
+                  to={currentExpo ? `/about-expo/${slugify(currentExpo.expoName)}` : "/about-expo"}
+                  className="expo-action-link about-expo-btn"
+                >
+                  <i className="fas fa-info-circle"></i> About the Expo
+                </Link>
                 <a
                   href={currentExpo.layoutImage ? getImageUrl(currentExpo.layoutImage) : undefined}
                   target={currentExpo.layoutImage ? "_blank" : undefined}
@@ -341,78 +359,115 @@ const NextExpoSection = () => {
       grid-template-columns: 1fr !important;
       gap: 30px !important;
     }
+
     .gallery-main-wrapper {
-      height: 250px !important;
+      width: 100% !important;
+      max-width: 500px !important;
+      height: auto !important;
+      aspect-ratio: 1/1 !important;
+      margin: 0 auto !important;
+      position: relative !important;
     }
+
     .gallery-main-wrapper > div {
-      height: 250px !important;
+      width: 100% !important;
+      height: 100% !important;
+      display: flex !important;
     }
+
+    .gallery-main-wrapper img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: contain !important;
+      display: block !important;
+      margin-bottom: 0 !important;
+    }
+
+    .next-expo-content-right {
+      text-align: left !important;
+    }
+
     .next-expo-content-right h3 {
       font-size: 1.8rem !important;
-      text-align: center;
+      text-align: left !important;
+      white-space: normal !important;
+      overflow: visible !important;
+      text-overflow: clip !important;
+      border-left: 5px solid #ED1C24 !important;
+      padding-left: 15px !important;
+      line-height: 1.3 !important;
+      margin-bottom: 20px !important;
     }
+
     .details-grid-v2 {
-      grid-template-columns: 1fr !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 20px !important;
+      margin-bottom: 25px !important;
+    }
+
+    .detail-item-v2 {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
       gap: 15px !important;
+      margin-bottom: 0 !important;
     }
+
+    .detail-item-v2 .text-content {
+      text-align: left !important;
+    }
+
+    .stats-row-mobile {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      gap: 10px !important;
+      align-items: start !important;
+      justify-items: start !important;
+      width: 100% !important;
+    }
+
+    .stats-row-mobile > div {
+      text-align: left !important;
+    }
+
     .present-expo-actions {
-      flex-direction: row !important;
-      flex-wrap: nowrap !important;
-      justify-content: space-between !important;
-      gap: 8px !important;
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 10px !important;
+      margin-top: 25px !important;
+      width: 100% !important;
     }
+
     .present-expo-actions a,
-    .present-expo-actions button {
-      padding: 10px 12px !important;
-      font-size: 0.8rem !important;
-      flex: 1 !important;
+    .present-expo-actions button,
+    .present-expo-actions .register-btn-main {
+      padding: 0 12px !important;
+      font-size: 0.85rem !important;
+      height: 48px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      white-space: nowrap !important;
+      box-sizing: border-box !important;
+      border-radius: 8px !important;
+    }
+
+    .present-expo-actions .about-expo-btn,
+    .present-expo-actions .register-btn-main {
+      grid-column: span 2 !important;
     }
   }
 
   @media (max-width: 768px) {
-
-  .stats-row-mobile {
-    width: 100%;
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    flex-wrap: nowrap !important;
-    gap: 10px !important;
-  }
-
-  .stats-row-mobile > div {
-    flex: 1;
-    text-align: center;
-  }
-
-/* Align stats cards equally on mobile/tablet */
-@media (max-width: 991px) {
-  .stats-row-mobile {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-    align-items: start;
-    justify-items: center;
-  }
-  .stats-row-mobile > div {
-    text-align: left !important;
-  }
-    
-}
-
-@media (max-width: 768px) {
-  .stats-row-mobile {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 8px;
-    align-items: start;
-    justify-items: center;
-  }
-}
-
     .next-expo-section {
       padding: 50px 20px !important;
     }
+
     .header-main-title {
       font-size: clamp(28px, 7vw, 42px) !important;
       line-height: 1.2 !important;
@@ -428,64 +483,27 @@ const NextExpoSection = () => {
       flex-shrink: 0;
     }
 
-  .header-accent-tag {
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-    .present-expo-actions {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 10px !important;
-  }
-
-  // .layout-btn,
-  // .brochure-btn {
-  //   flex: 1 1 calc(50% - 5px) !important;
-  //   width: calc(50% - 5px) !important;
-  // }
-
-  .present-expo-actions {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 12px !important;
-  }
-
-  .present-expo-actions .expo-action-link,
-  .present-expo-actions .register-btn-main {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 100% !important;
-
-    height: 64px !important;
-    box-sizing: border-box !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-
-    .details-grid-v2 {
-      gap: 15px !important;
+    .header-accent-tag {
+      margin: 0 !important;
+      padding: 0 !important;
     }
-    .next-expo-content-right p {
-      max-width: 100% !important;
-      font-size: 15px !important;
-      line-height: 1.7 !important;
+
+    .next-expo-section .nav-arrow {
+      top: 310px !important;
+      transform: translateY(-50%) !important;
+      z-index: 100 !important;
     }
-    .gallery-main-wrapper {
-      height: 100% !important;
-      display: flex;
+
+    .next-expo-section .nav-arrow.left {
+      left: 2px !important;
     }
-    .gallery-main-wrapper > div {
-      flex: 1 !important;
-      height: 100% !important;
+
+    .next-expo-section .nav-arrow.right {
+      right: 2px !important;
     }
-    .gallery-main-wrapper img {
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: cover !important;
-      display: block !important;
-      margin-bottom: 0 !important;
+
+    .stats-row-mobile {
+      gap: 8px !important;
     }
   }
 `}</style>

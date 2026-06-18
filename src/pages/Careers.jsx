@@ -521,6 +521,10 @@ const Careers = () => {
                         <i className="fas fa-users"></i>
                         <span className="job-detail-label">Openings:</span> {job.openings}
                       </p>
+                      <p className="job-detail-item">
+                        <i className="fas fa-rupee-sign"></i>
+                        <span className="job-detail-label">Salary:</span> Based on Experience
+                      </p>
                     </div>
                   </div>
 

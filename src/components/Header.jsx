@@ -54,6 +54,10 @@ const Header = () => {
             About Us
           </NavLink>
 
+          {/* <NavLink to="/about-expo" onClick={() => setIsMenuOpen(false)}>
+            About the Expo
+          </NavLink> */}
+
           <NavLink to="/upcoming-exhibitions" onClick={() => setIsMenuOpen(false)}>
             Current Expo
           </NavLink>

@@ -181,7 +181,7 @@ const EnquiryForm = ({
     <div className="modern-enquiry-form" style={{
       background: hideHeader ? 'transparent' : '#fff',
       borderRadius: hideHeader ? '0' : '8px',
-      overflow: 'hidden',
+      overflow: hideHeader ? 'visible' : 'hidden',
       boxShadow: hideHeader ? 'none' : '0 20px 60px rgba(0,0,0,0.4)',
       width: '100%',
       maxHeight: hideHeader ? 'none' : '90vh',
@@ -240,7 +240,7 @@ const EnquiryForm = ({
         </div>
       )}
 
-      <form noValidate onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, overflow: 'hidden', width: '100%', maxWidth: '100%' }}>
+      <form noValidate onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, overflow: hideHeader ? 'visible' : 'hidden', width: '100%', maxWidth: '100%' }}>
         <style>{`
         .form-grid {
   display: grid;
@@ -252,17 +252,33 @@ const EnquiryForm = ({
   grid-column: 1 / -1;
 }
 
+.form-grid input,
+.form-grid textarea {
+  transition: all 0.3s ease !important;
+}
+
+.form-grid input:focus,
+.form-grid textarea:focus {
+  border-color: #ED1C24 !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 4px rgba(237, 28, 36, 0.15) !important;
+  outline: none !important;
+}
+
 .form-actions-v3 {
   display: flex !important;
   flex-direction: row !important;
+  justify-content: center !important;
   gap: 12px !important;
   flex-wrap: nowrap !important;
 }
 
 .form-actions-v3 button {
-  flex: 1 !important;
-  height: 50px !important;
+  flex: none !important;
+  height: 46px !important;
   width: auto !important;
+  min-width: 160px !important;
+  padding: 0 30px !important;
 }
 
 @media (max-width: 991px) {
@@ -295,14 +311,16 @@ const EnquiryForm = ({
   .form-actions-v3 {
     display: flex !important;
     flex-direction: row !important;
+    justify-content: center !important;
     gap: 10px !important;
   }
 
   .form-actions-v3 button {
-    flex: 1 !important;
+    flex: none !important;
     width: auto !important;
-    height: 48px !important;
-    padding: 0 !important;
+    min-width: 140px !important;
+    height: 44px !important;
+    padding: 0 20px !important;
   }
 }
           
@@ -341,14 +359,6 @@ const EnquiryForm = ({
   .scrollable-fields-container {
     padding: 15px !important;
   }
-
-  // .form-actions-v3 {
-  //   flex-direction: column !important;
-  // }
-
-  // .form-actions-v3 button {
-  //   width: 100% !important;
-  // }
 }
 
 @media (min-width: 769px) and (max-width: 991px) {
@@ -462,10 +472,11 @@ const EnquiryForm = ({
           className="form-actions-v3"
           style={{
             display: "flex",
+            justifyContent: "center",
             gap: "12px",
-            padding: "15px",
-            background: "#f8fafc",
-            borderTop: "1px solid #eee"
+            padding: "20px 25px 25px",
+            background: "transparent",
+            borderTop: "none"
           }}
         >
           {!hideHeader && <button type="button" onClick={onClose} className="modal-btn-cancel" style={cancelBtnStyle}>Cancel</button>}
@@ -481,19 +492,7 @@ const EnquiryForm = ({
 const labelStyle = { fontSize: '0.85rem', fontWeight: '700', color: '#4b5563', marginBottom: '6px', display: 'block' };
 const inputStyle = {
   width: '100%',
-  height: '56px',
-  padding: '12px 16px',
-  border: '1px solid #e2e8f0',
-  borderRadius: '10px',
-  fontSize: '0.9rem',
-  boxSizing: 'border-box',
-  background: '#f8fafc',
-  transition: '0.3s'
-};
-
-const textareaStyle = {
-  width: '100%',
-  height: '56px !important',      // input same height
+  height: '50px',
   padding: '12px 16px',
   border: '1px solid #e2e8f0',
   borderRadius: '10px',
@@ -501,13 +500,27 @@ const textareaStyle = {
   boxSizing: 'border-box',
   background: '#f8fafc',
   transition: '0.3s',
-  resize: 'none'
+  outline: 'none'
+};
+
+const textareaStyle = {
+  width: '100%',
+  height: '50px !important',
+  padding: '12px 16px',
+  border: '1px solid #e2e8f0',
+  borderRadius: '10px',
+  fontSize: '0.9rem',
+  boxSizing: 'border-box',
+  background: '#f8fafc',
+  transition: '0.3s',
+  resize: 'none',
+  outline: 'none'
 };
 
 
 const cancelBtnStyle = {
-  flex: 1,
-  height: '50px',
+  height: '46px',
+  padding: '0 30px',
   background: '#6c757d',
   color: '#fff',
   border: 'none',
@@ -515,16 +528,16 @@ const cancelBtnStyle = {
   fontSize: '0.95rem',
   fontWeight: '600',
   cursor: 'pointer',
-
-  display: 'flex',
+  display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
-  lineHeight: '1'
+  lineHeight: '1',
+  transition: 'all 0.3s ease'
 };
 
 const saveBtnStyle = {
-  flex: 1,
-  height: '50px',
+  height: '46px',
+  padding: '0 40px',
   background: '#ed1c24',
   color: '#fff',
   border: 'none',
@@ -532,11 +545,12 @@ const saveBtnStyle = {
   fontSize: '0.95rem',
   fontWeight: '800',
   cursor: 'pointer',
-
-  display: 'flex',
+  display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
-  lineHeight: '1'
+  lineHeight: '1',
+  transition: 'all 0.3s ease',
+  boxShadow: '0 4px 12px rgba(237, 28, 36, 0.2)'
 };
 const errorTextStyle = { color: '#ED1C24', fontSize: '0.7rem', marginTop: '4px', display: 'block', fontWeight: '600' };
 

@@ -187,32 +187,38 @@ const Contact = () => {
                   // Removed fixed height, added flex:1 for equal height
                 }}
               >
-                <a
-                  href="https://www.google.com/maps?q=Prompt+Tower,+Plot+No:+324,+Ram+Nagar+South+12th+Extension,+Off+Radial+Road,+Near+Kamakshi+Hospital,+Pallikaranai,+Chennai+-+600100,+India"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <iframe
+                  title="Prompt Trade Fairs Location"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.3429612453842!2d80.2036651748409!3d12.949892487363483!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526640c18ace93%3A0x8985bc973dfc2262!2sPrompt%20Trade%20Fairs%20India%20Private%20Limited!5e0!3m2!1sen!2sin!4v1781759792753!5m2!1sen!2sin"
+                  width="100%"
+                  height="100%"
                   style={{
-                    display: "flex",
-                    width: "100%",
-                    height: "100%",
+                    border: 0,
+                    flex: 1,
                   }}
-                >
-                  <iframe
-                    title="Prompt Trade Fairs Location"
-                    src="https://www.google.com/maps?q=Prompt+Tower,+Plot+No:+324,+Ram+Nagar+South+12th+Extension,+Off+Radial+Road,+Near+Kamakshi+Hospital,+Pallikaranai,+Chennai+-+600100,+India&output=embed"
-                    width="100%"
-                    height="100%"
-                    style={{
-                      border: 0,
-                      pointerEvents: "none",
-                      flex: 1,
-                    }}
-                    allowFullScreen=""
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  />
-                </a>
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
               </div>
+              <a
+                href="https://www.google.com/maps/place/Prompt+Trade+Fairs+India+Private+Limited/@12.9498925,80.2036652,17z"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  marginTop: "12px",
+                  color: "#ED1C24",
+                  fontWeight: "700",
+                  fontSize: "14px",
+                  textDecoration: "none",
+                }}
+              >
+                <i className="fas fa-external-link-alt" style={{ fontSize: "12px" }}></i>
+                Open in Google Maps
+              </a>
             </div>
 
             {/* FORM */}

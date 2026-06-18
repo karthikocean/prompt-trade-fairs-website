@@ -88,7 +88,7 @@ const UpcomingExpoDetail = () => {
               <div className="v3-breadcrumb">
                 <Link to="/">Home</Link> <span>/</span> <Link to="/upcoming-exhibitions">Current Exhibitions</Link> <span>/</span> <span className="current">{expo.expoName}</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap', marginTop: '10px' }}>
+              <div className="v3-hero-title-row">
                 <h1 className="v3-hero-title" style={{ margin: 0 }}>Exhibition <span>Details</span></h1>
                 <button
                   onClick={scrollToForm}
@@ -121,7 +121,7 @@ const UpcomingExpoDetail = () => {
       </section>
 
       {/* CONTENT GRID */}
-      <div className="container" style={{ padding: '80px 0' }}>
+      <div className="container expo-detail-container">
         {/* BACK BUTTON */}
         <div style={{ marginBottom: '35px' }}>
           <Link to="/upcoming-exhibitions" className="v3-back-btn" style={{
@@ -204,25 +204,38 @@ const UpcomingExpoDetail = () => {
               </div>
 
               <div className="expo-downloads-row">
-                <a
-                  href={expo.layoutImage ? getImageUrl(expo.layoutImage) : undefined}
-                  target={expo.layoutImage ? "_blank" : undefined}
-                  rel="noopener noreferrer"
-                  className="download-btn-v3"
-                  style={!expo.layoutImage ? { pointerEvents: 'none', opacity: 0.5 } : {}}
-                >
-                  <i className="fas fa-download"></i> Layout
-                </a>
-
-                <a
-                  href={expo.brochure ? getImageUrl(expo.brochure) : undefined}
-                  target={expo.brochure ? "_blank" : undefined}
-                  rel="noopener noreferrer"
-                  className="download-btn-v3"
-                  style={!expo.brochure ? { pointerEvents: 'none', opacity: 0.5 } : {}}
-                >
-                  <i className="fas fa-download"></i> Brochure
-                </a>
+                <div className="present-expo-actions">
+                  <Link
+                    to={`/about-expo/${slug}`}
+                    className="expo-action-link about-expo-btn"
+                  >
+                    <i className="fas fa-info-circle"></i> About the Expo
+                  </Link>
+                  <a
+                    href={expo.layoutImage ? getImageUrl(expo.layoutImage) : undefined}
+                    target={expo.layoutImage ? "_blank" : undefined}
+                    rel="noopener noreferrer"
+                    className="expo-action-link layout-btn"
+                    style={!expo.layoutImage ? { pointerEvents: 'none', opacity: 0.5 } : {}}
+                  >
+                    <i className="fas fa-download"></i> Layout
+                  </a>
+                  <a
+                    href={expo.brochure ? getImageUrl(expo.brochure) : undefined}
+                    target={expo.brochure ? "_blank" : undefined}
+                    rel="noopener noreferrer"
+                    className="expo-action-link brochure-btn"
+                    style={!expo.brochure ? { pointerEvents: 'none', opacity: 0.5 } : {}}
+                  >
+                    <i className="fas fa-download"></i> Brochure
+                  </a>
+                  {/* <button
+                    onClick={scrollToForm}
+                    className="register-btn-main"
+                  >
+                    Register Now <i className="fas fa-arrow-right"></i>
+                  </button> */}
+                </div>
               </div>
             </div>
           </div>
@@ -254,6 +267,18 @@ const UpcomingExpoDetail = () => {
       </div>
 
       <style>{`
+        .v3-hero-title-row {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          flex-wrap: wrap;
+          margin-top: 10px;
+        }
+
+        .expo-detail-container {
+          padding: 80px 0;
+        }
+
         .expo-main-card {
           background: #fff;
           border-radius: 20px;
@@ -289,7 +314,7 @@ const UpcomingExpoDetail = () => {
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          gap: 30px;
+          gap: 15px;
         }
 
         .expo-details-title {
@@ -342,7 +367,7 @@ const UpcomingExpoDetail = () => {
         }
 
         .feature-value {
-          font-size: 1.1rem;
+          font-size: 1rem;
           color: #111;
           font-weight: 700;
         }
@@ -416,6 +441,10 @@ const UpcomingExpoDetail = () => {
         }
 
         @media (max-width: 991px) {
+          .expo-detail-container {
+            padding: 50px 0;
+          }
+
           .expo-detail-split-row {
             grid-template-columns: 1fr;
           }
@@ -427,7 +456,110 @@ const UpcomingExpoDetail = () => {
           }
           
           .expo-info-body-full {
-            padding: 30px;
+            padding: 35px;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .v3-hero-title-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+          }
+
+          .expo-detail-container {
+            padding: 40px 0;
+          }
+
+          .expo-info-body-full {
+            padding: 24px !important;
+            gap: 15px !important;
+          }
+
+          .expo-details-title {
+            font-size: 1.7rem !important;
+            margin-bottom: 8px !important;
+          }
+
+          .expo-features-grid-full {
+            margin-top: 20px !important;
+            gap: 15px !important;
+          }
+
+          .feature-block {
+            gap: 12px !important;
+          }
+
+          .feature-icon-box {
+            width: 40px !important;
+            height: 40px !important;
+            font-size: 1rem !important;
+            border-radius: 10px !important;
+          }
+
+          .feature-text-box {
+            gap: 2px !important;
+          }
+
+          .feature-value {
+            font-size: 0.95rem !important;
+          }
+
+          .expo-downloads-row {
+            padding-top: 20px !important;
+            margin-top: 20px !important;
+          }
+
+          .present-expo-actions {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 10px !important;
+            margin-top: 0 !important;
+            width: 100% !important;
+          }
+          
+          .present-expo-actions a,
+          .present-expo-actions button,
+          .present-expo-actions .register-btn-main {
+            padding: 0 12px !important;
+            font-size: 0.85rem !important;
+            height: 48px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            white-space: nowrap !important;
+            box-sizing: border-box !important;
+            border-radius: 8px !important;
+          }
+
+          .present-expo-actions .about-expo-btn {
+            grid-column: span 2 !important;
+          }
+
+          .expo-form-heading {
+            padding: 20px 20px 5px 20px !important;
+          }
+
+          .expo-form-heading h2 {
+            font-size: 1.3rem !important;
+          }
+
+          .expo-form-body-wrapper {
+            padding: 0 20px 20px 20px !important;
+          }
+
+          .expo-form-section-container {
+            margin-top: 35px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .expo-detail-container {
+            padding: 30px 0;
           }
         }
       `}</style>

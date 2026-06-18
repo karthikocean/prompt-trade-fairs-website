@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import ResigterForm from '../components/ResigterForm';
+import EnquiryForm from '../components/EnquiryForm';
 
 const ToExhibit = () => {
   const benefits = [
@@ -40,7 +41,31 @@ const ToExhibit = () => {
         </div>
       </section>
 
-      {/* 2. EXHIBITOR BENEFITS SECTION */}
+      {/* Section 2 - Registration Form */}
+      <div id="registration-form-section" className="expo-form-section-container" style={{ marginTop: '60px' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="expo-form-card"
+          >
+            <div className="expo-form-heading">
+              <h2>Register / Book Stall</h2>
+              <p>Fill out the form below to book a stall or register as a visitor.</p>
+            </div>
+            <div className="expo-form-body-wrapper">
+              <EnquiryForm
+                isExpoRegistration={false}
+                expoInfo={null}
+                hideHeader={true}
+                onClose={() => { }}
+              />
+            </div>
+          </motion.div>
+        </div>
+
+      {/* Section 3 - EXHIBITOR BENEFITS SECTION */}
       <section
         className="v3-initiatives-section"
         style={{ background: '#fff', padding: '50px 0' }}
@@ -114,7 +139,6 @@ const ToExhibit = () => {
                   whiteSpace: 'nowrap',
                   color: '#111'
                 }}>
-                  {item.num}
                 </span>
               </motion.div>
             ))}
@@ -123,7 +147,7 @@ const ToExhibit = () => {
         </div>
       </section>
 
-      {/* 3. NEW: EXHIBITION COVERAGE & ADVANTAGES SECTION */}
+      {/* Section 4 - NEW: EXHIBITION COVERAGE & ADVANTAGES SECTION */}
       <section className="coverage-v3-section" style={{ background: '#f8f9fa', padding: '120px 0' }}>
         <div className="container" style={{ overflow: 'hidden' }}>
           <div className="premium-header-box centered">
@@ -172,7 +196,7 @@ const ToExhibit = () => {
         </div>
       </section>
 
-      {/* 4. REGISTRATION FORM SECTION */}
+      {/* Section 5 - REGISTRATION FORM SECTION */}
       <ResigterForm />
       <style>{`
         .v3-initiative-card .v3-card-bottom-text {

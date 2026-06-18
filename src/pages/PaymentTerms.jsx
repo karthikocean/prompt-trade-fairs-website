@@ -29,7 +29,7 @@ const PaymentTerms = () => {
 
       {/* CONTENT SECTION */}
       <section className="legal-content-section" style={{padding: '100px 0', background: '#fff'}}>
-        <div className="container" style={{maxWidth: '900px'}}>
+        <div className="container">
            <div className="legal-doc-wrap" style={{lineHeight: '1.8', color: '#444'}}>
              
 
