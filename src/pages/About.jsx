@@ -1,6 +1,8 @@
 import React from 'react';
-import { useInView, useSpring, useTransform, motion } from 'framer-motion';
+import { useInView, useSpring, useTransform, motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { getGallery } from '../api/common.api';
+import { getImageUrl } from '../config/apiClient';
 
 const Counter = ({ value, suffix = "" }) => {
   const ref = React.useRef(null);
@@ -30,6 +32,12 @@ const Counter = ({ value, suffix = "" }) => {
 
 const About = () => {
   const [showAll, setShowAll] = React.useState(false);
+
+  // Editions Modal State
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [activeExpoName, setActiveExpoName] = React.useState('');
+  const [selectedYear, setSelectedYear] = React.useState('all');
+
   const brandExpoImages = import.meta.glob(
     '/src/assets/images/Our_Brand_Expo/*.{png,jpg,jpeg,webp}',
     {
@@ -41,12 +49,92 @@ const About = () => {
 
   const segments = Object.entries(brandExpoImages).map(([path, src]) => {
     const fileName = path.split('/').pop().replace(/\.[^/.]+$/, '');
-
     return {
       name: fileName,
       link: src,
     };
   });
+
+  // ── Gallery fetch ──
+  const [galleryItems, setGalleryItems] = React.useState([]);
+  const [galleryLoading, setGalleryLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    const fetchGallery = async () => {
+      setGalleryLoading(true);
+      try {
+        const res = await getGallery();
+        const data = res.data?.data || res.data || [];
+        setGalleryItems(Array.isArray(data) ? data : []);
+      } catch (e) {
+        console.error('Error fetching gallery:', e);
+      } finally {
+        setGalleryLoading(false);
+      }
+    };
+    fetchGallery();
+  }, []);
+
+  const openEditionsModal = (expoName) => {
+    setActiveExpoName(expoName);
+    setSelectedYear('all');
+    setModalOpen(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    document.body.style.overflow = '';
+  };
+
+  // Match gallery images by expo name (fuzzy match against expoId.expoName or category or title)
+  const matchedImages = React.useMemo(() => {
+    if (!activeExpoName || galleryItems.length === 0) return [];
+    const keyword = activeExpoName.toLowerCase().replace(/[^a-z0-9]/g, '');
+    return galleryItems.filter(img => {
+      const fields = [
+        img.expoId?.expoName || '',
+        img.category || '',
+        img.title || '',
+        img.expoName || '',
+        img.name || '',
+      ];
+      return fields.some(f => {
+        const norm = f.toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (!norm) return false;
+        return norm.includes(keyword) || keyword.includes(norm.substring(0, Math.min(norm.length, 6)));
+      });
+    });
+  }, [activeExpoName, galleryItems]);
+
+  // Extract unique years from matched images (from createdAt or date field)
+  const availableYears = React.useMemo(() => {
+    const years = new Set();
+    matchedImages.forEach(img => {
+      const dateStr = img.createdAt || img.date || img.year;
+      if (dateStr) {
+        const yr = new Date(dateStr).getFullYear();
+        if (!isNaN(yr)) years.add(yr);
+      }
+    });
+    return Array.from(years).sort((a, b) => b - a);
+  }, [matchedImages]);
+
+  // Apply year filter on matched images
+  const filteredImages = React.useMemo(() => {
+    if (selectedYear === 'all') return matchedImages;
+    return matchedImages.filter(img => {
+      const dateStr = img.createdAt || img.date || img.year;
+      if (!dateStr) return false;
+      return new Date(dateStr).getFullYear() === Number(selectedYear);
+    });
+  }, [matchedImages, selectedYear]);
+
+  const getGalleryImageSrc = (item) => {
+    const imagePath = item?.image || item?.galleryImage || item?.imageUrl || item?.url || item?.file;
+    return getImageUrl(imagePath);
+  };
+
   const cities = [
     "Chennai", "Bengaluru", "Hyderabad", "Ahmedabad",
     "Coimbatore", "Salem", "Vijayawada", "Visakhapatnam",
@@ -159,31 +247,37 @@ const About = () => {
             </p>
           </div>
 
-          <div
-            className="v3-segments-grid"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '28px',
-            }}
-          >
-            {(showAll ? segments : segments.slice(0, 8)).map((item, idx) => (
-              <motion.div
-                key={idx}
-                className="v3-segment-card"
-                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: (idx % 8) * 0.05 }}
+          {(() => {
+            const visibleItems = showAll ? segments : segments.slice(0, 8);
+
+            return (
+              <div
+                className="v3-segments-grid"
+                style={{
+                  display: 'grid',
+                  gap: '28px',
+                }}
               >
-                <div className="card-border-accent"></div>
-                <div className="card-image">
-                  <img src={item.link} alt={item.name} />                </div>
-                <h3 style={{ textAlign: 'center', marginTop: '20px' }}>{item.name}</h3>
-              </motion.div>
-            ))}
-          </div>
+                {visibleItems.map((item, idx) => (
+                  <motion.div
+                    key={idx}
+                    className="v3-segment-card"
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', cursor: 'pointer' }}
+                    onClick={() => openEditionsModal(item.name)}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: (idx % 8) * 0.05 }}
+                  >
+                    <div className="card-border-accent"></div>
+                    <div className="card-image" style={{ margin: 0, height: '100%', minHeight: '120px' }}>
+                      <img src={item.link} alt={item.name} />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            );
+          })()}
 
           <div className="about-v3-intro-btn" style={{ textAlign: 'center', marginTop: '40px' }}>
             <button
@@ -192,7 +286,7 @@ const About = () => {
                 background: '#ED1C24',
                 color: '#fff',
                 border: 'none',
-                padding: '14px 35px',
+                padding: '4px 25px',
                 borderRadius: '30px',
                 fontSize: '1rem',
                 fontWeight: '700',
@@ -225,23 +319,37 @@ const About = () => {
       <section className="v3-presence-section">
         <div className="container">
           <div className="presence-grid">
-            <div className="presence-header-col">
+            <div className="presence-text-col">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <div className="premium-header-box" style={{ marginBottom: '10px' }}>
-                  <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                <div className="premium-header-box" style={{ marginBottom: '15px' }}>
+                  <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                     <div className="header-accent-line"></div>
                     <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>PAN-INDIA NETWORK</span>
                   </div>
 
-                  <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111' }}>
+                  <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111', margin: '0' }}>
                     Strong Presence Across India
                   </h2>
                 </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '20px', textAlign: 'justify', marginTop: 0 }}>
+                  PROMPT has successfully organized exhibitions in major business cities including Chennai, Bengaluru, Hyderabad, Ahmedabad, Coimbatore, Salem, Vijayawada, Visakhapatnam, Warangal, Rajahmundry, and many other key locations across India.
+                </p>
+                <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '0', textAlign: 'justify' }}>
+                  With a strong database of registered visitors and industry professionals in every region, PROMPT exhibitions consistently attract quality footfall and deliver outstanding business opportunities for exhibitors.
+                </p>
               </motion.div>
             </div>
 
@@ -260,23 +368,6 @@ const About = () => {
                 </div>
               </motion.div>
             </div>
-
-            <div className="presence-content-col">
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              // style={{ marginTop: '-80px' }}
-              >
-                <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '20px', textAlign: 'justify', marginTop: 0 }}>
-                  PROMPT has successfully organized exhibitions in major business cities including Chennai, Bengaluru, Hyderabad, Ahmedabad, Coimbatore, Salem, Vijayawada, Visakhapatnam, Warangal, Rajahmundry, and many other key locations across India.
-                </p>
-                <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '30px', textAlign: 'justify' }}>
-                  With a strong database of registered visitors and industry professionals in every region, PROMPT exhibitions consistently attract quality footfall and deliver outstanding business opportunities for exhibitors.
-                </p>
-              </motion.div>
-            </div>
           </div>
         </div>
       </section>
@@ -285,25 +376,6 @@ const About = () => {
       <section className="v3-management-section">
         <div className="container">
           <div className="management-grid">
-            <div className="management-header-col">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                <div className="premium-header-box" style={{ marginBottom: '10px' }}>
-                  <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                    <div className="header-accent-line"></div>
-                    <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>END-TO-END SUPPORT</span>
-                  </div>
-                  <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111', lineHeight: '1.2' }}>
-                    Excellence in Exhibition Management
-                  </h2>
-                </div>
-              </motion.div>
-            </div>
-
             <div className="management-image-col">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -319,17 +391,34 @@ const About = () => {
               </motion.div>
             </div>
 
-            <div className="management-content-col">
+            <div className="management-text-col">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '20px', textAlign: 'justify' }}>
+                <div className="premium-header-box" style={{ marginBottom: '15px' }}>
+                  <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
+                    <div className="header-accent-line"></div>
+                    <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>END-TO-END SUPPORT</span>
+                  </div>
+                  <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111', margin: '0', lineHeight: '1.2' }}>
+                    Excellence in Exhibition Management
+                  </h2>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '20px', textAlign: 'justify', marginTop: 0 }}>
                   Every PROMPT exhibition is conceptualized with detailed planning, innovative marketing strategies, and extensive promotions across digital media, print advertising, outdoor campaigns and branding platforms. The company focuses on delivering seamless event execution and exceptional customer service, making every exhibition a valuable experience for exhibitors and visitors alike.
                 </p>
-                <p style={{ fontSize: '16px', lineHeight: '1.8', textAlign: 'justify' }}>
+                <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '0', textAlign: 'justify' }}>
                   As a complete exhibition solutions provider, PROMPT offers end-to-end support for Trade Fairs, Expos and Business Events, ensuring operational excellence at every stage. Its commitment to professionalism, quality, and business success has positioned PROMPT as one of the leading Trade Fair and exhibition organizers in India.
                 </p>
               </motion.div>
@@ -361,6 +450,114 @@ const About = () => {
           </div>
         </div>
       </section> */}
+
+      {/* ── EDITIONS MODAL ── */}
+      <AnimatePresence>
+        {modalOpen && (
+          <motion.div
+            className="editions-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeModal}
+          >
+            <motion.div
+              className="editions-modal"
+              initial={{ scale: 0.92, opacity: 0, y: 30 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.92, opacity: 0, y: 30 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="editions-modal-header">
+                <div>
+                  <span className="editions-modal-tag">PAST EDITIONS</span>
+                  <h2 className="editions-modal-title">{activeExpoName}</h2>
+                </div>
+                <button className="editions-modal-close" onClick={closeModal}>
+                  <i className="fas fa-times"></i>
+                </button>
+              </div>
+
+              {/* Year Filter Chips */}
+              {!galleryLoading && availableYears.length > 0 && (
+                <div className="editions-year-filters">
+                  <button
+                    className={`year-chip ${selectedYear === 'all' ? 'active' : ''}`}
+                    onClick={() => setSelectedYear('all')}
+                  >
+                    All Years
+                  </button>
+                  {availableYears.map(yr => (
+                    <button
+                      key={yr}
+                      className={`year-chip ${selectedYear === yr ? 'active' : ''}`}
+                      onClick={() => setSelectedYear(yr)}
+                    >
+                      {yr}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Modal Body */}
+              <div className="editions-modal-body">
+                {galleryLoading ? (
+                  <div className="editions-loading">
+                    <div className="editions-spinner"></div>
+                    <p>Loading editions...</p>
+                  </div>
+                ) : filteredImages.length === 0 ? (
+                  <div className="editions-empty">
+                    <i className="fas fa-calendar-times"></i>
+                    <p>No past editions found{selectedYear !== 'all' ? ` for ${selectedYear}` : ''}.</p>
+                  </div>
+                ) : (
+                  <div className="editions-cards-grid">
+                    {filteredImages.map((item, idx) => {
+                      const imageSrc = getGalleryImageSrc(item);
+                      const title = item.title || item.expoId?.expoName || item.expoName || activeExpoName;
+                      const venue = item.venue || item.expoId?.venue;
+                      const dateStr = item.createdAt || item.date || item.year;
+                      const year = dateStr ? new Date(dateStr).getFullYear() : null;
+
+                      return (
+                        <motion.div
+                          key={item._id || idx}
+                          className="editions-card"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: idx * 0.05 }}
+                        >
+                          {imageSrc && (
+                            <div className="editions-card-img">
+                              <img src={imageSrc} alt={title} />
+                            </div>
+                          )}
+                          <div className="editions-card-body">
+                            <h4>{title}</h4>
+                            {year && !isNaN(year) && (
+                              <div className="editions-card-meta">
+                                <span><i className="far fa-calendar-alt"></i> {year}</span>
+                              </div>
+                            )}
+                            {venue && (
+                              <div className="editions-card-meta">
+                                <span><i className="fas fa-map-marker-alt"></i> {venue}</span>
+                              </div>
+                            )}
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </main>
   );

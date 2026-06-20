@@ -36,7 +36,7 @@ const Header = () => {
             <img
               src={
                 isScrolled || window.innerWidth <= 991
-                  ? "/logooooooooooo.png"
+                  ? "/orginal1.png"
                   : "/prompt-logo-NEW.png"
               }
               alt="Prompt Logo"
@@ -88,9 +88,9 @@ const Header = () => {
             </div>
           </div> */}
 
-          {/* <NavLink to="/events" onClick={() => setIsMenuOpen(false)}>
+          <NavLink to="/events" onClick={() => setIsMenuOpen(false)}>
             Events
-          </NavLink> */}
+          </NavLink>
 
           {/* DROPDOWN - OUR GROUPS */}
           <div

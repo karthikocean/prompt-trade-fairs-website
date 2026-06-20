@@ -23,6 +23,18 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
+const formatDateRange = (start, end) => {
+  if (!start) return "";
+  const startDate = new Date(start);
+  const endDate = end ? new Date(end) : startDate;
+  const month = startDate.toLocaleString(undefined, { month: 'long' });
+  const year = startDate.getFullYear();
+  const dayStart = startDate.getDate();
+  const dayEnd = endDate.getDate();
+  const days = dayStart === dayEnd ? `${dayStart}` : Array.from({ length: dayEnd - dayStart + 1 }, (_, i) => dayStart + i).join(', ');
+  return `${days} ${month}-${year}`;
+};
+
 const UpcomingExpoDetail = () => {
   const { slug } = useParams();
   const [expo, setExpo] = useState(null);
@@ -159,47 +171,99 @@ const UpcomingExpoDetail = () => {
                 <h1 className="expo-details-title">{expo.expoName}</h1>
 
                 <div className="expo-features-grid-full">
-                  <div className="feature-block">
-                    <div className="feature-icon-box">
-                      <i className="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div className="feature-text-box">
-                      <span className="feature-label">Venue Location</span>
-                      <strong className="feature-value">{expo.venue}</strong>
-                    </div>
-                  </div>
-
-                  <div className="feature-block">
-                    <div className="feature-icon-box">
-                      <i className="far fa-calendar-alt"></i>
-                    </div>
-                    <div className="feature-text-box">
-                      <span className="feature-label">Duration</span>
-                      <strong className="feature-value">{formatDate(expo.startDate)} - {formatDate(expo.endDate)}</strong>
-                    </div>
-                  </div>
-
-                  <div className="feature-block">
-                    <div className="feature-icon-box">
-                      <i className="fas fa-clock"></i>
-                    </div>
-                    <div className="feature-text-box">
-                      <span className="feature-label">Timings</span>
-                      <strong className="feature-value">{expo.startTime} - {expo.endTime}</strong>
-                    </div>
-                  </div>
-
-                  {/* {expo.stats && (
-                    <div className="feature-block">
-                      <div className="feature-icon-box" style={{ color: '#22c55e', background: '#f0fdf4' }}>
-                        <i className="fas fa-th"></i>
+                  {expo.website ? (
+                    <>
+                      {/* 1. Website */}
+                      <div className="feature-block" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                        <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                          <i className="fas fa-globe" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
+                        </div>
+                        <div>
+                          <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'lowercase' }}>
+                            {expo.website}
+                          </h4>
+                          <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Website</p>
+                        </div>
                       </div>
-                      <div className="feature-text-box">
-                        <span className="feature-label">Available Stalls</span>
-                        <strong className="feature-value" style={{ color: '#22c55e' }}>{expo.stats.stallAvailable} Stalls</strong>
+
+                      {/* 2. Venue Location */}
+                      <div className="feature-block" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                        <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                          <i className="fas fa-map-marker-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
+                        </div>
+                        <div>
+                          <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f' }}>
+                            {expo.venue}
+                          </h4>
+                          <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Event Location</p>
+                        </div>
                       </div>
-                    </div>
-                  )} */}
+
+                      {/* 3. Date & Time (Horizontal) */}
+                      <div className="feature-block" style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                        <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                          <i className="fas fa-calendar-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                          <h4 style={{ margin: '0 0 4px 0', fontSize: '14px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '10px', whiteSpace: 'nowrap' }}>
+                            <span style={{ height: '60px', display: 'inline-flex', alignItems: 'center' }}>{formatDateRange(expo.startDate, expo.endDate)}</span>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
+                              <span style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                                <span style={{ background: '#ED1C24', width: '34px', height: '34px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                  <i className="fas fa-clock" style={{ color: '#fff', fontSize: '1.05rem' }}></i>
+                                </span>
+                              </span>
+                              <span style={{ height: '60px', display: 'inline-flex', alignItems: 'center' }}>{expo.startTime} - {expo.endTime}</span>
+                            </span>
+                          </h4>
+                          <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Date & Time</p>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {/* 1. Venue Location */}
+                      <div className="feature-block" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                        <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                          <i className="fas fa-map-marker-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
+                        </div>
+                        <div>
+                          <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f' }}>
+                            {expo.venue}
+                          </h4>
+                          <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Event Location</p>
+                        </div>
+                      </div>
+
+                      {/* 2. Date (Vertical) */}
+                      <div className="feature-block" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                        <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                          <i className="fas fa-calendar-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
+                        </div>
+                        <div>
+                          <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                            {formatDateRange(expo.startDate, expo.endDate)}
+                          </h4>
+                          <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Exhibition Duration</p>
+                        </div>
+                      </div>
+
+                      {/* 3. Time (Vertical) */}
+                      <div className="feature-block" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                        <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                          <span style={{ background: '#ED1C24', width: '34px', height: '34px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <i className="fas fa-clock" style={{ color: '#fff', fontSize: '1.05rem' }}></i>
+                          </span>
+                        </div>
+                        <div>
+                          <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                            {expo.startTime} - {expo.endTime}
+                          </h4>
+                          <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Expo Timing</p>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
 

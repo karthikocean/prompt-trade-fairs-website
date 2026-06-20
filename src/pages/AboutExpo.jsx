@@ -175,15 +175,8 @@ const AboutExpo = () => {
               <div className="v3-breadcrumb">
                 <Link to="/">Home</Link> <span>/</span> <span className="current">About the Expo</span>
               </div>
-              <h1 className="v3-hero-title">
-                {pageTitle.includes(" ") ? (
-                  <>
-                    {pageTitle.substring(0, pageTitle.lastIndexOf(" "))}{' '}
-                    <span>{pageTitle.substring(pageTitle.lastIndexOf(" ") + 1)}</span>
-                  </>
-                ) : (
-                  <span>{pageTitle}</span>
-                )}
+              <h1 className="v3-hero-title v3-hero-title--single-line">
+                {pageTitle}
               </h1>
               <p className="v3-hero-subtitle" style={{ color: '#fff', opacity: '0.8', maxWidth: '600px', marginTop: '15px' }}>
                 {pageSubtitle}
