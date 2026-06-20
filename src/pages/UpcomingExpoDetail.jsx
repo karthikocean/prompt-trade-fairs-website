@@ -171,7 +171,7 @@ const UpcomingExpoDetail = () => {
                 <h1 className="expo-details-title">{expo.expoName}</h1>
 
                 <div className="expo-features-grid-full">
-                  {expo.website ? (
+                  {expo.websiteLink ? (
                     <>
                       {/* 1. Website */}
                       <div className="feature-block" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
@@ -180,7 +180,7 @@ const UpcomingExpoDetail = () => {
                         </div>
                         <div>
                           <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'lowercase' }}>
-                            {expo.website}
+                            <a href={expo.websiteLink} target="_blank" rel="noopener noreferrer">{expo.websiteLink}</a>
                           </h4>
                           <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Website</p>
                         </div>
