@@ -203,16 +203,16 @@ const NextExpoSection = () => {
               </h3>
 
               <div className="details-grid-v2" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '25px', marginBottom: '30px' }}>
-                {currentExpo.website ? (
+                {currentExpo.websiteLink ? (
                   <>
                     {/* 1. Website */}
-                    <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                    <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center', cursor: 'pointer' }} onClick={() => window.open(currentExpo.websiteLink, '_blank')}>
                       <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
                         <i className="fas fa-globe" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
                       </div>
                       <div>
                         <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f' }}>
-                          {currentExpo.website}
+                          {currentExpo.websiteLink}
                         </h4>
                         <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Website</p>
                       </div>
