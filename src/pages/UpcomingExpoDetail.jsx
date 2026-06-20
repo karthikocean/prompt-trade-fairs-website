@@ -39,6 +39,15 @@ const UpcomingExpoDetail = () => {
   const { slug } = useParams();
   const [expo, setExpo] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 991);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 991);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const scrollToForm = () => {
     const element = document.getElementById('registration-form-section');
@@ -178,8 +187,8 @@ const UpcomingExpoDetail = () => {
                         <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
                           <i className="fas fa-globe" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
                         </div>
-                        <div>
-                          <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'lowercase' }}>
+                        <div style={{ minWidth: 0, flex: 1 }}>
+                          <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'lowercase', wordBreak: 'break-all' }}>
                             <a href={expo.websiteLink} target="_blank" rel="noopener noreferrer">{expo.websiteLink}</a>
                           </h4>
                           <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Website</p>
@@ -191,32 +200,42 @@ const UpcomingExpoDetail = () => {
                         <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
                           <i className="fas fa-map-marker-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
                         </div>
-                        <div>
-                          <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f' }}>
+                        <div style={{ minWidth: 0, flex: 1 }}>
+                          <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', wordBreak: 'break-word' }}>
                             {expo.venue}
                           </h4>
                           <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Event Location</p>
                         </div>
                       </div>
 
-                      {/* 3. Date & Time (Horizontal) */}
-                      <div className="feature-block" style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-                        <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
-                          <i className="fas fa-calendar-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
+                      {/* 3. Date & Time Row */}
+                      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '20px', width: '100%' }}>
+                        {/* Date Block */}
+                        <div className="feature-block" style={{ display: 'flex', gap: '20px', alignItems: 'center', flex: 1 }}>
+                          <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                            <i className="fas fa-calendar-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
+                          </div>
+                          <div style={{ minWidth: 0, flex: 1 }}>
+                            <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                              {formatDateRange(expo.startDate, expo.endDate)}
+                            </h4>
+                            <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Exhibition Duration</p>
+                          </div>
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                          <h4 style={{ margin: '0 0 4px 0', fontSize: '14px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '10px', whiteSpace: 'nowrap' }}>
-                            <span style={{ height: '60px', display: 'inline-flex', alignItems: 'center' }}>{formatDateRange(expo.startDate, expo.endDate)}</span>
-                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
-                              <span style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
-                                <span style={{ background: '#ED1C24', width: '34px', height: '34px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                  <i className="fas fa-clock" style={{ color: '#fff', fontSize: '1.05rem' }}></i>
-                                </span>
-                              </span>
-                              <span style={{ height: '60px', display: 'inline-flex', alignItems: 'center' }}>{expo.startTime} - {expo.endTime}</span>
+
+                        {/* Time Block */}
+                        <div className="feature-block" style={{ display: 'flex', gap: '20px', alignItems: 'center', flex: 1 }}>
+                          <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                            <span style={{ background: '#ED1C24', width: '34px', height: '34px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                              <i className="fas fa-clock" style={{ color: '#fff', fontSize: '1.05rem' }}></i>
                             </span>
-                          </h4>
-                          <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Date & Time</p>
+                          </div>
+                          <div style={{ minWidth: 0, flex: 1 }}>
+                            <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                              {expo.startTime} - {expo.endTime}
+                            </h4>
+                            <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Expo Timing</p>
+                          </div>
                         </div>
                       </div>
                     </>
@@ -227,8 +246,8 @@ const UpcomingExpoDetail = () => {
                         <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
                           <i className="fas fa-map-marker-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
                         </div>
-                        <div>
-                          <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f' }}>
+                        <div style={{ minWidth: 0, flex: 1 }}>
+                          <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', wordBreak: 'break-word' }}>
                             {expo.venue}
                           </h4>
                           <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Event Location</p>
@@ -240,7 +259,7 @@ const UpcomingExpoDetail = () => {
                         <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
                           <i className="fas fa-calendar-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
                         </div>
-                        <div>
+                        <div style={{ minWidth: 0, flex: 1 }}>
                           <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
                             {formatDateRange(expo.startDate, expo.endDate)}
                           </h4>
@@ -255,7 +274,7 @@ const UpcomingExpoDetail = () => {
                             <i className="fas fa-clock" style={{ color: '#fff', fontSize: '1.05rem' }}></i>
                           </span>
                         </div>
-                        <div>
+                        <div style={{ minWidth: 0, flex: 1 }}>
                           <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
                             {expo.startTime} - {expo.endTime}
                           </h4>
@@ -525,6 +544,14 @@ const UpcomingExpoDetail = () => {
         }
 
         @media (max-width: 768px) {
+          .desktop-only-row {
+            display: none !important;
+          }
+
+          .mobile-only-row {
+            display: flex !important;
+          }
+
           .v3-hero-title-row {
             flex-direction: column;
             align-items: flex-start;

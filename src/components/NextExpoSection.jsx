@@ -49,6 +49,16 @@ const NextExpoSection = () => {
   const [selectedExpo, setSelectedExpo] = useState(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 991);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 991);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   useEffect(() => {
     const fetchExpos = async () => {
       try {
@@ -231,27 +241,37 @@ const NextExpoSection = () => {
                       </div>
                     </div>
 
-                    {/* 3. Date & Time (Horizontal Inline) */}
-                    <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-                      <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
-                        <i className="fas fa-calendar-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
-                      </div>
-                      <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
-                          <span style={{ height: '60px', display: 'inline-flex', alignItems: 'center' }}>{formatDateRange(currentExpo.startDate, currentExpo.endDate)}</span>
-                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
-                            <span style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
-                              <span style={{ background: '#ED1C24', width: '34px', height: '34px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <i className="fas fa-clock" style={{ color: '#fff', fontSize: '1.05rem' }}></i>
-                              </span>
+                      {/* 3. Date & Time Row */}
+                      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '20px', width: '100%' }}>
+                        {/* Date Block */}
+                        <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center', flex: 1 }}>
+                          <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                            <i className="fas fa-calendar-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
+                          </div>
+                          <div style={{ minWidth: 0, flex: 1 }}>
+                            <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                              {formatDateRange(currentExpo.startDate, currentExpo.endDate)}
+                            </h4>
+                            <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Exhibition Duration</p>
+                          </div>
+                        </div>
+
+                        {/* Time Block */}
+                        <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center', flex: 1 }}>
+                          <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                            <span style={{ background: '#ED1C24', width: '34px', height: '34px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                              <i className="fas fa-clock" style={{ color: '#fff', fontSize: '1.05rem' }}></i>
                             </span>
-                            <span style={{ height: '60px', display: 'inline-flex', alignItems: 'center' }}>{currentExpo.startTime} - {currentExpo.endTime}</span>
-                          </span>
-                        </h4>
-                        <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Date & Time</p>
+                          </div>
+                          <div style={{ minWidth: 0, flex: 1 }}>
+                            <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                              {currentExpo.startTime} - {currentExpo.endTime}
+                            </h4>
+                            <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Expo Timing</p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </>
+                    </>
                 ) : (
                   <>
                     {/* 1. Address */}
