@@ -4,7 +4,8 @@ import {
   createStallEnquiry,
   createVisitorEnquiry,
   createInterestEnquiry,
-  createContactEnquiry
+  createContactEnquiry,
+  getPresentExpos
 } from "../api/common.api";
 import toast from "react-hot-toast";
 
@@ -36,6 +37,24 @@ const EnquiryForm = ({
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [expos, setExpos] = useState([]);
+  const [selectedExpoId, setSelectedExpoId] = useState("");
+
+  useEffect(() => {
+    if (!expoInfo) {
+      const fetchExpos = async () => {
+        try {
+          const response = await getPresentExpos();
+          if (response.data && response.data.data) {
+            setExpos(response.data.data);
+          }
+        } catch (error) {
+          console.error("Error fetching expos:", error);
+        }
+      };
+      fetchExpos();
+    }
+  }, [expoInfo]);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -93,6 +112,12 @@ const EnquiryForm = ({
 
     if (!formData.city.trim()) newErrors.city = "City is required";
 
+    if (!expoInfo && !isSimplified) {
+      if (!selectedExpoId) {
+        newErrors.expoId = "Exhibition selection is required";
+      }
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -128,7 +153,7 @@ const EnquiryForm = ({
         }
       } else if (enquiryType === "visitors") {
         const payload = {
-          expoId: expoInfo?._id,
+          expoId: expoInfo?._id || selectedExpoId || null,
           type: "Visitor Registration",
           name: formData.name,
           mobileNo: formData.mobileNo,
@@ -139,7 +164,7 @@ const EnquiryForm = ({
         await createEnquiry(payload);
       } else {
         const payload = {
-          expoId: expoInfo?._id,
+          expoId: expoInfo?._id || selectedExpoId || null,
           type: "Stall Booking",
           name: formData.name,
           companyName: formData.companyName,
@@ -155,6 +180,7 @@ const EnquiryForm = ({
 
       toast.success("Enquiry Submitted Successfully!");
 
+      setSelectedExpoId("");
       setFormData({
         name: "",
         email: "",
@@ -382,6 +408,38 @@ const EnquiryForm = ({
             {enquiryType === "stalls" || isSimplified ? (
               // STALL BOOKING FIELDS
               <>
+                {!expoInfo && !isSimplified && (
+                  <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+                    <label style={labelStyle}>Select Expo *</label>
+                    <select
+                      name="expoId"
+                      value={selectedExpoId}
+                      onChange={(e) => {
+                        setSelectedExpoId(e.target.value);
+                        if (errors.expoId) {
+                          setErrors(prev => ({ ...prev, expoId: "" }));
+                        }
+                      }}
+                      style={{
+                        ...inputStyle,
+                        borderColor: errors.expoId ? '#ED1C24' : '#e2e8f0',
+                        appearance: 'none',
+                        backgroundImage: `url("data:image/svg+xml;utf8,<svg fill='%234b5563' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>")`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'right 16px center',
+                        backgroundSize: '24px'
+                      }}
+                    >
+                      <option value="">Select Expo</option>
+                      {expos.map(expo => (
+                        <option key={expo._id} value={expo._id}>
+                          {expo.expoName}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.expoId && <span style={errorTextStyle}>{errors.expoId}</span>}
+                  </div>
+                )}
                 <div className="form-group">
                   <label style={labelStyle}>Name *</label>
                   <input style={{ ...inputStyle, borderColor: errors.name ? '#ED1C24' : '#e2e8f0' }} type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Enter Name" />
@@ -432,6 +490,38 @@ const EnquiryForm = ({
             ) : (
               // VISITOR REGISTRATION FIELDS
               <>
+                {!expoInfo && (
+                  <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+                    <label style={labelStyle}>Select Expo *</label>
+                    <select
+                      name="expoId"
+                      value={selectedExpoId}
+                      onChange={(e) => {
+                        setSelectedExpoId(e.target.value);
+                        if (errors.expoId) {
+                          setErrors(prev => ({ ...prev, expoId: "" }));
+                        }
+                      }}
+                      style={{
+                        ...inputStyle,
+                        borderColor: errors.expoId ? '#ED1C24' : '#e2e8f0',
+                        appearance: 'none',
+                        backgroundImage: `url("data:image/svg+xml;utf8,<svg fill='%234b5563' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>")`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'right 16px center',
+                        backgroundSize: '24px'
+                      }}
+                    >
+                      <option value="">Select Expo</option>
+                      {expos.map(expo => (
+                        <option key={expo._id} value={expo._id}>
+                          {expo.expoName}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.expoId && <span style={errorTextStyle}>{errors.expoId}</span>}
+                  </div>
+                )}
                 <div className="form-group">
                   <label style={labelStyle}>Name *</label>
                   <input style={{ ...inputStyle, borderColor: errors.name ? '#ED1C24' : '#e2e8f0' }} type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Enter Name" />
