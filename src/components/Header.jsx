@@ -36,7 +36,7 @@ const Header = () => {
             <img
               src={
                 isScrolled || window.innerWidth <= 991
-                  ? "/logooooooooooo.png"
+                  ? "/orginal1.png"
                   : "/prompt-logo-NEW.png"
               }
               alt="Prompt Logo"

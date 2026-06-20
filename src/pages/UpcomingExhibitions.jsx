@@ -26,7 +26,7 @@ const UpcomingExhibitions = () => {
   const navigate = useNavigate();
   const [expos, setExpos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [visibleCount, setVisibleCount] = useState(4);
+  const [visibleCount, setVisibleCount] = useState(6);
 
   useEffect(() => {
     const fetchExpos = async () => {
@@ -46,7 +46,7 @@ const UpcomingExhibitions = () => {
   }, []);
 
   const handleLoadMore = () => {
-    setVisibleCount(prev => prev + 2);
+    setVisibleCount(prev => prev + 3);
   };
 
   const showLoadMore = expos.length > visibleCount;
@@ -137,16 +137,16 @@ const UpcomingExhibitions = () => {
           ) : (
             <div
               className="row expo-grid"
-              style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}
+              style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}
             >
               {expos.slice(0, visibleCount).map((expo) => (
                 <div
                   key={expo._id}
                   className="expo-card mb-4"
                   onClick={() => navigate(`/upcoming-exhibitions/${slugify(expo.expoName)}`)}
-                  style={{ borderRadius: '12px', background: '#fff', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', cursor: 'pointer' }}
+                  style={{ borderRadius: '12px', background: '#fff', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', cursor: 'pointer', display: 'flex', flexDirection: 'column', height: '100%' }}
                 >
-                  <div style={{ width: '100%', height: '380px', overflow: 'hidden' }}>
+                  <div style={{ width: '100%', height: '380px', overflow: 'hidden', background: '#f8f9fa', borderRadius: '12px 12px 0 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <img
                       src={getImageUrl(expo.expoImage)}
                       alt={expo.expoName}
@@ -154,20 +154,21 @@ const UpcomingExhibitions = () => {
                     />
                   </div>
                   <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                    <h3 style={{ fontSize: '1.4rem', fontWeight: '800', color: '#111', lineHeight: '1.3', marginBottom: '15px' }}>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#111', lineHeight: '1.4', minHeight: '56px', display: 'flex', alignItems: 'flex-start' }}>
                       {expo.expoName}
                     </h3>
-                    <div className='expo-content-mobile' style={{ display: 'flex', flexDirection: 'column', gap: '10px', color: 'rgb(17,17,17)', fontWeight: '700', fontSize: '18px' }}>
-                      <div className="date-mobile-icon" style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <i className="far fa-calendar-alt" style={{ color: '#ED1C24' }}></i> {formatDate(expo.startDate)}
-                        </span>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <i className="fas fa-clock" style={{ color: '#ED1C24' }}></i> {expo.startTime} - {expo.endTime}
-                        </span>
-                        <span style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                          <i className="fas fa-map-marker-alt location-icon" style={{ color: '#ED1C24', position: 'relative', top: '14px' }}></i> {expo.venue}
-                        </span>
+                    <div className='expo-content-mobile' style={{ display: 'flex', flexDirection: 'column', gap: '12px', color: '#333', fontWeight: '700', fontSize: '14.5px'}}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <i className="far fa-calendar-alt" style={{ color: '#ED1C24', width: '18px', fontSize: '1.1rem', textAlign: 'center' }}></i>
+                        <span>{formatDate(expo.startDate)}</span>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <i className="fas fa-clock" style={{ color: '#ED1C24', width: '18px', fontSize: '1.1rem', textAlign: 'center' }}></i>
+                        <span>{expo.startTime} - {expo.endTime}</span>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                        <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24', width: '18px', fontSize: '1.1rem', textAlign: 'center', marginTop: '3px' }}></i>
+                        <span style={{ lineHeight: '1.4' }}>{expo.venue}</span>
                       </div>
                     </div>
                   </div>
@@ -203,12 +204,10 @@ const UpcomingExhibitions = () => {
         </div>
       </section>
 
-
-
       <style jsx>{`
-  @media (min-width: 769px) {
+  @media (min-width: 992px) {
     .expo-grid {
-      grid-template-columns: repeat(2, 1fr) !important;
+      grid-template-columns: repeat(3, 1fr) !important;
     }
   }
   @media (max-width: 991px) and (min-width: 769px) {

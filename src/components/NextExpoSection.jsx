@@ -149,12 +149,13 @@ const NextExpoSection = () => {
             display: 'grid',
             gridTemplateColumns: '1.2fr 1fr',
             gap: '50px',
-            alignItems: 'center'
+            alignItems: 'stretch'
           }}
         >
           {/* LEFT: GALLERY CAROUSEL */}
           <div className="next-expo-gallery" style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-            <div
+            <Link
+              to={`/upcoming-exhibitions/${slugify(currentExpo.expoName)}`}
               className="gallery-main-wrapper"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
@@ -190,66 +191,110 @@ const NextExpoSection = () => {
                 transition={{ duration: 0.5 }}
                 onLoad={() => setImageLoaded(true)}
               />
-            </div>
+            </Link>
           </div>
 
-          <div className="next-expo-content-right">
-            <div className="present-expo-card-v2">
+          <div className="next-expo-content-right" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <div className="present-expo-card-v2" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', gap: '20px' }}>
               <h3 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2.2rem)', fontWeight: '800', color: '#1a1a1a', marginBottom: '25px', borderLeft: '5px solid #ED1C24', paddingLeft: '15px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                {toTitleCase(currentExpo.expoName)}
+                <Link to={`/upcoming-exhibitions/${slugify(currentExpo.expoName)}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                  {toTitleCase(currentExpo.expoName)}
+                </Link>
               </h3>
 
               <div className="details-grid-v2" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '25px', marginBottom: '30px' }}>
-                <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-                  <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
-                    <i className="fas fa-calendar-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
-                  </div>
-                  <div>
-                    <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
-                      {formatDateRange(currentExpo.startDate, currentExpo.endDate)}
-                    </h4>
-                    <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Exhibition Duration</p>
-                  </div>
-                </div>
-
-                <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-                  <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
-                    <i className="fas fa-map-marker-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
-                  </div>
-                  <div>
-                    <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f' }}>
-                      {toTitleCase(currentExpo.venue)}
-                    </h4>
-                    <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Event Location</p>
-                  </div>
-                </div>
-
-                <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-                  <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
-                    <i className="fas fa-clock" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
-                  </div>
-                  <div>
-                    <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
-                      {currentExpo.startTime} - {currentExpo.endTime}
-                    </h4>
-                    <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Expo Timing</p>
-                  </div>
-                </div>
-
-                {currentExpo.stats && (
-                  <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center', marginTop: '10px' }}>
-                    <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
-                      <i className="fas fa-chart-pie" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
-                    </div>
-                    <div className="stats-row-mobile" style={{ display: 'flex', gap: '25px', flexWrap: 'wrap' }}>
+                {currentExpo.website ? (
+                  <>
+                    {/* 1. Website */}
+                    <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                      <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
+                        <i className="fas fa-globe" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
+                      </div>
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.75rem', textTransform: 'uppercase', fontWeight: '800', color: '#999', marginBottom: '3px' }}>Visitor Entry</label>
-                        <p style={{ margin: 0, fontSize: '1.1rem', fontWeight: '800', color: currentExpo.entryType === 'Free' ? '#2ecc71' : '#E31E24' }}>
-                          {currentExpo.entryType === 'Free' ? 'Free' : (currentExpo.entryType === 'Both' ? 'Free / Paid' : (currentExpo.entryFee ? `₹${currentExpo.entryFee}` : '₹100'))}
-                        </p>
+                        <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f' }}>
+                          {currentExpo.website}
+                        </h4>
+                        <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Website</p>
                       </div>
                     </div>
-                  </div>
+
+                    {/* 2. Address */}
+                    <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                      <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
+                        <i className="fas fa-map-marker-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
+                      </div>
+                      <div>
+                        <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f' }}>
+                          {toTitleCase(currentExpo.venue)}
+                        </h4>
+                        <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Event Location</p>
+                      </div>
+                    </div>
+
+                    {/* 3. Date & Time (Horizontal Inline) */}
+                    <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                      <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                        <i className="fas fa-calendar-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                          <span style={{ height: '60px', display: 'inline-flex', alignItems: 'center' }}>{formatDateRange(currentExpo.startDate, currentExpo.endDate)}</span>
+                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
+                            <span style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                              <span style={{ background: '#ED1C24', width: '34px', height: '34px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <i className="fas fa-clock" style={{ color: '#fff', fontSize: '1.05rem' }}></i>
+                              </span>
+                            </span>
+                            <span style={{ height: '60px', display: 'inline-flex', alignItems: 'center' }}>{currentExpo.startTime} - {currentExpo.endTime}</span>
+                          </span>
+                        </h4>
+                        <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Date & Time</p>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* 1. Address */}
+                    <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                      <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
+                        <i className="fas fa-map-marker-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
+                      </div>
+                      <div>
+                        <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f' }}>
+                          {toTitleCase(currentExpo.venue)}
+                        </h4>
+                        <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Event Location</p>
+                      </div>
+                    </div>
+
+                    {/* 2. Date (Vertical) */}
+                    <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                      <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
+                        <i className="fas fa-calendar-alt" style={{ color: '#E31E24', fontSize: '1.4rem' }}></i>
+                      </div>
+                      <div>
+                        <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                          {formatDateRange(currentExpo.startDate, currentExpo.endDate)}
+                        </h4>
+                        <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Exhibition Duration</p>
+                      </div>
+                    </div>
+
+                    {/* 3. Time (Vertical) */}
+                    <div className="detail-item-v2" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                      <div style={{ background: '#fff', minWidth: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                        <span style={{ background: '#ED1C24', width: '34px', height: '34px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <i className="fas fa-clock" style={{ color: '#fff', fontSize: '1.05rem' }}></i>
+                        </span>
+                      </div>
+                      <div>
+                        <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                          {currentExpo.startTime} - {currentExpo.endTime}
+                        </h4>
+                        <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>Expo Timing</p>
+                      </div>
+                    </div>
+                  </>
                 )}
               </div>
 
