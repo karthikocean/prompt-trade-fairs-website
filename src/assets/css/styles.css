@@ -3318,6 +3318,7 @@ section:not(.hero) {
   line-height: 1.1 !important;
   letter-spacing: -1.5px !important;
   margin: 0 !important;
+  padding-bottom: 39px;
 }
 
 
@@ -5049,6 +5050,7 @@ section:not(.hero) {
   line-height: 1.7;
   font-size: 0.95rem;
   transition: all 0.3s ease;
+  text-align: center;
 }
 
 /* 4. STATS SECTION V3 - LIGHT BACKGROUND */
@@ -7271,7 +7273,7 @@ select:focus {
 
 /* ── PAN-INDIA NETWORK / STRONG PRESENCE ── */
 .v3-presence-section {
-  padding: 100px 0;
+  padding: 50px 0;
   background: #fff;
 }
 
@@ -7643,59 +7645,23 @@ select:focus {
 
 .presence-grid {
   display: grid;
-  grid-template-areas:
-    "header image"
-    "content image";
   grid-template-columns: 1.2fr 0.8fr;
-  gap: 20px 50px;
+  gap: 40px;
   align-items: center;
-}
-
-.presence-header-col {
-  grid-area: header;
-}
-
-.presence-image-col {
-  grid-area: image;
-}
-
-.presence-content-col {
-  grid-area: content;
 }
 
 .management-grid {
   display: grid;
-  grid-template-areas:
-    "image header"
-    "image content";
   grid-template-columns: 0.8fr 1.2fr;
-  gap: 20px 50px;
+  gap: 40px;
   align-items: center;
 }
 
-.management-header-col {
-  grid-area: header;
-}
-
-.management-image-col {
-  grid-area: image;
-}
-
-.management-content-col {
-  grid-area: content;
-}
-
 @media (max-width: 991px) {
-
-  .about-v3-grid,
   .presence-grid,
   .management-grid {
-    grid-template-areas:
-      "header"
-      "image"
-      "content" !important;
     grid-template-columns: 1fr !important;
-    gap: 20px !important;
+    gap: 30px !important;
   }
 }
 
@@ -7864,7 +7830,7 @@ select:focus {
 
 /* Responsive Spacing Between Page Hero and Content Sections */
 .about-v3-hero+section {
-  padding-top: 80px !important;
+  padding-top: 40px !important;
 }
 
 .about-v3-hero+.expo-form-section-container {

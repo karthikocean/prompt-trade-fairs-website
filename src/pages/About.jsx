@@ -286,7 +286,7 @@ const About = () => {
                 background: '#ED1C24',
                 color: '#fff',
                 border: 'none',
-                padding: '14px 35px',
+                padding: '4px 25px',
                 borderRadius: '30px',
                 fontSize: '1rem',
                 fontWeight: '700',
@@ -319,23 +319,37 @@ const About = () => {
       <section className="v3-presence-section">
         <div className="container">
           <div className="presence-grid">
-            <div className="presence-header-col">
+            <div className="presence-text-col">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <div className="premium-header-box" style={{ marginBottom: '10px' }}>
-                  <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                <div className="premium-header-box" style={{ marginBottom: '15px' }}>
+                  <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                     <div className="header-accent-line"></div>
                     <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>PAN-INDIA NETWORK</span>
                   </div>
 
-                  <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111' }}>
+                  <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111', margin: '0' }}>
                     Strong Presence Across India
                   </h2>
                 </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '20px', textAlign: 'justify', marginTop: 0 }}>
+                  PROMPT has successfully organized exhibitions in major business cities including Chennai, Bengaluru, Hyderabad, Ahmedabad, Coimbatore, Salem, Vijayawada, Visakhapatnam, Warangal, Rajahmundry, and many other key locations across India.
+                </p>
+                <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '0', textAlign: 'justify' }}>
+                  With a strong database of registered visitors and industry professionals in every region, PROMPT exhibitions consistently attract quality footfall and deliver outstanding business opportunities for exhibitors.
+                </p>
               </motion.div>
             </div>
 
@@ -354,23 +368,6 @@ const About = () => {
                 </div>
               </motion.div>
             </div>
-
-            <div className="presence-content-col">
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              // style={{ marginTop: '-80px' }}
-              >
-                <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '20px', textAlign: 'justify', marginTop: 0 }}>
-                  PROMPT has successfully organized exhibitions in major business cities including Chennai, Bengaluru, Hyderabad, Ahmedabad, Coimbatore, Salem, Vijayawada, Visakhapatnam, Warangal, Rajahmundry, and many other key locations across India.
-                </p>
-                <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '30px', textAlign: 'justify' }}>
-                  With a strong database of registered visitors and industry professionals in every region, PROMPT exhibitions consistently attract quality footfall and deliver outstanding business opportunities for exhibitors.
-                </p>
-              </motion.div>
-            </div>
           </div>
         </div>
       </section>
@@ -379,25 +376,6 @@ const About = () => {
       <section className="v3-management-section">
         <div className="container">
           <div className="management-grid">
-            <div className="management-header-col">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                <div className="premium-header-box" style={{ marginBottom: '10px' }}>
-                  <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                    <div className="header-accent-line"></div>
-                    <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>END-TO-END SUPPORT</span>
-                  </div>
-                  <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111', lineHeight: '1.2' }}>
-                    Excellence in Exhibition Management
-                  </h2>
-                </div>
-              </motion.div>
-            </div>
-
             <div className="management-image-col">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -413,17 +391,34 @@ const About = () => {
               </motion.div>
             </div>
 
-            <div className="management-content-col">
+            <div className="management-text-col">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '20px', textAlign: 'justify' }}>
+                <div className="premium-header-box" style={{ marginBottom: '15px' }}>
+                  <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
+                    <div className="header-accent-line"></div>
+                    <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>END-TO-END SUPPORT</span>
+                  </div>
+                  <h2 className="header-main-title" style={{ fontWeight: '800', color: '#111', margin: '0', lineHeight: '1.2' }}>
+                    Excellence in Exhibition Management
+                  </h2>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '20px', textAlign: 'justify', marginTop: 0 }}>
                   Every PROMPT exhibition is conceptualized with detailed planning, innovative marketing strategies, and extensive promotions across digital media, print advertising, outdoor campaigns and branding platforms. The company focuses on delivering seamless event execution and exceptional customer service, making every exhibition a valuable experience for exhibitors and visitors alike.
                 </p>
-                <p style={{ fontSize: '16px', lineHeight: '1.8', textAlign: 'justify' }}>
+                <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '0', textAlign: 'justify' }}>
                   As a complete exhibition solutions provider, PROMPT offers end-to-end support for Trade Fairs, Expos and Business Events, ensuring operational excellence at every stage. Its commitment to professionalism, quality, and business success has positioned PROMPT as one of the leading Trade Fair and exhibition organizers in India.
                 </p>
               </motion.div>

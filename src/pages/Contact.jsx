@@ -148,6 +148,7 @@ const Contact = () => {
                 maxWidth: "700px",
                 margin: "20px auto 0",
                 fontSize: "16px",
+                textAlign: "center",
               }}
             >
               Ready to scale your business at our next event? Fill out the form
