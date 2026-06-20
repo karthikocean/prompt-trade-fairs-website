@@ -88,9 +88,9 @@ const Header = () => {
             </div>
           </div> */}
 
-          {/* <NavLink to="/events" onClick={() => setIsMenuOpen(false)}>
+          <NavLink to="/events" onClick={() => setIsMenuOpen(false)}>
             Events
-          </NavLink> */}
+          </NavLink>
 
           {/* DROPDOWN - OUR GROUPS */}
           <div
