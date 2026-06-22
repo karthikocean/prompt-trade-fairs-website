@@ -205,7 +205,7 @@ const NextExpoSection = () => {
           </div>
 
           <div className="next-expo-content-right" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <div className="present-expo-card-v2" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', gap: '20px' }}>
+            <div className="present-expo-card-v2" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', }}>
               <h3 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2.2rem)', fontWeight: '800', color: '#1a1a1a', marginBottom: '25px', borderLeft: '5px solid #ED1C24', paddingLeft: '15px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                 <Link to={`/upcoming-exhibitions/${slugify(currentExpo.expoName)}`} style={{ color: 'inherit', textDecoration: 'none' }}>
                   {toTitleCase(currentExpo.expoName)}
@@ -464,7 +464,7 @@ const NextExpoSection = () => {
     .present-expo-actions {
       display: grid !important;
       grid-template-columns: repeat(2, 1fr) !important;
-      gap: 10px !important;
+      gap: 24px !important;
       margin-top: 25px !important;
       width: 100% !important;
     }

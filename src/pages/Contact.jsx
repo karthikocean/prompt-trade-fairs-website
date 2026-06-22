@@ -511,7 +511,7 @@ const Contact = () => {
               },
               {
                 title: "Call Support",
-                desc: "+91 95436 68094\n+91 93913 91162\n+91 7845769348",
+                desc: "+91 95436 68094\n+91 93913 91162\n+91 78457 69348",
                 icon: "fa-phone-alt",
                 // label: "TALK TO US"
               },

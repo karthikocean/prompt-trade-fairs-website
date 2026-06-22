@@ -455,7 +455,7 @@ const Careers = () => {
 
             <div className="story-image-right">
               <div className="image-frame-premium">
-                <img src="/team.png" alt="Team Culture" className="main-story-img" style={{ borderRadius: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }} />
+                <img src="/Prompt%20Team.jpeg" alt="Team Culture" className="main-story-img" style={{ borderRadius: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }} />
                 <div className="accent-box-top"></div>
                 <div className="accent-box-bottom"></div>
               </div>
