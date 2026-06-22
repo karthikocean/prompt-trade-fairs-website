@@ -106,7 +106,7 @@ const ToExhibit = () => {
                 <div className="v3-card-content" style={{
                   position: 'relative',
                   minHeight: '200px',
-                  height: '200px',
+                  height: 'auto',
                   margin: '0 auto',
                   padding: '15px 20px',
                   boxSizing: 'border-box',
@@ -125,21 +125,6 @@ const ToExhibit = () => {
                   <h3 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '8px' }}>{item.title}</h3>
                   <p style={{ fontSize: '0.9rem', color: '#666', lineHeight: '1.6', whiteSpace: 'pre-line' }}>{item.desc}</p>
                 </div>
-                <span className="v3-card-bottom-text" style={{
-                  position: 'absolute',
-                  bottom: '5px',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  background: '#fff',
-                  padding: '0 14px',
-                  fontSize: '1.1rem',
-                  fontWeight: '800',
-                  marginBottom: '5px',
-                  textAlign: 'center',
-                  whiteSpace: 'nowrap',
-                  color: '#111'
-                }}>
-                </span>
               </motion.div>
             ))}
           </div>
@@ -198,19 +183,6 @@ const ToExhibit = () => {
 
       {/* Section 5 - REGISTRATION FORM SECTION */}
       <ResigterForm />
-      <style>{`
-        .v3-initiative-card .v3-card-bottom-text {
-          background: #fff !important;
-          color: #111 !important;
-          opacity: 1 !important;
-          visibility: visible !important;
-          transition: all 0.3s ease;
-        }
-        .v3-initiative-card:hover .v3-card-bottom-text {
-          background: #ED1C24 !important;
-          color: #fff !important;
-        }
-      `}</style>
     </main>
   );
 };

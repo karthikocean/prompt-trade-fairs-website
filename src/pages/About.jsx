@@ -262,8 +262,8 @@ const About = () => {
                   <motion.div
                     key={idx}
                     className="v3-segment-card"
-                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', cursor: 'pointer' }}
-                    onClick={() => openEditionsModal(item.name)}
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
+                    // onClick={() => openEditionsModal(item.name)}
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -303,7 +303,7 @@ const About = () => {
                 e.target.style.boxShadow = '0 12px 30px rgba(237, 28, 36, 0.3)';
               }}
               onMouseLeave={(e) => {
-                e.target.style.background = '#ED1C24';
+                e.target.style.background = '#d61820';
                 e.target.style.transform = 'none';
                 e.target.style.boxShadow = '0 8px 25px rgba(237, 28, 36, 0.2)';
               }}
@@ -376,27 +376,12 @@ const About = () => {
       <section className="v3-management-section">
         <div className="container">
           <div className="management-grid">
-            <div className="management-image-col">
+            <div className="management-header-col">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-              >
-                <div className="why-choose-image-box">
-                  <div className="accent-frame red"></div>
-                  <div className="accent-frame blue"></div>
-                  <img src="/about_img.jpg" alt="Exhibition Management Excellence" className="main-image shadow-premium" onError={(e) => { e.target.src = '/team.png'; }} />
-                </div>
-              </motion.div>
-            </div>
-
-            <div className="management-text-col">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
               >
                 <div className="premium-header-box" style={{ marginBottom: '15px' }}>
                   <div className="header-accent-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
@@ -408,7 +393,24 @@ const About = () => {
                   </h2>
                 </div>
               </motion.div>
+            </div>
 
+            <div className="management-image-col">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <div className="why-choose-image-box">
+                  <div className="accent-frame red"></div>
+                  <div className="accent-frame blue"></div>
+                  <img src="/Prompt%20Team.jpeg" alt="Exhibition Management Excellence" className="main-image shadow-premium" onError={(e) => { e.target.src = '/team.png'; }} />
+                </div>
+              </motion.div>
+            </div>
+
+            <div className="management-text-col">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -452,7 +454,7 @@ const About = () => {
       </section> */}
 
       {/* ── EDITIONS MODAL ── */}
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {modalOpen && (
           <motion.div
             className="editions-modal-overlay"
@@ -469,7 +471,6 @@ const About = () => {
               transition={{ type: 'spring', stiffness: 300, damping: 28 }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Modal Header */}
               <div className="editions-modal-header">
                 <div>
                   <span className="editions-modal-tag">PAST EDITIONS</span>
@@ -480,7 +481,6 @@ const About = () => {
                 </button>
               </div>
 
-              {/* Year Filter Chips */}
               {!galleryLoading && availableYears.length > 0 && (
                 <div className="editions-year-filters">
                   <button
@@ -501,7 +501,6 @@ const About = () => {
                 </div>
               )}
 
-              {/* Modal Body */}
               <div className="editions-modal-body">
                 {galleryLoading ? (
                   <div className="editions-loading">
@@ -557,7 +556,7 @@ const About = () => {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
 
     </main>
   );

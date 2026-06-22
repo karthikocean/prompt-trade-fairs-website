@@ -22,6 +22,18 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
+const formatDateRange = (start, end) => {
+  if (!start) return "";
+  const startDate = new Date(start);
+  const endDate = end ? new Date(end) : startDate;
+  const month = startDate.toLocaleString(undefined, { month: 'long' });
+  const year = startDate.getFullYear();
+  const dayStart = startDate.getDate();
+  const dayEnd = endDate.getDate();
+  const days = dayStart === dayEnd ? `${dayStart}` : Array.from({ length: dayEnd - dayStart + 1 }, (_, i) => dayStart + i).join(', ');
+  return `${days} ${month}-${year}`;
+};
+
 const UpcomingExhibitions = () => {
   const navigate = useNavigate();
   const [expos, setExpos] = useState([]);
@@ -160,7 +172,7 @@ const UpcomingExhibitions = () => {
                     <div className='expo-content-mobile' style={{ display: 'flex', flexDirection: 'column', gap: '12px', color: '#333', fontWeight: '700', fontSize: '14.5px'}}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <i className="far fa-calendar-alt" style={{ color: '#ED1C24', width: '18px', fontSize: '1.1rem', textAlign: 'center' }}></i>
-                        <span>{formatDate(expo.startDate)}</span>
+                        <span>{formatDateRange(expo.startDate, expo.endDate)}</span>
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <i className="fas fa-clock" style={{ color: '#ED1C24', width: '18px', fontSize: '1.1rem', textAlign: 'center' }}></i>
