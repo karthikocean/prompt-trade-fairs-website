@@ -1,18 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useParams } from 'react-router-dom';
-import { getPresentExpos } from '../api/common.api';
-
-const slugify = (text) => {
-  if (!text) return "";
-  return text
-    .toString()
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w\-]+/g, '')
-    .replace(/\-\-+/g, '-');
-};
+import { getExpoBySlug } from '../api/common.api';
 
 const AboutExpo = () => {
   const { slug } = useParams();
@@ -25,8 +14,8 @@ const AboutExpo = () => {
       desc: "Prompt Trade Fairs brings with it the rich experience of organizing over 1002 exhibitions across diverse industries, including 69 successful and exclusive editions dedicated to the Building & Construction Industry."
     },
     {
-      title: "South India’s Largest Dedicated Platform",
-      desc: "ABI EXPO-2026 is South India’s largest and most focused exhibition for the Building & Construction Industry, bringing together the entire ecosystem under one roof."
+      title: "South India's Largest Dedicated Platform",
+      desc: "ABI EXPO-2026 is South India's largest and most focused exhibition for the Building & Construction Industry, bringing together the entire ecosystem under one roof."
     },
     {
       title: "Comprehensive Industry Coverage",
@@ -80,26 +69,19 @@ const AboutExpo = () => {
   useEffect(() => {
     const fetchExpoDetails = async () => {
       try {
-        const response = await getPresentExpos();
-        if (response.data && response.data.data) {
-          const list = response.data.data;
-          let matched = null;
-          if (slug) {
-            matched = list.find(e => slugify(e.expoName) === slug);
+        if (slug) {
+          const response = await getExpoBySlug(slug);
+          if (response.data && response.data.data) {
+            setExpo(response.data.data);
           } else {
-            // Find first expo that has some custom aboutExpo content
-            matched = list.find(e => e.aboutExpo && (
-              (e.aboutExpo.expoProfile?.paragraphs && e.aboutExpo.expoProfile.paragraphs.some(p => p.trim() !== "")) ||
-              (e.aboutExpo.exhibitionHighlights?.highlights && e.aboutExpo.exhibitionHighlights.highlights.length > 0)
-            ));
-            if (!matched && list.length > 0) {
-              matched = list[0];
-            }
+            setExpo(null);
           }
-          setExpo(matched || null);
+        } else {
+          setExpo(null);
         }
       } catch (error) {
         console.error("Error fetching expo details in AboutExpo page:", error);
+        setExpo(null);
       } finally {
         setLoading(false);
       }

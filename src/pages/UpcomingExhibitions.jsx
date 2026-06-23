@@ -22,6 +22,7 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
+const PAGE_SIZE = 6;
 const formatDateRange = (start, end) => {
   if (!start) return "";
   const startDate = new Date(start);
@@ -38,30 +39,41 @@ const UpcomingExhibitions = () => {
   const navigate = useNavigate();
   const [expos, setExpos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(false);
 
-  useEffect(() => {
-    const fetchExpos = async () => {
-      try {
-        const response = await getPresentExpos();
-        if (response.data && response.data.data) {
-          setExpos(response.data.data);
-        }
-      } catch (error) {
-        console.error("Error fetching expos:", error);
-        toast.error("Failed to load exhibitions");
-      } finally {
-        setLoading(false);
+  const fetchExpos = async (pageNum, append = false) => {
+    try {
+      const response = await getPresentExpos(pageNum, PAGE_SIZE);
+      if (response.data && response.data.data) {
+        const newExpos = response.data.data;
+        setExpos(prev => append ? [...prev, ...newExpos] : newExpos);
+        // Check if there are more pages using backend total
+        const total = response.data.total || response.data.pagination?.total || 0;
+        const fetchedSoFar = (pageNum + 1) * PAGE_SIZE;
+        setHasMore(fetchedSoFar < total);
       }
-    };
-    fetchExpos();
-  }, []);
-
-  const handleLoadMore = () => {
-    setVisibleCount(prev => prev + 3);
+    } catch (error) {
+      console.error("Error fetching expos:", error);
+      toast.error("Failed to load exhibitions");
+    }
   };
 
-  const showLoadMore = expos.length > visibleCount;
+  useEffect(() => {
+    setLoading(true);
+    fetchExpos(0, false).finally(() => setLoading(false));
+  }, []);
+
+  const handleLoadMore = async () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+    setLoadingMore(true);
+    await fetchExpos(nextPage, true);
+    setLoadingMore(false);
+  };
+
+  const showLoadMore = hasMore;
 
   const actionBtnStyle = {
     padding: '12px',
@@ -151,11 +163,11 @@ const UpcomingExhibitions = () => {
               className="row expo-grid"
               style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}
             >
-              {expos.slice(0, visibleCount).map((expo) => (
+              {expos.map((expo) => (
                 <div
                   key={expo._id}
                   className="expo-card mb-4"
-                  onClick={() => navigate(`/upcoming-exhibitions/${slugify(expo.expoName)}`)}
+                  onClick={() => navigate(`/upcoming-exhibitions/${expo.slug}`, { state: { expoId: expo._id } })}
                   style={{ borderRadius: '12px', background: '#fff', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', cursor: 'pointer', display: 'flex', flexDirection: 'column', height: '100%' }}
                 >
                   <div style={{ width: '100%', height: '380px', overflow: 'hidden', background: '#f8f9fa', borderRadius: '12px 12px 0 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -169,7 +181,7 @@ const UpcomingExhibitions = () => {
                     <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#111', lineHeight: '1.4', minHeight: '56px', display: 'flex', alignItems: 'flex-start' }}>
                       {expo.expoName}
                     </h3>
-                    <div className='expo-content-mobile' style={{ display: 'flex', flexDirection: 'column', gap: '12px', color: '#333', fontWeight: '700', fontSize: '14.5px'}}>
+                    <div className='expo-content-mobile' style={{ display: 'flex', flexDirection: 'column', gap: '12px', color: '#333', fontWeight: '700', fontSize: '14.5px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <i className="far fa-calendar-alt" style={{ color: '#ED1C24', width: '18px', fontSize: '1.1rem', textAlign: 'center' }}></i>
                         <span>{formatDateRange(expo.startDate, expo.endDate)}</span>
@@ -193,6 +205,7 @@ const UpcomingExhibitions = () => {
             <div className="present-expo-btn" style={{ textAlign: 'center', marginTop: '40px' }}>
               <button
                 onClick={handleLoadMore}
+                disabled={loadingMore}
                 className="premium-load-btn"
                 style={{
                   padding: '12px 50px',
@@ -202,14 +215,15 @@ const UpcomingExhibitions = () => {
                   border: '2px solid #ED1C24',
                   fontWeight: '800',
                   fontSize: '1rem',
-                  cursor: 'pointer',
+                  cursor: loadingMore ? 'not-allowed' : 'pointer',
                   textTransform: 'uppercase',
-                  transition: '0.3s'
+                  transition: '0.3s',
+                  opacity: loadingMore ? 0.7 : 1
                 }}
-                onMouseEnter={(e) => { e.target.style.background = '#ED1C24'; e.target.style.color = '#fff'; }}
+                onMouseEnter={(e) => { if (!loadingMore) { e.target.style.background = '#ED1C24'; e.target.style.color = '#fff'; } }}
                 onMouseLeave={(e) => { e.target.style.background = '#fff'; e.target.style.color = '#ED1C24'; }}
               >
-                View More
+                {loadingMore ? 'Loading...' : 'View More'}
               </button>
             </div>
           )}
