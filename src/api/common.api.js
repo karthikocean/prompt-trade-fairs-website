@@ -40,6 +40,10 @@ export const getPastExpos = () => {
     return apiClient.get('/expos/past?limit=100');
 };
 
+export const getPastExposGrouped = () => {
+    return apiClient.get('/expos/past-grouped');
+};
+
 export const getPastExpoDetails = (id) => {
     return apiClient.get(`/expos/past?id=${id}`);
 };
