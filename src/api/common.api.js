@@ -24,12 +24,16 @@ export const createContact = (data) => {
     return apiClient.post('/contact/create', data);
 };
 
-export const getPresentExpos = () => {
-    return apiClient.get('/expos/present');
+export const getPresentExpos = (page = 0, limit = 10) => {
+    return apiClient.get(`/expos/present?page=${page}&limit=${limit}`);
 };
 
 export const getExpoDetails = (id) => {
     return apiClient.get(`/expos/details/${id}`);
+};
+
+export const getExpoBySlug = (slug) => {
+    return apiClient.get(`/expos/slug/${slug}`);
 };
 
 export const getPastExpos = () => {

@@ -21,9 +21,9 @@ switch (APP_ENV) {
 
     case "local":
     default:
-        IMAGE_BASE_URL = "http://localhost:5001/public";
-        BASE_URL = "http://localhost:5001/api/website";
-        server = "http://localhost:5001";
+        IMAGE_BASE_URL = "http://localhost:2001/public";
+        BASE_URL = "http://localhost:2001/api/website";
+        server = "http://localhost:2001";
         break;
 }
 

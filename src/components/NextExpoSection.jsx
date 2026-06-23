@@ -41,6 +41,8 @@ const slugify = (text) => {
     .replace(/\-\-+/g, '-');
 };
 
+const CAROUSEL_PAGE_SIZE = 5;
+
 const NextExpoSection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -50,6 +52,9 @@ const NextExpoSection = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 991);
+  const [carouselPage, setCarouselPage] = useState(0);
+  const [hasMore, setHasMore] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -59,35 +64,46 @@ const NextExpoSection = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => {
-    const fetchExpos = async () => {
-      try {
-        const response = await getPresentExpos();
-        if (response.data && response.data.data) {
-          setExpos(response.data.data);
+  const fetchPage = async (pageNum, append = false) => {
+    try {
+      const response = await getPresentExpos(pageNum, CAROUSEL_PAGE_SIZE);
+      if (response.data && response.data.data) {
+        const newExpos = response.data.data;
+        if (append) {
+          setExpos(prev => [...prev, ...newExpos]);
+        } else {
+          setExpos(newExpos);
         }
-      } catch (error) {
-        console.error("Error fetching Current expos:", error);
-        // toast.error("Failed to load ongoing exhibitions");
-      } finally {
-        setLoading(false);
+        const total = response.data.total || 0;
+        const fetchedSoFar = (pageNum + 1) * CAROUSEL_PAGE_SIZE;
+        setHasMore(fetchedSoFar < total);
       }
-    };
-    fetchExpos();
+    } catch (error) {
+      console.error("Error fetching Current expos:", error);
+    }
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    fetchPage(0, false).finally(() => setLoading(false));
   }, []);
 
   // Auto slide every 5 seconds
   useEffect(() => {
-    if (expos.length <= 1 || isHovered) return;
+    if (expos.length <= 1 || isHovered || loadingMore) return;
 
     const interval = setInterval(() => {
-      setCurrentIndex(prev =>
-        prev === expos.length - 1 ? 0 : prev + 1
-      );
+      setCurrentIndex(prev => {
+        if (prev === expos.length - 1) {
+          // At last item — don't auto-advance, let user click next manually
+          return prev;
+        }
+        return prev + 1;
+      });
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [expos.length, isHovered]);
+  }, [expos.length, isHovered, loadingMore]);
 
   const currentExpo = expos[currentIndex];
   // Reset loader when switching to a new expo image
@@ -95,8 +111,25 @@ const NextExpoSection = () => {
     setImageLoaded(false);
   }, [currentIndex]);
 
-  const nextExpo = () => setCurrentIndex((prev) => prev === expos.length - 1 ? 0 : prev + 1);
-  const prevExpo = () => setCurrentIndex((prev) => prev === 0 ? expos.length - 1 : prev - 1);
+  const nextExpo = async () => {
+    if (currentIndex < expos.length - 1) {
+      setCurrentIndex(prev => prev + 1);
+    } else if (hasMore && !loadingMore) {
+      // At last item — fetch next page and move to first new item
+      setLoadingMore(true);
+      const nextPage = carouselPage + 1;
+      setCarouselPage(nextPage);
+      await fetchPage(nextPage, true);
+      setCurrentIndex(prev => prev + 1);
+      setLoadingMore(false);
+    }
+  };
+
+  const prevExpo = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(prev => prev - 1);
+    }
+  };
 
   // if (loading) {
   //   return (
@@ -127,8 +160,8 @@ const NextExpoSection = () => {
           </h2>
         </div>
 
-        {/* EXTERNAL NAVIGATION ARROWS - ONLY IF > 1 EXPO */}
-        {expos.length > 1 && (
+        {/* EXTERNAL NAVIGATION ARROWS - ONLY IF > 1 EXPO OR MORE AVAILABLE */}
+        {(expos.length > 1 || hasMore) && (
           <>
             {currentIndex > 0 && (
               <button
@@ -139,13 +172,18 @@ const NextExpoSection = () => {
                 <i className="fas fa-chevron-left"></i>
               </button>
             )}
-            {currentIndex < expos.length - 1 && (
+            {(currentIndex < expos.length - 1 || hasMore) && (
               <button
                 className="nav-arrow right"
                 onClick={nextExpo}
+                disabled={loadingMore}
                 aria-label="Next Expo"
+                style={loadingMore ? { opacity: 0.6, cursor: 'wait' } : {}}
               >
-                <i className="fas fa-chevron-right"></i>
+                {loadingMore
+                  ? <i className="fas fa-spinner fa-spin"></i>
+                  : <i className="fas fa-chevron-right"></i>
+                }
               </button>
             )}
           </>
@@ -165,7 +203,7 @@ const NextExpoSection = () => {
           {/* LEFT: GALLERY CAROUSEL */}
           <div className="next-expo-gallery" style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
             <Link
-              to={`/upcoming-exhibitions/${slugify(currentExpo.expoName)}`}
+              to={`/upcoming-exhibitions/${currentExpo.slug}`}
               className="gallery-main-wrapper"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
@@ -207,7 +245,7 @@ const NextExpoSection = () => {
           <div className="next-expo-content-right" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
             <div className="present-expo-card-v2" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', gap: '20px' }}>
               <h3 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2.2rem)', fontWeight: '800', color: '#1a1a1a', marginBottom: '25px', borderLeft: '5px solid #ED1C24', paddingLeft: '15px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                <Link to={`/upcoming-exhibitions/${slugify(currentExpo.expoName)}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                <Link to={`/upcoming-exhibitions/${currentExpo.slug}`} style={{ color: 'inherit', textDecoration: 'none' }}>
                   {toTitleCase(currentExpo.expoName)}
                 </Link>
               </h3>
@@ -324,7 +362,7 @@ const NextExpoSection = () => {
 
               <div className="present-expo-actions">
                 <Link
-                  to={currentExpo ? `/about-expo/${slugify(currentExpo.expoName)}` : "/about-expo"}
+                  to={currentExpo ? `/about-expo/${currentExpo.slug}` : "/about-expo"}
                   className="expo-action-link about-expo-btn"
                 >
                   <i className="fas fa-info-circle"></i> About the Expo
@@ -362,7 +400,7 @@ const NextExpoSection = () => {
         </div>
 
         {/* DOTS */}
-        {expos.length > 1 && (
+        {(expos.length > 1 || hasMore) && (
           <div className="slider-dots">
             {expos.map((_, index) => (
               <button
@@ -371,6 +409,14 @@ const NextExpoSection = () => {
                 onClick={() => setCurrentIndex(index)}
               ></button>
             ))}
+            {/* Faded dot to indicate more expos available */}
+            {hasMore && (
+              <button
+                className="slider-dot"
+                style={{ opacity: 0.3, cursor: 'default', pointerEvents: 'none' }}
+                aria-hidden="true"
+              ></button>
+            )}
           </div>
         )}
       </div>

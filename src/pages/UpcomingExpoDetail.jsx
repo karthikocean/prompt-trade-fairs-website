@@ -1,21 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { getPresentExpos } from '../api/common.api';
+import { getExpoBySlug } from '../api/common.api';
 import { getImageUrl } from '../config/apiClient';
 import EnquiryForm from '../components/EnquiryForm';
 import toast from 'react-hot-toast';
-
-const slugify = (text) => {
-  if (!text) return "";
-  return text
-    .toString()
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w\-]+/g, '')
-    .replace(/\-\-+/g, '-');
-};
 
 const formatDate = (dateString) => {
   if (!dateString) return "";
@@ -59,14 +48,17 @@ const UpcomingExpoDetail = () => {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const response = await getPresentExpos();
+        // Always fetch by slug directly from backend — works for in-app nav & social media links
+        const response = await getExpoBySlug(slug);
         if (response.data && response.data.data) {
-          const foundExpo = response.data.data.find(e => slugify(e.expoName) === slug);
-          setExpo(foundExpo || null);
+          setExpo(response.data.data);
+        } else {
+          setExpo(null);
         }
       } catch (error) {
         console.error("Error fetching expo details:", error);
         toast.error("Failed to load exhibition details");
+        setExpo(null);
       } finally {
         setLoading(false);
       }
