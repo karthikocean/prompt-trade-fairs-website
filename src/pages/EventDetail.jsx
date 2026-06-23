@@ -6,10 +6,16 @@ import { getImageUrl } from '../config/apiClient';
 import EnquiryForm from '../components/EnquiryForm';
 import toast from 'react-hot-toast';
 
-const formatDate = (dateString) => {
-  if (!dateString) return "";
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  return new Date(dateString).toLocaleDateString(undefined, options);
+const formatDateRange = (start, end) => {
+  if (!start) return "";
+  const startDate = new Date(start);
+  const endDate = end ? new Date(end) : startDate;
+  const month = startDate.toLocaleString(undefined, { month: 'long' });
+  const year = startDate.getFullYear();
+  const dayStart = startDate.getDate();
+  const dayEnd = endDate.getDate();
+  const days = dayStart === dayEnd ? `${dayStart}` : Array.from({ length: dayEnd - dayStart + 1 }, (_, i) => dayStart + i).join(', ');
+  return `${days} ${month}-${year}`;
 };
 
 const EventDetail = () => {
@@ -18,6 +24,15 @@ const EventDetail = () => {
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 991);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 991);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -60,11 +75,31 @@ const EventDetail = () => {
   );
 
   return (
-    <main className="event-detail-v3" style={{ background: '#fff', paddingTop: '80px' }}>
+    <main className="upcoming-detail-v3" style={{ background: '#f8f9fa' }}>
+      {/* HERO BANNER STYLE */}
+      <section className="about-v3-hero" style={{ backgroundImage: "url('/aboutusbanner.png')" }}>
+        <div className="v3-hero-overlay-dark"></div>
+        <div className="container v3-hero-container">
+          <div className="v3-hero-content">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="v3-breadcrumb">
+                <Link to="/">Home</Link> <span>/</span> <Link to="/events">Events</Link> <span>/</span> <span className="current">{event.expoName}</span>
+              </div>
+              <div className="v3-hero-title-row">
+                <h1 className="v3-hero-title" style={{ margin: 0 }}>Event <span>Details</span></h1>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
 
-      <div className="container" style={{ marginTop: '30px' }}>
+      <div className="container expo-detail-container">
         {/* BACK TO EVENTS BUTTON */}
-        <div style={{ marginBottom: '25px' }}>
+        <div style={{ marginBottom: '35px' }}>
           <Link to="/events" className="v3-back-btn" style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -79,97 +114,112 @@ const EventDetail = () => {
           </Link>
         </div>
 
-        {/* MAIN TITLE AT TOP */}
-        <h1 style={{ fontSize: '2.8rem', fontWeight: '900', color: '#111', marginBottom: '40px', lineHeight: '1.1' }}>{event.expoName}</h1>
+        {/* TOP: EXPO DETAILS */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="expo-main-card"
+        >
+          <div className="expo-detail-split-row">
+            <div className="expo-banner-container-full">
+              <img
+                src={getImageUrl(event.expoImage)}
+                alt={event.expoName}
+                className="expo-banner-image-full"
+              />
+            </div>
 
+            <div className="expo-info-body-full">
+              <div>
+                <h1 className="expo-details-title" style={{ margin: '0 0 10px 0' }}>{event.expoName}</h1>
 
-        {/* HERO SECTION - SPLIT VIEW */}
-        <div className="detail-hero-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '50px', alignItems: 'stretch', marginBottom: '50px' }}>
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="detail-hero-media"
-            style={{ borderRadius: '12px', overflow: 'hidden', boxShadow: '0 20px 50px rgba(0,0,0,0.1)', height: '100%' }}
-          >
-            <img src={getImageUrl(event.expoImage)} alt={event.expoName} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="detail-hero-content"
-          >
-            <span style={{ background: '#ED1C24', color: '#fff', padding: '6px 18px', borderRadius: '50px', fontSize: '11px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>
-              EXHIBITION HIGHLIGHTS
-            </span>
-
-
-            <div className="detail-highlights-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginTop: '30px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}>
-                  <i className="far fa-calendar-alt"></i>
-                </div>
-                <div>
-                  <p style={{ fontSize: '11px', color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: '700' }}>Event Duration</p>
-                  <p style={{ fontWeight: '800', margin: 0, fontSize: '0.95rem' }}>{formatDate(event.startDate)} - {formatDate(event.endDate)}</p>
-                </div>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}>
-                  <i className="fas fa-clock"></i>
-                </div>
-                <div>
-                  <p style={{ fontSize: '11px', color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: '700' }}>Timings</p>
-                  <p style={{ fontWeight: '800', margin: 0, fontSize: '0.95rem' }}>{event.startTime} - {event.endTime}</p>
-                </div>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}>
-                  <i className="fas fa-map-marker-alt"></i>
-                </div>
-                <div>
-                  <p style={{ fontSize: '11px', color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: '700' }}>Venue Location</p>
-                  <p style={{ fontWeight: '800', margin: 0, fontSize: '0.95rem' }}>{event.venue}</p>
-                </div>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                {event.eventManager?.profileImage ? (
-                  <img src={getImageUrl(event.eventManager.profileImage)} style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} alt="manager" />
-                ) : (
-                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: '#fcf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ED1C24' }}>
-                    <i className="fas fa-user-tie"></i>
+                <div className="expo-features-grid-full" style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '15px' : '20px', marginTop: '30px' }}>
+                  {/* 1. Date Block */}
+                  <div className="feature-block" style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center' }}>
+                    <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                      <i className="fas fa-calendar-alt" style={{ color: '#E31E24', fontSize: isMobile ? '1.1rem' : '1.4rem' }}></i>
+                    </div>
+                    <div style={{ minWidth: 0, flex: 1 }}>
+                      <h4 style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                        {formatDateRange(event.startDate, event.endDate)}
+                      </h4>
+                      <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>Exhibition Duration</p>
+                    </div>
                   </div>
-                )}
-                <div>
-                  <p style={{ fontSize: '11px', color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: '700' }}>Manager</p>
-                  <p style={{ fontWeight: '800', margin: 0, fontSize: '0.95rem' }}>{event.eventManager?.name || "N/A"}</p>
+
+                  {/* 2. Venue Location */}
+                  <div className="feature-block" style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center' }}>
+                    <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                      <i className="fas fa-map-marker-alt" style={{ color: '#E31E24', fontSize: isMobile ? '1.1rem' : '1.4rem' }}></i>
+                    </div>
+                    <div style={{ minWidth: 0, flex: 1 }}>
+                      <h4 style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f', wordBreak: 'break-word' }}>
+                        {event.venue}
+                      </h4>
+                      <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>Event Location</p>
+                    </div>
+                  </div>
+
+                  {/* 3. Expo Timing */}
+                  {event.startTime && event.endTime && (
+                    <div className="feature-block" style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center' }}>
+                      <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                        <span style={{ background: '#ED1C24', width: isMobile ? '26px' : '34px', height: isMobile ? '26px' : '34px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <i className="fas fa-clock" style={{ color: '#fff', fontSize: isMobile ? '0.85rem' : '1.05rem' }}></i>
+                        </span>
+                      </div>
+                      <div style={{ minWidth: 0, flex: 1 }}>
+                        <h4 style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                          {event.startTime} - {event.endTime}
+                        </h4>
+                        <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>Expo Timing</p>
+                      </div>
+                    </div>
+                  )}
+
+                </div>
+              </div>
+              {/* 
+              <div style={{ marginTop: '30px', paddingTop: '20px', borderTop: '1px solid #eee' }}>
+                <h4 style={{ fontSize: '1.1rem', fontWeight: '900', marginBottom: '12px' }}>About this Event</h4>
+                <p style={{ color: '#555', lineHeight: '1.7', fontSize: '0.95rem', margin: 0 }}>
+                  Experience the highlights of <strong>{event.expoName}</strong> held at <strong>{event.venue}</strong>.
+                  {event.products?.length > 0 && ` Explore a wide range of products including ${event.products.map(p => p.productName).join(', ')}.`}
+                </p>
+              </div> */}
+
+              <div className="expo-downloads-row" style={{ marginTop: '20px', borderTop: '1px solid #eee', paddingTop: '20px' }}>
+                <div className="present-expo-actions">
+                  <Link
+                    to={`/about-expo/${event.slug}`}
+                    className="expo-action-link about-expo-btn"
+                  >
+                    <i className="fas fa-info-circle"></i> About the Expo
+                  </Link>
+                  <a
+                    href={event.layoutImage ? getImageUrl(event.layoutImage) : undefined}
+                    target={event.layoutImage ? "_blank" : undefined}
+                    rel="noopener noreferrer"
+                    className="expo-action-link layout-btn"
+                    style={!event.layoutImage ? { pointerEvents: 'none', opacity: 0.5 } : {}}
+                  >
+                    <i className="fas fa-download"></i> Layout
+                  </a>
+                  <a
+                    href={event.brochure ? getImageUrl(event.brochure) : undefined}
+                    target={event.brochure ? "_blank" : undefined}
+                    rel="noopener noreferrer"
+                    className="expo-action-link brochure-btn"
+                    style={!event.brochure ? { pointerEvents: 'none', opacity: 0.5 } : {}}
+                  >
+                    <i className="fas fa-download"></i> Brochure
+                  </a>
                 </div>
               </div>
             </div>
-
-            {event.stats && (
-              <div style={{ marginTop: '30px', padding: '20px', background: '#f8fafc', borderRadius: '12px', display: 'flex', gap: '30px' }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '10px', fontWeight: '800', color: '#94a3b8', textTransform: 'uppercase' }}>Available Stalls</label>
-                  <span style={{ fontSize: '1.2rem', fontWeight: '800', color: '#22c55e' }}>{event.stats.stallAvailable}</span>
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '10px', fontWeight: '800', color: '#94a3b8', textTransform: 'uppercase' }}>Booked Stalls</label>
-                  <span style={{ fontSize: '1.2rem', fontWeight: '800', color: '#ef4444' }}>{event.stats.stallBooked}</span>
-                </div>
-              </div>
-            )}
-
-            <div style={{ marginTop: '40px', paddingTop: '30px', borderTop: '1px solid #eee' }}>
-              <h4 style={{ fontSize: '1.2rem', fontWeight: '900', marginBottom: '15px' }}>About this Event</h4>
-              <p style={{ color: '#555', lineHeight: '1.8', fontSize: '1rem' }}>
-                Join us for <strong>{event.expoName}</strong> at <strong>{event.venue}</strong>. 
-                {event.products?.length > 0 && ` Explore a wide range of products including ${event.products.map(p => p.productName).join(', ')}.`}
-              </p>
-
-            </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
 
         {/* REGISTRATION MODAL */}
         <AnimatePresence>
@@ -201,7 +251,7 @@ const EventDetail = () => {
         </AnimatePresence>
 
         {/* GALLERY SECTION (WITH FILTER BUTTONS) */}
-        <section className="detail-gallery-section" style={{ marginBottom: '60px' }}>
+        <section className="detail-gallery-section" style={{ margin: '60px 0' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px', flexWrap: 'wrap', gap: '20px' }}>
             <h2 style={{ fontSize: '2.2rem', fontWeight: '900', margin: 0 }}>
               Event <span style={{ color: '#ED1C24' }}>Gallery</span>
@@ -258,12 +308,12 @@ const EventDetail = () => {
                       {item.type === 'YouTube' || item.type === 'Video' ? (
                         <div style={{ aspectRatio: '16/9' }}>
                           {item.type === 'YouTube' ? (
-                            <iframe 
-                              width="100%" 
-                              height="100%" 
-                              src={item.url.includes('embed') ? item.url : item.url.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/').split('&')[0]} 
-                              frameBorder="0" 
-                              allowFullScreen 
+                            <iframe
+                              width="100%"
+                              height="100%"
+                              src={item.url.includes('embed') ? item.url : item.url.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/').split('&')[0]}
+                              frameBorder="0"
+                              allowFullScreen
                               title="YouTube Video"
                             ></iframe>
                           ) : (
@@ -292,25 +342,215 @@ const EventDetail = () => {
             )}
           </div>
         </section>
+        <style>{`
+          .expo-detail-container {
+            padding: 80px 0;
+          }
+
+          .expo-main-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+            overflow: hidden;
+          }
+
+          .expo-detail-split-row {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: stretch;
+          }
+
+          .expo-banner-container-full {
+            width: 100%;
+            height: 480px;
+            overflow: hidden;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid #f1f5f9;
+          }
+
+          .expo-banner-image-full {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+          }
+
+          .expo-info-body-full {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 15px;
+          }
+
+          .expo-details-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #111;
+            margin-bottom: 10px;
+            line-height: 1.2;
+          }
+
+          .expo-features-grid-full {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 30px;
+          }
+
+          .feature-block {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+          }
+
+          .feature-icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #fff5f5;
+            color: #ED1C24;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+          }
+
+          .feature-text-box {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+          }
+
+          .feature-label {
+            font-size: 0.85rem;
+            color: #888;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+
+          .feature-value {
+            font-size: 1rem;
+            color: #111;
+            font-weight: 700;
+          }
+
+          @media (max-width: 991px) {
+            .expo-detail-container {
+              padding: 50px 0;
+            }
+
+            .expo-detail-split-row {
+              grid-template-columns: 1fr;
+            }
+            
+            .expo-banner-container-full {
+              height: auto;
+              border-right: none;
+              border-bottom: 1px solid #f1f5f9;
+            }
+
+            .expo-banner-image-full {
+              height: auto;
+              object-fit: contain;
+            }
+            
+            .expo-info-body-full {
+              padding: 35px;
+            }
+          }
+
+          @media (max-width: 768px) {
+            .expo-detail-container {
+              padding: 40px 0;
+            }
+
+            .expo-info-body-full {
+              padding: 24px !important;
+              gap: 15px !important;
+            }
+
+            .expo-details-title {
+              font-size: 1.7rem !important;
+              margin-bottom: 8px !important;
+            }
+
+            .expo-features-grid-full {
+              margin-top: 20px !important;
+              gap: 15px !important;
+            }
+
+            .feature-block {
+              gap: 12px !important;
+            }
+
+            .feature-icon-box {
+              width: 40px !important;
+              height: 40px !important;
+              font-size: 1rem !important;
+              border-radius: 10px !important;
+            }
+
+            .feature-text-box {
+              gap: 2px !important;
+            }
+
+            .feature-value {
+              font-size: 0.95rem !important;
+            }
+
+            .expo-downloads-row {
+              padding-top: 20px !important;
+              margin-top: 20px !important;
+            }
+
+            .present-expo-actions {
+              display: grid !important;
+              grid-template-columns: 1fr 1fr !important;
+              gap: 10px !important;
+              margin-top: 0 !important;
+              width: 100% !important;
+            }
+            
+            .present-expo-actions a,
+            .present-expo-actions button,
+            .present-expo-actions .register-btn-main {
+              padding: 0 12px !important;
+              font-size: 0.85rem !important;
+              height: 48px !important;
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+              margin: 0 !important;
+              width: 100% !important;
+              max-width: 100% !important;
+              min-width: 0 !important;
+              white-space: nowrap !important;
+              box-sizing: border-box !important;
+              border-radius: 8px !important;
+            }
+
+            .present-expo-actions .about-expo-btn {
+              grid-column: span 2 !important;
+            }
+          }
+
+          @media (max-width: 480px) {
+            .expo-detail-container {
+              padding: 30px 0;
+            }
+          }
+        `}</style>
       </div>
     </main>
   );
-};
-
-const actionBtnStyle = {
-  padding: '12px 25px',
-  borderRadius: '8px',
-  background: '#f1f5f9',
-  color: '#334155',
-  fontWeight: '700',
-  fontSize: '0.9rem',
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '10px',
-  textDecoration: 'none',
-  transition: '0.3s',
-  border: '1px solid #e2e8f0',
-  cursor: 'pointer'
 };
 
 export default EventDetail;
