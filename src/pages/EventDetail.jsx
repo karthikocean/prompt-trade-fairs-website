@@ -18,6 +18,31 @@ const formatDateRange = (start, end) => {
   return `${days} ${month}-${year}`;
 };
 
+const LogoMarquee = ({ logos }) => {
+  if (!logos || logos.length === 0) return null;
+  const displayLogos = logos.length < 8 
+    ? [...logos, ...logos, ...logos, ...logos, ...logos, ...logos] 
+    : [...logos, ...logos];
+
+  return (
+    <div className="brand-logo-scroller" style={{ overflow: 'hidden', padding: '20px 0', background: '#fff', borderTop: '1px solid #f0f0f0', borderBottom: '1px solid #f0f0f0', margin: '20px 0 60px 0', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.02)' }}>
+      <div className="marquee-track" style={{ display: 'flex', gap: '30px', width: 'max-content', animation: 'brandMarquee 25s linear infinite' }}>
+        {displayLogos.map((logo, idx) => (
+          <div key={idx} className="brand-logo-item" style={{ height: '70px', minWidth: '120px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', borderRadius: '10px', padding: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.03)', border: '1px solid #f0f0f0' }}>
+            <img src={getImageUrl(logo.image)} alt={logo.companyName || 'client-logo'} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} />
+          </div>
+        ))}
+      </div>
+      <style>{`
+        @keyframes brandMarquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
+    </div>
+  );
+};
+
 const EventDetail = () => {
   const { id } = useParams();
   const [activeFilter, setActiveFilter] = useState('Image'); // 'Image', 'Video', 'YouTube'
@@ -74,6 +99,10 @@ const EventDetail = () => {
     activeFilter === 'all' ? true : item.type === activeFilter
   );
 
+  const displayGallery = filteredGallery && filteredGallery.length > 0
+    ? filteredGallery
+    : (activeFilter === 'Image' && event.expoImage ? [{ url: event.expoImage, type: 'Image' }] : []);
+
   return (
     <main className="upcoming-detail-v3" style={{ background: '#f8f9fa' }}>
       {/* HERO BANNER STYLE */}
@@ -99,7 +128,7 @@ const EventDetail = () => {
 
       <div className="container expo-detail-container">
         {/* BACK TO EVENTS BUTTON */}
-        <div style={{ marginBottom: '35px' }}>
+        <div style={{ marginBottom: '20px', textAlign: 'left' }}>
           <Link to="/events" className="v3-back-btn" style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -113,113 +142,6 @@ const EventDetail = () => {
             <i className="fas fa-arrow-left"></i> Back to Events
           </Link>
         </div>
-
-        {/* TOP: EXPO DETAILS */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="expo-main-card"
-        >
-          <div className="expo-detail-split-row">
-            <div className="expo-banner-container-full">
-              <img
-                src={getImageUrl(event.expoImage)}
-                alt={event.expoName}
-                className="expo-banner-image-full"
-              />
-            </div>
-
-            <div className="expo-info-body-full">
-              <div>
-                <h1 className="expo-details-title" style={{ margin: '0 0 10px 0' }}>{event.expoName}</h1>
-
-                <div className="expo-features-grid-full" style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '15px' : '20px', marginTop: '30px' }}>
-                  {/* 1. Date Block */}
-                  <div className="feature-block" style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center' }}>
-                    <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
-                      <i className="fas fa-calendar-alt" style={{ color: '#E31E24', fontSize: isMobile ? '1.1rem' : '1.4rem' }}></i>
-                    </div>
-                    <div style={{ minWidth: 0, flex: 1 }}>
-                      <h4 style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
-                        {formatDateRange(event.startDate, event.endDate)}
-                      </h4>
-                      <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>Exhibition Duration</p>
-                    </div>
-                  </div>
-
-                  {/* 2. Venue Location */}
-                  <div className="feature-block" style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center' }}>
-                    <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
-                      <i className="fas fa-map-marker-alt" style={{ color: '#E31E24', fontSize: isMobile ? '1.1rem' : '1.4rem' }}></i>
-                    </div>
-                    <div style={{ minWidth: 0, flex: 1 }}>
-                      <h4 style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f', wordBreak: 'break-word' }}>
-                        {event.venue}
-                      </h4>
-                      <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>Event Location</p>
-                    </div>
-                  </div>
-
-                  {/* 3. Expo Timing */}
-                  {event.startTime && event.endTime && (
-                    <div className="feature-block" style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center' }}>
-                      <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
-                        <span style={{ background: '#ED1C24', width: isMobile ? '26px' : '34px', height: isMobile ? '26px' : '34px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          <i className="fas fa-clock" style={{ color: '#fff', fontSize: isMobile ? '0.85rem' : '1.05rem' }}></i>
-                        </span>
-                      </div>
-                      <div style={{ minWidth: 0, flex: 1 }}>
-                        <h4 style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
-                          {event.startTime} - {event.endTime}
-                        </h4>
-                        <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>Expo Timing</p>
-                      </div>
-                    </div>
-                  )}
-
-                </div>
-              </div>
-              {/* 
-              <div style={{ marginTop: '30px', paddingTop: '20px', borderTop: '1px solid #eee' }}>
-                <h4 style={{ fontSize: '1.1rem', fontWeight: '900', marginBottom: '12px' }}>About this Event</h4>
-                <p style={{ color: '#555', lineHeight: '1.7', fontSize: '0.95rem', margin: 0 }}>
-                  Experience the highlights of <strong>{event.expoName}</strong> held at <strong>{event.venue}</strong>.
-                  {event.products?.length > 0 && ` Explore a wide range of products including ${event.products.map(p => p.productName).join(', ')}.`}
-                </p>
-              </div> */}
-
-              <div className="expo-downloads-row" style={{ marginTop: '20px', borderTop: '1px solid #eee', paddingTop: '20px' }}>
-                <div className="present-expo-actions">
-                  <Link
-                    to={`/about-expo/${event.slug}`}
-                    className="expo-action-link about-expo-btn"
-                  >
-                    <i className="fas fa-info-circle"></i> About the Expo
-                  </Link>
-                  <a
-                    href={event.layoutImage ? getImageUrl(event.layoutImage) : undefined}
-                    target={event.layoutImage ? "_blank" : undefined}
-                    rel="noopener noreferrer"
-                    className="expo-action-link layout-btn"
-                    style={!event.layoutImage ? { pointerEvents: 'none', opacity: 0.5 } : {}}
-                  >
-                    <i className="fas fa-download"></i> Layout
-                  </a>
-                  <a
-                    href={event.brochure ? getImageUrl(event.brochure) : undefined}
-                    target={event.brochure ? "_blank" : undefined}
-                    rel="noopener noreferrer"
-                    className="expo-action-link brochure-btn"
-                    style={!event.brochure ? { pointerEvents: 'none', opacity: 0.5 } : {}}
-                  >
-                    <i className="fas fa-download"></i> Brochure
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
 
         {/* REGISTRATION MODAL */}
         <AnimatePresence>
@@ -251,7 +173,7 @@ const EventDetail = () => {
         </AnimatePresence>
 
         {/* GALLERY SECTION (WITH FILTER BUTTONS) */}
-        <section className="detail-gallery-section" style={{ margin: '60px 0' }}>
+        <section className="detail-gallery-section" style={{ margin: '20px 0 40px 0' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px', flexWrap: 'wrap', gap: '20px' }}>
             <h2 style={{ fontSize: '2.2rem', fontWeight: '900', margin: 0 }}>
               Event <span style={{ color: '#ED1C24' }}>Gallery</span>
@@ -268,7 +190,7 @@ const EventDetail = () => {
               >
                 Photos
               </button>
-              <button
+              {/* <button
                 onClick={() => setActiveFilter('Video')}
                 style={{
                   padding: '10px 25px', borderRadius: '50px', border: activeFilter === 'Video' ? 'none' : '1px solid #ddd',
@@ -277,7 +199,7 @@ const EventDetail = () => {
                 }}
               >
                 Videos
-              </button>
+              </button> */}
               <button
                 onClick={() => setActiveFilter('YouTube')}
                 style={{
@@ -292,10 +214,10 @@ const EventDetail = () => {
           </div>
 
           <div style={{ minHeight: '300px' }}>
-            {filteredGallery && filteredGallery.length > 0 ? (
+            {displayGallery && displayGallery.length > 0 ? (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '25px' }}>
                 <AnimatePresence mode="popLayout">
-                  {filteredGallery.map((item, idx) => (
+                  {displayGallery.map((item, idx) => (
                     <motion.div
                       key={`${item.url}-${idx}`}
                       layout
@@ -342,9 +264,21 @@ const EventDetail = () => {
             )}
           </div>
         </section>
+
+        {event.expoBrandId && event.expoBrandId.logos && (
+          <div style={{ marginTop: '50px' }}>
+            <div className="premium-header-box centered" style={{ marginBottom: '25px', textAlign: 'center' }}>
+              <h3 className="header-main-title" style={{ fontSize: "1.75rem", fontWeight: "800", color: "#111" }}>
+                Our Brand Partners
+              </h3>
+            </div>
+            <LogoMarquee logos={event.expoBrandId.logos} />
+          </div>
+        )}
+
         <style>{`
           .expo-detail-container {
-            padding: 80px 0;
+            padding: 30px 0 40px 0;
           }
 
           .expo-main-card {
