@@ -141,6 +141,10 @@ const BrandCarousel = ({ expos, navigate }) => {
                   <span>{expo?.expoLocation?.name || 'Not Found'}</span>
                 </span>
               </div>
+              <div className="view-more-btn" style={{ marginTop: '16px', display: 'flex', alignItems: 'center', gap: '6px', color: '#ED1C24', fontWeight: '800', fontSize: '14px' }}>
+                <span>View More</span>
+                <i className="fas fa-chevron-right" style={{ fontSize: '12px' }}></i>
+              </div>
             </div>
           </div>
         ))}
@@ -293,6 +297,16 @@ const Events = () => {
         .custom-scroll-container {
           -ms-overflow-style: none;
           scrollbar-width: none;
+        }
+        .expo-card:hover {
+          transform: translateY(-6px);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
+        }
+        .expo-card:hover .view-more-btn i {
+          transform: translateX(4px);
+        }
+        .view-more-btn i {
+          transition: transform 0.3s ease;
         }
         @media (max-width: 991px) {
           .expo-card {
