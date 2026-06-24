@@ -19,8 +19,8 @@ const formatDateRange = (start, end) => {
 
 const LogoMarquee = ({ logos }) => {
   if (!logos || logos.length === 0) return null;
-  const displayLogos = logos.length < 8 
-    ? [...logos, ...logos, ...logos, ...logos, ...logos, ...logos] 
+  const displayLogos = logos.length < 8
+    ? [...logos, ...logos, ...logos, ...logos, ...logos, ...logos]
     : [...logos, ...logos];
 
   return (
@@ -121,30 +121,25 @@ const BrandCarousel = ({ expos, navigate }) => {
           >
             <div style={{ width: '100%', height: '380px', overflow: 'hidden', background: '#f8f9fa', borderRadius: '12px 12px 0 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <img
-                src={getImageUrl(expo.expoImage)}
+                src={getImageUrl((expo.gallery && expo.gallery.find(item => item.type === 'Image')?.url) || expo.expoImage)}
                 alt={expo.expoName}
                 style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
               />
             </div>
             <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#111', lineHeight: '1.4', minHeight: '56px', display: 'flex', alignItems: 'flex-start', margin: '0 0 12px 0' }}>
+              {/* <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#111', lineHeight: '1.4', minHeight: '56px', display: 'flex', alignItems: 'flex-start', margin: '0 0 12px 0' }}>
                 {expo.expoName}
-              </h3>
-              <div className='expo-content-mobile' style={{ display: 'flex', flexDirection: 'column', gap: '12px', color: '#333', fontWeight: '700', fontSize: '14.5px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <i className="far fa-calendar-alt" style={{ color: '#ED1C24', width: '18px', fontSize: '1.1rem', textAlign: 'center' }}></i>
+              </h3> */}
+              <div className='expo-content-mobile' style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#333', fontWeight: '700', fontSize: '14.5px', marginTop: '8px', flexWrap: 'wrap' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                  <i className="far fa-calendar-alt" style={{ color: '#ED1C24' }}></i>
                   <span>{formatDateRange(expo.startDate, expo.endDate)}</span>
-                </div>
-                {expo.startTime && expo.endTime && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <i className="fas fa-clock" style={{ color: '#ED1C24', width: '18px', fontSize: '1.1rem', textAlign: 'center' }}></i>
-                    <span>{expo.startTime} - {expo.endTime}</span>
-                  </div>
-                )}
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                  <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24', width: '18px', fontSize: '1.1rem', textAlign: 'center', marginTop: '3px' }}></i>
-                  <span style={{ lineHeight: '1.4' }}>{expo.venue}</span>
-                </div>
+                </span>
+                <span style={{ color: '#ccc' }}>|</span>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                  <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24' }}></i>
+                  <span>{expo.venue}</span>
+                </span>
               </div>
             </div>
           </div>
@@ -223,9 +218,9 @@ const Events = () => {
       </section>
 
       {/* 2. GROUPED GALLERY SECTION */}
-      <section className="events-gallery-v3" style={{ padding: '100px 0', background: '#f8f9fa' }}>
+      <section className="events-gallery-v3" style={{ padding: '50px 0', background: '#f8f9fa' }}>
         <div className="container">
-          <div className="premium-header-box centered">
+          {/* <div className="premium-header-box centered">
             <div className="header-accent-row">
               <div className="header-accent-line"></div>
               <span className="header-accent-tag" style={{ color: '#ED1C24', fontWeight: '700', letterSpacing: '2px', fontSize: '13.5px' }}>
@@ -234,10 +229,10 @@ const Events = () => {
               <div className="header-accent-line"></div>
             </div>
             <h2 className="header-main-title" style={{ fontSize: "2.5rem", fontWeight: "900" }}>Moments & Highlights</h2>
-          </div>
+          </div> */}
 
           {loading ? (
-            <div style={{ padding: '100px 0', textAlign: 'center' }}>
+            <div style={{ padding: '50px 0', textAlign: 'center' }}>
               <div className="loader" style={{ border: '4px solid #f3f3f3', borderTop: '4px solid #ED1C24', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite', margin: '0 auto' }}></div>
               <p style={{ marginTop: '20px', color: '#666' }}>Loading exhibitions calendar...</p>
               <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
