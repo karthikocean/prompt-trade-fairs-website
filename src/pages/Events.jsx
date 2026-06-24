@@ -119,7 +119,7 @@ const BrandCarousel = ({ expos, navigate }) => {
               transition: '0.3s'
             }}
           >
-            <div style={{ width: '100%', height: '380px', overflow: 'hidden', background: '#f8f9fa', borderRadius: '12px 12px 0 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: '100%', height: '250px', overflow: 'hidden', background: '#f8f9fa', borderRadius: '12px 12px 0 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <img
                 src={getImageUrl((expo.gallery && expo.gallery.find(item => item.type === 'Image')?.url) || expo.expoImage)}
                 alt={expo.expoName}
@@ -138,7 +138,7 @@ const BrandCarousel = ({ expos, navigate }) => {
                 <span style={{ color: '#ccc' }}>|</span>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                   <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24' }}></i>
-                  <span>{expo.venue}</span>
+                  <span>{expo?.expoLocation?.name || 'Not Found'}</span>
                 </span>
               </div>
             </div>
