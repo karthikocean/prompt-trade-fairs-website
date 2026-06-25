@@ -37,6 +37,10 @@ const LogoMarquee = ({ logos }) => {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
+        @keyframes skeleton-shimmer {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
       `}</style>
     </div>
   );
@@ -119,12 +123,23 @@ const BrandCarousel = ({ expos, navigate }) => {
               transition: '0.3s'
             }}
           >
-            <div style={{ width: '100%', height: '250px', overflow: 'hidden', background: '#f8f9fa', borderRadius: '12px 12px 0 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img
-                src={getImageUrl((expo.gallery && expo.gallery.find(item => item.type === 'Image')?.url) || expo.expoImage)}
-                alt={expo.expoName}
-                style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
-              />
+            <div style={{ width: '100%', height: '250px', overflow: 'hidden', background: '#f8f9fa', borderRadius: '12px 12px 0 0', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+              {((expo.gallery && expo.gallery.find(item => item.type === 'Image')?.url) || expo.expoImage) ? (
+                <img
+                  src={getImageUrl((expo.gallery && expo.gallery.find(item => item.type === 'Image')?.url) || expo.expoImage)}
+                  alt={expo.expoName}
+                  style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+                />
+              ) : (
+                <div style={{
+                  width: '100%',
+                  height: '100%',
+                  background: 'linear-gradient(90deg, #fefefe 25%, #f5f5f5 50%, #fefefe 75%)',
+                  backgroundSize: '200% 100%',
+                  animation: 'skeleton-shimmer 1.5s infinite',
+                  borderRadius: '12px 12px 0 0'
+                }}></div>
+              )}
             </div>
             <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
               {/* <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#111', lineHeight: '1.4', minHeight: '56px', display: 'flex', alignItems: 'flex-start', margin: '0 0 12px 0' }}>
