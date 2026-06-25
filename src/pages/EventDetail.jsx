@@ -50,6 +50,11 @@ const EventDetail = () => {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 991);
+  const [loadedImages, setLoadedImages] = useState({});
+
+  const handleImageLoad = (url) => {
+    setLoadedImages(prev => ({ ...prev, [url]: true }));
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -246,7 +251,34 @@ const EventDetail = () => {
                           )}
                         </div>
                       ) : (
-                        <img src={getImageUrl(item.url)} alt="Gallery" style={{ width: '100%', height: '220px', objectFit: 'cover' }} />
+                        <div style={{ position: 'relative', width: '100%', height: '220px', background: '#f8f9fa', borderRadius: '16px', overflow: 'hidden' }}>
+                          {!loadedImages[item.url] && (
+                            <div style={{
+                              position: 'absolute',
+                              top: 0,
+                              left: 0,
+                              width: '100%',
+                              height: '100%',
+                              background: 'linear-gradient(90deg, #fefefe 25%, #f5f5f5 50%, #fefefe 75%)',
+                              backgroundSize: '200% 100%',
+                              animation: 'skeleton-shimmer 1.5s infinite',
+                              borderRadius: '16px'
+                            }}></div>
+                          )}
+                          <img
+                            src={getImageUrl(item.url)}
+                            alt="Gallery"
+                            style={{
+                              width: '100%',
+                              height: '220px',
+                              objectFit: 'cover',
+                              opacity: loadedImages[item.url] ? 1 : 0,
+                              transition: 'opacity 0.3s ease-in-out',
+                              display: 'block'
+                            }}
+                            onLoad={() => handleImageLoad(item.url)}
+                          />
+                        </div>
                       )}
                     </motion.div>
                   ))}
@@ -277,6 +309,10 @@ const EventDetail = () => {
         )}
 
         <style>{`
+          @keyframes skeleton-shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+          }
           .expo-detail-container {
             padding: 30px 0 40px 0;
           }
