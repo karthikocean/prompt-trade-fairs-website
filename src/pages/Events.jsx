@@ -23,19 +23,21 @@ const LogoMarquee = ({ logos }) => {
     ? [...logos, ...logos, ...logos, ...logos, ...logos, ...logos]
     : [...logos, ...logos];
 
+  const duration = displayLogos.length * 2.5; // Constant slow speed of 30px/s (assuming ~150px per logo item + gap)
+
   return (
     <div className="brand-logo-scroller" style={{ overflow: 'hidden', padding: '20px 0', background: '#fff', borderTop: '1px solid #f0f0f0', borderBottom: '1px solid #f0f0f0', margin: '20px 0 60px 0', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.02)' }}>
-      <div className="marquee-track" style={{ display: 'flex', gap: '30px', width: 'max-content', animation: 'brandMarquee 25s linear infinite' }}>
+      <div className="marquee-track" style={{ display: 'flex', gap: '30px', width: 'max-content', animation: `brandMarquee ${duration}s linear infinite` }}>
         {displayLogos.map((logo, idx) => (
           <div key={idx} className="brand-logo-item" style={{ height: '70px', minWidth: '120px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', borderRadius: '10px', padding: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.03)', border: '1px solid #f0f0f0' }}>
             <img src={getImageUrl(logo.image)} alt={logo.companyName || 'client-logo'} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} />
           </div>
         ))}
       </div>
-      <style jsx>{`
+      <style>{`
         @keyframes brandMarquee {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          100% { transform: translateX(-100%); }
         }
         @keyframes skeleton-shimmer {
           0% { background-position: 200% 0; }
