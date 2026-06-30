@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getExpoBySlug } from '../api/common.api';
 import { getImageUrl } from '../config/apiClient';
@@ -26,6 +26,9 @@ const formatDateRange = (start, end) => {
 
 const UpcomingExpoDetail = () => {
   const { slug } = useParams();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const formType = searchParams.get('formType'); // 'visitor' or 'stall'
   const [expo, setExpo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 991);
@@ -86,6 +89,75 @@ const UpcomingExpoDetail = () => {
     );
   }
 
+
+  if (formType) {
+    return (
+      <main className="upcoming-detail-v3" style={{ background: '#f8f9fa', minHeight: '100vh' }}>
+        {/* HERO BANNER STYLE */}
+        <section className="about-v3-hero" style={{ backgroundImage: "url('/aboutusbanner.png')" }}>
+          <div className="v3-hero-overlay-dark"></div>
+          <div className="container v3-hero-container">
+            <div className="v3-hero-content">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <div className="v3-breadcrumb">
+                  <Link to="/">Home</Link> <span>/</span> <Link to="/upcoming-exhibitions">Current Exhibitions</Link> <span>/</span> <span className="current">{expo.expoName}</span>
+                </div>
+                <div className="v3-hero-title-row">
+                  <h1 className="v3-hero-title" style={{ margin: 0 }}>
+                    {formType === 'visitor' ? 'Visitor Registration' : 'Stall Booking'}
+                  </h1>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* CENTERED RESPONSIVE FORM SECTION */}
+        <div className="container" style={{ padding: isMobile ? '30px 15px' : '60px 15px', display: 'flex', justifyContent: 'center' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="expo-form-card"
+            style={{
+              background: '#fff',
+              borderRadius: '20px',
+              boxShadow: '0 10px 40px rgba(0,0,0,0.06)',
+              border: '1px solid rgba(0,0,0,0.05)',
+              width: '100%',
+              maxWidth: '650px',
+              overflow: 'hidden'
+            }}
+          >
+            <div className="expo-form-heading" style={{ borderBottom: '1px solid #f1f5f9', padding: isMobile ? '20px' : '30px' }}>
+              <h2 style={{ fontSize: isMobile ? '1.3rem' : '1.6rem', fontWeight: '800', margin: 0, color: '#1e293b' }}>
+                {formType === 'visitor' ? 'Register as Visitor' : 'Book a Stall'}
+              </h2>
+              <p style={{ color: '#64748b', marginTop: '6px', fontSize: '0.9rem' }}>
+                {formType === 'visitor' 
+                  ? `Please register to attend ${expo.expoName}` 
+                  : `Please fill out details to book a stall at ${expo.expoName}`}
+              </p>
+            </div>
+            <div className="expo-form-body-wrapper" style={{ padding: isMobile ? '20px' : '30px' }}>
+              <EnquiryForm
+                isExpoRegistration={true}
+                expoInfo={expo}
+                hideHeader={true}
+                forceType={formType}
+                onClose={() => { }}
+              />
+            </div>
+          </motion.div>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="upcoming-detail-v3" style={{ background: '#f8f9fa' }}>
       {/* HERO BANNER STYLE */}
@@ -103,30 +175,6 @@ const UpcomingExpoDetail = () => {
               </div>
               <div className="v3-hero-title-row">
                 <h1 className="v3-hero-title" style={{ margin: 0 }}>Exhibition <span>Details</span></h1>
-                <button
-                  onClick={scrollToForm}
-                  style={{
-                    padding: '8px 20px',
-                    borderRadius: '50px',
-                    background: '#ED1C24',
-                    color: '#fff',
-                    fontWeight: '800',
-                    fontSize: '0.8rem',
-                    border: 'none',
-                    cursor: 'pointer',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px',
-                    boxShadow: '0 6px 15px rgba(237, 28, 36, 0.3)',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => e.target.style.transform = 'translateY(-2px)'}
-                  onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
-                >
-                  Register Now <i className="fas fa-arrow-right"></i>
-                </button>
               </div>
             </motion.div>
           </div>
@@ -239,7 +287,57 @@ const UpcomingExpoDetail = () => {
                 </div>
               </div>
 
-              <div className="expo-downloads-row">
+              {/* Registration Buttons Above the Downloads Row */}
+              <div style={{ display: 'flex', gap: '15px', marginTop: '30px', width: '100%' }}>
+                <Link
+                  to={`/upcoming-exhibitions/${slug}?formType=stall`}
+                  className="expo-action-link"
+                  style={{
+                    flex: 1,
+                    background: '#ED1C24',
+                    color: '#fff',
+                    padding: '12px 15px',
+                    borderRadius: '10px',
+                    fontWeight: '800',
+                    fontSize: '0.9rem',
+                    textAlign: 'center',
+                    textDecoration: 'none',
+                    boxShadow: '0 4px 12px rgba(237, 28, 36, 0.25)',
+                    transition: 'all 0.3s ease',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px'
+                  }}
+                >
+                  <i className="fas fa-store"></i> Stall Registration
+                </Link>
+                <Link
+                  to={`/upcoming-exhibitions/${slug}?formType=visitor`}
+                  className="expo-action-link"
+                  style={{
+                    flex: 1,
+                    background: '#ED1C24',
+                    color: '#fff',
+                    padding: '12px 15px',
+                    borderRadius: '10px',
+                    fontWeight: '800',
+                    fontSize: '0.9rem',
+                    textAlign: 'center',
+                    textDecoration: 'none',
+                    boxShadow: '0 4px 12px rgba(237, 28, 36, 0.25)',
+                    transition: 'all 0.3s ease',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px'
+                  }}
+                >
+                  <i className="fas fa-user-plus"></i> Visitor Registration
+                </Link>
+              </div>
+
+              <div className="expo-downloads-row" style={{ marginTop: '20px', paddingTop: '20px' }}>
                 <div className="present-expo-actions">
                   <Link
                     to={`/about-expo/${slug}`}
@@ -265,41 +363,11 @@ const UpcomingExpoDetail = () => {
                   >
                     <i className="fas fa-download"></i> Brochure
                   </a>
-                  {/* <button
-                    onClick={scrollToForm}
-                    className="register-btn-main"
-                  >
-                    Register Now <i className="fas fa-arrow-right"></i>
-                  </button> */}
                 </div>
               </div>
             </div>
           </div>
         </motion.div>
-
-        {/* BOTTOM: REGISTER NOW FORM */}
-        <div id="registration-form-section" className="expo-form-section-container" style={{ marginTop: '60px' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="expo-form-card"
-          >
-            <div className="expo-form-heading">
-              <h2>Register / Book Stall</h2>
-              <p>Fill out the form below to book a stall or register as a visitor.</p>
-            </div>
-            <div className="expo-form-body-wrapper">
-              <EnquiryForm
-                isExpoRegistration={true}
-                expoInfo={expo}
-                hideHeader={true}
-                onClose={() => { }}
-              />
-            </div>
-          </motion.div>
-        </div>
       </div>
 
       <style>{`
