@@ -15,9 +15,16 @@ const EnquiryForm = ({
   onClose = () => { },
   isSimplified = false,
   hideHeader = false,
-  customClass = ""
+  customClass = "",
+  forceType = null
 }) => {
-  const [enquiryType, setEnquiryType] = useState("stalls"); // "stalls" or "visitors"
+  const [enquiryType, setEnquiryType] = useState(forceType === "visitor" ? "visitors" : "stalls"); // "stalls" or "visitors"
+
+  useEffect(() => {
+    if (forceType) {
+      setEnquiryType(forceType === "visitor" ? "visitors" : "stalls");
+    }
+  }, [forceType]);
 
   // RESET DATA ON TAB SWITCH
   useEffect(() => {
@@ -233,7 +240,7 @@ const EnquiryForm = ({
         </div>
       )}
 
-      {!isSimplified && (
+      {!isSimplified && !forceType && (
         <div className="enquiry-tabs" style={{ display: 'flex', gap: '20px', padding: '15px 25px', background: '#fcfcfc', borderBottom: '1px solid #eee' }}>
           <button type="button" onClick={() => setEnquiryType("stalls")} style={{
             flex: 1,
