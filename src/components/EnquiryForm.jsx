@@ -117,7 +117,9 @@ const EnquiryForm = ({
       }
     }
 
+    if (!formData.companyName.trim()) newErrors.companyName = "Company Name is required";
     if (!formData.city.trim()) newErrors.city = "City is required";
+    if (!formData.businessCategory.trim()) newErrors.businessCategory = "Business Category is required";
 
     if (!expoInfo && !isSimplified) {
       if (!selectedExpoId) {
@@ -163,9 +165,11 @@ const EnquiryForm = ({
           expoId: expoInfo?._id || selectedExpoId || null,
           type: "Visitor Registration",
           name: formData.name,
+          companyName: formData.companyName,
           mobileNo: formData.mobileNo,
           email: formData.email,
           city: formData.city,
+          businessCategory: formData.businessCategory,
           productOfInterest: formData.productOfInterest
         };
         await createEnquiry(payload);
@@ -453,8 +457,9 @@ const EnquiryForm = ({
                   {errors.name && <span style={errorTextStyle}>{errors.name}</span>}
                 </div>
                 <div className="form-group">
-                  <label style={labelStyle}>Company Name</label>
+                  <label style={labelStyle}>Company Name *</label>
                   <input style={{ ...inputStyle, borderColor: errors.companyName ? '#ED1C24' : '#e2e8f0' }} type="text" name="companyName" value={formData.companyName} onChange={handleChange} placeholder="Enter Company Name" />
+                  {errors.companyName && <span style={errorTextStyle}>{errors.companyName}</span>}
                 </div>
                 <div className="form-group">
                   <label style={labelStyle}>Mobile Number *</label>
@@ -467,8 +472,9 @@ const EnquiryForm = ({
                   {errors.email && <span style={errorTextStyle}>{errors.email}</span>}
                 </div>
                 <div className="form-group">
-                  <label style={labelStyle}>Business Category</label>
-                  <input style={inputStyle} type="text" name="businessCategory" value={formData.businessCategory} onChange={handleChange} placeholder="Enter Business Category" />
+                  <label style={labelStyle}>Business Category *</label>
+                  <input style={{ ...inputStyle, borderColor: errors.businessCategory ? '#ED1C24' : '#e2e8f0' }} type="text" name="businessCategory" value={formData.businessCategory} onChange={handleChange} placeholder="Enter Business Category" />
+                  {errors.businessCategory && <span style={errorTextStyle}>{errors.businessCategory}</span>}
                 </div>
                 <div className="form-group">
                   <label style={labelStyle}>Stall Size</label>
@@ -540,13 +546,19 @@ const EnquiryForm = ({
                   {errors.mobileNo && <span style={errorTextStyle}>{errors.mobileNo}</span>}
                 </div>
                 <div className="form-group">
-                  <label style={labelStyle}>Company Name</label>
-                  <input style={inputStyle} type="text" name="companyName" value={formData.companyName} onChange={handleChange} placeholder="Enter Company Name" />
+                  <label style={labelStyle}>Company Name *</label>
+                  <input style={{ ...inputStyle, borderColor: errors.companyName ? '#ED1C24' : '#e2e8f0' }} type="text" name="companyName" value={formData.companyName} onChange={handleChange} placeholder="Enter Company Name" />
+                  {errors.companyName && <span style={errorTextStyle}>{errors.companyName}</span>}
                 </div>
                 <div className="form-group">
                   <label style={labelStyle}>Email ID</label>
                   <input style={{ ...inputStyle, borderColor: errors.email ? '#ED1C24' : '#e2e8f0' }} type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Enter Email ID" />
                   {errors.email && <span style={errorTextStyle}>{errors.email}</span>}
+                </div>
+                <div className="form-group">
+                  <label style={labelStyle}>Business Category *</label>
+                  <input style={{ ...inputStyle, borderColor: errors.businessCategory ? '#ED1C24' : '#e2e8f0' }} type="text" name="businessCategory" value={formData.businessCategory} onChange={handleChange} placeholder="Enter Business Category" />
+                  {errors.businessCategory && <span style={errorTextStyle}>{errors.businessCategory}</span>}
                 </div>
                 <div className="form-group">
                   <label style={labelStyle}>Product of Interest</label>
@@ -558,7 +570,6 @@ const EnquiryForm = ({
                   {errors.city && <span style={errorTextStyle}>{errors.city}</span>}
                 </div>
               </>
-
             )}
 
           </div>
