@@ -24,12 +24,12 @@ const Contact = () => {
     }
   ];
 
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "", isAuthorized: false });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
 
     if (name === "name") {
       // Only allow letters and spaces
@@ -48,7 +48,9 @@ const Contact = () => {
       }
     }
 
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const val = type === "checkbox" ? checked : value;
+
+    setFormData(prev => ({ ...prev, [name]: val }));
     setErrors(prev => ({ ...prev, [name]: false }));
   };
 
@@ -71,6 +73,10 @@ const Contact = () => {
       newErrors.email = "Please enter a valid email address";
     }
 
+    if (!formData.isAuthorized) {
+      newErrors.isAuthorized = "Please check this box to authorize contact.";
+    }
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       toast.error("Please fix the highlighted fields.");
@@ -88,7 +94,7 @@ const Contact = () => {
       });
 
       toast.success("Message sent successfully!");
-      setFormData({ name: "", email: "", phone: "", message: "" });
+      setFormData({ name: "", email: "", phone: "", message: "", isAuthorized: false });
       setErrors({});
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to send message.");
@@ -466,6 +472,53 @@ const Contact = () => {
                       boxSizing: "border-box",
                     }}
                   />
+                </div>
+
+                {/* Authorization Checkbox */}
+                <div style={{ marginTop: "10px", marginBottom: "5px" }}>
+                  <label
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: "10px",
+                      fontSize: "13px",
+                      color: "#444",
+                      lineHeight: "1.5",
+                      cursor: "pointer",
+                      textAlign: "left",
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      name="isAuthorized"
+                      checked={formData.isAuthorized}
+                      onChange={handleChange}
+                      style={{
+                        marginTop: "3px",
+                        width: "18px",
+                        height: "18px",
+                        accentColor: "#ED1C24",
+                        cursor: "pointer",
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span>
+                      I authorise Prompt Trade Fairs India Private Limited &amp; its representatives to contact me with updates and notifications via Email/SMS/RCS/WhatsApp/Call. This will override DND/NDNC. <span style={{ color: "#ED1C24", fontWeight: "bold" }}>*</span>
+                    </span>
+                  </label>
+                  {errors.isAuthorized && (
+                    <span
+                      style={{
+                        color: "#ED1C24",
+                        fontSize: "12px",
+                        marginTop: "6px",
+                        display: "block",
+                        textAlign: "left",
+                      }}
+                    >
+                      {errors.isAuthorized}
+                    </span>
+                  )}
                 </div>
 
                 <button

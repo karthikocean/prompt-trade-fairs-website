@@ -19,6 +19,7 @@ import ToExhibit from './pages/ToExhibit';
 import PaymentTerms from './pages/PaymentTerms';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import RefundPolicy from './pages/RefundPolicy';
+import TermsConditions from './pages/TermsConditions';
 import EventDetail from './pages/EventDetail';
 import RegisterNow from './pages/RegisterNow';
 import './assets/css/styles.css';
@@ -47,6 +48,8 @@ function App() {
                     <Route path="/payment-terms" element={<PaymentTerms />} />
                     <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                     <Route path="/refund-policy" element={<RefundPolicy />} />
+                    <Route path="/terms-conditions" element={<TermsConditions />} />
+                    <Route path="/terms-and-conditions" element={<TermsConditions />} />
                 </Routes>
                 <Footer />
                 <ChatBot />

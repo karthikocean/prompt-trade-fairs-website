@@ -56,6 +56,7 @@ const Footer = () => {
             <li><Link to="/payment-terms"><i className="fas fa-chevron-right"></i>Payment Terms</Link></li>
             <li><Link to="/privacy-policy"><i className="fas fa-chevron-right"></i>Privacy Policy</Link></li>
             <li><Link to="/refund-policy"><i className="fas fa-chevron-right"></i>Refund Policy</Link></li>
+            <li><Link to="/terms-conditions"><i className="fas fa-chevron-right"></i>Terms &amp; Conditions</Link></li>
           </ul>
         </div>
 
