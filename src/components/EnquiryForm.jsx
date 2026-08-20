@@ -38,6 +38,7 @@ const EnquiryForm = ({
       stallSize: "",
       city: "",
       remark: "",
+      knowAboutExhibition: "",
     });
     setErrors({});
   }, [enquiryType]);
@@ -73,6 +74,7 @@ const EnquiryForm = ({
     stallSize: "",
     city: "",
     remark: "",
+    knowAboutExhibition: "",
   });
 
   const handleChange = (e) => {
@@ -103,23 +105,40 @@ const EnquiryForm = ({
 
   const validateForm = () => {
     let newErrors = {};
-    if (!formData.name.trim()) newErrors.name = "Name is required";
+    const name = (formData.name || "").trim();
+    const mobileNo = (formData.mobileNo || "").trim();
+    const email = (formData.email || "").trim();
+    const companyName = (formData.companyName || "").trim();
+    const businessCategory = (formData.businessCategory || "").trim();
+    const knowAboutExhibition = (formData.knowAboutExhibition || "").trim();
+    const city = (formData.city || "").trim();
 
-    if (!formData.mobileNo.trim()) {
+    if (!name) newErrors.name = "Name is required";
+
+    if (!mobileNo) {
       newErrors.mobileNo = "Mobile Number is required";
-    } else if (formData.mobileNo.length !== 10) {
+    } else if (mobileNo.length !== 10) {
       newErrors.mobileNo = "Mobile Number must be 10 digits";
     }
 
-    if (formData.email.trim()) {
-      if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    if (email) {
+      if (!/\S+@\S+\.\S+/.test(email)) {
         newErrors.email = "Email Address is invalid";
       }
     }
 
-    if (!formData.companyName.trim()) newErrors.companyName = "Company Name is required";
-    if (!formData.city.trim()) newErrors.city = "City is required";
-    if (!formData.businessCategory.trim()) newErrors.businessCategory = "Business Category is required";
+    if (enquiryType === "stalls") {
+      if (!companyName) newErrors.companyName = "Company Name is required";
+      if (!businessCategory) newErrors.businessCategory = "Business Category is required";
+    }
+
+    if (enquiryType === "visitors") {
+      if (!knowAboutExhibition) {
+        newErrors.knowAboutExhibition = "Please select how you know about this exhibition";
+      }
+    }
+    
+    if (!city) newErrors.city = "City is required";
 
     if (!expoInfo && !isSimplified) {
       if (!selectedExpoId) {
@@ -170,7 +189,8 @@ const EnquiryForm = ({
           email: formData.email,
           city: formData.city,
           businessCategory: formData.businessCategory,
-          productOfInterest: formData.productOfInterest
+          productOfInterest: formData.productOfInterest,
+          knowAboutExhibition: formData.knowAboutExhibition
         };
         await createEnquiry(payload);
       } else {
@@ -202,6 +222,7 @@ const EnquiryForm = ({
         stallSize: "",
         city: "",
         remark: "",
+        knowAboutExhibition: "",
       });
       setErrors({});
 
@@ -546,7 +567,7 @@ const EnquiryForm = ({
                   {errors.mobileNo && <span style={errorTextStyle}>{errors.mobileNo}</span>}
                 </div>
                 <div className="form-group">
-                  <label style={labelStyle}>Company Name *</label>
+                  <label style={labelStyle}>Company Name</label>
                   <input style={{ ...inputStyle, borderColor: errors.companyName ? '#ED1C24' : '#e2e8f0' }} type="text" name="companyName" value={formData.companyName} onChange={handleChange} placeholder="Enter Company Name" />
                   {errors.companyName && <span style={errorTextStyle}>{errors.companyName}</span>}
                 </div>
@@ -556,18 +577,44 @@ const EnquiryForm = ({
                   {errors.email && <span style={errorTextStyle}>{errors.email}</span>}
                 </div>
                 <div className="form-group">
-                  <label style={labelStyle}>Business Category *</label>
+                  <label style={labelStyle}>Business Category</label>
                   <input style={{ ...inputStyle, borderColor: errors.businessCategory ? '#ED1C24' : '#e2e8f0' }} type="text" name="businessCategory" value={formData.businessCategory} onChange={handleChange} placeholder="Enter Business Category" />
                   {errors.businessCategory && <span style={errorTextStyle}>{errors.businessCategory}</span>}
-                </div>
-                <div className="form-group">
-                  <label style={labelStyle}>Product of Interest</label>
-                  <input style={inputStyle} type="text" name="productOfInterest" value={formData.productOfInterest} onChange={handleChange} placeholder="Enter Product of Interest" />
                 </div>
                 <div className="form-group">
                   <label style={labelStyle}>City *</label>
                   <input style={{ ...inputStyle, borderColor: errors.city ? '#ED1C24' : '#e2e8f0' }} type="text" name="city" value={formData.city} onChange={handleChange} placeholder="Enter City" />
                   {errors.city && <span style={errorTextStyle}>{errors.city}</span>}
+                </div>
+                <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+                  <label style={labelStyle}>Product of Interest</label>
+                  <input style={inputStyle} type="text" name="productOfInterest" value={formData.productOfInterest} onChange={handleChange} placeholder="Enter Product of Interest" />
+                </div>
+                <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+                  <label style={labelStyle}>How do you know about this Exhibition ? *</label>
+                  <select
+                    name="knowAboutExhibition"
+                    value={formData.knowAboutExhibition}
+                    onChange={handleChange}
+                    style={{
+                      ...inputStyle,
+                      borderColor: errors.knowAboutExhibition ? '#ED1C24' : '#e2e8f0',
+                      appearance: 'none',
+                      backgroundImage: `url("data:image/svg+xml;utf8,<svg fill='%234b5563' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>")`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'right 16px center',
+                      backgroundSize: '24px'
+                    }}
+                  >
+                    <option value="">Select Option</option>
+                    <option value="Facebook & Instagram">Facebook & Instagram</option>
+                    <option value="Whatsapp">Whatsapp</option>
+                    <option value="SMS">SMS</option>
+                    <option value="Hindu Newspaper">Hindu Newspaper</option>
+                    <option value="Daily Thanthi Newspaper">Daily Thanthi Newspaper</option>
+                    <option value="OBD AI CALL">OBD AI CALL</option>
+                  </select>
+                  {errors.knowAboutExhibition && <span style={errorTextStyle}>{errors.knowAboutExhibition}</span>}
                 </div>
               </>
             )}
