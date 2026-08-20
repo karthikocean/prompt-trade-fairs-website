@@ -5,7 +5,9 @@ import {
   createVisitorEnquiry,
   createInterestEnquiry,
   createContactEnquiry,
-  getPresentExpos
+  getPresentExpos,
+  sendEnquiryOtp,
+  verifyEnquiryOtp
 } from "../api/common.api";
 import toast from "react-hot-toast";
 
@@ -41,12 +43,33 @@ const EnquiryForm = ({
       knowAboutExhibition: "",
     });
     setErrors({});
+    setIsMobileVerified(false);
+    setOtpSent(false);
+    setOtpCode("");
+    setResendTimer(0);
   }, [enquiryType]);
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [expos, setExpos] = useState([]);
   const [selectedExpoId, setSelectedExpoId] = useState("");
+
+  // OTP Verification States
+  const [isMobileVerified, setIsMobileVerified] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
+  const [isSendingOtp, setIsSendingOtp] = useState(false);
+  const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
+  const [resendTimer, setResendTimer] = useState(0);
+
+  // Resend Countdown Timer
+  useEffect(() => {
+    let interval = null;
+    if (resendTimer > 0) {
+      interval = setInterval(() => setResendTimer((prev) => prev - 1), 1000);
+    }
+    return () => clearInterval(interval);
+  }, [resendTimer]);
 
   useEffect(() => {
     if (!expoInfo) {
@@ -93,6 +116,11 @@ const EnquiryForm = ({
     // VALIDATION: Mobile only numbers and max 10 digits
     if (name === "mobileNo") {
       if (!/^\d*$/.test(value) || value.length > 10) return;
+      if (isMobileVerified || otpSent) {
+        setIsMobileVerified(false);
+        setOtpSent(false);
+        setOtpCode("");
+      }
     }
 
     // VALIDATION: City only alphabets
@@ -101,6 +129,49 @@ const EnquiryForm = ({
     }
 
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  // Check if mobile number is valid for Get OTP (10 digits starting with 6,7,8,9)
+  const isMobileNumberValid = /^[6-9]\d{9}$/.test(formData.mobileNo);
+
+  const handleSendOtp = async () => {
+    if (!isMobileNumberValid) {
+      toast.error("Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9");
+      return;
+    }
+    setIsSendingOtp(true);
+    try {
+      await sendEnquiryOtp({ mobileNo: formData.mobileNo });
+      toast.success("OTP sent to your mobile number!");
+      setOtpSent(true);
+      setResendTimer(30);
+      setErrors(prev => ({ ...prev, mobileNo: "" }));
+    } catch (error) {
+      console.error("OTP send error:", error);
+      toast.error(error.response?.data?.message || "Failed to send OTP.");
+    } finally {
+      setIsSendingOtp(false);
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    if (!otpCode || otpCode.length !== 4) {
+      toast.error("Please enter a valid 4-digit OTP");
+      return;
+    }
+    setIsVerifyingOtp(true);
+    try {
+      await verifyEnquiryOtp({ mobileNo: formData.mobileNo, otp: otpCode });
+      toast.success("Mobile number verified successfully!");
+      setIsMobileVerified(true);
+      setOtpSent(false);
+      setErrors(prev => ({ ...prev, mobileNo: "" }));
+    } catch (error) {
+      console.error("OTP verify error:", error);
+      toast.error(error.response?.data?.message || "Invalid OTP. Please try again.");
+    } finally {
+      setIsVerifyingOtp(false);
+    }
   };
 
   const validateForm = () => {
@@ -117,8 +188,10 @@ const EnquiryForm = ({
 
     if (!mobileNo) {
       newErrors.mobileNo = "Mobile Number is required";
-    } else if (mobileNo.length !== 10) {
-      newErrors.mobileNo = "Mobile Number must be 10 digits";
+    } else if (mobileNo.length !== 10 || !/^[6-9]\d{9}$/.test(mobileNo)) {
+      newErrors.mobileNo = "Mobile Number must be 10 digits starting with 6, 7, 8, or 9";
+    } else if (!isMobileVerified) {
+      newErrors.mobileNo = "Please verify your mobile number with OTP before submitting";
     }
 
     if (email) {
@@ -154,7 +227,11 @@ const EnquiryForm = ({
     e.preventDefault();
 
     if (!validateForm()) {
-      toast.error("Please fill in all required fields.");
+      if (!isMobileVerified && formData.mobileNo && /^[6-9]\d{9}$/.test(formData.mobileNo)) {
+        toast.error("Please verify your mobile number with OTP before submitting.");
+      } else {
+        toast.error("Please fill in all required fields.");
+      }
       return;
     }
 
@@ -225,6 +302,10 @@ const EnquiryForm = ({
         knowAboutExhibition: "",
       });
       setErrors({});
+      setIsMobileVerified(false);
+      setOtpSent(false);
+      setOtpCode("");
+      setResendTimer(0);
 
       onClose();
     } catch (error) {
@@ -482,11 +563,123 @@ const EnquiryForm = ({
                   <input style={{ ...inputStyle, borderColor: errors.companyName ? '#ED1C24' : '#e2e8f0' }} type="text" name="companyName" value={formData.companyName} onChange={handleChange} placeholder="Enter Company Name" />
                   {errors.companyName && <span style={errorTextStyle}>{errors.companyName}</span>}
                 </div>
-                <div className="form-group">
-                  <label style={labelStyle}>Mobile Number *</label>
-                  <input style={{ ...inputStyle, borderColor: errors.mobileNo ? '#ED1C24' : '#e2e8f0' }} type="tel" name="mobileNo" value={formData.mobileNo} onChange={handleChange} placeholder="Enter 10-digit Mobile" maxLength="10" />
+                <div className="form-group" style={{ position: 'relative' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                    <label style={{ ...labelStyle, marginBottom: 0 }}>Mobile Number *</label>
+                    {isMobileVerified && (
+                      <span style={{
+                        background: '#22c55e',
+                        color: '#fff',
+                        padding: '2px 8px',
+                        borderRadius: '12px',
+                        fontSize: '0.72rem',
+                        fontWeight: '700',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px'
+                      }}>
+                        ✓ Verified
+                      </span>
+                    )}
+                  </div>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <input
+                      style={{
+                        ...inputStyle,
+                        borderColor: errors.mobileNo ? '#ED1C24' : isMobileVerified ? '#22c55e' : '#e2e8f0',
+                        flex: 1
+                      }}
+                      type="tel"
+                      name="mobileNo"
+                      value={formData.mobileNo}
+                      onChange={handleChange}
+                      placeholder="Enter 10-digit Mobile"
+                      maxLength="10"
+                    />
+                    {!isMobileVerified && (
+                      <button
+                        type="button"
+                        onClick={handleSendOtp}
+                        disabled={!isMobileNumberValid || isSendingOtp || isMobileVerified}
+                        style={{
+                          height: '50px',
+                          padding: '0 16px',
+                          background: isMobileNumberValid && !isSendingOtp ? '#ed1c24' : '#cbd5e1',
+                          color: '#fff',
+                          border: 'none',
+                          borderRadius: '10px',
+                          fontSize: '0.85rem',
+                          fontWeight: '700',
+                          cursor: isMobileNumberValid && !isSendingOtp ? 'pointer' : 'not-allowed',
+                          whiteSpace: 'nowrap',
+                          transition: 'all 0.3s ease'
+                        }}
+                      >
+                        {isSendingOtp ? "Sending..." : "Get OTP"}
+                      </button>
+                    )}
+                  </div>
                   {errors.mobileNo && <span style={errorTextStyle}>{errors.mobileNo}</span>}
                 </div>
+
+                {otpSent && !isMobileVerified && (
+                  <div className="form-group" style={{ gridColumn: '1 / -1', background: '#f8fafc', padding: '16px', borderRadius: '12px', border: '1.5px solid #ed1c24', marginTop: '4px' }}>
+                    <label style={{ ...labelStyle, color: '#1e293b' }}>Enter OTP sent to {formData.mobileNo} *</label>
+                    <div style={{ display: 'flex', gap: '10px', marginTop: '6px' }}>
+                      <input
+                        style={{
+                          ...inputStyle,
+                          flex: 1,
+                          letterSpacing: '6px',
+                          textAlign: 'center',
+                          fontWeight: '800',
+                          fontSize: '1.1rem',
+                          background: '#fff'
+                        }}
+                        type="text"
+                        maxLength="4"
+                        value={otpCode}
+                        onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ""))}
+                        placeholder="4-digit OTP"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleVerifyOtp}
+                        disabled={isVerifyingOtp || otpCode.length !== 4}
+                        style={{
+                          height: '50px',
+                          padding: '0 24px',
+                          background: otpCode.length === 4 ? '#22c55e' : '#cbd5e1',
+                          color: '#fff',
+                          border: 'none',
+                          borderRadius: '10px',
+                          fontSize: '0.9rem',
+                          fontWeight: '700',
+                          cursor: otpCode.length === 4 ? 'pointer' : 'not-allowed',
+                          whiteSpace: 'nowrap',
+                          transition: 'all 0.3s ease'
+                        }}
+                      >
+                        {isVerifyingOtp ? "Verifying..." : "Verify OTP"}
+                      </button>
+                    </div>
+                    <div style={{ marginTop: '10px', fontSize: '0.8rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#64748b' }}>
+                      <span>Check your mobile SMS inbox</span>
+                      {resendTimer > 0 ? (
+                        <span style={{ fontWeight: '600' }}>Resend OTP in {resendTimer}s</span>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={handleSendOtp}
+                          disabled={isSendingOtp}
+                          style={{ background: 'none', border: 'none', color: '#ed1c24', fontWeight: '700', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
+                        >
+                          Resend OTP
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
                 <div className="form-group">
                   <label style={labelStyle}>Email ID</label>
                   <input style={{ ...inputStyle, borderColor: errors.email ? '#ED1C24' : '#e2e8f0' }} type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Enter Email ID" />
@@ -561,11 +754,123 @@ const EnquiryForm = ({
                   <input style={{ ...inputStyle, borderColor: errors.name ? '#ED1C24' : '#e2e8f0' }} type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Enter Name" />
                   {errors.name && <span style={errorTextStyle}>{errors.name}</span>}
                 </div>
-                <div className="form-group">
-                  <label style={labelStyle}>Mobile Number *</label>
-                  <input style={{ ...inputStyle, borderColor: errors.mobileNo ? '#ED1C24' : '#e2e8f0' }} type="tel" name="mobileNo" value={formData.mobileNo} onChange={handleChange} placeholder="Enter 10-digit Mobile" maxLength="10" />
+                <div className="form-group" style={{ position: 'relative' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                    <label style={{ ...labelStyle, marginBottom: 0 }}>Mobile Number *</label>
+                    {isMobileVerified && (
+                      <span style={{
+                        background: '#22c55e',
+                        color: '#fff',
+                        padding: '2px 8px',
+                        borderRadius: '12px',
+                        fontSize: '0.72rem',
+                        fontWeight: '700',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px'
+                      }}>
+                        ✓ Verified
+                      </span>
+                    )}
+                  </div>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <input
+                      style={{
+                        ...inputStyle,
+                        borderColor: errors.mobileNo ? '#ED1C24' : isMobileVerified ? '#22c55e' : '#e2e8f0',
+                        flex: 1
+                      }}
+                      type="tel"
+                      name="mobileNo"
+                      value={formData.mobileNo}
+                      onChange={handleChange}
+                      placeholder="Enter 10-digit Mobile"
+                      maxLength="10"
+                    />
+                    {!isMobileVerified && (
+                      <button
+                        type="button"
+                        onClick={handleSendOtp}
+                        disabled={!isMobileNumberValid || isSendingOtp || isMobileVerified}
+                        style={{
+                          height: '50px',
+                          padding: '0 16px',
+                          background: isMobileNumberValid && !isSendingOtp ? '#ed1c24' : '#cbd5e1',
+                          color: '#fff',
+                          border: 'none',
+                          borderRadius: '10px',
+                          fontSize: '0.85rem',
+                          fontWeight: '700',
+                          cursor: isMobileNumberValid && !isSendingOtp ? 'pointer' : 'not-allowed',
+                          whiteSpace: 'nowrap',
+                          transition: 'all 0.3s ease'
+                        }}
+                      >
+                        {isSendingOtp ? "Sending..." : "Get OTP"}
+                      </button>
+                    )}
+                  </div>
                   {errors.mobileNo && <span style={errorTextStyle}>{errors.mobileNo}</span>}
                 </div>
+
+                {otpSent && !isMobileVerified && (
+                  <div className="form-group" style={{ gridColumn: '1 / -1', background: '#f8fafc', padding: '16px', borderRadius: '12px', border: '1.5px solid #ed1c24', marginTop: '4px' }}>
+                    <label style={{ ...labelStyle, color: '#1e293b' }}>Enter OTP sent to {formData.mobileNo} *</label>
+                    <div style={{ display: 'flex', gap: '10px', marginTop: '6px' }}>
+                      <input
+                        style={{
+                          ...inputStyle,
+                          flex: 1,
+                          letterSpacing: '6px',
+                          textAlign: 'center',
+                          fontWeight: '800',
+                          fontSize: '1.1rem',
+                          background: '#fff'
+                        }}
+                        type="text"
+                        maxLength="4"
+                        value={otpCode}
+                        onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ""))}
+                        placeholder="4-digit OTP"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleVerifyOtp}
+                        disabled={isVerifyingOtp || otpCode.length !== 4}
+                        style={{
+                          height: '50px',
+                          padding: '0 24px',
+                          background: otpCode.length === 4 ? '#22c55e' : '#cbd5e1',
+                          color: '#fff',
+                          border: 'none',
+                          borderRadius: '10px',
+                          fontSize: '0.9rem',
+                          fontWeight: '700',
+                          cursor: otpCode.length === 4 ? 'pointer' : 'not-allowed',
+                          whiteSpace: 'nowrap',
+                          transition: 'all 0.3s ease'
+                        }}
+                      >
+                        {isVerifyingOtp ? "Verifying..." : "Verify OTP"}
+                      </button>
+                    </div>
+                    <div style={{ marginTop: '10px', fontSize: '0.8rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#64748b' }}>
+                      <span>Check your mobile SMS inbox</span>
+                      {resendTimer > 0 ? (
+                        <span style={{ fontWeight: '600' }}>Resend OTP in {resendTimer}s</span>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={handleSendOtp}
+                          disabled={isSendingOtp}
+                          style={{ background: 'none', border: 'none', color: '#ed1c24', fontWeight: '700', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
+                        >
+                          Resend OTP
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
                 <div className="form-group">
                   <label style={labelStyle}>Company Name</label>
                   <input style={{ ...inputStyle, borderColor: errors.companyName ? '#ED1C24' : '#e2e8f0' }} type="text" name="companyName" value={formData.companyName} onChange={handleChange} placeholder="Enter Company Name" />

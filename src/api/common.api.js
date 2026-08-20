@@ -72,6 +72,14 @@ export const createEnquiry = (data) => {
     return apiClient.post('/enquiry/create', data);
 };
 
+export const sendEnquiryOtp = (data) => {
+    return apiClient.post('/enquiry/send-otp', data);
+};
+
+export const verifyEnquiryOtp = (data) => {
+    return apiClient.post('/enquiry/verify-otp', data);
+};
+
 export const createStallEnquiry = (data) => {
     return apiClient.post('/enquiry/stall/create', { ...data, source: 'website' });
 };
