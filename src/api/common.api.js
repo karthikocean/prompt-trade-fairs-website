@@ -67,6 +67,10 @@ export const getAvailableStalls = (expoId) => {
     return apiClient.get(`/master/stalls/${expoId}?availableOnly=true`);
 };
 
+export const getKnownSources = () => {
+    return apiClient.get('/master/known-sources');
+};
+
 // Enquiry APIs
 export const createEnquiry = (data) => {
     return apiClient.post('/enquiry/create', data);

@@ -6,6 +6,7 @@ import {
   createInterestEnquiry,
   createContactEnquiry,
   getPresentExpos,
+  getKnownSources,
   sendEnquiryOtp,
   verifyEnquiryOtp
 } from "../api/common.api";
@@ -53,6 +54,22 @@ const EnquiryForm = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [expos, setExpos] = useState([]);
   const [selectedExpoId, setSelectedExpoId] = useState("");
+  const [knownSources, setKnownSources] = useState([]);
+
+  // Fetch Known Sources on Mount
+  useEffect(() => {
+    const fetchSources = async () => {
+      try {
+        const response = await getKnownSources();
+        if (response.data && response.data.data) {
+          setKnownSources(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching known sources:", error);
+      }
+    };
+    fetchSources();
+  }, []);
 
   // OTP Verification States
   const [isMobileVerified, setIsMobileVerified] = useState(false);
@@ -912,12 +929,11 @@ const EnquiryForm = ({
                     }}
                   >
                     <option value="">Select Option</option>
-                    <option value="Facebook & Instagram">Facebook & Instagram</option>
-                    <option value="Whatsapp">Whatsapp</option>
-                    <option value="SMS">SMS</option>
-                    <option value="Hindu Newspaper">Hindu Newspaper</option>
-                    <option value="Daily Thanthi Newspaper">Daily Thanthi Newspaper</option>
-                    <option value="OBD AI CALL">OBD AI CALL</option>
+                    {knownSources && knownSources.map((source) => (
+                      <option key={source._id || source.name} value={source.name}>
+                        {source.name}
+                      </option>
+                    ))}
                   </select>
                   {errors.knowAboutExhibition && <span style={errorTextStyle}>{errors.knowAboutExhibition}</span>}
                 </div>
