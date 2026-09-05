@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./Testimonials.css";
 
 const videos = [
+  { id: "P5TrAdK8x8Y", url: "https://youtube.com/shorts/P5TrAdK8x8Y" },
+  { id: "fw2Ibfxe23c", url: "https://youtube.com/shorts/fw2Ibfxe23c" },
+  { id: "e94j6VnBU_U", url: "https://youtube.com/shorts/e94j6VnBU_U" },
   { id: "G9MkoVxABck", url: "https://youtube.com/shorts/G9MkoVxABck" },
   { id: "ebWVHciHjSY", url: "https://youtube.com/shorts/ebWVHciHjSY" },
   { id: "u2G4VmK416E", url: "https://youtube.com/shorts/u2G4VmK416E" },
