@@ -17,6 +17,13 @@ const formatDateRange = (start, end) => {
   return `${days} ${month}-${year}`;
 };
 
+const toTitleCase = (str) => {
+  if (!str) return "";
+  return str
+    .toLowerCase()
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
 const LogoMarquee = ({ logos }) => {
   if (!logos || logos.length === 0) return null;
   const displayLogos = logos.length < 8
@@ -147,18 +154,36 @@ const BrandCarousel = ({ expos, navigate }) => {
               {/* <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#111', lineHeight: '1.4', minHeight: '56px', display: 'flex', alignItems: 'flex-start', margin: '0 0 12px 0' }}>
                 {expo.expoName}
               </h3> */}
-              <div className='expo-content-mobile' style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#333', fontWeight: '700', fontSize: '14.5px', marginTop: '8px', flexWrap: 'wrap' }}>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                  <i className="far fa-calendar-alt" style={{ color: '#ED1C24' }}></i>
-                  <span>{formatDateRange(expo.startDate, expo.endDate)}</span>
-                </span>
-                <span style={{ color: '#ccc' }}>|</span>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                  <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24' }}></i>
-                  <span>{expo?.expoLocation?.name || 'Not Found'}</span>
-                </span>
-              </div>
-              <div className="view-more-btn" style={{ marginTop: '16px', display: 'flex', alignItems: 'center', gap: '6px', color: '#ED1C24', fontWeight: '800', fontSize: '14px' }}>
+              {(() => {
+                const cityName = expo?.expoLocation?.name 
+                  || expo?.location?.name 
+                  || (typeof expo?.expoLocation === 'string' && !/^[0-9a-fA-F]{24}$/.test(expo.expoLocation) ? expo.expoLocation : '');
+                const venueName = expo?.venue || expo?.location?.address || '';
+
+                return (
+                  <div className='expo-content-mobile' style={{ display: 'flex', flexDirection: 'column', gap: '8px', color: '#333', fontWeight: '700', fontSize: '14px', marginTop: '4px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <i className="far fa-calendar-alt" style={{ color: '#ED1C24', width: '18px', fontSize: '1.1rem', textAlign: 'center', flexShrink: 0 }}></i>
+                      <span>{formatDateRange(expo.startDate, expo.endDate)}</span>
+                    </div>
+
+                    {cityName && (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <i className="fas fa-city" style={{ color: '#ED1C24', width: '18px', fontSize: '1.1rem', textAlign: 'center', flexShrink: 0 }}></i>
+                        <span>{toTitleCase(cityName)}</span>
+                      </div>
+                    )}
+
+                    {venueName && (
+                      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                        <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24', width: '18px', fontSize: '1.1rem', textAlign: 'center', flexShrink: 0, marginTop: '2px' }}></i>
+                        <span style={{ lineHeight: '1.4' }}>{toTitleCase(venueName)}</span>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+              <div className="view-more-btn" style={{ marginTop: 'auto', paddingTop: '16px', display: 'flex', alignItems: 'center', gap: '6px', color: '#ED1C24', fontWeight: '800', fontSize: '14px' }}>
                 <span>View More</span>
                 <i className="fas fa-chevron-right" style={{ fontSize: '12px' }}></i>
               </div>

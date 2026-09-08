@@ -12,6 +12,13 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
+const toTitleCase = (str) => {
+  if (!str) return "";
+  return str
+    .toLowerCase()
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
 const formatDateRange = (start, end) => {
   if (!start) return "";
   const startDate = new Date(start);
@@ -233,18 +240,35 @@ const UpcomingExpoDetail = () => {
                     </div>
                   </div>
 
-                  {/* 2. Venue Location */}
-                  <div className="feature-block" style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center' }}>
-                    <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
-                      <i className="fas fa-map-marker-alt" style={{ color: '#E31E24', fontSize: isMobile ? '1.1rem' : '1.4rem' }}></i>
+                  {/* 2. City */}
+                  {(expo.expoLocation?.name || expo.location?.name) && (
+                    <div className="feature-block" style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center' }}>
+                      <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                        <i className="fas fa-city" style={{ color: '#E31E24', fontSize: isMobile ? '1.1rem' : '1.4rem' }}></i>
+                      </div>
+                      <div style={{ minWidth: 0, flex: 1 }}>
+                        <h4 style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f' }}>
+                          {toTitleCase(expo.expoLocation?.name || expo.location?.name)}
+                        </h4>
+                        <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>City</p>
+                      </div>
                     </div>
-                    <div style={{ minWidth: 0, flex: 1 }}>
-                      <h4 style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f', wordBreak: 'break-word' }}>
-                        {expo.venue}
-                      </h4>
-                      <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>Event Location</p>
+                  )}
+
+                  {/* 3. Venue */}
+                  {(expo.venue || expo.location?.address) && (
+                    <div className="feature-block" style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center' }}>
+                      <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                        <i className="fas fa-map-marker-alt" style={{ color: '#E31E24', fontSize: isMobile ? '1.1rem' : '1.4rem' }}></i>
+                      </div>
+                      <div style={{ minWidth: 0, flex: 1 }}>
+                        <h4 style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f', wordBreak: 'break-word' }}>
+                          {toTitleCase(expo.venue || expo.location?.address)}
+                        </h4>
+                        <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>Venue</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* 3. Expo Timing */}
                   <div className="feature-block" style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center' }}>

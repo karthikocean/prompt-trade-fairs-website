@@ -56,11 +56,13 @@ const EnquiryForm = ({
   const [selectedExpoId, setSelectedExpoId] = useState("");
   const [knownSources, setKnownSources] = useState([]);
 
-  // Fetch Known Sources on Mount
+  const currentExpoId = expoInfo?._id || expoInfo?.id || selectedExpoId;
+
+  // Fetch Known Sources for the current expo
   useEffect(() => {
     const fetchSources = async () => {
       try {
-        const response = await getKnownSources();
+        const response = await getKnownSources(currentExpoId);
         if (response.data && response.data.data) {
           setKnownSources(response.data.data);
         }
@@ -69,7 +71,17 @@ const EnquiryForm = ({
       }
     };
     fetchSources();
-  }, []);
+  }, [currentExpoId]);
+
+  // Reset selected source if it's no longer in the updated knownSources list
+  useEffect(() => {
+    if (formData.knowAboutExhibition && knownSources.length > 0) {
+      const exists = knownSources.some((s) => s.name === formData.knowAboutExhibition);
+      if (!exists) {
+        setFormData((prev) => ({ ...prev, knowAboutExhibition: "" }));
+      }
+    }
+  }, [knownSources]);
 
   // OTP Verification States
   const [isMobileVerified, setIsMobileVerified] = useState(false);

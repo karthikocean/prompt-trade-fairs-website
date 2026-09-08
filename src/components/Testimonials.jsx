@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./Testimonials.css";
+import { getWebsiteTestimonials } from "../api/testimonial.api";
 
-const videos = [
+const defaultVideos = [
   { id: "P5TrAdK8x8Y", url: "https://youtube.com/shorts/P5TrAdK8x8Y" },
   { id: "fw2Ibfxe23c", url: "https://youtube.com/shorts/fw2Ibfxe23c" },
   { id: "e94j6VnBU_U", url: "https://youtube.com/shorts/e94j6VnBU_U" },
@@ -22,19 +23,37 @@ const videos = [
 ];
 
 const Testimonial = () => {
+  const [videos, setVideos] = useState(defaultVideos);
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const res = await getWebsiteTestimonials();
+        const data = res?.data?.data || res?.data || [];
+        if (Array.isArray(data) && data.length > 0) {
+          setVideos(data);
+        }
+      } catch (error) {
+        console.error("Failed to load dynamic testimonials:", error);
+      }
+    };
+    fetchVideos();
+  }, []);
+
+  useEffect(() => {
+    if (!videos.length) return;
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % videos.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [videos.length]);
 
   const prev = () => setIndex((prev) => Math.max(prev - 1, 0));
   const next = () => setIndex((prev) => Math.min(prev + 1, videos.length - 1));
 
   const getItem = (offset) => {
+    if (!videos.length) return null;
     return videos[(index + offset + videos.length) % videos.length];
   };
 
