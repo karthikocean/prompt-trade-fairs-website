@@ -250,76 +250,103 @@ const NextExpoSection = () => {
                 </Link>
               </h3>
 
-              <div className="details-grid-v2" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: isMobile ? '15px' : '25px', marginBottom: '30px' }}>
-                {/* 1. Date Block */}
-                <div className="detail-item-v2" style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center' }}>
-                  <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
-                    <i className="fas fa-calendar-alt" style={{ color: '#E31E24', fontSize: isMobile ? '1.1rem' : '1.4rem' }}></i>
-                  </div>
-                  <div style={{ minWidth: 0, flex: 1 }}>
-                    <h4 style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
-                      {formatDateRange(currentExpo.startDate, currentExpo.endDate)}
-                    </h4>
-                    <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>Exhibition Duration</p>
-                  </div>
-                </div>
+              {/* City and Venue names */}
+              {(() => {
+                const cityName = currentExpo.expoLocation?.name 
+                  || currentExpo.location?.name 
+                  || (typeof currentExpo.expoLocation === 'string' && !/^[0-9a-fA-F]{24}$/.test(currentExpo.expoLocation) ? currentExpo.expoLocation : '');
+                const venueName = currentExpo.venue || currentExpo.location?.address || '';
 
-                {/* 2. Event Location / Venue */}
-                <div className="detail-item-v2" style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center' }}>
-                  <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
-                    <i className="fas fa-map-marker-alt" style={{ color: '#E31E24', fontSize: isMobile ? '1.1rem' : '1.4rem' }}></i>
-                  </div>
-                  <div style={{ minWidth: 0, flex: 1 }}>
-                    <h4 style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f' }}>
-                      {toTitleCase(currentExpo.venue)}
-                    </h4>
-                    <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>Event Location</p>
-                  </div>
-                </div>
-
-                {/* 3. Expo Timing */}
-                <div className="detail-item-v2" style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center' }}>
-                  <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
-                    <span style={{ background: '#ED1C24', width: isMobile ? '26px' : '34px', height: isMobile ? '26px' : '34px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <i className="fas fa-clock" style={{ color: '#fff', fontSize: isMobile ? '0.85rem' : '1.05rem' }}></i>
-                    </span>
-                  </div>
-                  <div style={{ minWidth: 0, flex: 1 }}>
-                    <h4 style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
-                      {currentExpo.startTime} - {currentExpo.endTime}
-                    </h4>
-                    <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>Expo Timing</p>
-                  </div>
-                </div>
-
-                {/* 4. Website (if present) */}
-                {currentExpo.websiteLink && (
-                  <div
-                    className="detail-item-v2"
-                    style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center', cursor: 'pointer' }}
-                    onClick={() => {
-                      const websiteUrl = currentExpo.websiteLink.startsWith('http://') || currentExpo.websiteLink.startsWith('https://')
-                        ? currentExpo.websiteLink
-                        : `https://${currentExpo.websiteLink}`;
-                      window.open(websiteUrl, '_blank');
-                    }}
-                  >
-                    <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
-                      <i className="fas fa-globe" style={{ color: '#E31E24', fontSize: isMobile ? '1.1rem' : '1.4rem' }}></i>
+                return (
+                  <div className="details-grid-v2" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: isMobile ? '12px' : '18px', marginBottom: isMobile ? '20px' : '25px' }}>
+                    {/* 1. Date Block */}
+                    <div className="detail-item-v2" style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center' }}>
+                      <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                        <i className="fas fa-calendar-alt" style={{ color: '#E31E24', fontSize: isMobile ? '1.1rem' : '1.4rem' }}></i>
+                      </div>
+                      <div style={{ minWidth: 0, flex: 1 }}>
+                        <h4 style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                          {formatDateRange(currentExpo.startDate, currentExpo.endDate)}
+                        </h4>
+                        <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>Exhibition Duration</p>
+                      </div>
                     </div>
-                    <div style={{ minWidth: 0, flex: 1 }}>
-                      <h4
-                        style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f', transition: 'color 0.2s ease', wordBreak: 'break-all' }}
-                        onMouseEnter={(e) => e.target.style.color = '#ED1C24'}
-                        onMouseLeave={(e) => e.target.style.color = 'inherit'}
+
+                    {/* 2. City Block */}
+                    {cityName && (
+                      <div className="detail-item-v2" style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center' }}>
+                        <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                          <i className="fas fa-city" style={{ color: '#E31E24', fontSize: isMobile ? '1.1rem' : '1.4rem' }}></i>
+                        </div>
+                        <div style={{ minWidth: 0, flex: 1 }}>
+                          <h4 style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f' }}>
+                            {toTitleCase(cityName)}
+                          </h4>
+                          <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>City</p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* 3. Venue Block */}
+                    {venueName && (
+                      <div className="detail-item-v2" style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center' }}>
+                        <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                          <i className="fas fa-map-marker-alt" style={{ color: '#E31E24', fontSize: isMobile ? '1.1rem' : '1.4rem' }}></i>
+                        </div>
+                        <div style={{ minWidth: 0, flex: 1 }}>
+                          <h4 style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f', wordBreak: 'break-word' }}>
+                            {toTitleCase(venueName)}
+                          </h4>
+                          <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>Venue</p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* 4. Expo Timing */}
+                    <div className="detail-item-v2" style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center' }}>
+                      <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                        <span style={{ background: '#ED1C24', width: isMobile ? '26px' : '34px', height: isMobile ? '26px' : '34px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <i className="fas fa-clock" style={{ color: '#fff', fontSize: isMobile ? '0.85rem' : '1.05rem' }}></i>
+                        </span>
+                      </div>
+                      <div style={{ minWidth: 0, flex: 1 }}>
+                        <h4 style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f', textTransform: 'uppercase' }}>
+                          {currentExpo.startTime} - {currentExpo.endTime}
+                        </h4>
+                        <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>Expo Timing</p>
+                      </div>
+                    </div>
+
+                    {/* 5. Website (if present) */}
+                    {currentExpo.websiteLink && (
+                      <div
+                        className="detail-item-v2"
+                        style={{ display: 'flex', gap: isMobile ? '12px' : '20px', alignItems: 'center', cursor: 'pointer' }}
+                        onClick={() => {
+                          const websiteUrl = currentExpo.websiteLink.startsWith('http://') || currentExpo.websiteLink.startsWith('https://')
+                            ? currentExpo.websiteLink
+                            : `https://${currentExpo.websiteLink}`;
+                          window.open(websiteUrl, '_blank');
+                        }}
                       >
-                        {currentExpo.websiteLink}
-                      </h4>
-                      <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>Website</p>
-                    </div>
+                        <div style={{ background: '#fff', minWidth: isMobile ? '45px' : '60px', height: isMobile ? '45px' : '60px', borderRadius: isMobile ? '10px' : '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', flexShrink: 0 }}>
+                          <i className="fas fa-globe" style={{ color: '#E31E24', fontSize: isMobile ? '1.1rem' : '1.4rem' }}></i>
+                        </div>
+                        <div style={{ minWidth: 0, flex: 1 }}>
+                          <h4
+                            style={{ margin: '0 0 4px 0', fontSize: isMobile ? '14.5px' : '16px', fontWeight: '800', color: '#0a192f', transition: 'color 0.2s ease', wordBreak: 'break-all' }}
+                            onMouseEnter={(e) => e.target.style.color = '#ED1C24'}
+                            onMouseLeave={(e) => e.target.style.color = 'inherit'}
+                          >
+                            {currentExpo.websiteLink}
+                          </h4>
+                          <p style={{ margin: 0, fontSize: isMobile ? '0.8rem' : '0.9rem', color: '#666' }}>Website</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
+                );
+              })()}
 
               {/* <p style={{ color: '#666', lineHeight: '1.7', marginBottom: '35px', fontSize: '1rem' }}>
                 Experience South India's premier trade event at {currentExpo.venue}. Join industry leaders and explore the latest innovations in {currentExpo.products?.map(p => p.productName).join(', ') || "various sectors"}.
@@ -478,8 +505,8 @@ const NextExpoSection = () => {
     .details-grid-v2 {
       display: flex !important;
       flex-direction: column !important;
-      gap: 20px !important;
-      margin-bottom: 25px !important;
+      gap: 14px !important;
+      margin-bottom: 20px !important;
     }
 
     .detail-item-v2 {

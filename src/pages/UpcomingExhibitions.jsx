@@ -22,6 +22,13 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
+const toTitleCase = (str) => {
+  if (!str) return "";
+  return str
+    .toLowerCase()
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
 const PAGE_SIZE = 6;
 const formatDateRange = (start, end) => {
   if (!start) return "";
@@ -190,10 +197,20 @@ const UpcomingExhibitions = () => {
                         <i className="fas fa-clock" style={{ color: '#ED1C24', width: '18px', fontSize: '1.1rem', textAlign: 'center' }}></i>
                         <span>{expo.startTime} - {expo.endTime}</span>
                       </div>
-                      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                        <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24', width: '18px', fontSize: '1.1rem', textAlign: 'center', marginTop: '3px' }}></i>
-                        <span style={{ lineHeight: '1.4' }}>{expo.venue}</span>
-                      </div>
+                      {/* City */}
+                      {(expo.expoLocation?.name || expo.location?.name) && (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <i className="fas fa-city" style={{ color: '#ED1C24', width: '18px', fontSize: '1.1rem', textAlign: 'center' }}></i>
+                          <span>{toTitleCase(expo.expoLocation?.name || expo.location?.name)}</span>
+                        </div>
+                      )}
+                      {/* Venue */}
+                      {(expo.venue || expo.location?.address) && (
+                        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                          <i className="fas fa-map-marker-alt" style={{ color: '#ED1C24', width: '18px', fontSize: '1.1rem', textAlign: 'center', marginTop: '3px' }}></i>
+                          <span style={{ lineHeight: '1.4' }}>{toTitleCase(expo.venue || expo.location?.address)}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
