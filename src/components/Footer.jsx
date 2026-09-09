@@ -90,7 +90,7 @@ const Footer = () => {
           <p>
             Developed & Maintained By{" "}
             <a href="https://www.oceansoftwares.com/" target="_blank">
-              <span>Ocean Softwares</span>
+              <span>Oceansoftwares Pvt Ltd.</span>
             </a>
           </p>
         </div>

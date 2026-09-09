@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMessageCircle, FiX, FiSend } from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +42,10 @@ const ChatBot = () => {
         position: 'fixed',
         bottom: window.innerWidth <= 768 ? '90px' : '30px',
         right: window.innerWidth <= 768 ? '15px' : '30px',
-        zIndex: 10001
+        zIndex: 10001,
+        display: 'flex',
+        alignItems: 'center',
+        gap: '12px'
       }}
     >
       <AnimatePresence>
@@ -130,6 +134,34 @@ const ChatBot = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* WhatsApp Button */}
+      <motion.a
+        href="https://wa.me/919543668094"
+        target="_blank"
+        rel="noopener noreferrer"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        title="Chat on WhatsApp (+91 95436 68094)"
+        aria-label="Chat on WhatsApp"
+        style={{
+          width: '60px',
+          height: '60px',
+          borderRadius: '50%',
+          background: '#25D366',
+          color: '#ffffff',
+          boxShadow: '0 10px 20px rgba(37, 211, 102, 0.35)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          textDecoration: 'none',
+          position: 'relative',
+          zIndex: 2
+        }}
+      >
+        <FaWhatsapp style={{ fontSize: '32px', color: '#ffffff' }} />
+      </motion.a>
 
       <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {!isOpen && (
