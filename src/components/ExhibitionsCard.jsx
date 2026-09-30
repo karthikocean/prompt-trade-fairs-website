@@ -5,40 +5,43 @@ const StatsSection = () => {
   const [visitorCount, setVisitorCount] = useState(0);
 
   // Counter animation
-  useEffect(() => {
-    let expo = 0;
-    let visitor = 0;
+useEffect(() => {
+  let expo = 0;
+  let visitor = 0;
 
-    const interval = setInterval(() => {
-      let isExpoDone = false;
-      let isVisitorDone = false;
+  const interval = setInterval(() => {
+    let isExpoDone = false;
+    let isVisitorDone = false;
 
-      if (expo < 900000) {
-        if (expo < 890000) {
-          expo += 25000; // Counts up rapidly to 890K
-          if (expo > 890000) expo = 890000;
-        } else {
-          expo += 1000; // Increments slowly and smoothly by 1K from 890K to 900K
-        }
-        setExpoCount(expo);
+    // Target 900
+    if (expo < 900) {
+      if (expo < 850) {
+        expo += 25; // Speed-a 850 varaikum increment aagum
+        if (expo > 850) expo = 850;
       } else {
-        isExpoDone = true;
+        expo += 5; // 850 la irundhu 900 varaikum smooth-a reach aagum
       }
+      setExpoCount(expo);
+    } else {
+      isExpoDone = true;
+    }
 
-      if (visitor < 50000) {
-        visitor += 1100; // Counts up to 50000 in alignment with expo steps
-        setVisitorCount(visitor);
-      } else {
-        isVisitorDone = true;
-      }
+    // Target 50,000 (50K)
+    if (visitor < 50000) {
+      visitor += 1100;
+      setVisitorCount(visitor);
+    } else {
+      isVisitorDone = true;
+    }
 
-      if (isExpoDone && isVisitorDone) {
-        clearInterval(interval);
-      }
-    }, 30); // 30ms interval for clear, visible transitions in the UI
+    if (isExpoDone && isVisitorDone) {
+      clearInterval(interval);
+    }
+  }, 30);
 
-    return () => clearInterval(interval);
-  }, []);
+  return () => clearInterval(interval);
+}, []);
+
 
   const formatNumber = (num) => {
     if (num >= 1000) {

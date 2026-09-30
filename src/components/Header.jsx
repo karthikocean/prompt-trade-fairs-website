@@ -112,7 +112,7 @@ const Header = () => {
               <a href="https://www.buildersline.in" target="_blank" rel="noopener noreferrer" onClick={() => { setActiveDropdown(null); setIsMenuOpen(false); }}>
                 Publication
               </a>
-              <a href="https://promptdigimart.com/" target="_blank" rel="noopener noreferrer" onClick={() => { setActiveDropdown(null); setIsMenuOpen(false); }}>
+              <a href="https://www.promptmediasolutions.com" target="_blank" rel="noopener noreferrer" onClick={() => { setActiveDropdown(null); setIsMenuOpen(false); }}>
                 Digi Mart
               </a>
               <a href="http://www.cnibusinessforum.in/" target="_blank" rel="noopener noreferrer" onClick={() => { setActiveDropdown(null); setIsMenuOpen(false); }}>
